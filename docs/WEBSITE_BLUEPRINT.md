@@ -296,6 +296,23 @@ Each system record must support:
 
 Categories are administrator-managed database records. This approved starting structure does not prevent administrators from adding categories later.
 
+### Pricing and currency localization
+
+- Ready-made systems may use a fixed price or a visible starting price.
+- Customizable systems may use a starting price with separately quoted changes.
+- Custom development uses Request a Quote.
+- Store every catalog price as an authoritative integer amount and ISO currency code.
+- Use PHP as the proposed canonical catalog and settlement currency until merchant capabilities are verified.
+- Infer a visitor's likely display currency from coarse country information and allow manual override.
+- Remember the selected display currency without storing precise location.
+- Retrieve exchange rates server-side through a replaceable provider, cache them, and record the rate timestamp.
+- Prefix converted displays with an approximation indicator and label them as estimates.
+- Display the actual charge currency and final amount before payment.
+- Preserve base price, exchange-rate context, displayed estimate, and actual charged amount and currency on the order.
+- Never use a browser-calculated conversion as the authoritative checkout amount.
+
+PayMongo currently supports broad PHP payment acceptance. USD card acceptance requires account configuration and is limited to eligible card payments. Automatic display conversion may support additional currencies, but actual local-currency charging depends on payment-provider capability. If charging in currencies beyond supported PHP or USD flows becomes required, add a suitable international provider behind the existing payment abstraction.
+
 Only published systems are discoverable in the public catalog. Unlisted systems may be accessed through an authorized direct link but should not appear in catalog results.
 
 ## 10. Admin modules
@@ -676,6 +693,7 @@ A phase is complete only when:
 - Whether customization is included or separately quoted
 - PayMongo merchant onboarding and approved payment methods
 - Business registration, invoice, tax, and legal presentation requirements
+- Actual international charge currencies and payment-provider coverage
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary

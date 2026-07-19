@@ -173,26 +173,42 @@ Customer accounts and the full customer portal are confirmed for the initial lau
 
 This sitemap is the architecture and design-planning baseline. Labels and navigation grouping may be refined without creating duplicate product areas.
 
-## 7. Pricing definition
+## 7. Pricing and currency definition
 
-Every system can use one pricing mode:
+### Confirmed pricing modes
 
-- Fixed price
-- Starting price
-- Request a quote
-- Monthly subscription in a future SaaS phase
-
-| Offering | Proposed behavior |
+| Offering | Approved behavior |
 |---|---|
 | Ready-made system | Fixed price or visible starting price |
 | Customizable template | Starting price plus separate customization quote |
 | Custom development | Request a quote |
-| Hosted SaaS | Monthly or annual subscription later |
+| Hosted SaaS | Monthly or annual subscription in a future phase |
 
-The server is authoritative for checkout prices. Orders preserve the purchased name, version, price, currency, and license. Product pages must distinguish the product price from optional customization, deployment, hosting, and extended support.
+The server is authoritative for checkout prices. Orders preserve the purchased name, version, base price, displayed estimate, actual charge amount, currency, and license. Product pages must distinguish the product price from optional customization, deployment, hosting, and extended support.
 
-**Owner decisions:** Actual prices, currency, taxes, invoice requirements, sale behavior, and treatment of payment-processing fees.
+### Confirmed localized display behavior
 
+1. Infer the visitor's likely currency from coarse country information supplied by the hosting layer.
+2. Fall back to PHP when the country or currency cannot be determined.
+3. Always provide a visible manual currency selector.
+4. Remember the customer's selection without storing precise location.
+5. Convert prices on the server through a replaceable exchange-rate provider.
+6. Cache exchange rates and retain the rate timestamp used for the estimate.
+7. Show converted prices with an approximation label such as `≈` and state that the checkout amount controls.
+8. Show the actual charge currency and final amount before the customer opens or confirms payment.
+9. Never authorize payment from a browser-calculated conversion.
+
+### Proposed settlement behavior
+
+- Store catalog prices canonically in PHP unless a product explicitly requires another supported base currency.
+- Charge PHP for Philippine e-wallets, QR, banking, and standard local checkout flows.
+- Offer USD charging only for eligible card payments after PayMongo enables USD Card Acceptance for the merchant account.
+- Show other local currencies as display estimates while the checkout clearly states the supported charge currency.
+- Add another payment provider later if the business requires actual charging in currencies that PayMongo does not support.
+
+PayMongo's current documentation describes PHP payment acceptance and separately activated USD card acceptance. It does not establish arbitrary local-currency charging for every visitor country. Therefore, automatic localization and actual settlement currency must remain separate concepts.
+
+**Owner decisions still required:** Confirm PHP as the canonical catalog currency, approve estimated local displays with PHP or eligible USD settlement, define taxes and invoices, approve sale behavior, and determine treatment of payment-processing fees.
 ## 8. Checkout and delivery
 
 ### Confirmed workflow
@@ -369,6 +385,9 @@ Targets should be set after baseline production data exists.
 | D-016 | Support and update duration | Open |
 | D-017 | Ethical student-service boundary as defined in this document | Confirmed |
 | D-018 | Initial launch catalog structure: POS, Inventory, Warehouse, Capstone, Thesis-Related, and Custom Development | Confirmed |
+| D-019 | Ready-made systems use fixed or starting prices; custom development uses quotation | Confirmed |
+| D-020 | Suggest local display currency by visitor country and allow manual override | Confirmed |
+| D-021 | Canonical and actual charge currency policy | Open pending owner and provider confirmation |
 
 ## 16. Owner approval checklist
 
@@ -383,7 +402,10 @@ Targets should be set after baseline production data exists.
 - [x] Allow guest checkout with verified-email account linking
 - [x] Confirm initial launch catalog categories
 - [ ] Select and prepare the actual systems available at launch
-- [ ] Confirm currency, tax, invoice, and pricing presentation
+- [x] Confirm fixed or starting prices for ready-made systems
+- [x] Confirm automatic localized currency display with manual override
+- [ ] Confirm PHP base pricing and actual settlement policy
+- [ ] Confirm tax, invoice, sale, and processing-fee presentation
 - [ ] Confirm payment provider and merchant readiness
 - [ ] Confirm standard and extended licenses
 - [ ] Confirm source-code rules
