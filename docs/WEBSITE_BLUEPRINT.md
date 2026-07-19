@@ -489,7 +489,23 @@ sequenceDiagram
 - Email should link to the verified order or portal, not expose a permanent raw storage URL.
 - Record download issuance and completion events for support and security.
 - Administrators may revoke future access after a refund, chargeback, confirmed fraud, legal requirement, or invalidated order.
-- Entitlement to future product versions remains a separate support-and-update policy decision.
+- The original purchaser receives 30 calendar days of installation and reproducible-defect support beginning when the paid order is fulfilled.
+- Support covers the purchased version and eligible patches released for that version during the support period.
+- Permanent portal entitlement applies to the purchased version, not every future release.
+- Future major versions are separate products or purchases unless a product page explicitly says otherwise.
+- Free support is tied to the original order and does not transfer to downstream buyers when the system is resold or redistributed.
+- Downstream sellers are responsible for supporting their own customers.
+
+### Approved product-package boundary
+
+The listed ready-made system price includes:
+
+- The purchased source-code package
+- Supplied installation and usage documentation
+- The approved 30-day support entitlement
+- Any inclusions explicitly listed on the product page
+
+The listed price does not include customization, rebranding, deployment, hosting, domain or infrastructure costs, data migration, training, ongoing maintenance, or other professional services unless the product page explicitly includes them. These services require a separate scope and quotation. Product pages and checkout must show this boundary before purchase.
 
 Email should normally contain a secure portal or order link rather than the ZIP attachment. Short-lived links are easier to revoke, replace, audit, and support for large files.
 
@@ -731,9 +747,7 @@ A phase is complete only when:
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
 - Final legal wording and review for the approved no-change-of-mind refund policy
-- Duration of future-version and update entitlement
-- Support duration included with each purchase
-- Whether customization is included or separately quoted
+- Support channel and response target
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration, invoice, tax, and legal presentation requirements
 - Tax, invoice, sale, and processing-fee presentation

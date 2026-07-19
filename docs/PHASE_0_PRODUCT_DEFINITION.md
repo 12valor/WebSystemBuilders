@@ -331,19 +331,70 @@ The public policy must not state or imply that mandatory consumer rights are wai
 Use language such as “Digital sales are final for change-of-mind purchases, subject to applicable consumer rights and legally required remedies.” Do not publish a blanket “No Return, No Exchange” or “No Refunds Under Any Circumstances” notice.
 
 The final policy requires appropriate Philippine legal review before production. Payment-provider refund and dispute capabilities must remain implemented even when discretionary refunds are not offered.
-## 11. Support and customization
+## 11. Approved support and update policy
 
-| Area | Proposed treatment |
-|---|---|
-| Product support | Download, installation, and reproducible product defects |
-| Customization | Separately quoted feature or branding changes |
-| Deployment | Optional hosted or on-premise installation service |
-| Maintenance | Separately priced ongoing updates and operational support |
+### Included support
 
-Every product must state support channels, duration, supported environment, what counts as a defect, what is billable customization, and whether hosting or deployment is included.
+The original purchaser receives 30 calendar days of support beginning when the paid order is fulfilled.
 
-**Owner decisions:** Default support duration, channels, response expectations, included setup assistance, and customization quotation process.
+Included support covers:
 
+- Accessing and downloading the purchased files
+- Installation using the supplied documentation
+- Clarification of documented system requirements
+- Reproducible defects in the unmodified delivered version
+- Eligible corrective patches released for the purchased version during the support period
+
+### Excluded from free support
+
+- New features or design changes
+- Custom branding or business-rule changes
+- Problems introduced by purchaser modifications
+- Unsupported environments or ignored system requirements
+- Hosting, domain, deployment, data migration, or server administration unless the product explicitly includes them
+- Training beyond supplied documentation
+- Third-party service outages, fees, policy changes, or account issues
+- Support for customers of a buyer who resells or redistributes the system
+
+### Version entitlement
+
+- The purchaser has permanent portal access to the version purchased.
+- The purchaser retains access to eligible patches attached to that purchased version.
+- Future major versions are separate products or purchases unless the product page explicitly includes an upgrade.
+- Automatic update distribution is not required for the initial launch.
+
+### Transferability
+
+The broad source license allows resale and redistribution, but the 30-day support entitlement remains tied to the original WebSystemBuilders order and customer. Downstream sellers are responsible for their own customer support.
+
+### Approved product-package boundary
+
+The listed ready-made system price includes:
+
+- The purchased source-code package
+- Supplied installation and usage documentation
+- Thirty calendar days of included support
+- Other inclusions explicitly stated on the product page
+
+The listed price excludes the following unless a product page explicitly includes them:
+
+- Feature customization
+- Business-rule changes
+- Branding and white-label work
+- Deployment or installation performed by WebSystemBuilders
+- Hosting, domain, database, storage, or other infrastructure fees
+- Data migration or data entry
+- Training
+- Ongoing maintenance after included support
+- Third-party accounts, subscriptions, licenses, or transaction fees
+
+Excluded services require a separate requirements review, scope, quotation, and acceptance. Product pages and checkout must present inclusions and exclusions before payment.
+
+### Product disclosure
+
+Every product page must state the support start event, duration, included tasks, system requirements, purchased version, update entitlement, support channel, and whether customization, hosting, or deployment is separately quoted.
+
+**Owner decisions still required:** Support channel and response target.
 ## 12. Trust and content requirements
 
 Required trust content:
@@ -433,13 +484,15 @@ Targets should be set after baseline production data exists.
 | D-013 | Broad, perpetual, non-exclusive commercial source license permits use, modification, resale, and redistribution | Confirmed |
 | D-014 | No discretionary or change-of-mind refunds; mandatory consumer remedies remain available | Confirmed intent, legal wording pending |
 | D-015 | Ready-made systems include source code | Confirmed |
-| D-016 | Support and update duration | Open |
+| D-016 | Original purchaser receives 30 days of installation and defect support; permanent purchased-version access; major versions sold separately | Confirmed |
 | D-017 | Ethical student-service boundary as defined in this document | Confirmed |
 | D-018 | Initial launch catalog structure: POS, Inventory, Warehouse, Capstone, Thesis-Related, and Custom Development | Confirmed |
 | D-019 | Ready-made systems use fixed or starting prices; custom development uses quotation | Confirmed |
 | D-020 | Suggest local display currency by visitor country and allow manual override | Confirmed |
 | D-021 | PHP is canonical and default charge currency; localized displays are estimates; eligible USD cards require provider approval | Confirmed |
 | D-022 | WebSystemBuilders retains original ownership and may continue selling the same non-exclusive systems | Confirmed |
+| D-023 | Free support belongs to the original order and does not transfer to downstream resale customers | Confirmed |
+| D-024 | Listed price includes source package, documentation, and 30-day support; customization and operational services are quoted separately | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -467,8 +520,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm no discretionary or change-of-mind refunds
 - [ ] Complete legal review and final refund-policy wording
 - [x] Confirm permanent entitlement, unlimited re-downloads, and one-hour signed URLs
-- [ ] Confirm support and update duration
-- [ ] Confirm customization and deployment inclusions
+- [x] Confirm 30-day support and purchased-version update policy
+- [x] Confirm product inclusions and separately quoted customization or operational services
 - [ ] Supply or approve initial brand and company content
 - [ ] Confirm legal-review plan for production policies
 
