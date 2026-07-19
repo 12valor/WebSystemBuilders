@@ -198,9 +198,9 @@ The server is authoritative for checkout prices. Orders preserve the purchased n
 8. Show the actual charge currency and final amount before the customer opens or confirms payment.
 9. Never authorize payment from a browser-calculated conversion.
 
-### Proposed settlement behavior
+### Approved settlement behavior
 
-- Store catalog prices canonically in PHP unless a product explicitly requires another supported base currency.
+- Store catalog prices canonically in PHP.
 - Charge PHP for Philippine e-wallets, QR, banking, and standard local checkout flows.
 - Offer USD charging only for eligible card payments after PayMongo enables USD Card Acceptance for the merchant account.
 - Show other local currencies as display estimates while the checkout clearly states the supported charge currency.
@@ -208,7 +208,7 @@ The server is authoritative for checkout prices. Orders preserve the purchased n
 
 PayMongo's current documentation describes PHP payment acceptance and separately activated USD card acceptance. It does not establish arbitrary local-currency charging for every visitor country. Therefore, automatic localization and actual settlement currency must remain separate concepts.
 
-**Owner decisions still required:** Confirm PHP as the canonical catalog currency, approve estimated local displays with PHP or eligible USD settlement, define taxes and invoices, approve sale behavior, and determine treatment of payment-processing fees.
+**Owner decisions still required:** Define taxes and invoices, approve sale behavior, and determine treatment of payment-processing fees.
 ## 8. Checkout and delivery
 
 ### Confirmed workflow
@@ -387,7 +387,7 @@ Targets should be set after baseline production data exists.
 | D-018 | Initial launch catalog structure: POS, Inventory, Warehouse, Capstone, Thesis-Related, and Custom Development | Confirmed |
 | D-019 | Ready-made systems use fixed or starting prices; custom development uses quotation | Confirmed |
 | D-020 | Suggest local display currency by visitor country and allow manual override | Confirmed |
-| D-021 | Canonical and actual charge currency policy | Open pending owner and provider confirmation |
+| D-021 | PHP is canonical and default charge currency; localized displays are estimates; eligible USD cards require provider approval | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -404,7 +404,7 @@ Targets should be set after baseline production data exists.
 - [ ] Select and prepare the actual systems available at launch
 - [x] Confirm fixed or starting prices for ready-made systems
 - [x] Confirm automatic localized currency display with manual override
-- [ ] Confirm PHP base pricing and actual settlement policy
+- [x] Confirm PHP base pricing and actual settlement policy
 - [ ] Confirm tax, invoice, sale, and processing-fee presentation
 - [ ] Confirm payment provider and merchant readiness
 - [ ] Confirm standard and extended licenses

@@ -302,7 +302,7 @@ Categories are administrator-managed database records. This approved starting st
 - Customizable systems may use a starting price with separately quoted changes.
 - Custom development uses Request a Quote.
 - Store every catalog price as an authoritative integer amount and ISO currency code.
-- Use PHP as the proposed canonical catalog and settlement currency until merchant capabilities are verified.
+- Use PHP as the canonical catalog currency and default settlement currency.
 - Infer a visitor's likely display currency from coarse country information and allow manual override.
 - Remember the selected display currency without storing precise location.
 - Retrieve exchange rates server-side through a replaceable provider, cache them, and record the rate timestamp.
@@ -311,7 +311,7 @@ Categories are administrator-managed database records. This approved starting st
 - Preserve base price, exchange-rate context, displayed estimate, and actual charged amount and currency on the order.
 - Never use a browser-calculated conversion as the authoritative checkout amount.
 
-PayMongo currently supports broad PHP payment acceptance. USD card acceptance requires account configuration and is limited to eligible card payments. Automatic display conversion may support additional currencies, but actual local-currency charging depends on payment-provider capability. If charging in currencies beyond supported PHP or USD flows becomes required, add a suitable international provider behind the existing payment abstraction.
+PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
 
 Only published systems are discoverable in the public catalog. Unlisted systems may be accessed through an authorized direct link but should not appear in catalog results.
 
@@ -693,7 +693,7 @@ A phase is complete only when:
 - Whether customization is included or separately quoted
 - PayMongo merchant onboarding and approved payment methods
 - Business registration, invoice, tax, and legal presentation requirements
-- Actual international charge currencies and payment-provider coverage
+- Tax, invoice, sale, and processing-fee presentation
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary
