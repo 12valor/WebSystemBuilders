@@ -33,6 +33,8 @@ Phase 0 prevents development from embedding unapproved assumptions about pricing
 | Visual direction | Dark, minimal, modern, restrained, seamless, and professional |
 | Trust priority | The complete browsing and purchasing experience must feel legitimate and reliable |
 | Platform shape | Public site, catalog, checkout, customer area, and admin area form one coherent platform |
+| Customer portal | Customer accounts and the full portal are included in the initial launch |
+| Checkout access | Customers may purchase as guests and access linked orders after verifying the purchase email |
 
 ## 3. Customer definitions
 
@@ -84,6 +86,7 @@ Categories remain database-managed. These names are seeds, not a hardcoded perma
 - Hosted checkout
 - Verified payment webhooks
 - Durable order and payment records
+- Customer accounts and portal for orders, downloads, receipts, updates, and support
 - Private ZIP or protected-link delivery
 - Purchase email and verified success page
 - Legal, delivery, refund, and license pages
@@ -91,7 +94,6 @@ Categories remain database-managed. These names are seeds, not a hardcoded perma
 
 ### Proposed for later
 
-- Full customer portal
 - Hosted SaaS subscriptions and recurring billing
 - License-key generation
 - Automatic update distribution
@@ -99,9 +101,18 @@ Categories remain database-managed. These names are seeds, not a hardcoded perma
 - Affiliate program
 - Multiple payment providers
 
-Guest checkout can support the MVP, but every purchase still requires durable order, customer-email, payment, and delivery records.
+Customer accounts and the full customer portal are confirmed for the initial launch. Customers may complete checkout without signing in. The order is associated with the submitted purchase email, and portal access is granted only after that email is verified through a secure sign-in or account-activation flow. Every purchase must retain durable customer, payment, delivery, receipt, and support records.
 
-**Owner decision:** Confirm whether the customer portal is postponed or included in the initial launch.
+### Approved account-linking behavior
+
+1. Collect and normalize the customer email before checkout.
+2. Store the email and customer reference on the pending order.
+3. Complete payment without requiring an existing account.
+4. After verified payment, send delivery and secure account-access instructions to the purchase email.
+5. Require email verification before exposing orders, receipts, downloads, or support records in the portal.
+6. Link only orders whose normalized email matches the verified identity.
+7. Never expose whether another email has purchases through public account-recovery responses.
+8. Allow signed-in customers to check out normally and attach the order directly to their verified account.
 
 ## 6. Sitemap baseline
 
@@ -131,7 +142,7 @@ Guest checkout can support the MVP, but every purchase still requires durable or
 - `/payment/success`
 - `/payment/cancelled`
 
-### Customer portal when included
+### Customer portal
 
 - `/account`
 - `/account/orders`
@@ -328,7 +339,7 @@ Targets should be set after baseline production data exists.
 | Unclear source-code rights | Explicit per-product field and approved license |
 | Mixed audiences | Separate audience paths and filters |
 | Fake trust signals | Never invent testimonials, customers, metrics, or urgency |
-| Scope expansion | Keep subscriptions and advanced portal features outside MVP until approved |
+| Scope expansion | Keep subscriptions and nonessential post-launch features outside the approved initial scope |
 
 ## 15. Decision log
 
@@ -342,8 +353,8 @@ Targets should be set after baseline production data exists.
 | D-006 | PayMongo is the initial payment integration | Proposed pending merchant verification |
 | D-007 | Resend is the initial email provider | Proposed |
 | D-008 | Supabase provides database, authentication, and storage | Proposed |
-| D-009 | Guest checkout supports the MVP | Proposed |
-| D-010 | Customer portal timing | Open |
+| D-009 | Allow guest checkout and link purchases after purchase-email verification | Confirmed |
+| D-010 | Customer accounts and full portal are included in the initial launch | Confirmed |
 | D-011 | Default link lifetime of 72 hours | Open |
 | D-012 | Default limit of 3 downloads | Open |
 | D-013 | Standard and extended licenses | Open |
@@ -360,7 +371,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm hosted payment and automated delivery goal
 - [x] Confirm dark, minimal, professional design
 - [ ] Confirm ethical student-service wording
-- [ ] Confirm customer portal timing
+- [x] Include customer accounts and the full portal in the initial launch
+- [x] Allow guest checkout with verified-email account linking
 - [ ] Confirm initial categories and launch systems
 - [ ] Confirm currency, tax, invoice, and pricing presentation
 - [ ] Confirm payment provider and merchant readiness

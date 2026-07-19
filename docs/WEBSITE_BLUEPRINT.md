@@ -181,7 +181,7 @@ Provider choices may be revisited before production if account eligibility, fees
 | `/account/downloads` | Available system downloads |
 | `/account/support` | Support requests |
 
-Customer accounts may be postponed for the earliest MVP. Guest purchases must still create durable order and delivery records.
+Customer accounts and the full customer portal are included in the initial launch. Guest checkout is permitted. A purchase is associated with the submitted email, but portal access requires verification of that same email through a secure sign-in or account-activation flow. Every order must have durable customer, payment, and delivery records.
 
 ### Admin routes
 
@@ -604,7 +604,7 @@ Critical smoke journeys:
 | 10 | Production launch | Domain, live providers, monitoring, backups, and launch checks | 2–4 days |
 | 11 | Post-launch growth | Feedback, conversion improvements, catalog growth, and SaaS validation | Ongoing |
 
-The complete first release is expected to take approximately 8–10 weeks for one primary developer or coding-agent workflow. An MVP without the customer portal may launch in approximately 6–8 weeks. These ranges are planning estimates rather than delivery guarantees and depend on owner approvals, content readiness, provider onboarding, and testing outcomes.
+The complete initial release, including customer accounts and the customer portal, is expected to take approximately 8–10 weeks for one primary developer or coding-agent workflow. This range is a planning estimate rather than a delivery guarantee and depends on owner approvals, content readiness, provider onboarding, and testing outcomes.
 
 The active Phase 0 definition, confirmed decisions, proposed defaults, and approval checklist are maintained in [`PHASE_0_PRODUCT_DEFINITION.md`](PHASE_0_PRODUCT_DEFINITION.md).
 ## 21. Phase exit criteria
@@ -634,6 +634,7 @@ A phase is complete only when:
 - PayMongo test and production checkout
 - Verified payment webhook
 - Order records
+- Customer accounts and portal for orders, downloads, receipts, updates, and support
 - Private ZIP delivery
 - Purchase email and success page
 - Legal and trust content
@@ -641,7 +642,6 @@ A phase is complete only when:
 
 ### Can follow after launch
 
-- Full customer portal
 - SaaS subscriptions
 - License-key generation
 - Automatic update distribution
@@ -663,7 +663,7 @@ A phase is complete only when:
 - Whether customization is included or separately quoted
 - PayMongo merchant onboarding and approved payment methods
 - Business registration, invoice, tax, and legal presentation requirements
-- MVP inclusion or postponement of customer accounts
+- Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary
 
