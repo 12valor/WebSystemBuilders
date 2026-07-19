@@ -231,18 +231,20 @@ PayMongo's current documentation describes PHP payment acceptance and separately
 - Protected external URL — allowed
 - Manual delivery — fallback
 
-### Proposed defaults
+### Approved download-access model
 
-| Control | Proposed default | Status |
-|---|---|---|
-| Link lifetime | 72 hours | Open |
-| Download limit | 3 completed downloads | Open |
-| Link regeneration | Admin can regenerate with an audit record | Proposed |
-| Link revocation | Admin can revoke future access | Proposed |
-| Delivery email | Receipt, order number, system, license, instructions, download, and support | Proposed |
-| Success page | Verified order status and available delivery action | Proposed |
+| Control | Approved behavior |
+|---|---|
+| Purchase entitlement | Permanent access in the portal to the purchased product version |
+| Total download count | Unlimited re-downloads for the entitled version |
+| Generated signed URL | Expires one hour after issuance |
+| Authorization | Recheck verified identity, order, entitlement, and revocation before every URL |
+| Delivery email | Receipt, order number, system, license, instructions, and secure portal or order link |
+| Success page | Verified order status and available delivery action |
+| Revocation | Allowed after refund, chargeback, confirmed fraud, legal requirement, or invalidated order |
+| Audit | Record signed-link issuance and download activity |
 
-Email should normally contain a protected link instead of attaching the ZIP.
+Email should link to the verified portal or order page instead of attaching the ZIP or exposing a permanent raw storage URL. Access to future versions remains a separate support-and-update decision.
 
 ## 9. Approved commercial source license
 
@@ -426,8 +428,8 @@ Targets should be set after baseline production data exists.
 | D-008 | Supabase provides database, authentication, and storage | Proposed |
 | D-009 | Allow guest checkout and link purchases after purchase-email verification | Confirmed |
 | D-010 | Customer accounts and full portal are included in the initial launch | Confirmed |
-| D-011 | Default link lifetime of 72 hours | Open |
-| D-012 | Default limit of 3 downloads | Open |
+| D-011 | Generate a new one-hour signed URL for every authorized download | Confirmed |
+| D-012 | Permanent portal entitlement and unlimited re-downloads for the purchased version | Confirmed |
 | D-013 | Broad, perpetual, non-exclusive commercial source license permits use, modification, resale, and redistribution | Confirmed |
 | D-014 | No discretionary or change-of-mind refunds; mandatory consumer remedies remain available | Confirmed intent, legal wording pending |
 | D-015 | Ready-made systems include source code | Confirmed |
@@ -464,7 +466,7 @@ Targets should be set after baseline production data exists.
 - [ ] Complete legal wording and third-party license audit
 - [x] Confirm no discretionary or change-of-mind refunds
 - [ ] Complete legal review and final refund-policy wording
-- [ ] Confirm download expiration and limit
+- [x] Confirm permanent entitlement, unlimited re-downloads, and one-hour signed URLs
 - [ ] Confirm support and update duration
 - [ ] Confirm customization and deployment inclusions
 - [ ] Supply or approve initial brand and company content

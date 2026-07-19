@@ -480,7 +480,18 @@ sequenceDiagram
 | Protected external URL | Allowed when the admin provides a trusted delivery service |
 | Manual delivery | Fallback for custom or exceptional orders |
 
-Email should normally contain a secure link rather than the ZIP attachment. Links are easier to revoke, replace, audit, and support for large files.
+### Approved download-access model
+
+- A verified purchase creates a permanent portal entitlement to the purchased product version.
+- The original purchaser may re-download that entitled version without a lifetime download-count limit.
+- Every download request generates a new signed storage URL that expires after one hour.
+- Signed URLs must be created server-side only after rechecking the account, order, entitlement, and revocation state.
+- Email should link to the verified order or portal, not expose a permanent raw storage URL.
+- Record download issuance and completion events for support and security.
+- Administrators may revoke future access after a refund, chargeback, confirmed fraud, legal requirement, or invalidated order.
+- Entitlement to future product versions remains a separate support-and-update policy decision.
+
+Email should normally contain a secure portal or order link rather than the ZIP attachment. Short-lived links are easier to revoke, replace, audit, and support for large files.
 
 ## 13. Authentication and authorization
 
@@ -720,7 +731,7 @@ A phase is complete only when:
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
 - Final legal wording and review for the approved no-change-of-mind refund policy
-- Default download expiration and download limit
+- Duration of future-version and update entitlement
 - Support duration included with each purchase
 - Whether customization is included or separately quoted
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
