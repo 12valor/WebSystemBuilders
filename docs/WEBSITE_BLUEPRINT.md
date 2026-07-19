@@ -283,6 +283,19 @@ Each system record must support:
 - SEO title and description
 - Status: Draft, Published, Unlisted, or Archived
 
+### Approved launch catalog structure
+
+| Audience | Launch category or service |
+|---|---|
+| Business | Point of Sale |
+| Business | Inventory Management |
+| Business | Warehouse Management |
+| Student | Capstone Systems |
+| Student | Thesis-Related Systems |
+| Both | Custom System Development |
+
+Categories are administrator-managed database records. This approved starting structure does not prevent administrators from adding categories later.
+
 Only published systems are discoverable in the public catalog. Unlisted systems may be accessed through an authorized direct link but should not appear in catalog results.
 
 ## 10. Admin modules
@@ -654,7 +667,7 @@ A phase is complete only when:
 ## 23. Decisions still requiring owner approval
 
 - Final logo and brand assets
-- Exact student-service boundaries and wording
+- Final public copy describing the approved student-service boundary
 - Standard and extended software licenses
 - Refund eligibility and time window
 - Default download expiration and download limit

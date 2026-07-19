@@ -22,6 +22,7 @@ Phase 0 prevents development from embedding unapproved assumptions about pricing
 | Primary audiences | Students and business owners |
 | Platform purpose | Sell ready-made systems and offer custom system-development services |
 | Student offering | Capstone, thesis-related technical support, templates, development, and related services |
+| Student-service boundary | Ethical technical support is allowed; deceptive authorship, impersonation, fabricated research, guaranteed grades, and school-policy violations are prohibited |
 | Business offering | POS, inventory, warehouse, management, and other business systems |
 | Catalog ownership | Administrators add and manage the systems shown publicly |
 | Product presentation | Systems include descriptions, features, media, price or quotation rules, and delivery details |
@@ -61,13 +62,18 @@ Administrators need to manage the public catalog without editing code. They must
 | Custom development | A service requiring requirements review and quotation | Include in MVP |
 | Hosted SaaS | Online software sold as a recurring subscription | Defer until demand is validated |
 
-### Initial category seeds
+### Approved launch catalog structure
 
-**Business:** Point of Sale, Inventory, Warehouse, Payroll and Attendance, Booking, Customer Management, School Management, and other management systems.
+| Audience | Launch category or service |
+|---|---|
+| Business | Point of Sale |
+| Business | Inventory Management |
+| Business | Warehouse Management |
+| Student | Capstone Systems |
+| Student | Thesis-Related Systems |
+| Both | Custom System Development |
 
-**Student:** Capstone, thesis-related systems, attendance, enrollment, library, reservation, inventory, POS, and custom academic systems.
-
-Categories remain database-managed. These names are seeds, not a hardcoded permanent list.
+Categories remain administrator-managed database records. This is the approved starting structure, not a permanent hardcoded list. Actual launch products and files must still be selected and prepared separately.
 
 ## 5. MVP scope
 
@@ -361,6 +367,8 @@ Targets should be set after baseline production data exists.
 | D-014 | Refund policy | Open |
 | D-015 | Source-code inclusion policy | Open |
 | D-016 | Support and update duration | Open |
+| D-017 | Ethical student-service boundary as defined in this document | Confirmed |
+| D-018 | Initial launch catalog structure: POS, Inventory, Warehouse, Capstone, Thesis-Related, and Custom Development | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -370,10 +378,11 @@ Targets should be set after baseline production data exists.
 - [x] Confirm admin-managed catalog
 - [x] Confirm hosted payment and automated delivery goal
 - [x] Confirm dark, minimal, professional design
-- [ ] Confirm ethical student-service wording
+- [x] Confirm ethical student-service boundary
 - [x] Include customer accounts and the full portal in the initial launch
 - [x] Allow guest checkout with verified-email account linking
-- [ ] Confirm initial categories and launch systems
+- [x] Confirm initial launch catalog categories
+- [ ] Select and prepare the actual systems available at launch
 - [ ] Confirm currency, tax, invoice, and pricing presentation
 - [ ] Confirm payment provider and merchant readiness
 - [ ] Confirm standard and extended licenses
