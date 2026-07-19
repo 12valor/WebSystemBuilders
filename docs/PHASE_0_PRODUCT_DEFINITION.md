@@ -298,23 +298,37 @@ These require separate public terms. The final license wording should receive ap
 ### Business implication
 
 Because buyers may redistribute or resell the unchanged source package, the same product may become available elsewhere, including at a lower price or for free. The owner has explicitly accepted this broad redistribution model.
-## 10. Refund and cancellation framework
+## 10. Approved refund-policy direction
 
-The final refund policy must comply with applicable law and payment-provider requirements and should receive appropriate legal review before production.
+### Owner's commercial intent
 
-Decisions required:
+Completed digital-system sales are final. WebSystemBuilders will not offer discretionary refunds because a customer changed their mind, found a different product, no longer needs the system, failed to review disclosed requirements, or mishandled the delivered files.
 
-- Refund before delivery
-- Effect of opening or downloading a digital product
-- Duplicate payments
-- Corrupt, missing, or materially misrepresented products
-- Failed delivery
-- Chargebacks
-- Custom-development deposits and milestones
-- Review-request time window
+### Mandatory exceptions and remedies
 
-Do not publish a strict no-refund promise until the policy has been reviewed.
+The public policy must not state or imply that mandatory consumer rights are waived. Applicable remedies must remain available for circumstances such as:
 
+- Duplicate or unauthorized charges
+- Failure to deliver the purchased system
+- A materially defective or nonconforming system
+- Material misrepresentation of the system or its inclusions
+- Breach of an applicable express or implied warranty
+- Other remedies that cannot legally be excluded
+
+### Resolution workflow
+
+1. Verify the order, payment, delivery, product version, and reported problem.
+2. Determine whether the issue is buyer configuration, a disclosed limitation, delivery failure, defect, or misrepresentation.
+3. Attempt redelivery, setup guidance, correction, repair, or replacement when appropriate.
+4. Issue a full or partial refund when required by law, provider rules, duplicate payment, or an approved exceptional resolution.
+5. Record the reason, evidence, amount, provider reference, and administrator responsible.
+6. Revoke future download access when appropriate, recognizing that already downloaded source code cannot be technically recovered.
+
+### Required public wording
+
+Use language such as “Digital sales are final for change-of-mind purchases, subject to applicable consumer rights and legally required remedies.” Do not publish a blanket “No Return, No Exchange” or “No Refunds Under Any Circumstances” notice.
+
+The final policy requires appropriate Philippine legal review before production. Payment-provider refund and dispute capabilities must remain implemented even when discretionary refunds are not offered.
 ## 11. Support and customization
 
 | Area | Proposed treatment |
@@ -415,7 +429,7 @@ Targets should be set after baseline production data exists.
 | D-011 | Default link lifetime of 72 hours | Open |
 | D-012 | Default limit of 3 downloads | Open |
 | D-013 | Broad, perpetual, non-exclusive commercial source license permits use, modification, resale, and redistribution | Confirmed |
-| D-014 | Refund policy | Open |
+| D-014 | No discretionary or change-of-mind refunds; mandatory consumer remedies remain available | Confirmed intent, legal wording pending |
 | D-015 | Ready-made systems include source code | Confirmed |
 | D-016 | Support and update duration | Open |
 | D-017 | Ethical student-service boundary as defined in this document | Confirmed |
@@ -448,7 +462,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm broad commercial source license
 - [x] Include source code with ready-made systems
 - [ ] Complete legal wording and third-party license audit
-- [ ] Confirm refund and cancellation rules
+- [x] Confirm no discretionary or change-of-mind refunds
+- [ ] Complete legal review and final refund-policy wording
 - [ ] Confirm download expiration and limit
 - [ ] Confirm support and update duration
 - [ ] Confirm customization and deployment inclusions

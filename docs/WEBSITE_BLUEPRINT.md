@@ -328,6 +328,21 @@ Product pages and purchase terms must clearly state:
 
 Before production, the final license text and every distributed dependency require appropriate legal and license-compliance review.
 
+### Approved refund-policy direction
+
+The owner's commercial intent is that completed digital-system sales are final and that customers do not receive discretionary refunds for change of mind. Public copy must not use an absolute “No Return, No Exchange/Refund” term that suggests legally required remedies are waived.
+
+The production policy must preserve remedies required by applicable law for situations such as:
+
+- Duplicate or unauthorized charges
+- Failure to deliver the purchased system
+- A materially defective or nonconforming product
+- Material misrepresentation of the purchased product
+- Breach of an applicable express or implied warranty
+- Any other non-waivable consumer remedy
+
+The workflow should prioritize diagnosis, repair, replacement, redelivery, or correction when appropriate, while retaining administrator refund capability for legally required or approved cases. Final wording requires appropriate Philippine legal review before publication.
+
 Only published systems are discoverable in the public catalog. Unlisted systems may be accessed through an authorized direct link but should not appear in catalog results.
 
 ## 10. Admin modules
@@ -704,7 +719,7 @@ A phase is complete only when:
 - Final public copy describing the approved student-service boundary
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
-- Refund eligibility and time window
+- Final legal wording and review for the approved no-change-of-mind refund policy
 - Default download expiration and download limit
 - Support duration included with each purchase
 - Whether customization is included or separately quoted
