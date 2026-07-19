@@ -594,15 +594,19 @@ Critical smoke journeys:
 | 0 | Product definition | Scope, sitemap, licensing, refund and delivery decisions | 2–4 days |
 | 1 | Design foundation | Tokens, component rules, wireframes, and responsive direction | 4–7 days |
 | 2 | Technical foundation | Next.js, database, authentication, migrations, and layouts | 4–6 days |
-| 3 | Public experience | Homepage, audience pages, catalog, details, trust, and inquiries | 7–10 days |
-| 4 | Admin experience | Systems, categories, media, files, orders, content, and audit trail | 7–10 days |
-| 5 | Commerce and delivery | Checkout, webhooks, orders, signed downloads, and email | 5–8 days |
-| 6 | Customer portal | Accounts, orders, downloads, updates, and support | 5–8 days |
-| 7 | Quality hardening | Testing, accessibility, security, SEO, and performance | 5–7 days |
-| 8 | Production launch | Domain, live providers, monitoring, backups, and launch checks | 2–4 days |
+| 3 | Public website | Homepage, audience pages, services, portfolio, trust, and inquiries | 5–8 days |
+| 4 | Systems catalog | Search, filters, system details, demos, features, and pricing | 4–6 days |
+| 5 | Admin dashboard | Systems, categories, media, files, orders, content, and audit trail | 7–10 days |
+| 6 | Payment and ordering | Checkout, pending orders, PayMongo, webhooks, and payment records | 5–8 days |
+| 7 | Automated delivery | Private files, signed downloads, email, limits, resend, and revoke | 4–6 days |
+| 8 | Customer portal | Accounts, orders, downloads, updates, receipts, and support | 5–8 days |
+| 9 | Quality hardening | Testing, accessibility, security, SEO, and performance | 5–7 days |
+| 10 | Production launch | Domain, live providers, monitoring, backups, and launch checks | 2–4 days |
+| 11 | Post-launch growth | Feedback, conversion improvements, catalog growth, and SaaS validation | Ongoing |
 
-The complete first release is expected to take approximately 8–10 weeks for one primary developer or coding-agent workflow. An MVP without the customer portal can launch sooner.
+The complete first release is expected to take approximately 8–10 weeks for one primary developer or coding-agent workflow. An MVP without the customer portal may launch in approximately 6–8 weeks. These ranges are planning estimates rather than delivery guarantees and depend on owner approvals, content readiness, provider onboarding, and testing outcomes.
 
+The active Phase 0 definition, confirmed decisions, proposed defaults, and approval checklist are maintained in [`PHASE_0_PRODUCT_DEFINITION.md`](PHASE_0_PRODUCT_DEFINITION.md).
 ## 21. Phase exit criteria
 
 A phase is complete only when:

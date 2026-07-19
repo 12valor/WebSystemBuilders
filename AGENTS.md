@@ -4,6 +4,8 @@
 
 Before planning or changing application code, read [`docs/WEBSITE_BLUEPRINT.md`](docs/WEBSITE_BLUEPRINT.md). Treat it as the project's product and technical source of truth.
 
+The project is currently in Phase 0. Read [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) for confirmed decisions, proposed defaults, unresolved owner decisions, and phase exit criteria. Do not present proposed or open items as approved policy.
+
 If the requested work conflicts with the blueprint, identify the conflict and ask for an owner decision before changing architecture, business rules, payment behavior, licensing, or delivery policy.
 
 ## Current project state
