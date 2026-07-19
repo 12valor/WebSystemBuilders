@@ -244,25 +244,60 @@ PayMongo's current documentation describes PHP payment acceptance and separately
 
 Email should normally contain a protected link instead of attaching the ZIP.
 
-## 9. License framework
+## 9. Approved commercial source license
 
-The final license requires owner approval and appropriate legal review.
+Ready-made systems include source code and are sold with a broad, perpetual, non-exclusive commercial license.
 
-### Proposed standard license
+### Buyer permissions
 
-- Use by one named student project, business, or organization
-- Modification for the licensed user's own use when source code is included
-- No resale, redistribution, sublicensing, public repository upload, or removal of ownership notices
-- Support and updates only for the period shown on the product page
+The purchaser may:
 
-### Proposed extended license
+- Use the system for personal, academic, organizational, or business purposes
+- Copy and modify the source code
+- Deploy the system multiple times
+- Create derivative systems
+- Resell the original or modified system
+- Redistribute the original or modified source package
+- Choose their own pricing and commercial model for redistributed copies
 
-Separately priced rights for agencies, developers, multiple deployments, or commercial redistribution. Rights must be explicit per product.
+### Rights retained by WebSystemBuilders
 
-Every product must disclose whether source code is included, permitted deployments, customization coverage, support period, update entitlement, and separately billed dependencies.
+- WebSystemBuilders retains ownership of its original code and materials.
+- WebSystemBuilders may continue using, modifying, selling, and licensing the same system.
+- A purchase is non-exclusive and does not transfer exclusive ownership.
+- Buyers may not claim ownership of the WebSystemBuilders name, logo, website, or trademarks.
+- The license cannot grant rights that WebSystemBuilders does not own.
 
-**Owner decisions:** Source-code policy, deployment limits, ownership transfer, resale rules, and update entitlement.
+### Third-party materials
 
+Libraries, frameworks, fonts, icons, images, media, sample data, and external services remain subject to their original licenses and terms. A buyer's broad license applies only to material WebSystemBuilders has the legal right to license that way.
+
+Before a system is sold:
+
+- Audit distributed dependencies and assets.
+- Include required notices and source-license files.
+- Remove assets that cannot legally be redistributed.
+- Disclose separately billed external services.
+- State whether bundled credentials, data, or hosted services are excluded.
+
+### Separate commercial terms
+
+Source-code permission does not automatically define:
+
+- Support duration or transferability
+- Future updates
+- Warranties
+- Refunds
+- Liability
+- Hosted services
+- Custom development
+- Trademark use
+
+These require separate public terms. The final license wording should receive appropriate legal review before production.
+
+### Business implication
+
+Because buyers may redistribute or resell the unchanged source package, the same product may become available elsewhere, including at a lower price or for free. The owner has explicitly accepted this broad redistribution model.
 ## 10. Refund and cancellation framework
 
 The final refund policy must comply with applicable law and payment-provider requirements and should receive appropriate legal review before production.
@@ -379,15 +414,16 @@ Targets should be set after baseline production data exists.
 | D-010 | Customer accounts and full portal are included in the initial launch | Confirmed |
 | D-011 | Default link lifetime of 72 hours | Open |
 | D-012 | Default limit of 3 downloads | Open |
-| D-013 | Standard and extended licenses | Open |
+| D-013 | Broad, perpetual, non-exclusive commercial source license permits use, modification, resale, and redistribution | Confirmed |
 | D-014 | Refund policy | Open |
-| D-015 | Source-code inclusion policy | Open |
+| D-015 | Ready-made systems include source code | Confirmed |
 | D-016 | Support and update duration | Open |
 | D-017 | Ethical student-service boundary as defined in this document | Confirmed |
 | D-018 | Initial launch catalog structure: POS, Inventory, Warehouse, Capstone, Thesis-Related, and Custom Development | Confirmed |
 | D-019 | Ready-made systems use fixed or starting prices; custom development uses quotation | Confirmed |
 | D-020 | Suggest local display currency by visitor country and allow manual override | Confirmed |
 | D-021 | PHP is canonical and default charge currency; localized displays are estimates; eligible USD cards require provider approval | Confirmed |
+| D-022 | WebSystemBuilders retains original ownership and may continue selling the same non-exclusive systems | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -409,8 +445,9 @@ Targets should be set after baseline production data exists.
 - [x] Select PayMongo as the initial payment provider
 - [ ] Create and verify the PayMongo merchant account
 - [ ] Activate required PayMongo payment methods and production webhooks
-- [ ] Confirm standard and extended licenses
-- [ ] Confirm source-code rules
+- [x] Confirm broad commercial source license
+- [x] Include source code with ready-made systems
+- [ ] Complete legal wording and third-party license audit
 - [ ] Confirm refund and cancellation rules
 - [ ] Confirm download expiration and limit
 - [ ] Confirm support and update duration

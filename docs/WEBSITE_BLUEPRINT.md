@@ -313,6 +313,21 @@ Categories are administrator-managed database records. This approved starting st
 
 PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
 
+### Approved commercial license direction
+
+Ready-made systems include their source code and use a broad, perpetual, non-exclusive commercial license. The purchaser may use, copy, modify, deploy, resell, and redistribute the purchased system, including the original source package. WebSystemBuilders retains ownership of its original work, may continue selling and licensing the same system, and does not grant exclusivity, ownership of the WebSystemBuilders brand, or rights that override third-party licenses.
+
+Product pages and purchase terms must clearly state:
+
+- Source code is included.
+- Resale and redistribution are allowed.
+- The license is non-exclusive.
+- WebSystemBuilders may continue selling the same system.
+- Third-party packages, fonts, media, and services remain governed by their own licenses.
+- Support, updates, warranties, liability, and trademark rights are separate from source-code permissions.
+
+Before production, the final license text and every distributed dependency require appropriate legal and license-compliance review.
+
 Only published systems are discoverable in the public catalog. Unlisted systems may be accessed through an authorized direct link but should not appear in catalog results.
 
 ## 10. Admin modules
@@ -687,11 +702,11 @@ A phase is complete only when:
 
 - Final logo and brand assets
 - Final public copy describing the approved student-service boundary
-- Standard and extended software licenses
+- Final legal wording for the approved broad commercial source license
+- Third-party dependency and asset license audit
 - Refund eligibility and time window
 - Default download expiration and download limit
 - Support duration included with each purchase
-- Whether source code is included for every system
 - Whether customization is included or separately quoted
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration, invoice, tax, and legal presentation requirements
