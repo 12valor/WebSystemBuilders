@@ -353,7 +353,7 @@ Targets should be set after baseline production data exists.
 
 | Dependency or risk | Required treatment |
 |---|---|
-| PayMongo onboarding | Confirm merchant account, KYC, test access, and approved payment methods |
+| PayMongo onboarding | Owner will complete later; required before production checkout, live credentials, and payment-method activation |
 | Legal policies | Obtain qualified review before publishing production terms |
 | Missing product content | Define minimum publishable product content |
 | Large or unsafe ZIP files | Private storage, upload restrictions, and production scanning plan |
@@ -372,7 +372,7 @@ Targets should be set after baseline production data exists.
 | D-003 | Catalog is administered through the website | Confirmed |
 | D-004 | Ready-made systems and custom development launch first | Confirmed |
 | D-005 | Hosted SaaS subscriptions follow proven demand | Proposed |
-| D-006 | PayMongo is the initial payment integration | Proposed pending merchant verification |
+| D-006 | PayMongo is the selected initial payment integration; onboarding is deferred and required before production | Confirmed provider, onboarding pending |
 | D-007 | Resend is the initial email provider | Proposed |
 | D-008 | Supabase provides database, authentication, and storage | Proposed |
 | D-009 | Allow guest checkout and link purchases after purchase-email verification | Confirmed |
@@ -406,7 +406,9 @@ Targets should be set after baseline production data exists.
 - [x] Confirm automatic localized currency display with manual override
 - [x] Confirm PHP base pricing and actual settlement policy
 - [ ] Confirm tax, invoice, sale, and processing-fee presentation
-- [ ] Confirm payment provider and merchant readiness
+- [x] Select PayMongo as the initial payment provider
+- [ ] Create and verify the PayMongo merchant account
+- [ ] Activate required PayMongo payment methods and production webhooks
 - [ ] Confirm standard and extended licenses
 - [ ] Confirm source-code rules
 - [ ] Confirm refund and cancellation rules
@@ -424,7 +426,7 @@ Phase 0 is complete when:
 - Initial launch products are selected.
 - Pricing and currency presentation are approved.
 - Licensing, source-code, refund, delivery, support, and customization rules are approved.
-- Payment-provider readiness is confirmed.
+- Payment-provider readiness is confirmed before any live-payment implementation or production launch.
 - Required company, product, and trust content has an owner and delivery plan.
 - No unresolved decision would materially change Phase 1 information architecture or design.
 

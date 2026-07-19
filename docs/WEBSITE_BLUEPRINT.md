@@ -587,6 +587,8 @@ The admin dashboard should share the brand tokens but favor density, clarity, ke
 
 Use separate test and production payment credentials. Production webhook URLs, email domains, storage policies, and environment variables require a launch checklist and verification.
 
+PayMongo is the selected initial payment provider, but the merchant account has not yet been created or verified. Keep the payment integration behind an adapter, support non-live development states, and do not enable production purchasing until merchant onboarding, live credentials, webhook registration, and required payment-method activation are verified.
+
 ## 19. Testing strategy
 
 ### Unit and integration testing
@@ -691,7 +693,7 @@ A phase is complete only when:
 - Support duration included with each purchase
 - Whether source code is included for every system
 - Whether customization is included or separately quoted
-- PayMongo merchant onboarding and approved payment methods
+- Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration, invoice, tax, and legal presentation requirements
 - Tax, invoice, sale, and processing-fee presentation
 - Final account-activation email wording and session-expiration policy
