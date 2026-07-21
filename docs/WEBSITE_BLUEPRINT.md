@@ -294,7 +294,7 @@ Each system record must support:
 | Student | Thesis-Related Systems |
 | Both | Custom System Development |
 
-Categories are administrator-managed database records. This approved starting structure does not prevent administrators from adding categories later.
+Categories are administrator-managed database records. This approved starting structure does not prevent administrators from adding categories later. The owner will select, prepare, upload, price, and publish the actual systems through the admin dashboard; launch products must not be hardcoded into the application.
 
 ### Pricing and currency localization
 

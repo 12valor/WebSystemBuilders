@@ -73,7 +73,7 @@ Administrators need to manage the public catalog without editing code. They must
 | Student | Thesis-Related Systems |
 | Both | Custom System Development |
 
-Categories remain administrator-managed database records. This is the approved starting structure, not a permanent hardcoded list. Actual launch products and files must still be selected and prepared separately.
+Categories remain administrator-managed database records. This is the approved starting structure, not a permanent hardcoded list. The owner is responsible for selecting, preparing, uploading, pricing, and publishing the actual launch systems through the admin dashboard.
 
 ## 5. MVP scope
 
@@ -467,7 +467,7 @@ Targets should be set after baseline production data exists.
 |---|---|
 | PayMongo onboarding | Owner will complete later; required before production checkout, live credentials, and payment-method activation |
 | Legal policies | Obtain qualified review before publishing production terms |
-| Missing product content | Define minimum publishable product content |
+| Missing product content | Owner selects and uploads actual systems; admin publishing validation enforces minimum content before production |
 | Large or unsafe ZIP files | Private storage, upload restrictions, and production scanning plan |
 | Link sharing | Expiring, revocable links and download records |
 | Unclear source-code rights | Explicit per-product field and approved license |
@@ -504,6 +504,7 @@ Targets should be set after baseline production data exists.
 | D-023 | Free support belongs to the original order and does not transfer to downstream resale customers | Confirmed |
 | D-024 | Listed price includes source package, documentation, and 30-day support; customization and operational services are quoted separately | Confirmed |
 | D-025 | Support uses portal tickets and support@websystembuilders.com with a two-Philippine-business-day first-response target | Confirmed |
+| D-026 | Owner selects, prepares, uploads, prices, and publishes the actual launch systems through admin | Confirmed responsibility |
 
 ## 16. Owner approval checklist
 
@@ -517,7 +518,8 @@ Targets should be set after baseline production data exists.
 - [x] Include customer accounts and the full portal in the initial launch
 - [x] Allow guest checkout with verified-email account linking
 - [x] Confirm initial launch catalog categories
-- [ ] Select and prepare the actual systems available at launch
+- [x] Assign launch-system selection and uploads to the owner
+- [ ] Owner publishes at least one complete system before production launch
 - [x] Confirm fixed or starting prices for ready-made systems
 - [x] Confirm automatic localized currency display with manual override
 - [x] Confirm PHP base pricing and actual settlement policy
@@ -542,7 +544,7 @@ Targets should be set after baseline production data exists.
 Phase 0 is complete when:
 
 - MVP scope and sitemap are approved.
-- Initial launch products are selected.
+- Launch-product ownership and the admin publication plan are approved; actual products must be published before production.
 - Pricing and currency presentation are approved.
 - Licensing, source-code, refund, delivery, support, and customization rules are approved.
 - Payment-provider readiness is confirmed before any live-payment implementation or production launch.
