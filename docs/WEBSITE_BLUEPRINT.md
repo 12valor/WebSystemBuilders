@@ -271,7 +271,7 @@ Each system record must support:
 - Demo URL and optional demo instructions
 - Technology stack
 - Pricing type: fixed, starting, subscription, or quotation
-- Regular and optional sale price
+- Regular price, optional sale price, and manual sale-active status
 - Currency
 - Delivery estimate
 - Package inclusions
@@ -313,6 +313,9 @@ Categories are administrator-managed database records. This approved starting st
 - Include anticipated payment-processing costs in the displayed product price.
 - Do not add a separate payment-processing surcharge at checkout; provider fees are handled internally through administrator-set pricing.
 - Keep any future legally required tax separate from this fee rule and disclose it only after registration and qualified review.
+- Let administrators enter an optional sale price and manually activate or deactivate it.
+- Do not include automatic sale start or end scheduling in the initial release.
+- When a sale is active, show the sale price prominently with the regular price as a comparison and snapshot the server-validated sale price into new orders.
 
 PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
 
@@ -362,7 +365,7 @@ Only published systems are discoverable in the public catalog. Unlisted systems 
 ### Systems
 
 - Create, edit, preview, publish, unpublish, duplicate, and archive
-- Manage pricing and sale periods
+- Manage pricing and manually activate or deactivate sale prices
 - Upload and order media
 - Upload delivery files
 - Configure delivery method
@@ -763,7 +766,6 @@ A phase is complete only when:
 - Final legal wording and review for the approved no-change-of-mind refund policy
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration is not yet complete; registration, seller identity, invoice, tax, and legal presentation requirements must be confirmed before production commerce
-- Sale-price presentation and scheduling behavior
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary
