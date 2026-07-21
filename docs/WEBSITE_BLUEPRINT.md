@@ -507,6 +507,17 @@ The listed ready-made system price includes:
 
 The listed price does not include customization, rebranding, deployment, hosting, domain or infrastructure costs, data migration, training, ongoing maintenance, or other professional services unless the product page explicitly includes them. These services require a separate scope and quotation. Product pages and checkout must show this boundary before purchase.
 
+### Approved support channels and response target
+
+- Accept support through authenticated customer-portal tickets and `support@websystembuilders.com`.
+- Send an automatic receipt with a ticket or case reference.
+- Target the first human response within two Philippine business days.
+- Define Philippine business days as Monday through Friday in the Asia/Manila timezone, excluding Philippine national public holidays.
+- Treat the response target as an acknowledgement or substantive first reply, not a guaranteed resolution time.
+- Keep tickets submitted during the 30-day support window eligible until that reported case is resolved, even if resolution occurs after the window ends.
+- Preserve ticket messages, timestamps, status, assignment, and resolution history.
+- Configure and verify the domain email before production launch.
+
 Email should normally contain a secure portal or order link rather than the ZIP attachment. Short-lived links are easier to revoke, replace, audit, and support for large files.
 
 ## 13. Authentication and authorization
@@ -747,7 +758,6 @@ A phase is complete only when:
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
 - Final legal wording and review for the approved no-change-of-mind refund policy
-- Support channel and response target
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration, invoice, tax, and legal presentation requirements
 - Tax, invoice, sale, and processing-fee presentation

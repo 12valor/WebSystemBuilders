@@ -390,11 +390,21 @@ The listed price excludes the following unless a product page explicitly include
 
 Excluded services require a separate requirements review, scope, quotation, and acceptance. Product pages and checkout must present inclusions and exclusions before payment.
 
+### Approved support channels and response target
+
+- Customers may request support through authenticated portal tickets or `support@websystembuilders.com`.
+- Every request receives an automatic acknowledgement and case reference.
+- The target for the first human response is within two Philippine business days.
+- A Philippine business day is Monday through Friday in the Asia/Manila timezone, excluding Philippine national public holidays.
+- The target covers the first human acknowledgement or substantive reply, not guaranteed final resolution.
+- A case opened during the 30-day support window remains eligible until that reported case is resolved.
+- Support records must retain messages, timestamps, status, assignment, and resolution history.
+- The domain mailbox and delivery configuration must be verified before production.
+
 ### Product disclosure
 
 Every product page must state the support start event, duration, included tasks, system requirements, purchased version, update entitlement, support channel, and whether customization, hosting, or deployment is separately quoted.
 
-**Owner decisions still required:** Support channel and response target.
 ## 12. Trust and content requirements
 
 Required trust content:
@@ -493,6 +503,7 @@ Targets should be set after baseline production data exists.
 | D-022 | WebSystemBuilders retains original ownership and may continue selling the same non-exclusive systems | Confirmed |
 | D-023 | Free support belongs to the original order and does not transfer to downstream resale customers | Confirmed |
 | D-024 | Listed price includes source package, documentation, and 30-day support; customization and operational services are quoted separately | Confirmed |
+| D-025 | Support uses portal tickets and support@websystembuilders.com with a two-Philippine-business-day first-response target | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -522,6 +533,7 @@ Targets should be set after baseline production data exists.
 - [x] Confirm permanent entitlement, unlimited re-downloads, and one-hour signed URLs
 - [x] Confirm 30-day support and purchased-version update policy
 - [x] Confirm product inclusions and separately quoted customization or operational services
+- [x] Confirm support channels and two-business-day first-response target
 - [ ] Supply or approve initial brand and company content
 - [ ] Confirm legal-review plan for production policies
 
