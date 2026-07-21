@@ -443,7 +443,7 @@ Required trust content:
 
 Content needed from the owner:
 
-- Logo or approval to start with a text wordmark
+- Approved logo assets are maintained in `assets/brand`; company and trust content still require owner input
 - Company description
 - Public team or founder information
 - Business contact information
@@ -531,6 +531,7 @@ Targets should be set after baseline production data exists.
 | D-027 | Business is not currently registered; tax, invoice, and seller disclosures remain pending before production commerce | Confirmed current state |
 | D-028 | Displayed product prices include payment-processing costs; no separate processing surcharge is added at checkout | Confirmed |
 | D-029 | Administrators manually activate and deactivate sale prices; launch does not include sale scheduling | Confirmed |
+| D-030 | Use the approved modular W logo, graphite/off-white base, and restrained cobalt accent | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -565,7 +566,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm 30-day support and purchased-version update policy
 - [x] Confirm product inclusions and separately quoted customization or operational services
 - [x] Confirm support channels and two-business-day first-response target
-- [ ] Supply or approve initial brand and company content
+- [x] Approve the initial logo and brand direction
+- [ ] Supply initial company and trust content
 - [ ] Confirm legal-review plan for production policies
 
 ## 17. Phase 0 exit criteria

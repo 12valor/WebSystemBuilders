@@ -597,6 +597,15 @@ The interface should feel dark, minimal, seamless, premium, and professional. Ap
 
 These are starting values and should be refined during design-system implementation with accessibility checks.
 
+### Approved brand identity
+
+The approved logo uses a continuous modular `W` with one restrained cobalt connecting stroke. It represents separate software components working together as one system. Production-ready SVG marks, horizontal wordmarks, a favicon, and usage guidance are maintained in `assets/brand`.
+
+- Use the off-white and cobalt variant on the primary dark interface.
+- Use the graphite and cobalt variant on light backgrounds.
+- Use Geist for the `WebSystemBuilders` wordmark presentation.
+- Keep the identity flat and restrained; do not add gradients, glow, shadows, bevels, or decorative animation to the logo.
+
 ### Visual rules
 
 - Use large but controlled editorial headings.
@@ -759,7 +768,6 @@ A phase is complete only when:
 
 ## 23. Decisions still requiring owner approval
 
-- Final logo and brand assets
 - Final public copy describing the approved student-service boundary
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
