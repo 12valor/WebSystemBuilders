@@ -576,6 +576,10 @@ The platform must earn trust using real evidence:
 
 Do not use fabricated reviews, customers, statistics, awards, availability, or urgency.
 
+### Approved company presentation
+
+The About page must lead with WebSystemBuilders as the brand, explaining its purpose, audiences, standards, services, and development process. A secondary founder section will identify **AG Evangelista** as **Web Developer**. Until further owner-approved content is provided, do not invent a biography, photograph, credentials, experience, achievements, team size, registered-company status, physical office, or operating history.
+
 ## 16. Design system
 
 ### Direction
