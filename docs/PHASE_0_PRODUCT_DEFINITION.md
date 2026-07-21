@@ -214,7 +214,13 @@ PayMongo's current documentation describes PHP payment acceptance and separately
 - Do not display a registration number, VAT status, tax claim, or official-invoice promise until the owner completes registration and obtains qualified accounting or legal guidance.
 - Keep tax and invoice configuration disabled or clearly marked as pending in non-production environments.
 - Before accepting live payments, confirm the legal seller identity, registration status, provider eligibility, required checkout disclosures, receipt or invoice format, and tax treatment.
-- Sale pricing and payment-processing-fee presentation remain separate product decisions and must not imply an unapproved tax treatment.
+### Confirmed customer-facing price rule
+
+- The displayed product price includes anticipated payment-processing costs.
+- Do not add a separate payment-processing surcharge during checkout.
+- The authoritative checkout price must match the clearly displayed product price, except for a tax or legally required charge that is introduced and disclosed only after registration and qualified review.
+- Provider fees are absorbed into the administrator-set product price and recorded internally rather than presented as a surprise customer fee.
+- Sale-price behavior remains a separate product decision and must not imply an unapproved tax treatment.
 
 This current state does not block interface design or development with test data, but it blocks production commerce until the required business, payment-provider, and compliance details are confirmed.
 ## 8. Checkout and delivery
@@ -515,6 +521,7 @@ Targets should be set after baseline production data exists.
 | D-025 | Support uses portal tickets and support@websystembuilders.com with a two-Philippine-business-day first-response target | Confirmed |
 | D-026 | Owner selects, prepares, uploads, prices, and publishes the actual launch systems through admin | Confirmed responsibility |
 | D-027 | Business is not currently registered; tax, invoice, and seller disclosures remain pending before production commerce | Confirmed current state |
+| D-028 | Displayed product prices include payment-processing costs; no separate processing surcharge is added at checkout | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -535,7 +542,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm PHP base pricing and actual settlement policy
 - [x] Record that the business is not currently registered
 - [ ] Complete business registration and confirm tax and invoice requirements before production commerce
-- [ ] Confirm sale and payment-processing-fee presentation
+- [x] Include payment-processing costs in the displayed product price
+- [ ] Confirm sale-price presentation and scheduling behavior
 - [x] Select PayMongo as the initial payment provider
 - [ ] Create and verify the PayMongo merchant account
 - [ ] Activate required PayMongo payment methods and production webhooks

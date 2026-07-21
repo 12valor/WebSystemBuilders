@@ -310,6 +310,9 @@ Categories are administrator-managed database records. This approved starting st
 - Display the actual charge currency and final amount before payment.
 - Preserve base price, exchange-rate context, displayed estimate, and actual charged amount and currency on the order.
 - Never use a browser-calculated conversion as the authoritative checkout amount.
+- Include anticipated payment-processing costs in the displayed product price.
+- Do not add a separate payment-processing surcharge at checkout; provider fees are handled internally through administrator-set pricing.
+- Keep any future legally required tax separate from this fee rule and disclose it only after registration and qualified review.
 
 PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
 
@@ -760,7 +763,7 @@ A phase is complete only when:
 - Final legal wording and review for the approved no-change-of-mind refund policy
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
 - Business registration is not yet complete; registration, seller identity, invoice, tax, and legal presentation requirements must be confirmed before production commerce
-- Sale and payment-processing-fee presentation
+- Sale-price presentation and scheduling behavior
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary
