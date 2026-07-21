@@ -759,8 +759,8 @@ A phase is complete only when:
 - Third-party dependency and asset license audit
 - Final legal wording and review for the approved no-change-of-mind refund policy
 - Complete PayMongo merchant onboarding and activate required payment methods before production checkout
-- Business registration, invoice, tax, and legal presentation requirements
-- Tax, invoice, sale, and processing-fee presentation
+- Business registration is not yet complete; registration, seller identity, invoice, tax, and legal presentation requirements must be confirmed before production commerce
+- Sale and payment-processing-fee presentation
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary

@@ -208,7 +208,15 @@ The server is authoritative for checkout prices. Orders preserve the purchased n
 
 PayMongo's current documentation describes PHP payment acceptance and separately activated USD card acceptance. It does not establish arbitrary local-currency charging for every visitor country. Therefore, automatic localization and actual settlement currency must remain separate concepts.
 
-**Owner decisions still required:** Define taxes and invoices, approve sale behavior, and determine treatment of payment-processing fees.
+### Current registration and tax state
+
+- The owner has confirmed that the business is not currently registered.
+- Do not display a registration number, VAT status, tax claim, or official-invoice promise until the owner completes registration and obtains qualified accounting or legal guidance.
+- Keep tax and invoice configuration disabled or clearly marked as pending in non-production environments.
+- Before accepting live payments, confirm the legal seller identity, registration status, provider eligibility, required checkout disclosures, receipt or invoice format, and tax treatment.
+- Sale pricing and payment-processing-fee presentation remain separate product decisions and must not imply an unapproved tax treatment.
+
+This current state does not block interface design or development with test data, but it blocks production commerce until the required business, payment-provider, and compliance details are confirmed.
 ## 8. Checkout and delivery
 
 ### Confirmed workflow
@@ -466,6 +474,7 @@ Targets should be set after baseline production data exists.
 | Dependency or risk | Required treatment |
 |---|---|
 | PayMongo onboarding | Owner will complete later; required before production checkout, live credentials, and payment-method activation |
+| Business registration and tax setup | Business is not currently registered; complete registration and obtain qualified guidance before production commerce |
 | Legal policies | Obtain qualified review before publishing production terms |
 | Missing product content | Owner selects and uploads actual systems; admin publishing validation enforces minimum content before production |
 | Large or unsafe ZIP files | Private storage, upload restrictions, and production scanning plan |
@@ -505,6 +514,7 @@ Targets should be set after baseline production data exists.
 | D-024 | Listed price includes source package, documentation, and 30-day support; customization and operational services are quoted separately | Confirmed |
 | D-025 | Support uses portal tickets and support@websystembuilders.com with a two-Philippine-business-day first-response target | Confirmed |
 | D-026 | Owner selects, prepares, uploads, prices, and publishes the actual launch systems through admin | Confirmed responsibility |
+| D-027 | Business is not currently registered; tax, invoice, and seller disclosures remain pending before production commerce | Confirmed current state |
 
 ## 16. Owner approval checklist
 
@@ -523,7 +533,9 @@ Targets should be set after baseline production data exists.
 - [x] Confirm fixed or starting prices for ready-made systems
 - [x] Confirm automatic localized currency display with manual override
 - [x] Confirm PHP base pricing and actual settlement policy
-- [ ] Confirm tax, invoice, sale, and processing-fee presentation
+- [x] Record that the business is not currently registered
+- [ ] Complete business registration and confirm tax and invoice requirements before production commerce
+- [ ] Confirm sale and payment-processing-fee presentation
 - [x] Select PayMongo as the initial payment provider
 - [ ] Create and verify the PayMongo merchant account
 - [ ] Activate required PayMongo payment methods and production webhooks
