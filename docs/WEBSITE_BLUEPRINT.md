@@ -578,7 +578,7 @@ Do not use fabricated reviews, customers, statistics, awards, availability, or u
 
 ### Approved company presentation
 
-The About page must lead with WebSystemBuilders as the brand, explaining its purpose, audiences, standards, services, and development process. A secondary founder section will identify **AG Evangelista** as **Web Developer**. Until further owner-approved content is provided, do not invent a photograph, credentials, experience duration, education, awards, client claims, team size, registered-company status, physical office, or operating history.
+The About page must lead with WebSystemBuilders as the brand, explaining its purpose, audiences, standards, services, and development process. A secondary founder section will identify **AG Evangelista** as **Web Developer**. It will intentionally launch without a founder photograph, using a clean typographic presentation of the approved name, title, and biography. Do not use a placeholder portrait that implies the founder's likeness, and do not invent credentials, experience duration, education, awards, client claims, team size, registered-company status, physical office, or operating history.
 
 Approved short founder biography:
 

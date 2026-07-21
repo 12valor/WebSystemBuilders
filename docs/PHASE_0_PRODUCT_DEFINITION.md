@@ -446,7 +446,9 @@ Required trust content:
 - Lead with WebSystemBuilders as the brand: its purpose, audiences, standards, services, and development process.
 - Introduce the owner in a secondary founder section after the brand story.
 - Display the confirmed public identity as **AG Evangelista — Web Developer**.
-- Do not invent the founder's biography, photograph, credentials, experience, or achievements.
+- Launch without a founder photograph; use a clean typographic presentation of the approved name, title, and biography.
+- Do not create a placeholder portrait or avatar that implies the founder's likeness.
+- Do not invent credentials, experience, achievements, or other personal claims.
 - Do not imply a larger team, registered-company status, physical office, or operating history unless the owner supplies accurate information for publication.
 
 ### Approved short company description
@@ -464,7 +466,6 @@ Use this biography in the secondary founder section. Do not add credentials, exp
 Content needed from the owner:
 
 - Approved logo assets are maintained in `assets/brand`; remaining company and trust content still require owner input
-- Optional founder photograph; public identity and short biography are confirmed
 - Business contact information
 - Professional email addresses
 - Social links
@@ -555,6 +556,7 @@ Targets should be set after baseline production data exists.
 | D-032 | Display AG Evangelista as the founder with the title Web Developer | Confirmed |
 | D-033 | Use the approved short company description for public brand summaries | Confirmed |
 | D-034 | Use the approved short biography for AG Evangelista in the secondary founder section | Confirmed |
+| D-035 | Launch the founder section without a photograph using a typographic presentation | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -594,7 +596,8 @@ Targets should be set after baseline production data exists.
 - [x] Confirm founder public name and title: AG Evangelista, Web Developer
 - [x] Approve the short company description
 - [x] Approve the short founder biography
-- [ ] Supply an optional founder photo and remaining trust content
+- [x] Launch the founder section without a photograph
+- [ ] Supply remaining business contact and trust content
 - [ ] Confirm legal-review plan for production policies
 
 ## 17. Phase 0 exit criteria
