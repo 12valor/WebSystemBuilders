@@ -449,11 +449,22 @@ Required trust content:
 - Do not invent the founder's biography, photograph, credentials, experience, or achievements.
 - Do not imply a larger team, registered-company status, physical office, or operating history unless the owner supplies accurate information for publication.
 
+### Approved short company description
+
+> WebSystemBuilders helps students and business owners access ready-made software systems and request custom development through one professional platform.
+
+Use this sentence as the canonical short description for metadata, About-page introduction, and compact brand summaries. Longer copy may expand on confirmed services and standards but must not add unverified claims.
+
+### Approved short founder biography
+
+> AG Evangelista is the founder of WebSystemBuilders and a web developer focused on creating practical software solutions for students and business owners.
+
+Use this biography in the secondary founder section. Do not add credentials, experience duration, client claims, awards, education, achievements, or other personal details without owner approval.
+
 Content needed from the owner:
 
 - Approved logo assets are maintained in `assets/brand`; remaining company and trust content still require owner input
-- Company description
-- Founder biography and optional photograph; public name and title are confirmed as AG Evangelista, Web Developer
+- Optional founder photograph; public identity and short biography are confirmed
 - Business contact information
 - Professional email addresses
 - Social links
@@ -542,6 +553,8 @@ Targets should be set after baseline production data exists.
 | D-030 | Use the approved modular W logo, graphite/off-white base, and restrained cobalt accent | Confirmed |
 | D-031 | Present WebSystemBuilders first on the About page, followed by a secondary founder section | Confirmed |
 | D-032 | Display AG Evangelista as the founder with the title Web Developer | Confirmed |
+| D-033 | Use the approved short company description for public brand summaries | Confirmed |
+| D-034 | Use the approved short biography for AG Evangelista in the secondary founder section | Confirmed |
 
 ## 16. Owner approval checklist
 
@@ -579,7 +592,9 @@ Targets should be set after baseline production data exists.
 - [x] Approve the initial logo and brand direction
 - [x] Confirm brand-first About-page hierarchy with a secondary founder section
 - [x] Confirm founder public name and title: AG Evangelista, Web Developer
-- [ ] Supply founder biography, optional photo, company description, and remaining trust content
+- [x] Approve the short company description
+- [x] Approve the short founder biography
+- [ ] Supply an optional founder photo and remaining trust content
 - [ ] Confirm legal-review plan for production policies
 
 ## 17. Phase 0 exit criteria

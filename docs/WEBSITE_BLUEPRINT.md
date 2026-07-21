@@ -578,7 +578,17 @@ Do not use fabricated reviews, customers, statistics, awards, availability, or u
 
 ### Approved company presentation
 
-The About page must lead with WebSystemBuilders as the brand, explaining its purpose, audiences, standards, services, and development process. A secondary founder section will identify **AG Evangelista** as **Web Developer**. Until further owner-approved content is provided, do not invent a biography, photograph, credentials, experience, achievements, team size, registered-company status, physical office, or operating history.
+The About page must lead with WebSystemBuilders as the brand, explaining its purpose, audiences, standards, services, and development process. A secondary founder section will identify **AG Evangelista** as **Web Developer**. Until further owner-approved content is provided, do not invent a photograph, credentials, experience duration, education, awards, client claims, team size, registered-company status, physical office, or operating history.
+
+Approved short founder biography:
+
+> AG Evangelista is the founder of WebSystemBuilders and a web developer focused on creating practical software solutions for students and business owners.
+
+Approved short company description:
+
+> WebSystemBuilders helps students and business owners access ready-made software systems and request custom development through one professional platform.
+
+Use this as the canonical short brand summary. Longer copy may expand only on confirmed product scope, services, standards, and processes.
 
 ## 16. Design system
 
