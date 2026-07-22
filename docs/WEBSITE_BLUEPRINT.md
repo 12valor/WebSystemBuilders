@@ -735,7 +735,7 @@ Critical smoke journeys:
 
 The complete initial release, including customer accounts and the customer portal, is expected to take approximately 8–10 weeks for one primary developer or coding-agent workflow. This range is a planning estimate rather than a delivery guarantee and depends on owner approvals, content readiness, provider onboarding, and testing outcomes.
 
-The active Phase 0 definition, confirmed decisions, proposed defaults, and approval checklist are maintained in [`PHASE_0_PRODUCT_DEFINITION.md`](PHASE_0_PRODUCT_DEFINITION.md).
+Phase 0 decisions and deferred production gates are maintained in [`PHASE_0_PRODUCT_DEFINITION.md`](PHASE_0_PRODUCT_DEFINITION.md). The active Phase 1 tokens, component rules, responsive wireframes, and exit criteria are maintained in [`PHASE_1_DESIGN_FOUNDATION.md`](PHASE_1_DESIGN_FOUNDATION.md).
 ## 21. Phase exit criteria
 
 A phase is complete only when:

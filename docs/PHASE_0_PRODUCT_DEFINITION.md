@@ -2,10 +2,12 @@
 
 ## Status
 
-**Active phase:** Phase 0 — Product definition
+**Status:** Complete for design progression
 **Started:** July 20, 2026
-**Target output:** An approved product scope, sitemap, product model, commercial rules, delivery rules, and readiness decision for Phase 1.
+**Completed:** July 22, 2026
+**Target output:** Approved product scope, sitemap, product model, commercial rules, delivery rules, and readiness decision for Phase 1.
 
+Unchecked production dependencies remain mandatory before live commerce or launch. They do not block Phase 1 design or Phase 2 test-environment implementation.
 This document separates confirmed owner decisions from proposed defaults and unresolved decisions. A proposal is not an approved business policy until the owner confirms it.
 
 ## 1. Objective
@@ -614,4 +616,4 @@ Phase 0 is complete when:
 
 ## 18. Next action
 
-Review and resolve the unchecked approval items. Once decisions that affect page structure and product presentation are confirmed, Phase 1 can begin with the design system, responsive wireframes, and content hierarchy.
+Phase 1 is active. Continue in [`PHASE_1_DESIGN_FOUNDATION.md`](PHASE_1_DESIGN_FOUNDATION.md) with high-fidelity homepage direction, responsive validation, and owner approval. Keep unchecked items in this document as production gates.
