@@ -1,0 +1,9 @@
+import type { Metadata } from "next";
+import { AdminShell } from "@/components/admin/admin-shell";
+import { AdminSystemsList } from "@/components/admin/admin-systems-list";
+
+export const metadata: Metadata = { title: "Admin systems preview", robots: { index: false, follow: false } };
+
+export default function AdminSystemsPage() {
+  return <AdminShell><AdminSystemsList /></AdminShell>;
+}

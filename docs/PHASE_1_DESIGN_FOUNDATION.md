@@ -376,7 +376,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Create the responsive high-fidelity homepage in [`../src/app/page.tsx`](../src/app/page.tsx) with reusable React components
 - [x] Create high-fidelity catalog and system-detail direction in [`../src/app/systems/page.tsx`](../src/app/systems/page.tsx) and [`../src/app/systems/preview/page.tsx`](../src/app/systems/preview/page.tsx)
 - [x] Create high-fidelity checkout direction in [`../src/app/checkout/preview/page.tsx`](../src/app/checkout/preview/page.tsx)
-- [ ] Create high-fidelity admin direction
+- [x] Create high-fidelity admin direction in [`../src/app/admin/systems/page.tsx`](../src/app/admin/systems/page.tsx) and [`../src/app/admin/systems/new/page.tsx`](../src/app/admin/systems/new/page.tsx)
 - [x] Verify the homepage at 360px, 390px, 768px, 1024px, 1280px, and 1440px
 - [ ] Verify contrast, focus, and reduced-motion behavior in an interactive prototype or Phase 2 implementation
 - [ ] Obtain owner approval for the final Phase 1 direction
@@ -394,4 +394,4 @@ Phase 1 is complete when:
 
 ## 16. Next action
 
-Review the non-transactional checkout direction at `http://localhost:3000/checkout/preview`. After approval, extend the shared design system to the admin systems list and editor direction.
+Review the admin systems list at `http://localhost:3000/admin/systems` and the non-persistent editor at `http://localhost:3000/admin/systems/new`. After approval, complete contrast, keyboard-focus, and reduced-motion verification before final Phase 1 approval.
