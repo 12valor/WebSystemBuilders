@@ -1,6 +1,17 @@
 # WebSystemBuilders
 
-WebSystemBuilders is a planned marketplace and custom-development platform for students and business owners.
+WebSystemBuilders is a marketplace and custom-development platform for students and business owners.
+
+## Application
+
+The active frontend uses Next.js App Router, React, TypeScript, and Tailwind CSS.
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
 
 ## Project documentation
 
@@ -8,6 +19,6 @@ WebSystemBuilders is a planned marketplace and custom-development platform for s
 - [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) — approved product decisions and production gates
 - [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) — active design foundation and responsive wireframes
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) — approved logo and brand usage
-- [design/phase-1/homepage/homepage.html](design/phase-1/homepage/homepage.html) — responsive high-fidelity homepage concept
+- [`src/app/page.tsx`](src/app/page.tsx) — responsive React homepage composition
 
 **Current phase:** Phase 1 — Design foundation

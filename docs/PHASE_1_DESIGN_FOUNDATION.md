@@ -8,6 +8,8 @@
 
 Phase 0 is complete for design progression. Business registration, legal review, PayMongo activation, actual system uploads, and final production content remain required production gates; they do not authorize placeholder claims or live commerce during design work.
 
+**Implementation note:** At the owner's request, the homepage concept is implemented directly in the required Next.js, React, TypeScript, and Tailwind stack. This starts the minimal application scaffold early without adding Phase 2 database, authentication, payment, or email integrations.
+
 ## 1. Objective
 
 Create a cohesive interface foundation for the public website, catalog, checkout, customer portal, and admin dashboard before application scaffolding begins. The design must feel dark, minimal, seamless, modern, and professional while remaining accessible and practical on mobile devices.
@@ -371,11 +373,11 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Define public content hierarchy
 - [x] Create structural responsive wireframes for primary surfaces
 - [x] Define required loading, empty, failure, and success states
-- [x] Create high-fidelity homepage direction in [`../design/phase-1/homepage/homepage.html`](../design/phase-1/homepage/homepage.html)
+- [x] Create the responsive high-fidelity homepage in [`../src/app/page.tsx`](../src/app/page.tsx) with reusable React components
 - [ ] Create high-fidelity catalog and system-detail direction
 - [ ] Create high-fidelity checkout direction
 - [ ] Create high-fidelity admin direction
-- [ ] Verify high-fidelity work at 360px, 390px, 768px, 1024px, 1280px, and 1440px
+- [x] Verify the homepage at 360px, 390px, 768px, 1024px, 1280px, and 1440px
 - [ ] Verify contrast, focus, and reduced-motion behavior in an interactive prototype or Phase 2 implementation
 - [ ] Obtain owner approval for the final Phase 1 direction
 
@@ -392,4 +394,4 @@ Phase 1 is complete when:
 
 ## 16. Next action
 
-Review and approve the responsive high-fidelity homepage concept in [`../design/phase-1/homepage/homepage.html`](../design/phase-1/homepage/homepage.html). After approval, extend its visual language to the catalog and system-detail direction.
+Review the live Next.js homepage at `http://localhost:3000`. After approval, extend its visual language to the catalog and system-detail direction.
