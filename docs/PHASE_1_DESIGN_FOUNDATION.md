@@ -60,7 +60,7 @@ These tokens are design inputs. Phase 2 must implement them as semantic CSS vari
 | `surface-subtle` | `#0D0E10` | Quiet section alternation |
 | `text-primary` | `#F5F5F7` | Headings and primary content |
 | `text-secondary` | `#A1A1AA` | Supporting content |
-| `text-muted` | `#71717A` | Metadata and disabled context |
+| `text-muted` | `#85858F` | Metadata and disabled context; AA contrast on dark surfaces |
 | `border` | `rgba(255,255,255,0.09)` | Standard separation |
 | `border-strong` | `rgba(255,255,255,0.16)` | Active or emphasized separation |
 | `accent` | `#3B82F6` | Links, selected states, focused brand moments |
@@ -363,6 +363,13 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - Reduced-motion preferences are honored.
 - Contrast is tested on rendered components before approval.
 
+### Phase 1 verification - July 24, 2026
+
+- Raised `text-muted` to `#85858F`; it now reaches at least `4.86:1` on the darkest raised interface surface and exceeds `5:1` on the main background and standard surface.
+- Audited rendered text contrast on the homepage, systems catalog, system detail, checkout, admin systems list, and admin editor. No non-disabled text failures remain.
+- Verified visible `2px` cobalt keyboard-focus outlines on public, checkout, and admin controls, including the skip links.
+- Verified the compiled `prefers-reduced-motion: reduce` rule removes smooth scrolling and reduces transition and animation duration to `0.01ms`.
+
 ## 14. Phase 1 deliverables
 
 - [x] Approve initial brand identity and variants
@@ -378,7 +385,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Create high-fidelity checkout direction in [`../src/app/checkout/preview/page.tsx`](../src/app/checkout/preview/page.tsx)
 - [x] Create high-fidelity admin direction in [`../src/app/admin/systems/page.tsx`](../src/app/admin/systems/page.tsx) and [`../src/app/admin/systems/new/page.tsx`](../src/app/admin/systems/new/page.tsx)
 - [x] Verify the homepage at 360px, 390px, 768px, 1024px, 1280px, and 1440px
-- [ ] Verify contrast, focus, and reduced-motion behavior in an interactive prototype or Phase 2 implementation
+- [x] Verify contrast, focus, and reduced-motion behavior in the interactive Next.js prototype
 - [ ] Obtain owner approval for the final Phase 1 direction
 
 ## 15. Phase 1 exit criteria
@@ -394,4 +401,4 @@ Phase 1 is complete when:
 
 ## 16. Next action
 
-Review the admin systems list at `http://localhost:3000/admin/systems` and the non-persistent editor at `http://localhost:3000/admin/systems/new`. After approval, complete contrast, keyboard-focus, and reduced-motion verification before final Phase 1 approval.
+Review the complete live Phase 1 direction and explicitly approve it. After owner approval, begin Phase 2 technical foundation work while preserving the outstanding production gates in Phase 0.
