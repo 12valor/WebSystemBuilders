@@ -12,7 +12,7 @@ export function HeroSection() {
           <h1 className="max-w-[780px] text-[clamp(3rem,8vw,6rem)] font-semibold leading-[0.96] tracking-[-0.065em] text-foreground">Software systems for your next step.</h1>
           <p className="mt-7 max-w-[650px] text-[1.05rem] leading-7 text-secondary sm:text-lg sm:leading-8">Explore practical systems for school and business, or work with us to build one around your exact requirements.</p>
           <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap">
-            <Link href="#systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">Browse systems <span aria-hidden="true">↗</span></Link>
+            <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">Browse systems <span aria-hidden="true">↗</span></Link>
             <Link href="#custom" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 bg-surface px-6 font-semibold transition-colors hover:bg-surface-raised">Request a custom system</Link>
           </div>
           <div className="mt-11 grid gap-3 sm:mt-14 sm:grid-cols-2" aria-label="Choose an audience">

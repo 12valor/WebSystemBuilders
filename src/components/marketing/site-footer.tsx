@@ -2,8 +2,8 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
 
 const footerGroups = [
-  { title: "Explore", links: [["Systems", "#systems"], ["For students", "#students"], ["For business", "#businesses"], ["Custom development", "#custom"]] },
-  { title: "Company", links: [["About", "#about"], ["Process", "#process"], ["Contact", "#contact"], ["Account", "/account"]] },
+  { title: "Explore", links: [["Systems", "/systems"], ["For students", "/#students"], ["For business", "/#businesses"], ["Custom development", "/#custom"]] },
+  { title: "Company", links: [["About", "/#about"], ["Process", "/#process"], ["Contact", "/#contact"], ["Account", "/account"]] },
   { title: "Policies", links: [["Delivery", "/legal/delivery"], ["License", "/legal/license"], ["Refunds", "/legal/refunds"], ["Privacy", "/legal/privacy"]] },
 ];
 

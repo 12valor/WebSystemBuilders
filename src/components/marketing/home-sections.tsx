@@ -61,7 +61,7 @@ export function AudienceSection() {
               <div className="flex justify-between text-xs uppercase tracking-[0.1em] text-muted"><span>{audience.label}</span><b className="font-medium">{String(index + 1).padStart(2, "0")}</b></div>
               <h3 className="mb-8 mt-12 max-w-xl text-[clamp(1.65rem,3vw,2rem)] font-semibold leading-[1.16] tracking-[-0.045em] sm:mt-16">{audience.title}</h3>
               <ul className="mb-9 grid gap-3 text-secondary">{audience.items.map((item) => <li key={item} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand-hover">{item}</li>)}</ul>
-              <Link href="#systems" className="mt-auto text-sm font-semibold">{audience.action} →</Link>
+              <Link href="/systems" className="mt-auto text-sm font-semibold">{audience.action} →</Link>
             </article>
           ))}
         </div>
@@ -103,7 +103,7 @@ export function FinalCallToAction() {
       <div className="mx-auto flex max-w-[1280px] flex-col items-start gap-10 rounded-2xl border border-white/15 bg-surface p-6 sm:p-12 lg:flex-row lg:items-end lg:justify-between lg:p-16">
         <div><SectionEyebrow>Start with what you need</SectionEyebrow><h2 className="max-w-3xl text-[clamp(2.35rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">Ready to find or build your system?</h2></div>
         <div className="grid w-full shrink-0 gap-2.5 sm:flex lg:w-auto">
-          <Link href="#systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a]">Browse systems <span aria-hidden="true">↗</span></Link>
+          <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a]">Browse systems <span aria-hidden="true">↗</span></Link>
           <Link href="#custom" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
         </div>
       </div>

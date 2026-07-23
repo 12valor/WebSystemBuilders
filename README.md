@@ -20,5 +20,7 @@ Open `http://localhost:3000`.
 - [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) — active design foundation and responsive wireframes
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) — approved logo and brand usage
 - [`src/app/page.tsx`](src/app/page.tsx) — responsive React homepage composition
+- [`src/app/systems/page.tsx`](src/app/systems/page.tsx) - interactive catalog direction and honest empty state
+- [`src/app/systems/preview/page.tsx`](src/app/systems/preview/page.tsx) - non-purchasable system detail direction
 
 **Current phase:** Phase 1 — Design foundation

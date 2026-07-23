@@ -374,7 +374,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Create structural responsive wireframes for primary surfaces
 - [x] Define required loading, empty, failure, and success states
 - [x] Create the responsive high-fidelity homepage in [`../src/app/page.tsx`](../src/app/page.tsx) with reusable React components
-- [ ] Create high-fidelity catalog and system-detail direction
+- [x] Create high-fidelity catalog and system-detail direction in [`../src/app/systems/page.tsx`](../src/app/systems/page.tsx) and [`../src/app/systems/preview/page.tsx`](../src/app/systems/preview/page.tsx)
 - [ ] Create high-fidelity checkout direction
 - [ ] Create high-fidelity admin direction
 - [x] Verify the homepage at 360px, 390px, 768px, 1024px, 1280px, and 1440px
@@ -394,4 +394,4 @@ Phase 1 is complete when:
 
 ## 16. Next action
 
-Review the live Next.js homepage at `http://localhost:3000`. After approval, extend its visual language to the catalog and system-detail direction.
+Review the live catalog at `http://localhost:3000/systems` and its non-purchasable system-detail layout preview at `http://localhost:3000/systems/preview`. After approval, extend the visual language to the checkout direction.

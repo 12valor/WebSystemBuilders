@@ -5,11 +5,11 @@ import { useState } from "react";
 import { BrandLogo } from "@/components/brand/brand-logo";
 
 const navigation = [
-  { label: "Systems", href: "#systems" },
-  { label: "For students", href: "#students" },
-  { label: "For business", href: "#businesses" },
-  { label: "Custom development", href: "#custom" },
-  { label: "Process", href: "#process" },
+  { label: "Systems", href: "/systems" },
+  { label: "For students", href: "/#students" },
+  { label: "For business", href: "/#businesses" },
+  { label: "Custom development", href: "/#custom" },
+  { label: "Process", href: "/#process" },
 ];
 
 export function SiteHeader() {
@@ -18,7 +18,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#08090a]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[74px] w-[min(calc(100%-40px),1280px)] items-center gap-8 md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
-        <Link href="#top" aria-label="WebSystemBuilders home" className="shrink-0 rounded-sm">
+        <Link href="/" aria-label="WebSystemBuilders home" className="shrink-0 rounded-sm">
           <BrandLogo priority className="h-auto w-[184px] sm:w-[214px]" />
         </Link>
 
@@ -33,7 +33,7 @@ export function SiteHeader() {
         <div className="ml-auto hidden items-center gap-4 xl:flex">
           <span className="text-sm font-medium text-secondary" aria-label="Display currency: Philippine peso">PHP</span>
           <Link href="/account" className="text-sm font-medium text-secondary transition-colors hover:text-foreground">Account</Link>
-          <Link href="#custom" className="inline-flex min-h-10 items-center justify-center rounded-[10px] bg-foreground px-4 text-sm font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">
+          <Link href="/#contact" className="inline-flex min-h-10 items-center justify-center rounded-[10px] bg-foreground px-4 text-sm font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">
             Request a quote
           </Link>
         </div>
@@ -58,9 +58,9 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="#about" onClick={() => setIsOpen(false)} className="border-b border-white/10 px-1 py-3 text-secondary">About</Link>
+          <Link href="/#about" onClick={() => setIsOpen(false)} className="border-b border-white/10 px-1 py-3 text-secondary">About</Link>
           <Link href="/account" onClick={() => setIsOpen(false)} className="border-b border-white/10 px-1 py-3 text-secondary">Account</Link>
-          <Link href="#custom" onClick={() => setIsOpen(false)} className="mt-3 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-5 font-semibold text-[#08090a]">Request a quote</Link>
+          <Link href="/#contact" onClick={() => setIsOpen(false)} className="mt-3 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-5 font-semibold text-[#08090a]">Request a quote</Link>
         </div>
       </nav>
     </header>
