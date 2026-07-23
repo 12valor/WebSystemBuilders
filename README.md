@@ -8,5 +8,6 @@ WebSystemBuilders is a planned marketplace and custom-development platform for s
 - [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) — approved product decisions and production gates
 - [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) — active design foundation and responsive wireframes
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) — approved logo and brand usage
+- [design/phase-1/homepage/homepage.html](design/phase-1/homepage/homepage.html) — responsive high-fidelity homepage concept
 
 **Current phase:** Phase 1 — Design foundation

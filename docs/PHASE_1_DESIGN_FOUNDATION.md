@@ -371,7 +371,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Define public content hierarchy
 - [x] Create structural responsive wireframes for primary surfaces
 - [x] Define required loading, empty, failure, and success states
-- [ ] Create high-fidelity homepage direction
+- [x] Create high-fidelity homepage direction in [`../design/phase-1/homepage/homepage.html`](../design/phase-1/homepage/homepage.html)
 - [ ] Create high-fidelity catalog and system-detail direction
 - [ ] Create high-fidelity checkout direction
 - [ ] Create high-fidelity admin direction
@@ -392,4 +392,4 @@ Phase 1 is complete when:
 
 ## 16. Next action
 
-Create the high-fidelity homepage direction first using the approved logo, tokens, content hierarchy, and responsive homepage wireframe. Validate desktop and mobile compositions before extending the visual language to catalog, checkout, customer, and admin surfaces.
+Review and approve the responsive high-fidelity homepage concept in [`../design/phase-1/homepage/homepage.html`](../design/phase-1/homepage/homepage.html). After approval, extend its visual language to the catalog and system-detail direction.
