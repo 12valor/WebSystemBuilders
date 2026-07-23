@@ -34,6 +34,7 @@ export function SystemDetailPreview() {
                 <p className="mt-2 text-sm text-secondary">Localized estimates and the PHP settlement amount will appear here.</p>
               </div>
               <button type="button" disabled className="mt-6 inline-flex min-h-13 w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-white/10 px-6 font-semibold text-muted">Purchase unavailable in preview</button>
+              <Link href="/checkout/preview" className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] border border-white/15 px-6 text-sm font-semibold text-secondary hover:text-foreground">Review checkout layout</Link>
               <dl className="mt-7 grid gap-4 text-sm">
                 <TrustRow term="Delivery" detail="Protected access after verified payment" />
                 <TrustRow term="License" detail="Commercial source license summary" />

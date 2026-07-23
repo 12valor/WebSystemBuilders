@@ -22,5 +22,6 @@ Open `http://localhost:3000`.
 - [`src/app/page.tsx`](src/app/page.tsx) — responsive React homepage composition
 - [`src/app/systems/page.tsx`](src/app/systems/page.tsx) - interactive catalog direction and honest empty state
 - [`src/app/systems/preview/page.tsx`](src/app/systems/preview/page.tsx) - non-purchasable system detail direction
+- [`src/app/checkout/preview/page.tsx`](src/app/checkout/preview/page.tsx) - non-transactional checkout direction
 
 **Current phase:** Phase 1 — Design foundation
