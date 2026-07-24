@@ -28,6 +28,9 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 - Validated public and server-only environment boundaries.
 - Separate Supabase browser, server-cookie, and service-role clients.
 - Verified-user authentication helper using Supabase Auth.
+- Passwordless email sign-in UI, sanitized callback redirects, and a code-exchange route.
+- Next.js session-refresh proxy using verified JWT claims.
+- Server-side administrator layout protection with a fail-closed production state.
 - Administrator and super-administrator role hierarchy.
 - Initial identity and catalog migration with RLS-first access policies.
 - Administrator-managed launch categories seeded from the approved Phase 0 structure.
@@ -54,6 +57,8 @@ Orders, payments, fulfillment, emails, downloads, inquiries, and support receive
 - Browser code receives only the Supabase project URL and publishable key.
 - The service-role key is imported through a server-only module.
 - Protected application operations must call server authorization helpers.
+- Proxy refreshes authentication cookies but never replaces server or RLS authorization.
+- Authentication redirects accept internal application paths only.
 - RLS remains the database enforcement layer for exposed tables.
 - Public users may read only active categories and published catalog records.
 - Routine administrators may manage catalog data.
@@ -67,6 +72,7 @@ The owner has not created the Supabase, PayMongo, or Resend production configura
 
 - Create separate Supabase development and production projects.
 - Copy the Supabase URL and publishable key into local/host environment settings.
+- Set the canonical SITE_URL and allow its /auth/callback URL in Supabase Auth redirects.
 - Keep the service-role key in server-only secret storage.
 - Link the Supabase CLI and apply migrations.
 - Generate database types after the migration is applied.
@@ -89,8 +95,8 @@ Never commit real credentials. Use [`.env.example`](../.env.example) only as a k
 - [x] Add focused environment, role, and migration-contract tests
 - [ ] Create and link Supabase development and production projects
 - [ ] Apply the migration and generate database types
-- [ ] Add session-refresh proxy and authentication pages
-- [ ] Protect administrator routes on the server
+- [x] Add session-refresh proxy and authentication pages
+- [x] Protect administrator routes on the server
 - [ ] Replace preview catalog data with repository-backed queries
 - [ ] Connect the admin catalog forms to validated server mutations
 - [ ] Create private Storage buckets and object policies
@@ -113,4 +119,4 @@ Phase 2 is complete when:
 
 ## 8. Next action
 
-Create the Supabase development project and add its local credentials. Then link the project, apply the initial migration, generate types, and implement the authenticated admin session flow.
+Create the Supabase development project, configure its allowed callback URL, and add local credentials. Then apply the migration, generate database types, bootstrap the first super administrator through a trusted workflow, and run live authentication/RLS integration tests.

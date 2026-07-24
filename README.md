@@ -14,6 +14,8 @@ npm run dev
 
 Open `http://localhost:3000`. Supabase clients load configuration only when a database-backed feature calls them, so the Phase 1 previews can still build before local credentials are added.
 
+The email sign-in interface is available at /auth/sign-in. Without Supabase credentials it shows an explicit unavailable state and sends no email. Local development keeps the approved admin preview visible; a production environment without authentication configuration keeps /admin closed.
+
 ## Checks
 
 ```bash
@@ -31,6 +33,7 @@ npm run build
 - [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) - active technical foundation, schema boundary, and setup gates
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) - approved logo and brand usage
 - [`supabase/migrations`](supabase/migrations) - versioned database changes
-- [src/app/account/page.tsx](src/app/account/page.tsx) - non-persistent customer account direction
+- [src/app/account/page.tsx](src/app/account/page.tsx) - configuration-aware customer account direction
+- [src/app/auth/sign-in/page.tsx](src/app/auth/sign-in/page.tsx) - passwordless email sign-in interface
 
 **Current phase:** Phase 2 - Technical foundation

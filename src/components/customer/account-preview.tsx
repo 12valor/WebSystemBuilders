@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
+import { signOut } from "@/features/auth/actions";
 
 const accountNavigation = [
   ["Overview", "#overview"],
@@ -8,7 +9,14 @@ const accountNavigation = [
   ["Support", "#support"],
 ] as const;
 
-export function AccountPreview() {
+type AccountPreviewProps = {
+  authState: "unconfigured" | "signed_out" | "signed_in";
+  customerEmail?: string;
+};
+
+export function AccountPreview({ authState, customerEmail }: AccountPreviewProps) {
+  const signedIn = authState === "signed_in";
+
   return (
     <div className="min-h-screen bg-background">
       <a href="#account-content" className="fixed left-4 top-3 z-[100] -translate-y-24 bg-white px-3 py-2 text-sm font-semibold text-black transition-transform focus:translate-y-0">
@@ -23,8 +31,8 @@ export function AccountPreview() {
           <span className="hidden h-5 w-px bg-white/15 sm:block" aria-hidden="true" />
           <span className="hidden text-xs font-semibold uppercase tracking-[0.12em] text-muted sm:block">Customer account</span>
           <div className="ml-auto flex items-center gap-3">
-            <span className="hidden text-xs text-muted sm:block">Preview mode</span>
-            <span className="grid size-9 place-items-center rounded-full border border-white/15 bg-surface text-xs font-semibold text-secondary" aria-label="No customer is signed in">--</span>
+            <span className="hidden max-w-56 truncate text-xs text-muted sm:block">{signedIn ? customerEmail ?? "Verified account" : "Preview mode"}</span>
+            <span className="grid size-9 place-items-center rounded-full border border-white/15 bg-surface text-xs font-semibold text-secondary" aria-label={signedIn ? "Verified customer account" : "No customer is signed in"}>{signedIn ? "OK" : "--"}</span>
           </div>
         </div>
       </header>
@@ -34,7 +42,7 @@ export function AccountPreview() {
           <div className="flex items-center justify-between lg:block">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Account workspace</p>
-              <p className="mt-2 text-sm font-semibold text-foreground">Signed-out preview</p>
+              <p className="mt-2 text-sm font-semibold text-foreground">{signedIn ? "Verified account" : "Signed-out preview"}</p>
             </div>
             <Link href="/" className="text-xs font-semibold text-secondary hover:text-foreground lg:hidden">Back home</Link>
           </div>
@@ -57,9 +65,15 @@ export function AccountPreview() {
               <div>
                 <span className="inline-flex min-h-8 items-center rounded-full border border-blue-400/20 bg-blue-500/[0.08] px-3 text-xs font-semibold text-brand-hover">Phase 1 design preview</span>
                 <h1 id="account-heading" className="mt-5 max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.06em]">Your systems, orders, and support in one place.</h1>
-                <p className="mt-5 max-w-2xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">This preview contains no customer records. Secure email verification, order history, and protected downloads will be connected during the account implementation phase.</p>
+                <p className="mt-5 max-w-2xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">{signedIn ? <>Signed in as <strong className="font-semibold text-foreground">{customerEmail ?? "a verified customer"}</strong>. Order history and protected-download data will appear after the commerce modules are connected.</> : <>This preview contains no customer records. Secure email verification is available after authentication is configured.</>}</p>
               </div>
-              <button type="button" disabled className="inline-flex min-h-11 w-full cursor-not-allowed items-center justify-center rounded-[9px] bg-white/10 px-5 text-sm font-semibold text-muted sm:w-auto">Sign in with email</button>
+              {signedIn ? (
+                <form action={signOut}><button type="submit" className="inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 px-5 text-sm font-semibold hover:bg-white/[0.04] sm:w-auto">Sign out</button></form>
+              ) : authState === "signed_out" ? (
+                <Link href="/auth/sign-in?next=/account" className="inline-flex min-h-11 w-full items-center justify-center rounded-[9px] bg-foreground px-5 text-sm font-semibold text-background hover:bg-white sm:w-auto">Sign in with email</Link>
+              ) : (
+                <button type="button" disabled className="inline-flex min-h-11 w-full cursor-not-allowed items-center justify-center rounded-[9px] bg-white/10 px-5 text-sm font-semibold text-muted sm:w-auto">Sign-in setup pending</button>
+              )}
             </div>
 
             <div className="mt-8 rounded-xl border border-blue-400/20 bg-blue-500/[0.06] p-4 sm:flex sm:items-start sm:gap-4 sm:p-5">
