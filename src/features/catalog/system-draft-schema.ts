@@ -3,6 +3,19 @@ import { parseMoneyToMinorUnits } from "@/features/catalog/money";
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+const technologyStackSchema = z
+  .string()
+  .trim()
+  .max(2500)
+  .transform((value) =>
+    [...new Set(value.split(/[,\n]/).map((item) => item.trim()).filter(Boolean))],
+  )
+  .pipe(
+    z
+      .array(z.string().max(80, "Keep each technology name under 80 characters."))
+      .max(30, "Add no more than 30 technologies."),
+  );
+
 export const systemDraftInputSchema = z
   .object({
     title: z.string().trim().min(2, "Enter a system name.").max(160),
@@ -19,8 +32,13 @@ export const systemDraftInputSchema = z
     inclusions: z.string().trim().max(10000).optional(),
     exclusions: z.string().trim().max(10000).optional(),
     requirements: z.string().trim().max(10000).optional(),
+    technologyStack: technologyStackSchema,
+    deliverySummary: z.string().trim().max(3000).optional(),
+    demoInstructions: z.string().trim().max(3000).optional(),
     licenseSummary: z.string().trim().max(10000).optional(),
     supportSummary: z.string().trim().max(5000).optional(),
+    seoTitle: z.string().trim().max(70, "Keep the SEO title under 70 characters.").optional(),
+    seoDescription: z.string().trim().max(180, "Keep the SEO description under 180 characters.").optional(),
   })
   .superRefine((input, context) => {
     const regularMinor = parseMoneyToMinorUnits(input.regularPrice);
@@ -52,8 +70,12 @@ export const systemDraftInputSchema = z
     inclusions: input.inclusions || null,
     exclusions: input.exclusions || null,
     requirements: input.requirements || null,
+    deliverySummary: input.deliverySummary || null,
+    demoInstructions: input.demoInstructions || null,
     licenseSummary: input.licenseSummary || null,
     supportSummary: input.supportSummary || null,
+    seoTitle: input.seoTitle || null,
+    seoDescription: input.seoDescription || null,
     priceMinor: input.pricingType === "quotation" ? null : parseMoneyToMinorUnits(input.regularPrice),
     regularPriceMinor: input.pricingType === "quotation" ? null : parseMoneyToMinorUnits(input.regularPrice),
     salePriceMinor: input.salePrice ? parseMoneyToMinorUnits(input.salePrice) : null,

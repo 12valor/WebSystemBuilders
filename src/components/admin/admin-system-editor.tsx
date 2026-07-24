@@ -80,7 +80,7 @@ export function AdminSystemEditor({
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
         <nav aria-label="System editor sections" className="hidden h-fit rounded-xl border border-white/10 bg-surface p-2 lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
@@ -144,7 +144,15 @@ export function AdminSystemEditor({
             <TextAreaField name="supportSummary" label="Support summary" defaultValue={system?.supportSummary} />
           </EditorSection>
 
-          <EditorSection id="next" number="04" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
+          <EditorSection id="technical" number="04" title="Technical, delivery, and search details" description="Keep product facts structured so the public page and search metadata stay accurate.">
+            <TextAreaField name="technologyStack" label="Technology stack" defaultValue={system?.technologyStack.join("\n")} hint="Add one technology per line or separate entries with commas. At least one is required before publication." error={firstError(state, "technologyStack")} />
+            <TextAreaField name="deliverySummary" label="Delivery summary" defaultValue={system?.deliverySummary} hint="Explain when and how the buyer receives access. Do not promise delivery before verified payment." error={firstError(state, "deliverySummary")} />
+            <TextAreaField name="demoInstructions" label="Demo instructions" defaultValue={system?.demoInstructions} hint="Optional access steps or safe test credentials shown only when a demo link is published." error={firstError(state, "demoInstructions")} />
+            <Field name="seoTitle" label="SEO title" maxLength={70} defaultValue={system?.seoTitle ?? ""} placeholder="Optional custom search title" error={firstError(state, "seoTitle")} />
+            <TextAreaField name="seoDescription" label="SEO description" defaultValue={system?.seoDescription} hint="Optional search description, up to 180 characters. The product summary remains the fallback." error={firstError(state, "seoDescription")} />
+          </EditorSection>
+
+          <EditorSection id="next" number="05" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
             <div className="grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
               {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Run the server publication check"].map((item, index) => <div key={item} className="bg-background p-4 text-sm text-secondary"><span className="mr-3 text-xs text-muted">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
             </div>
@@ -156,7 +164,7 @@ export function AdminSystemEditor({
           <h2 className="mt-3 text-lg font-semibold tracking-[-0.025em]">Private until complete</h2>
           <p className="mt-2 text-sm leading-6 text-secondary">Saving verifies administrator access, category compatibility, slug uniqueness, and authoritative price values.</p>
           <ul className="mt-5 grid gap-3 text-sm text-secondary">
-            {["Full description and package boundaries", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-300" aria-hidden="true">+</span><span>{item}</span></li>)}
+            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-300" aria-hidden="true">+</span><span>{item}</span></li>)}
           </ul>
           <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-muted">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
         </aside>

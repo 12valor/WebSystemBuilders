@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: result.system.title,
-    description: result.system.summary,
+    title: result.system.seoTitle ?? result.system.title,
+    description: result.system.seoDescription ?? result.system.summary,
     alternates: { canonical: `/systems/${result.system.slug}` },
     robots: { index: true, follow: true },
   };
@@ -68,6 +68,8 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
     ["Package inclusions", system.inclusions],
     ["Exclusions", system.exclusions],
     ["System requirements", system.requirements],
+    ["Delivery", system.deliverySummary],
+    ["Demo instructions", system.media.some((item) => item.mediaType === "demo") ? system.demoInstructions : null],
     ["License", system.licenseSummary],
     ["Support", system.supportSummary],
   ].filter((section): section is [string, string] => Boolean(section[1]));
@@ -110,7 +112,7 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
             <dl className="mt-7 grid gap-4 border-t border-white/10 pt-6 text-sm">
               <TrustRow term="Version" detail={system.currentVersion?.versionLabel ?? "Not disclosed"} />
               <TrustRow term="Updated" detail={formatDate(system.updatedAt)} />
-              <TrustRow term="Delivery" detail={system.productType === "custom_service" ? "Defined in the accepted scope" : "Private access after verified payment"} />
+              <TrustRow term="Delivery" detail={system.deliverySummary ?? (system.productType === "custom_service" ? "Defined in the accepted scope" : "Private access after verified payment")} />
               <TrustRow term="Support" detail="Product-specific coverage shown below" />
             </dl>
           </aside>
@@ -131,6 +133,20 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
           </div>
         </div>
       </section>
+
+      {system.technologyStack.length > 0 && (
+        <section className="border-b border-white/10 py-12 sm:py-14">
+          <div className="mx-auto grid w-[min(calc(100%-40px),1120px)] gap-6 md:w-[min(calc(100%-64px),1120px)] lg:grid-cols-[260px_1fr] lg:items-start lg:gap-16">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Technology stack</p>
+              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Built with disclosed tools.</h2>
+            </div>
+            <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
+              {system.technologyStack.map((technology) => <li key={technology} className="rounded-full border border-white/15 bg-surface px-3 py-2 text-sm text-secondary">{technology}</li>)}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="py-16 sm:py-20 lg:py-24">
         <div className="mx-auto grid w-[min(calc(100%-40px),1000px)] gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:w-[min(calc(100%-64px),1000px)] md:grid-cols-2">

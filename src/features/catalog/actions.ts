@@ -185,8 +185,13 @@ function parseSystemInput(formData: FormData) {
     inclusions: formData.get("inclusions"),
     exclusions: formData.get("exclusions"),
     requirements: formData.get("requirements"),
+    technologyStack: formData.get("technologyStack"),
+    deliverySummary: formData.get("deliverySummary"),
+    demoInstructions: formData.get("demoInstructions"),
     licenseSummary: formData.get("licenseSummary"),
     supportSummary: formData.get("supportSummary"),
+    seoTitle: formData.get("seoTitle"),
+    seoDescription: formData.get("seoDescription"),
   });
 }
 
@@ -207,8 +212,13 @@ function toSystemMutation(input: SystemDraftInput) {
     inclusions: input.inclusions,
     exclusions: input.exclusions,
     requirements: input.requirements,
+    technology_stack: input.technologyStack,
+    delivery_summary: input.deliverySummary,
+    demo_instructions: input.demoInstructions,
     license_summary: input.licenseSummary,
     support_summary: input.supportSummary,
+    seo_title: input.seoTitle,
+    seo_description: input.seoDescription,
   };
 }
 

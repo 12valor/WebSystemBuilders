@@ -59,6 +59,11 @@ export type CatalogSystemDetail = CatalogSystemRecord & {
   exclusions: string | null;
   licenseSummary: string | null;
   supportSummary: string | null;
+  technologyStack: string[];
+  deliverySummary: string | null;
+  demoInstructions: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
   features: CatalogSystemFeature[];
   media: CatalogSystemMedia[];
   currentVersion: CatalogSystemVersion | null;

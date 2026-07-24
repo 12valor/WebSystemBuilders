@@ -40,8 +40,13 @@ const systemDetailRowSchema = systemRowSchema.extend({
   requirements: z.string().nullable(),
   inclusions: z.string().nullable(),
   exclusions: z.string().nullable(),
+  technology_stack: z.array(z.string()),
+  delivery_summary: z.string().nullable(),
+  demo_instructions: z.string().nullable(),
   license_summary: z.string().nullable(),
   support_summary: z.string().nullable(),
+  seo_title: z.string().nullable(),
+  seo_description: z.string().nullable(),
 });
 
 const featureRowSchema = z.object({
@@ -108,7 +113,7 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("systems")
-    .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,license_summary,support_summary`)
+    .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,technology_stack,delivery_summary,demo_instructions,license_summary,support_summary,seo_title,seo_description`)
     .eq("status", "published")
     .eq("slug", slug)
     .maybeSingle();
@@ -178,8 +183,13 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
       requirements: parsed.data.requirements,
       inclusions: parsed.data.inclusions,
       exclusions: parsed.data.exclusions,
+      technologyStack: parsed.data.technology_stack,
+      deliverySummary: parsed.data.delivery_summary,
+      demoInstructions: parsed.data.demo_instructions,
       licenseSummary: parsed.data.license_summary,
       supportSummary: parsed.data.support_summary,
+      seoTitle: parsed.data.seo_title,
+      seoDescription: parsed.data.seo_description,
       features: features.data,
       media: resolvedMedia,
       currentVersion: version.data

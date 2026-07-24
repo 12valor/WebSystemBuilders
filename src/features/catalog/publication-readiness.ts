@@ -12,6 +12,8 @@ type PublicationCandidate = Pick<
   | "description"
   | "inclusions"
   | "exclusions"
+  | "technologyStack"
+  | "deliverySummary"
   | "licenseSummary"
   | "supportSummary"
 >;
@@ -25,6 +27,8 @@ export function getPublicationIssues(
   if (!system.description) issues.push("Add a full product description.");
   if (!system.inclusions) issues.push("Define the package inclusions.");
   if (!system.exclusions) issues.push("Define the package exclusions.");
+  if (system.technologyStack.length < 1) issues.push("Add at least one technology.");
+  if (!system.deliverySummary) issues.push("Add the delivery summary.");
   if (!system.licenseSummary) issues.push("Add the customer-facing license summary.");
   if (!system.supportSummary) issues.push("Add the support summary.");
   if (assets.featureCount < 1) issues.push("Add at least one customer-facing feature.");

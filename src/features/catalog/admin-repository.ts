@@ -39,8 +39,13 @@ const editableSystemSchema = systemListSchema.extend({
   inclusions: z.string().nullable(),
   exclusions: z.string().nullable(),
   requirements: z.string().nullable(),
+  technology_stack: z.array(z.string()),
+  delivery_summary: z.string().nullable(),
+  demo_instructions: z.string().nullable(),
   license_summary: z.string().nullable(),
   support_summary: z.string().nullable(),
+  seo_title: z.string().nullable(),
+  seo_description: z.string().nullable(),
   published_at: z.string().nullable(),
 });
 
@@ -78,7 +83,7 @@ const versionSchema = z.object({
 
 const categoryColumns = "id,name,audience";
 const editableSystemColumns =
-  "id,category_id,title,slug,summary,description,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,status,inclusions,exclusions,requirements,license_summary,support_summary,published_at,updated_at,category:system_categories(name)";
+  "id,category_id,title,slug,summary,description,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,status,inclusions,exclusions,requirements,technology_stack,delivery_summary,demo_instructions,license_summary,support_summary,seo_title,seo_description,published_at,updated_at,category:system_categories(name)";
 
 const emptyResources: AdminSystemResources = {
   features: [],
@@ -250,8 +255,13 @@ function mapEditableSystem(
     inclusions: system.inclusions,
     exclusions: system.exclusions,
     requirements: system.requirements,
+    technologyStack: system.technology_stack,
+    deliverySummary: system.delivery_summary,
+    demoInstructions: system.demo_instructions,
     licenseSummary: system.license_summary,
     supportSummary: system.support_summary,
+    seoTitle: system.seo_title,
+    seoDescription: system.seo_description,
     publishedAt: system.published_at,
   };
 }
