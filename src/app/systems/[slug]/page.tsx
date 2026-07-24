@@ -3,9 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
+import { LocalizedCatalogPrice, SystemPriceSummary } from "@/components/catalog/localized-catalog-price";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
-import { getCatalogPricePresentation } from "@/features/catalog/pricing";
+import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicSystemBySlug } from "@/features/catalog/repository";
 import type {
   CatalogSystemDetail,
@@ -51,18 +53,24 @@ export default async function SystemDetailPage({ params }: { params: Promise<{ s
     );
   }
 
+  const currency = await getCatalogCurrencySnapshot(
+    (result.system.pricingType !== "quotation" && result.system.priceMinor !== null) ||
+      result.system.relatedSystems.some((system) => system.pricingType !== "quotation" && system.priceMinor !== null),
+  );
+
   return (
     <>
       <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 bg-white px-3 py-2 text-sm font-semibold text-black transition-transform focus:translate-y-0">Skip to content</a>
       <SiteHeader />
-      <PublishedSystem system={result.system} />
+      <CatalogCurrencyProvider snapshot={currency}>
+        <PublishedSystem system={result.system} />
+      </CatalogCurrencyProvider>
       <SiteFooter />
     </>
   );
 }
 
 function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
-  const price = getCatalogPricePresentation(system);
   const sections = [
     ["Overview", system.description],
     ["Package inclusions", system.inclusions],
@@ -94,13 +102,7 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
           </div>
 
           <aside className="h-fit rounded-2xl border border-white/10 bg-surface p-6 lg:sticky lg:top-24">
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Price</p>
-              {price.isSale && <span className="rounded-full border border-blue-400/20 bg-blue-500/[0.08] px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-brand-hover">Sale active</span>}
-            </div>
-            {price.regular && <p className="mt-4 text-sm text-muted line-through">{price.regular}</p>}
-            <p className={`${price.regular ? "mt-1" : "mt-4"} text-3xl font-semibold tabular-nums tracking-[-0.04em]`}>{price.current}</p>
-            <p className="mt-3 text-sm leading-6 text-secondary">Catalog prices use {system.currency}. The authoritative amount and charge currency must be confirmed before hosted payment.</p>
+            <SystemPriceSummary system={system} />
 
             {system.pricingType === "quotation" || system.productType === "custom_service" ? (
               <Link href="/request-a-quote" className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-foreground px-5 text-sm font-semibold text-background">Request a quotation</Link>
@@ -194,7 +196,7 @@ function RelatedSystems({ systems }: { systems: CatalogSystemRecord[] }) {
     <section className="border-t border-white/10 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Continue comparing</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em]">Related published systems.</h2></div><Link href="/systems" className="text-sm font-semibold text-brand-hover">View full catalog →</Link></div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">{systems.map((system) => { const price = getCatalogPricePresentation(system); return <article key={system.id} className="flex min-h-72 flex-col rounded-xl border border-white/10 bg-surface p-5"><p className="text-xs uppercase tracking-[0.08em] text-muted">{system.category?.name ?? audienceLabel(system.audience)}</p><h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3><p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p><div className="mt-auto border-t border-white/10 pt-5"><div className="flex items-baseline gap-2"><strong className="text-lg">{price.current}</strong>{price.regular && <span className="text-xs text-muted line-through">{price.regular}</span>}</div><Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 text-sm font-semibold">View system</Link></div></article>; })}</div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">{systems.map((system) => { return <article key={system.id} className="flex min-h-72 flex-col rounded-xl border border-white/10 bg-surface p-5"><p className="text-xs uppercase tracking-[0.08em] text-muted">{system.category?.name ?? audienceLabel(system.audience)}</p><h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3><p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p><div className="mt-auto border-t border-white/10 pt-5"><LocalizedCatalogPrice system={system} variant="related" /><Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 text-sm font-semibold">View system</Link></div></article>; })}</div>
       </div>
     </section>
   );

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CatalogCurrencyControl } from "@/components/catalog/catalog-currency-provider";
+import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
 import { catalogAudiences, catalogPricingModes, type CatalogAudience } from "@/features/catalog/catalog-options";
-import { getCatalogPricePresentation, getEffectiveCatalogPrice } from "@/features/catalog/pricing";
+import { getEffectiveCatalogPrice } from "@/features/catalog/pricing";
 import type { CatalogData, CatalogPricingType, CatalogSystemRecord } from "@/features/catalog/types";
 
 type SortMode = "Newest" | "Name: A to Z" | "Price: low to high" | "Price: high to low";
@@ -64,6 +66,9 @@ export function CatalogExplorer({
     audience !== "All audiences" ||
     category !== "all" ||
     pricing !== "All pricing";
+  const hasPricedSystems = catalog.systems.some(
+    (system) => system.pricingType !== "quotation" && system.priceMinor !== null,
+  );
 
   function clearFilters() {
     setQuery("");
@@ -76,22 +81,28 @@ export function CatalogExplorer({
     <section aria-labelledby="catalog-results-title" className="pb-20 sm:pb-24 lg:pb-32">
       <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
         <div className="rounded-2xl border border-white/10 bg-surface-subtle p-4 sm:p-6">
-          <label htmlFor="system-search" className="mb-2 block text-xs font-semibold text-secondary">Search systems</label>
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto]">
-            <input
-              id="system-search"
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search by system name, category, or workflow"
-              className="min-h-12 w-full rounded-[10px] border border-white/15 bg-background px-4 text-sm placeholder:text-muted focus:border-brand focus:outline-none"
-            />
-            <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} aria-label="Sort systems" className="min-h-12 rounded-[10px] border border-white/15 bg-background px-4 text-sm text-secondary focus:border-brand focus:outline-none">
-              <option>Newest</option>
-              <option>Name: A to Z</option>
-              <option>Price: low to high</option>
-              <option>Price: high to low</option>
-            </select>
+          <div className={hasPricedSystems ? "grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px_230px]" : "grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]"}>
+            <label htmlFor="system-search" className="grid gap-2 text-xs font-semibold text-secondary">
+              <span>Search systems</span>
+              <input
+                id="system-search"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search by system name, category, or workflow"
+                className="min-h-12 w-full rounded-[10px] border border-white/15 bg-background px-4 text-sm font-normal text-foreground placeholder:text-muted focus:border-brand focus:outline-none"
+              />
+            </label>
+            <label className="grid gap-2 text-xs font-semibold text-secondary">
+              <span>Sort systems</span>
+              <select value={sort} onChange={(event) => setSort(event.target.value as SortMode)} className="min-h-12 rounded-[10px] border border-white/15 bg-background px-4 text-sm font-normal text-secondary focus:border-brand focus:outline-none">
+                <option>Newest</option>
+                <option>Name: A to Z</option>
+                <option>Price: low to high</option>
+                <option>Price: high to low</option>
+              </select>
+            </label>
+            {hasPricedSystems && <CatalogCurrencyControl />}
           </div>
         </div>
 
@@ -145,8 +156,6 @@ export function CatalogExplorer({
 }
 
 function SystemCard({ system }: { system: CatalogSystemRecord }) {
-  const price = getCatalogPricePresentation(system);
-
   return (
     <article className="flex min-h-80 flex-col rounded-xl border border-white/10 bg-surface p-5">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-[0.08em] text-muted">
@@ -157,7 +166,7 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
       <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
       <div className="mt-auto border-t border-white/10 pt-5">
-        <div className="flex flex-wrap items-baseline gap-2"><p className="text-lg font-semibold tabular-nums">{price.current}</p>{price.regular && <span className="text-xs text-muted line-through">{price.regular}</span>}{price.isSale && <span className="text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-brand-hover">Sale</span>}</div>
+        <LocalizedCatalogPrice system={system} />
         <Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 px-4 text-sm font-semibold hover:bg-white/[0.04]">View system</Link>
       </div>
     </article>

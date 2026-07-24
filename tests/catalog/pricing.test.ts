@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   getCatalogPricePresentation,
   getEffectiveCatalogPrice,
+  getLocalizedCatalogPricePresentation,
 } from "@/features/catalog/pricing";
 
 const fixedPrice = {
@@ -49,5 +50,28 @@ describe("catalog price presentation", () => {
       regular: null,
       isSale: false,
     });
+  });
+  it("marks converted prices as estimates while retaining the PHP base", () => {
+    const localized = getLocalizedCatalogPricePresentation(fixedPrice, {
+      currency: "USD",
+      rate: 0.02,
+    });
+
+    expect(localized.current).toContain("≈");
+    expect(localized.current).toContain("$25.00");
+    expect(localized.baseCurrent).toBe("₱1,250.00");
+    expect(localized.displayCurrency).toBe("USD");
+    expect(localized.estimated).toBe(true);
+  });
+
+  it("keeps quotation and invalid conversions on their authoritative display", () => {
+    expect(getLocalizedCatalogPricePresentation(
+      { ...fixedPrice, pricingType: "quotation", priceMinor: null },
+      { currency: "USD", rate: 0.02 },
+    ).estimated).toBe(false);
+    expect(getLocalizedCatalogPricePresentation(
+      fixedPrice,
+      { currency: "USD", rate: 0 },
+    ).displayCurrency).toBe("PHP");
   });
 });

@@ -32,7 +32,7 @@ Deliver a database-driven catalog where visitors can discover published systems,
 - [x] Active-sale and regular-price comparison
 - [x] Related published systems
 - [x] Dedicated technology-stack, delivery, demo-instruction, and SEO fields
-- [ ] Localized estimated display currency with manual override
+- [x] Localized estimated display currency with manual override
 - [ ] Live Supabase and Storage policy verification
 - [ ] Checkout entry point, implemented in the payment and ordering phase
 
@@ -40,7 +40,7 @@ Deliver a database-driven catalog where visitors can discover published systems,
 
 - No real system records have been supplied or published yet.
 - Supabase credentials and migrations are not applied in a live project.
-- Currency localization needs a replaceable exchange-rate provider and server-side cache before implementation.
+- Localized estimates depend on the cached Frankfurter service; provider failures intentionally fall back to authoritative PHP prices.
 - Checkout remains intentionally unavailable until the order and PayMongo phases.
 
 ## 5. Exit criteria
@@ -49,4 +49,4 @@ Phase 4 exits when published systems can be searched, filtered, evaluated throug
 
 ## 6. Next action
 
-Select a replaceable exchange-rate provider and define its server-side cache and fallback behavior before localized currency work, then verify the complete catalog against the owner-provided Supabase project and private Storage policies.
+Apply the catalog migrations to the owner-provided Supabase project, publish owner-supplied product records, and verify live database, RLS, signed media, and private deliverable boundaries before Phase 4 exits.

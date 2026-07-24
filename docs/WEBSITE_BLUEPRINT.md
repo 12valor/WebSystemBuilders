@@ -319,6 +319,8 @@ Categories are administrator-managed database records. This approved starting st
 
 PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
 
+The initial display-rate adapter uses Frankfurter v2 from the server only. It requests PHP-based reference rates, caches successful responses for six hours, retains the rate date, and fails back to authoritative PHP prices without blocking the catalog. The initial currency suggestion uses the hosting layer's coarse ISO country header. A visible manual override is stored in the first-party wsb_currency preference cookie; no precise visitor location is stored or sent to the rate provider. Frankfurter remains isolated behind the catalog currency module so it can be replaced without rewriting product or checkout pricing.
+
 ### Approved commercial license direction
 
 Ready-made systems include their source code and use a broad, perpetual, non-exclusive commercial license. The purchaser may use, copy, modify, deploy, resell, and redistribute the purchased system, including the original source package. WebSystemBuilders retains ownership of its original work, may continue selling and licensing the same system, and does not grant exclusivity, ownership of the WebSystemBuilders brand, or rights that override third-party licenses.

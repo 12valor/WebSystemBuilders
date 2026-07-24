@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
 import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
-import { getCatalogPricePresentation } from "@/features/catalog/pricing";
 import type {
   CatalogCategoryRecord,
   CatalogData,
@@ -77,8 +77,6 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 }
 
 function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
-  const price = getCatalogPricePresentation(system);
-
   return (
     <article className="flex min-h-[330px] flex-col rounded-xl border border-white/10 bg-surface p-6">
       <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.08em] text-muted">
@@ -89,7 +87,7 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
       <h3 className="mt-2 text-2xl font-semibold tracking-[-0.035em]">{system.title}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
       <div className="mt-auto flex items-end justify-between gap-4 border-t border-white/10 pt-5">
-        <div><p className="font-semibold tabular-nums">{price.current}</p>{price.regular && <p className="mt-1 text-xs text-muted line-through">{price.regular}</p>}</div>
+        <LocalizedCatalogPrice system={system} variant="featured" />
         <Link href={`/systems/${system.slug}`} className="text-sm font-semibold text-brand-hover">View system <span aria-hidden="true">&rarr;</span></Link>
       </div>
     </article>

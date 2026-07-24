@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
 import { CatalogExplorer } from "@/components/catalog/catalog-explorer";
 import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicCatalogData } from "@/features/catalog/repository";
 
 export const metadata: Metadata = {
@@ -15,6 +17,9 @@ export const dynamic = "force-dynamic";
 
 export default async function SystemsPage({ searchParams }: { searchParams: Promise<{ audience?: string; category?: string }> }) {
   const [catalog, query] = await Promise.all([getPublicCatalogData(), searchParams]);
+  const currency = await getCatalogCurrencySnapshot(
+    catalog.systems.some((system) => system.pricingType !== "quotation" && system.priceMinor !== null),
+  );
   const initialAudience = query.audience === "students" || query.audience === "business" ? query.audience : undefined;
   const initialCategory = query.category && catalog.categories.some((category) => category.slug === query.category) ? query.category : undefined;
 
@@ -29,7 +34,9 @@ export default async function SystemsPage({ searchParams }: { searchParams: Prom
             <p className="max-w-md text-lg leading-8 text-secondary">Browse administrator-published software by audience, category, and pricing mode. Every listing will show its exact inclusions before purchase.</p>
           </div>
         </section>
-        <CatalogExplorer catalog={catalog} initialAudience={initialAudience} initialCategory={initialCategory} />
+        <CatalogCurrencyProvider snapshot={currency}>
+          <CatalogExplorer catalog={catalog} initialAudience={initialAudience} initialCategory={initialCategory} />
+        </CatalogCurrencyProvider>
       </main>
       <SiteFooter />
     </>
