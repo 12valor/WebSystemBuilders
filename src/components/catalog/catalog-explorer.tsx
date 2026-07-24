@@ -7,10 +7,20 @@ import type { CatalogData, CatalogPricingType, CatalogSystemRecord } from "@/fea
 
 type SortMode = "Newest" | "Name: A to Z" | "Price: low to high" | "Price: high to low";
 
-export function CatalogExplorer({ catalog }: { catalog: CatalogData }) {
+export function CatalogExplorer({
+  catalog,
+  initialAudience,
+  initialCategory,
+}: {
+  catalog: CatalogData;
+  initialAudience?: "students" | "business";
+  initialCategory?: string;
+}) {
   const [query, setQuery] = useState("");
-  const [audience, setAudience] = useState<CatalogAudience>("All audiences");
-  const [category, setCategory] = useState("all");
+  const [audience, setAudience] = useState<CatalogAudience>(
+    initialAudience === "students" ? "Students" : initialAudience === "business" ? "Business" : "All audiences",
+  );
+  const [category, setCategory] = useState(initialCategory ?? "all");
   const [pricing, setPricing] = useState<(typeof catalogPricingModes)[number]>("All pricing");
   const [sort, setSort] = useState<SortMode>("Newest");
 

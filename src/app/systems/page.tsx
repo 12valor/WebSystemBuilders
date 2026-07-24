@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function SystemsPage() {
-  const catalog = await getPublicCatalogData();
+export default async function SystemsPage({ searchParams }: { searchParams: Promise<{ audience?: string; category?: string }> }) {
+  const [catalog, query] = await Promise.all([getPublicCatalogData(), searchParams]);
+  const initialAudience = query.audience === "students" || query.audience === "business" ? query.audience : undefined;
+  const initialCategory = query.category && catalog.categories.some((category) => category.slug === query.category) ? query.category : undefined;
 
   return (
     <>
@@ -26,7 +28,7 @@ export default async function SystemsPage() {
             <p className="max-w-md text-lg leading-8 text-secondary">Browse administrator-published software by audience, category, and pricing mode. Every listing will show its exact inclusions before purchase.</p>
           </div>
         </section>
-        <CatalogExplorer catalog={catalog} />
+        <CatalogExplorer catalog={catalog} initialAudience={initialAudience} initialCategory={initialCategory} />
       </main>
       <SiteFooter />
     </>
