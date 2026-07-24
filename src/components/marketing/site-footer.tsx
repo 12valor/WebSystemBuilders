@@ -2,8 +2,8 @@ import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
 
 const footerGroups = [
-  { title: "Explore", links: [["Systems", "/systems"], ["For students", "/#students"], ["For business", "/#businesses"], ["Custom development", "/#custom"]] },
-  { title: "Company", links: [["About", "/#about"], ["Process", "/#process"], ["Contact", "/#contact"], ["Account", "/account"]] },
+  { title: "Explore", links: [["Systems", "/systems"], ["For students", "/for-students"], ["For business", "/for-business"], ["Custom development", "/services/custom-development"]] },
+  { title: "Company", links: [["About", "/about"], ["Process", "/process"], ["Portfolio", "/portfolio"], ["Account", "/account"]] },
   { title: "Policies", links: [["Delivery", "/legal/delivery"], ["License", "/legal/license"], ["Refunds", "/legal/refunds"], ["Privacy", "/legal/privacy"]] },
 ];
 
@@ -17,7 +17,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="mx-auto flex min-h-20 w-[min(calc(100%-40px),1280px)] flex-col items-start justify-center gap-2 border-t border-white/10 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
-        <span>© 2026 WebSystemBuilders</span><span>AG Evangelista · Web Developer</span><span>websystembuilders.com</span>
+        <span>&copy; 2026 WebSystemBuilders</span><span>AG Evangelista &middot; Web Developer</span><span>websystembuilders.com</span>
       </div>
     </footer>
   );

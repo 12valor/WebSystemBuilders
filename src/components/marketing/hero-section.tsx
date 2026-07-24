@@ -13,11 +13,11 @@ export function HeroSection() {
           <p className="mt-7 max-w-[650px] text-[1.05rem] leading-7 text-secondary sm:text-lg sm:leading-8">Explore practical systems for school and business, or work with us to build one around your exact requirements.</p>
           <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap">
             <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">Browse systems <span aria-hidden="true">↗</span></Link>
-            <Link href="#custom" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 bg-surface px-6 font-semibold transition-colors hover:bg-surface-raised">Request a custom system</Link>
+            <Link href="/services/custom-development" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 bg-surface px-6 font-semibold transition-colors hover:bg-surface-raised">Request a custom system</Link>
           </div>
           <div className="mt-11 grid gap-3 sm:mt-14 sm:grid-cols-2" aria-label="Choose an audience">
-            <AudienceLink href="#students" kicker="For students">Capstone and thesis-related systems</AudienceLink>
-            <AudienceLink href="#businesses" kicker="For business">Systems for day-to-day operations</AudienceLink>
+            <AudienceLink href="/for-students" kicker="For students">Capstone and thesis-related systems</AudienceLink>
+            <AudienceLink href="/for-business" kicker="For business">Systems for day-to-day operations</AudienceLink>
           </div>
         </div>
         <SystemWorkspace />

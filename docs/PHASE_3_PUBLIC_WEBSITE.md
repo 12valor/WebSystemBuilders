@@ -23,17 +23,17 @@ Deliver a trustworthy, responsive public website that gives students and busines
 ## 3. Initial public route checklist
 
 - [x] Homepage with two audience paths and approved design foundation
-- [ ] Administrator-driven featured systems and categories on the homepage
-- [ ] `/for-students`
-- [ ] `/for-business`
-- [ ] `/services/custom-development`
-- [ ] `/process`
-- [ ] `/about`
-- [ ] `/portfolio` with an honest no-published-case-studies state
+- [x] Administrator-driven featured systems and categories on the homepage
+- [x] `/for-students`
+- [x] `/for-business`
+- [x] `/services/custom-development`
+- [x] `/process`
+- [x] `/about`
+- [x] `/portfolio` with an honest no-published-case-studies state
 - [ ] `/contact` and `/request-a-quote` inquiry workflows
 - [ ] `/faq`
 - [ ] Approved legal routes
-- [ ] Public sitemap, robots rules, canonical metadata, and structured data
+- [x] Public sitemap, robots rules, canonical metadata, and website structured data
 
 ## 4. Public navigation
 
@@ -58,4 +58,4 @@ The homepage catalog can render only after Supabase is configured and an adminis
 
 ## 7. Next action
 
-Replace homepage catalog placeholders with repository data, then implement the dedicated audience, custom-development, process, about, and portfolio routes without fabricated evidence.
+Implement the inquiry workflow and approved FAQ/legal content. Provider-backed form persistence and production email remain gated by owner-provided Supabase and Resend configuration.

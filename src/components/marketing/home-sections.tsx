@@ -11,10 +11,10 @@ export function EngagementModelsSection() {
           <p className="mt-7 max-w-lg text-secondary">Choose the route that matches your timeline, requirements, and level of customization.</p>
         </div>
         <div className="border-t border-white/15">
-          <ModelRow index="01" title="Ready-made systems" href="#systems" action="Browse categories">
+          <ModelRow index="01" title="Ready-made systems" href="/systems" action="Browse categories">
             Review the features, requirements, license, support, and delivery details before purchasing the source package.
           </ModelRow>
-          <ModelRow index="02" title="Custom development" href="#contact" action="Request a quotation">
+          <ModelRow index="02" title="Custom development" href="/services/custom-development" action="Request a quotation">
             Tell us what the system needs to do. Requirements are reviewed before scope, price, and delivery expectations are agreed.
           </ModelRow>
         </div>
@@ -39,6 +39,7 @@ const audienceContent = [
     title: "Build the technical side of your academic project with clarity.",
     items: ["Capstone and thesis-related systems", "Templates and technical development", "Debugging, deployment, and documentation guidance", "Ethical support that respects school policies"],
     action: "Explore student systems",
+    href: "/for-students",
   },
   {
     id: "businesses",
@@ -46,6 +47,7 @@ const audienceContent = [
     title: "Choose a system that supports the way your business operates.",
     items: ["Point-of-sale and inventory workflows", "Warehouse and management systems", "Source code with a commercial license", "Custom development when ready-made is not enough"],
     action: "Explore business systems",
+    href: "/for-business",
     accent: true,
   },
 ];
@@ -61,7 +63,7 @@ export function AudienceSection() {
               <div className="flex justify-between text-xs uppercase tracking-[0.1em] text-muted"><span>{audience.label}</span><b className="font-medium">{String(index + 1).padStart(2, "0")}</b></div>
               <h3 className="mb-8 mt-12 max-w-xl text-[clamp(1.65rem,3vw,2rem)] font-semibold leading-[1.16] tracking-[-0.045em] sm:mt-16">{audience.title}</h3>
               <ul className="mb-9 grid gap-3 text-secondary">{audience.items.map((item) => <li key={item} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand-hover">{item}</li>)}</ul>
-              <Link href="/systems" className="mt-auto text-sm font-semibold">{audience.action} →</Link>
+              <Link href={audience.href} className="mt-auto text-sm font-semibold">{audience.action} →</Link>
             </article>
           ))}
         </div>
@@ -104,7 +106,7 @@ export function FinalCallToAction() {
         <div><SectionEyebrow>Start with what you need</SectionEyebrow><h2 className="max-w-3xl text-[clamp(2.35rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">Ready to find or build your system?</h2></div>
         <div className="grid w-full shrink-0 gap-2.5 sm:flex lg:w-auto">
           <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a]">Browse systems <span aria-hidden="true">↗</span></Link>
-          <Link href="#custom" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
+          <Link href="/services/custom-development" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
         </div>
       </div>
     </section>

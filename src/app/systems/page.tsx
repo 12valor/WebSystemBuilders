@@ -8,6 +8,7 @@ import { getPublicCatalogData } from "@/features/catalog/repository";
 export const metadata: Metadata = {
   title: "Systems catalog",
   description: "Browse ready-made systems for students and business owners, or request a custom software system.",
+  alternates: { canonical: "/systems" },
 };
 
 export const dynamic = "force-dynamic";
