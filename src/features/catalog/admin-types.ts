@@ -19,8 +19,30 @@ export type AdminSystemRecord = {
   categoryName: string | null;
 };
 
+export type AdminEditableSystem = AdminSystemRecord & {
+  categoryId: string;
+  productType: "ready_made" | "customizable_template" | "custom_service";
+  summary: string;
+  description: string | null;
+  regularPriceMinor: number | null;
+  salePriceMinor: number | null;
+  saleActive: boolean;
+  inclusions: string | null;
+  exclusions: string | null;
+  requirements: string | null;
+  licenseSummary: string | null;
+  supportSummary: string | null;
+  publishedAt: string | null;
+};
+
 export type AdminCatalogData = {
   status: "ready" | "unconfigured" | "error";
   categories: AdminCategoryRecord[];
   systems: AdminSystemRecord[];
+};
+
+export type AdminSystemEditorData = {
+  status: "ready" | "unconfigured" | "error" | "not_found";
+  categories: AdminCategoryRecord[];
+  system: AdminEditableSystem | null;
 };

@@ -2,22 +2,175 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { systemDraftInputSchema } from "@/features/catalog/system-draft-schema";
+import { z } from "zod";
+import { getPublicationIssues } from "@/features/catalog/publication-readiness";
+import {
+  systemDraftInputSchema,
+  type SystemDraftInput,
+} from "@/features/catalog/system-draft-schema";
 import { AuthorizationError, requireAdmin } from "@/lib/auth/authorization";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createClient } from "@/lib/supabase/server";
 
-export type CreateSystemDraftState = {
+export type SystemEditorState = {
   status: "idle" | "error" | "unavailable";
   message?: string;
   fieldErrors?: Record<string, string[] | undefined>;
+  publicationIssues?: string[];
 };
 
+export type CreateSystemDraftState = SystemEditorState;
+
+const systemIdSchema = z.uuid();
+const editorIntentSchema = z.enum(["save", "publish"]);
+
 export async function createSystemDraft(
-  _previousState: CreateSystemDraftState,
+  _previousState: SystemEditorState,
   formData: FormData,
-): Promise<CreateSystemDraftState> {
-  const result = systemDraftInputSchema.safeParse({
+): Promise<SystemEditorState> {
+  const result = parseSystemInput(formData);
+  if (!result.success) return validationFailure(result.error);
+
+  if (!isSupabasePubliclyConfigured()) {
+    return unavailableState();
+  }
+
+  let admin;
+  try {
+    admin = await requireAdmin();
+  } catch (error) {
+    return authorizationFailure(error);
+  }
+
+  const supabase = await createClient();
+  const categoryFailure = await validateCategory(
+    supabase,
+    result.data.categoryId,
+    result.data.audience,
+  );
+  if (categoryFailure) return categoryFailure;
+
+  const { data: created, error } = await supabase
+    .from("systems")
+    .insert({
+      ...toSystemMutation(result.data),
+      currency: "PHP",
+      status: "draft",
+      published_at: null,
+      created_by: admin.identity.id,
+      updated_by: admin.identity.id,
+    })
+    .select("id")
+    .single<{ id: string }>();
+
+  if (error || !created) {
+    return mutationFailure(error);
+  }
+
+  revalidateCatalog(created.id, result.data.slug);
+  redirect(`/admin/systems/${created.id}/edit?created=1`);
+}
+
+export async function updateSystem(
+  systemId: string,
+  _previousState: SystemEditorState,
+  formData: FormData,
+): Promise<SystemEditorState> {
+  const id = systemIdSchema.safeParse(systemId);
+  if (!id.success) {
+    return { status: "error", message: "The system identifier is invalid." };
+  }
+
+  const intent = editorIntentSchema.safeParse(formData.get("intent"));
+  if (!intent.success) {
+    return { status: "error", message: "Choose a valid editor action." };
+  }
+
+  const result = parseSystemInput(formData);
+  if (!result.success) return validationFailure(result.error);
+
+  if (!isSupabasePubliclyConfigured()) {
+    return unavailableState();
+  }
+
+  let admin;
+  try {
+    admin = await requireAdmin();
+  } catch (error) {
+    return authorizationFailure(error);
+  }
+
+  const supabase = await createClient();
+  const [categoryFailure, currentResult] = await Promise.all([
+    validateCategory(supabase, result.data.categoryId, result.data.audience),
+    supabase
+      .from("systems")
+      .select("id,status,published_at,slug")
+      .eq("id", id.data)
+      .maybeSingle<{
+        id: string;
+        status: "draft" | "published" | "unlisted" | "archived";
+        published_at: string | null;
+        slug: string;
+      }>(),
+  ]);
+
+  if (categoryFailure) return categoryFailure;
+  if (currentResult.error) {
+    return { status: "error", message: "The existing system could not be verified." };
+  }
+  if (!currentResult.data) {
+    return { status: "error", message: "The system no longer exists or is not accessible." };
+  }
+
+  let nextStatus = currentResult.data.status;
+  let publishedAt = currentResult.data.published_at;
+
+  if (intent.data === "publish") {
+    const readiness = await loadPublicationReadiness(supabase, id.data);
+    if (readiness.status === "error") {
+      return {
+        status: "error",
+        message: "Publication readiness could not be verified. The system remains unchanged.",
+      };
+    }
+
+    const publicationIssues = getPublicationIssues(result.data, readiness.assets);
+    if (publicationIssues.length > 0) {
+      return {
+        status: "error",
+        message: "Complete the publication checklist before making this system public.",
+        publicationIssues,
+      };
+    }
+
+    nextStatus = "published";
+    publishedAt = publishedAt ?? new Date().toISOString();
+  }
+
+  const { data: updated, error } = await supabase
+    .from("systems")
+    .update({
+      ...toSystemMutation(result.data),
+      status: nextStatus,
+      published_at: publishedAt,
+      updated_by: admin.identity.id,
+    })
+    .eq("id", id.data)
+    .select("id")
+    .maybeSingle<{ id: string }>();
+
+  if (error || !updated) {
+    return mutationFailure(error);
+  }
+
+  revalidateCatalog(id.data, currentResult.data.slug, result.data.slug);
+  const resultFlag = intent.data === "publish" ? "published" : "saved";
+  redirect(`/admin/systems/${id.data}/edit?${resultFlag}=1`);
+}
+
+function parseSystemInput(formData: FormData) {
+  return systemDraftInputSchema.safeParse({
     title: formData.get("title"),
     slug: formData.get("slug"),
     audience: formData.get("audience"),
@@ -35,41 +188,43 @@ export async function createSystemDraft(
     licenseSummary: formData.get("licenseSummary"),
     supportSummary: formData.get("supportSummary"),
   });
+}
 
-  if (!result.success) {
-    return {
-      status: "error",
-      message: "Review the highlighted fields before saving the draft.",
-      fieldErrors: result.error.flatten().fieldErrors,
-    };
-  }
+function toSystemMutation(input: SystemDraftInput) {
+  return {
+    category_id: input.categoryId,
+    title: input.title,
+    slug: input.slug,
+    summary: input.summary,
+    description: input.description,
+    audience: input.audience,
+    product_type: input.productType,
+    pricing_type: input.pricingType,
+    price_minor: input.priceMinor,
+    regular_price_minor: input.regularPriceMinor,
+    sale_price_minor: input.salePriceMinor,
+    sale_active: input.saleActive,
+    inclusions: input.inclusions,
+    exclusions: input.exclusions,
+    requirements: input.requirements,
+    license_summary: input.licenseSummary,
+    support_summary: input.supportSummary,
+  };
+}
 
-  if (!isSupabasePubliclyConfigured()) {
-    return {
-      status: "unavailable",
-      message: "Draft saving is unavailable until the Supabase project is connected.",
-    };
-  }
-
-  let admin;
-  try {
-    admin = await requireAdmin();
-  } catch (error) {
-    if (error instanceof AuthorizationError) {
-      return { status: "error", message: "Your administrator access could not be verified." };
-    }
-    throw error;
-  }
-
-  const supabase = await createClient();
-  const { data: category, error: categoryError } = await supabase
+async function validateCategory(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  categoryId: string,
+  audience: SystemDraftInput["audience"],
+): Promise<SystemEditorState | null> {
+  const { data: category, error } = await supabase
     .from("system_categories")
     .select("id,audience")
-    .eq("id", result.data.categoryId)
+    .eq("id", categoryId)
     .eq("is_active", true)
     .maybeSingle<{ id: string; audience: "students" | "business" | "both" }>();
 
-  if (categoryError || !category) {
+  if (error || !category) {
     return {
       status: "error",
       message: "The selected category is unavailable.",
@@ -77,7 +232,7 @@ export async function createSystemDraft(
     };
   }
 
-  if (category.audience !== "both" && category.audience !== result.data.audience) {
+  if (category.audience !== "both" && category.audience !== audience) {
     return {
       status: "error",
       message: "The selected category does not match the system audience.",
@@ -85,50 +240,105 @@ export async function createSystemDraft(
     };
   }
 
-  const { data: created, error } = await supabase
-    .from("systems")
-    .insert({
-      category_id: result.data.categoryId,
-      title: result.data.title,
-      slug: result.data.slug,
-      summary: result.data.summary,
-      description: result.data.description,
-      audience: result.data.audience,
-      product_type: result.data.productType,
-      pricing_type: result.data.pricingType,
-      price_minor: result.data.priceMinor,
-      regular_price_minor: result.data.regularPriceMinor,
-      sale_price_minor: result.data.salePriceMinor,
-      sale_active: result.data.saleActive,
-      currency: "PHP",
-      status: "draft",
-      inclusions: result.data.inclusions,
-      exclusions: result.data.exclusions,
-      requirements: result.data.requirements,
-      license_summary: result.data.licenseSummary,
-      support_summary: result.data.supportSummary,
-      created_by: admin.identity.id,
-      updated_by: admin.identity.id,
-    })
-    .select("id")
-    .single<{ id: string }>();
+  return null;
+}
 
-  if (error || !created) {
-    if (error?.code === "23505") {
-      return {
-        status: "error",
-        message: "A system already uses this URL slug.",
-        fieldErrors: { slug: ["Choose a unique URL slug."] },
-      };
-    }
+async function loadPublicationReadiness(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  systemId: string,
+) {
+  const [features, media, currentVersion] = await Promise.all([
+    supabase
+      .from("system_features")
+      .select("id", { count: "exact", head: true })
+      .eq("system_id", systemId),
+    supabase
+      .from("system_media")
+      .select("id", { count: "exact", head: true })
+      .eq("system_id", systemId),
+    supabase
+      .from("system_versions")
+      .select("id")
+      .eq("system_id", systemId)
+      .eq("is_current", true)
+      .maybeSingle<{ id: string }>(),
+  ]);
 
+  if (features.error || media.error || currentVersion.error) {
+    return { status: "error" as const };
+  }
+
+  let hasCurrentDeliverable = false;
+  if (currentVersion.data) {
+    const files = await supabase
+      .from("system_files")
+      .select("id", { count: "exact", head: true })
+      .eq("system_version_id", currentVersion.data.id);
+
+    if (files.error) return { status: "error" as const };
+    hasCurrentDeliverable = (files.count ?? 0) > 0;
+  }
+
+  return {
+    status: "ready" as const,
+    assets: {
+      featureCount: features.count ?? 0,
+      mediaCount: media.count ?? 0,
+      hasCurrentDeliverable,
+    },
+  };
+}
+
+function validationFailure(
+  error: z.ZodError,
+): SystemEditorState {
+  return {
+    status: "error",
+    message: "Review the highlighted fields before saving.",
+    fieldErrors: error.flatten().fieldErrors,
+  };
+}
+
+function unavailableState(): SystemEditorState {
+  return {
+    status: "unavailable",
+    message: "Saving is unavailable until the Supabase project is connected.",
+  };
+}
+
+function authorizationFailure(error: unknown): SystemEditorState {
+  if (error instanceof AuthorizationError) {
     return {
       status: "error",
-      message: "The draft could not be saved. No publication action was attempted.",
+      message: "Your administrator access could not be verified.",
+    };
+  }
+  throw error;
+}
+
+function mutationFailure(error: { code?: string } | null): SystemEditorState {
+  if (error?.code === "23505") {
+    return {
+      status: "error",
+      message: "A system already uses this URL slug.",
+      fieldErrors: { slug: ["Choose a unique URL slug."] },
     };
   }
 
+  return {
+    status: "error",
+    message: "The system could not be saved. No publication change was applied.",
+  };
+}
+
+function revalidateCatalog(
+  systemId: string,
+  ...slugs: string[]
+) {
   revalidatePath("/admin/systems");
+  revalidatePath(`/admin/systems/${systemId}/edit`);
   revalidatePath("/systems");
-  redirect("/admin/systems?created=1");
+  for (const slug of new Set(slugs)) {
+    revalidatePath(`/systems/${slug}`);
+  }
 }
