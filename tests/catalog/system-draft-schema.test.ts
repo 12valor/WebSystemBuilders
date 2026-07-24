@@ -16,8 +16,13 @@ const validDraft = {
   inclusions: "",
   exclusions: "",
   requirements: "",
+  technologyStack: "Next.js, TypeScript, Supabase, TypeScript",
+  deliverySummary: "",
+  demoInstructions: "",
   licenseSummary: "",
   supportSummary: "",
+  seoTitle: "",
+  seoDescription: "",
 } as const;
 
 describe("system draft validation", () => {
@@ -26,6 +31,20 @@ describe("system draft validation", () => {
     expect(result.priceMinor).toBe(1_250_000);
     expect(result.regularPriceMinor).toBe(1_250_000);
     expect(result.description).toBeNull();
+    expect(result.technologyStack).toEqual(["Next.js", "TypeScript", "Supabase"]);
+    expect(result.deliverySummary).toBeNull();
+    expect(result.seoTitle).toBeNull();
+  });
+
+  it("limits and normalizes structured catalog metadata", () => {
+    const tooManyTechnologies = Array.from({ length: 31 }, (_, index) => "Tool " + index).join(",");
+    const invalid = systemDraftInputSchema.safeParse({
+      ...validDraft,
+      technologyStack: tooManyTechnologies,
+      seoTitle: "x".repeat(71),
+    });
+
+    expect(invalid.success).toBe(false);
   });
 
   it("requires a lower sale amount before activation", () => {

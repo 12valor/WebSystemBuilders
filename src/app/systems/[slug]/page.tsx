@@ -86,7 +86,7 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
 
       <section className="py-12 sm:py-16 lg:py-24">
         <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] gap-10 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[minmax(0,1.08fr)_minmax(340px,.72fr)] lg:gap-14 xl:w-[min(calc(100%-96px),1280px)] xl:gap-20">
-          <div>
+          <div className="min-w-0">
             <ProductMedia media={system.media} title={system.title} />
             <div className="mt-10 flex flex-wrap gap-2 text-xs uppercase tracking-[0.08em] text-muted"><span>{audienceLabel(system.audience)}</span><span>/</span><span>{system.category?.name ?? "Uncategorized"}</span><span>/</span><span>{productTypeLabel(system.productType)}</span></div>
             <h1 className="mt-5 max-w-4xl text-[clamp(3rem,7vw,5.5rem)] font-semibold leading-[0.96] tracking-[-0.065em]">{system.title}</h1>
@@ -142,7 +142,7 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
               <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">Built with disclosed tools.</h2>
             </div>
             <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
-              {system.technologyStack.map((technology) => <li key={technology} className="rounded-full border border-white/15 bg-surface px-3 py-2 text-sm text-secondary">{technology}</li>)}
+              {system.technologyStack.map((technology) => <li key={technology} className="max-w-full break-words rounded-full border border-white/15 bg-surface px-3 py-2 text-sm text-secondary">{technology}</li>)}
             </ul>
           </div>
         </section>

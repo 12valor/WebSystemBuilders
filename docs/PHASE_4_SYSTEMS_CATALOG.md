@@ -31,7 +31,7 @@ Deliver a database-driven catalog where visitors can discover published systems,
 - [x] Public feature list, demo links, and current-version disclosure
 - [x] Active-sale and regular-price comparison
 - [x] Related published systems
-- [ ] Dedicated technology-stack, delivery, demo-instruction, and SEO fields
+- [x] Dedicated technology-stack, delivery, demo-instruction, and SEO fields
 - [ ] Localized estimated display currency with manual override
 - [ ] Live Supabase and Storage policy verification
 - [ ] Checkout entry point, implemented in the payment and ordering phase
@@ -49,4 +49,4 @@ Phase 4 exits when published systems can be searched, filtered, evaluated throug
 
 ## 6. Next action
 
-Extend the catalog schema and administrator editor with dedicated technology-stack, delivery, demo-instruction, and SEO fields, then select a replaceable exchange-rate provider before localized currency work.
+Select a replaceable exchange-rate provider and define its server-side cache and fallback behavior before localized currency work, then verify the complete catalog against the owner-provided Supabase project and private Storage policies.

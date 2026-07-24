@@ -6,6 +6,8 @@ const completeSystem = {
   description: "A complete overview.",
   inclusions: "Source code and setup guide.",
   exclusions: "Hosting and third-party subscriptions.",
+  technologyStack: ["Next.js", "TypeScript", "Supabase"],
+  deliverySummary: "Private download access after verified payment.",
   licenseSummary: "Single-business commercial source license.",
   supportSummary: "Support boundaries are shown before purchase.",
 };
@@ -23,11 +25,13 @@ describe("catalog publication readiness", () => {
 
   it("reports missing trust and delivery requirements", () => {
     const issues = getPublicationIssues(
-      { ...completeSystem, description: null, licenseSummary: null },
+      { ...completeSystem, description: null, technologyStack: [], deliverySummary: null, licenseSummary: null },
       { featureCount: 0, mediaCount: 0, hasCurrentDeliverable: false },
     );
 
     expect(issues).toContain("Add a full product description.");
+    expect(issues).toContain("Add at least one technology.");
+    expect(issues).toContain("Add the delivery summary.");
     expect(issues).toContain("Add the customer-facing license summary.");
     expect(issues).toContain("Add at least one customer-facing feature.");
     expect(issues).toContain("Add at least one product media item.");

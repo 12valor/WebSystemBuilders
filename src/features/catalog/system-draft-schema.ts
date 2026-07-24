@@ -33,12 +33,12 @@ export const systemDraftInputSchema = z
     exclusions: z.string().trim().max(10000).optional(),
     requirements: z.string().trim().max(10000).optional(),
     technologyStack: technologyStackSchema,
-    deliverySummary: z.string().trim().max(3000).optional(),
-    demoInstructions: z.string().trim().max(3000).optional(),
+    deliverySummary: z.string().trim().max(3000).refine((value) => value.length === 0 || value.length >= 2, "Enter at least 2 characters.").optional(),
+    demoInstructions: z.string().trim().max(3000).refine((value) => value.length === 0 || value.length >= 2, "Enter at least 2 characters.").optional(),
     licenseSummary: z.string().trim().max(10000).optional(),
     supportSummary: z.string().trim().max(5000).optional(),
-    seoTitle: z.string().trim().max(70, "Keep the SEO title under 70 characters.").optional(),
-    seoDescription: z.string().trim().max(180, "Keep the SEO description under 180 characters.").optional(),
+    seoTitle: z.string().trim().max(70, "Keep the SEO title under 70 characters.").refine((value) => value.length === 0 || value.length >= 2, "Enter at least 2 characters.").optional(),
+    seoDescription: z.string().trim().max(180, "Keep the SEO description under 180 characters.").refine((value) => value.length === 0 || value.length >= 10, "Enter at least 10 characters.").optional(),
   })
   .superRefine((input, context) => {
     const regularMinor = parseMoneyToMinorUnits(input.regularPrice);

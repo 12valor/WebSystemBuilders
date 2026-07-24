@@ -4,8 +4,9 @@ import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 const details = [
   ["Overview and outcomes", "The description explains the operational problem, intended users, and practical outcomes without unsupported claims."],
   ["Features and inclusions", "Administrators list the exact modules, source files, documentation, and other materials included with the selected version."],
-  ["Requirements", "Hosting, device, runtime, database, and installation requirements appear before payment."],
-  ["License and support", "The commercial source license, 30-day support coverage, customization boundaries, and update policy remain visible."],
+  ["Technology and requirements", "The administrator discloses the actual technology stack together with hosting, device, runtime, database, and installation requirements."],
+  ["Delivery and demo guidance", "Product-specific delivery timing, access method, and any published demo instructions appear before payment."],
+  ["License and support", "The approved 30-day installation and reproducible-defect support boundary, product license, customization options, and update policy remain visible."],
 ];
 
 export function SystemDetailPreview() {
@@ -23,7 +24,7 @@ export function SystemDetailPreview() {
         <section className="py-12 sm:py-16 lg:py-24">
           <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] gap-10 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[minmax(0,1.18fr)_minmax(360px,.82fr)] lg:items-start lg:gap-14 xl:w-[min(calc(100%-96px),1280px)] xl:gap-20">
             <ProductMediaPreview />
-            <div className="lg:sticky lg:top-28">
+            <div className="min-w-0 lg:sticky lg:top-28">
               <p className="mb-5 inline-flex min-h-8 items-center rounded-full border border-blue-400/20 bg-blue-500/[0.08] px-3 text-xs font-semibold text-brand-hover">Phase 1 design preview</p>
               <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.08em] text-muted"><span>Audience set by admin</span><span>/</span><span>Category set by admin</span></div>
               <h1 className="mt-5 text-[clamp(2.6rem,6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.06em]">System listing title</h1>
@@ -38,7 +39,7 @@ export function SystemDetailPreview() {
               <dl className="mt-7 grid gap-4 text-sm">
                 <TrustRow term="Delivery" detail="Protected access after verified payment" />
                 <TrustRow term="License" detail="Commercial source license summary" />
-                <TrustRow term="Support" detail="30 days included with the purchased version" />
+                <TrustRow term="Support" detail="30 days for the original purchaser after fulfillment" />
                 <TrustRow term="Refunds" detail="Policy summary shown before checkout" />
               </dl>
             </div>
@@ -78,7 +79,7 @@ function TrustRow({ term, detail }: { term: string; detail: string }) {
 
 function ProductMediaPreview() {
   return (
-    <div>
+    <div className="min-w-0">
       <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c0d0f]">
         <div className="flex h-14 items-center justify-between border-b border-white/10 px-5 text-xs text-muted"><span>Product screenshot area</span><span>01 / 04</span></div>
         <div className="aspect-[4/3] p-4 sm:p-7">
