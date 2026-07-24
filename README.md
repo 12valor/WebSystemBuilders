@@ -31,5 +31,6 @@ npm run build
 - [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) - active technical foundation, schema boundary, and setup gates
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) - approved logo and brand usage
 - [`supabase/migrations`](supabase/migrations) - versioned database changes
+- [src/app/account/page.tsx](src/app/account/page.tsx) - non-persistent customer account direction
 
 **Current phase:** Phase 2 - Technical foundation

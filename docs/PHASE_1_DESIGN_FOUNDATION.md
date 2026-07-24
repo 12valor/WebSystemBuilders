@@ -370,6 +370,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - Audited rendered text contrast on the homepage, systems catalog, system detail, checkout, admin systems list, and admin editor. No non-disabled text failures remain.
 - Verified visible `2px` cobalt keyboard-focus outlines on public, checkout, and admin controls, including the skip links.
 - Verified the compiled `prefers-reduced-motion: reduce` rule removes smooth scrolling and reduces transition and animation duration to `0.01ms`.
+- Verified the customer-account preview compiles as a static Next.js route and returns successfully from the local application.
 
 ## 14. Phase 1 deliverables
 
@@ -384,6 +385,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - [x] Create the responsive high-fidelity homepage in [`../src/app/page.tsx`](../src/app/page.tsx) with reusable React components
 - [x] Create high-fidelity catalog and system-detail direction in [`../src/app/systems/page.tsx`](../src/app/systems/page.tsx) and [`../src/app/systems/preview/page.tsx`](../src/app/systems/preview/page.tsx)
 - [x] Create high-fidelity checkout direction in [`../src/app/checkout/preview/page.tsx`](../src/app/checkout/preview/page.tsx)
+- [x] Create high-fidelity customer-account direction in [../src/app/account/page.tsx](../src/app/account/page.tsx)
 - [x] Create high-fidelity admin direction in [`../src/app/admin/systems/page.tsx`](../src/app/admin/systems/page.tsx) and [`../src/app/admin/systems/new/page.tsx`](../src/app/admin/systems/new/page.tsx)
 - [x] Verify the homepage at 360px, 390px, 768px, 1024px, 1280px, and 1440px
 - [x] Verify contrast, focus, and reduced-motion behavior in the interactive Next.js prototype
