@@ -41,6 +41,8 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 - Administrator catalog list, validated private system-draft creation, and existing-record editing.
 - A second migration for manual sale state, private Storage buckets, object policies, and system audit triggers.
 - A fail-closed publication action that checks product copy, features, media, and deliverable readiness before exposing a record.
+- Administrator management for features, external media, product images, versions, and private ZIP deliverables.
+- Short-lived signed upload tokens that send file bytes directly to private Storage before server-side metadata confirmation.
 
 ## 3. Initial schema boundary
 
@@ -69,6 +71,8 @@ Orders, payments, fulfillment, emails, downloads, inquiries, and support receive
 - Only super administrators may grant or revoke administrator access.
 - Deliverable file rows are not publicly readable.
 - Product media and deliverable buckets remain private; only administrators receive direct object-management policies.
+- Upload preparation verifies administrator access, system ownership, file type, and size before issuing a randomized object path.
+- Upload confirmation verifies the stored object before creating media or deliverable metadata, and object deletion uses the Storage API.
 - Customer delivery will use a later server eligibility check before creating a short-lived signed URL.
 - The first super administrator must be bootstrapped through a trusted server or Supabase administrative workflow.
 
@@ -83,6 +87,7 @@ The owner has not created the Supabase, PayMongo, or Resend production configura
 - Link the Supabase CLI and apply migrations.
 - Generate database types after the migration is applied.
 - Apply the private Storage bucket and policy migration to the configured projects.
+- Apply the catalog-resource migration that enforces bucket limits and atomic current-version creation.
 - Complete PayMongo merchant onboarding before live checkout.
 - Configure a verified Resend sending domain before production email.
 
@@ -106,7 +111,7 @@ Never commit real credentials. Use [`.env.example`](../.env.example) only as a k
 - [x] Replace preview catalog data with repository-backed queries
 - [x] Connect initial system-draft creation to a validated, authorized server mutation
 - [x] Connect existing-system editing and guarded publication mutations
-- [ ] Connect feature, media, version, and private-file management mutations
+- [x] Connect feature, media, version, and private-file management mutations
 - [x] Add private Storage buckets and administrator object policies through a migration
 - [ ] Apply and verify the private Storage migration in configured projects
 - [ ] Add integration tests against a configured test project

@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { AdminSystemResources } from "@/components/admin/admin-system-resources";
 import type {
   AdminCategoryRecord,
   AdminCatalogData,
   AdminEditableSystem,
+  AdminSystemResources as AdminSystemResourcesData,
 } from "@/features/catalog/admin-types";
 import {
   createSystemDraft,
@@ -23,11 +25,13 @@ export function AdminSystemEditor({
   categories,
   dataStatus,
   system = null,
+  resources = null,
   success = null,
 }: {
   categories: AdminCategoryRecord[];
   dataStatus: AdminCatalogData["status"];
   system?: AdminEditableSystem | null;
+  resources?: AdminSystemResourcesData | null;
   success?: EditorSuccess;
 }) {
   const isEditing = system !== null;
@@ -76,7 +80,7 @@ export function AdminSystemEditor({
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
         <nav aria-label="System editor sections" className="hidden h-fit rounded-xl border border-white/10 bg-surface p-2 lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Publication", "next"]].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
@@ -157,6 +161,7 @@ export function AdminSystemEditor({
           <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-muted">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
         </aside>
       </div>
+      {system && resources && <AdminSystemResources systemId={system.id} resources={resources} />}
     </main>
   );
 }

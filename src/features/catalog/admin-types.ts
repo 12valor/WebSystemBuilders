@@ -41,8 +41,47 @@ export type AdminCatalogData = {
   systems: AdminSystemRecord[];
 };
 
+export type AdminSystemFeature = {
+  id: string;
+  label: string;
+  sortOrder: number;
+};
+
+export type AdminSystemMedia = {
+  id: string;
+  mediaType: "image" | "video" | "demo";
+  storagePath: string | null;
+  externalUrl: string | null;
+  altText: string | null;
+  sortOrder: number;
+};
+
+export type AdminSystemFile = {
+  id: string;
+  storagePath: string;
+  originalFilename: string;
+  byteSize: number | null;
+  sha256: string | null;
+};
+
+export type AdminSystemVersion = {
+  id: string;
+  versionLabel: string;
+  releaseNotes: string | null;
+  isCurrent: boolean;
+  releasedAt: string | null;
+  files: AdminSystemFile[];
+};
+
+export type AdminSystemResources = {
+  features: AdminSystemFeature[];
+  media: AdminSystemMedia[];
+  versions: AdminSystemVersion[];
+};
+
 export type AdminSystemEditorData = {
   status: "ready" | "unconfigured" | "error" | "not_found";
   categories: AdminCategoryRecord[];
   system: AdminEditableSystem | null;
+  resources: AdminSystemResources;
 };

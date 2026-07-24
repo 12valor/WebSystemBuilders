@@ -53,6 +53,7 @@ export default async function EditAdminSystemPage({
         categories={data.categories}
         dataStatus="ready"
         system={data.system}
+        resources={data.resources}
         success={success}
       />
     </AdminShell>

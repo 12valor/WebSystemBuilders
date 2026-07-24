@@ -10,7 +10,7 @@ If the requested work conflicts with the blueprint, identify the conflict and as
 
 ## Current project state
 
-The repository contains the Phase 1 interfaces plus Phase 2 authentication, server administrator protection, database-backed public/admin catalog repositories, validated draft create/edit actions, guarded publication, identity/catalog migrations, and private Storage policy migrations. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, and Storage remain unverified. Local development shows explicit unconfigured states and may retain the approved admin preview; production fails closed. Feature, media, version, and private-file management mutations are not connected yet. Inspect the repository before every task and build on the actual current state.
+The repository contains the Phase 1 interfaces plus Phase 2 authentication, server administrator protection, database-backed public/admin catalog repositories, validated draft create/edit actions, guarded publication, feature/media/version/private-file management, signed private uploads, and versioned identity/catalog/Storage migrations. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, and Storage remain unverified. Local development shows explicit unconfigured states and may retain the approved admin preview; production fails closed. Inspect the repository before every task and build on the actual current state.
 
 ## Product boundaries
 
