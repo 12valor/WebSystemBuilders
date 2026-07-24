@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { catalogAudiences, catalogPricingModes, type CatalogAudience } from "@/features/catalog/catalog-options";
+import { getCatalogPricePresentation, getEffectiveCatalogPrice } from "@/features/catalog/pricing";
 import type { CatalogData, CatalogPricingType, CatalogSystemRecord } from "@/features/catalog/types";
 
 type SortMode = "Newest" | "Name: A to Z" | "Price: low to high" | "Price: high to low";
@@ -144,6 +145,8 @@ export function CatalogExplorer({
 }
 
 function SystemCard({ system }: { system: CatalogSystemRecord }) {
+  const price = getCatalogPricePresentation(system);
+
   return (
     <article className="flex min-h-80 flex-col rounded-xl border border-white/10 bg-surface p-5">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs uppercase tracking-[0.08em] text-muted">
@@ -154,7 +157,7 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
       <h3 className="mt-2 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
       <div className="mt-auto border-t border-white/10 pt-5">
-        <p className="text-lg font-semibold tabular-nums">{formatSystemPrice(system)}</p>
+        <div className="flex flex-wrap items-baseline gap-2"><p className="text-lg font-semibold tabular-nums">{price.current}</p>{price.regular && <span className="text-xs text-muted line-through">{price.regular}</span>}{price.isSale && <span className="text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-brand-hover">Sale</span>}</div>
         <Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 px-4 text-sm font-semibold hover:bg-white/[0.04]">View system</Link>
       </div>
     </article>
@@ -217,25 +220,12 @@ function audienceLabel(audience: CatalogSystemRecord["audience"]) {
   return "Students + Business";
 }
 
-function effectivePrice(system: CatalogSystemRecord) {
-  if (system.saleActive && system.salePriceMinor !== null) return system.salePriceMinor;
-  return system.priceMinor;
-}
-
 function compareSystems(left: CatalogSystemRecord, right: CatalogSystemRecord, sort: SortMode) {
   if (sort === "Name: A to Z") return left.title.localeCompare(right.title);
-  if (sort === "Price: low to high") return (effectivePrice(left) ?? Number.MAX_SAFE_INTEGER) - (effectivePrice(right) ?? Number.MAX_SAFE_INTEGER);
-  if (sort === "Price: high to low") return (effectivePrice(right) ?? -1) - (effectivePrice(left) ?? -1);
+  if (sort === "Price: low to high") return (getEffectiveCatalogPrice(left) ?? Number.MAX_SAFE_INTEGER) - (getEffectiveCatalogPrice(right) ?? Number.MAX_SAFE_INTEGER);
+  if (sort === "Price: high to low") return (getEffectiveCatalogPrice(right) ?? -1) - (getEffectiveCatalogPrice(left) ?? -1);
   return new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime();
 }
-
-function formatSystemPrice(system: CatalogSystemRecord) {
-  if (system.pricingType === "quotation" || system.priceMinor === null) return "Request a quote";
-  const amount = effectivePrice(system) ?? system.priceMinor;
-  const formatted = new Intl.NumberFormat("en-PH", { style: "currency", currency: system.currency, maximumFractionDigits: 2 }).format(amount / 100);
-  return system.pricingType === "starting" ? `From ${formatted}` : formatted;
-}
-
 function FilterGroup({ label, children, last = false }: { label: string; children: React.ReactNode; last?: boolean }) {
   return <fieldset className={last ? "" : "mb-6 border-b border-white/10 pb-6"}><legend className="mb-3 text-xs font-semibold">{label}</legend><div className="grid gap-1">{children}</div></fieldset>;
 }

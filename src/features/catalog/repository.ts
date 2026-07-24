@@ -1,6 +1,10 @@
 import "server-only";
 import { z } from "zod";
-import type { CatalogData, CatalogSystemDetailData } from "@/features/catalog/types";
+import type {
+  CatalogData,
+  CatalogSystemDetailData,
+  CatalogSystemMedia,
+} from "@/features/catalog/types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createClient } from "@/lib/supabase/server";
 
@@ -18,6 +22,7 @@ const systemRowSchema = z.object({
   slug: z.string(),
   summary: z.string(),
   audience: z.enum(["students", "business", "both"]),
+  product_type: z.enum(["ready_made", "customizable_template", "custom_service"]),
   pricing_type: z.enum(["fixed", "starting", "quotation"]),
   price_minor: z.number().int().nullable(),
   regular_price_minor: z.number().int().nullable(),
@@ -30,6 +35,7 @@ const systemRowSchema = z.object({
 });
 
 const systemDetailRowSchema = systemRowSchema.extend({
+  category_id: z.uuid().nullable(),
   description: z.string().nullable(),
   requirements: z.string().nullable(),
   inclusions: z.string().nullable(),
@@ -37,6 +43,26 @@ const systemDetailRowSchema = systemRowSchema.extend({
   license_summary: z.string().nullable(),
   support_summary: z.string().nullable(),
 });
+
+const featureRowSchema = z.object({
+  id: z.uuid(),
+  label: z.string(),
+});
+
+const mediaRowSchema = z.object({
+  id: z.uuid(),
+  media_type: z.enum(["image", "video", "demo"]),
+  storage_path: z.string().nullable(),
+  external_url: z.url().startsWith("https://").nullable(),
+  alt_text: z.string().nullable(),
+});
+
+const versionRowSchema = z.object({
+  version_label: z.string(),
+  released_at: z.string().nullable(),
+});
+
+const systemSelect = "id,title,slug,summary,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,is_featured,updated_at,category:system_categories(name,slug)";
 
 export async function getPublicCatalogData(): Promise<CatalogData> {
   if (!isSupabasePubliclyConfigured()) {
@@ -52,7 +78,7 @@ export async function getPublicCatalogData(): Promise<CatalogData> {
       .order("sort_order"),
     supabase
       .from("systems")
-      .select("id,title,slug,summary,audience,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,is_featured,updated_at,category:system_categories(name,slug)")
+      .select(systemSelect)
       .eq("status", "published")
       .order("is_featured", { ascending: false })
       .order("updated_at", { ascending: false }),
@@ -82,7 +108,7 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("systems")
-    .select("id,title,slug,summary,description,audience,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,is_featured,updated_at,requirements,inclusions,exclusions,license_summary,support_summary,category:system_categories(name,slug)")
+    .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,license_summary,support_summary`)
     .eq("status", "published")
     .eq("slug", slug)
     .maybeSingle();
@@ -92,6 +118,57 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
 
   const parsed = systemDetailRowSchema.safeParse(data);
   if (!parsed.success) return { status: "error", system: null };
+
+  const relatedFilters = [
+    parsed.data.category_id ? `category_id.eq.${parsed.data.category_id}` : null,
+    `audience.eq.${parsed.data.audience}`,
+    "audience.eq.both",
+  ].filter((filter): filter is string => Boolean(filter));
+
+  const [featuresResult, mediaResult, versionResult, relatedResult] = await Promise.all([
+    supabase
+      .from("system_features")
+      .select("id,label")
+      .eq("system_id", parsed.data.id)
+      .order("sort_order"),
+    supabase
+      .from("system_media")
+      .select("id,media_type,storage_path,external_url,alt_text")
+      .eq("system_id", parsed.data.id)
+      .order("sort_order"),
+    supabase
+      .from("system_versions")
+      .select("version_label,released_at")
+      .eq("system_id", parsed.data.id)
+      .eq("is_current", true)
+      .maybeSingle(),
+    supabase
+      .from("systems")
+      .select(systemSelect)
+      .eq("status", "published")
+      .neq("id", parsed.data.id)
+      .or(relatedFilters.join(","))
+      .order("is_featured", { ascending: false })
+      .order("updated_at", { ascending: false })
+      .limit(3),
+  ]);
+
+  if (featuresResult.error || mediaResult.error || versionResult.error) {
+    return { status: "error", system: null };
+  }
+
+  const features = z.array(featureRowSchema).safeParse(featuresResult.data);
+  const media = z.array(mediaRowSchema).safeParse(mediaResult.data);
+  const version = versionRowSchema.nullable().safeParse(versionResult.data);
+  const related = relatedResult.error
+    ? { success: true as const, data: [] as z.infer<typeof systemRowSchema>[] }
+    : z.array(systemRowSchema).safeParse(relatedResult.data);
+
+  if (!features.success || !media.success || !version.success || !related.success) {
+    return { status: "error", system: null };
+  }
+
+  const resolvedMedia = await resolvePublicMedia(supabase, media.data);
 
   return {
     status: "ready",
@@ -103,8 +180,43 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
       exclusions: parsed.data.exclusions,
       licenseSummary: parsed.data.license_summary,
       supportSummary: parsed.data.support_summary,
+      features: features.data,
+      media: resolvedMedia,
+      currentVersion: version.data
+        ? { versionLabel: version.data.version_label, releasedAt: version.data.released_at }
+        : null,
+      relatedSystems: related.data.map(mapSystemRow),
     },
   };
+}
+
+async function resolvePublicMedia(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  media: z.infer<typeof mediaRowSchema>[],
+): Promise<CatalogSystemMedia[]> {
+  const imagePaths = media
+    .filter((item) => item.media_type === "image" && item.storage_path)
+    .map((item) => item.storage_path as string);
+  const signedByPath = new Map<string, string>();
+
+  if (imagePaths.length > 0) {
+    const { data } = await supabase.storage.from("system-media").createSignedUrls(imagePaths, 3600);
+    data?.forEach((item) => {
+      if (item.path && item.signedUrl) signedByPath.set(item.path, item.signedUrl);
+    });
+  }
+
+  return media.flatMap((item) => {
+    const url = item.storage_path ? signedByPath.get(item.storage_path) : item.external_url;
+    if (!url || !item.alt_text) return [];
+    return [{
+      id: item.id,
+      mediaType: item.media_type,
+      url,
+      altText: item.alt_text,
+      storageBacked: Boolean(item.storage_path),
+    }];
+  });
 }
 
 function mapSystemRow(system: z.infer<typeof systemRowSchema>) {
@@ -114,6 +226,7 @@ function mapSystemRow(system: z.infer<typeof systemRowSchema>) {
     slug: system.slug,
     summary: system.summary,
     audience: system.audience,
+    productType: system.product_type,
     pricingType: system.pricing_type,
     priceMinor: system.price_minor,
     regularPriceMinor: system.regular_price_minor,

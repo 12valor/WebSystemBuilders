@@ -1,5 +1,6 @@
 export type CatalogAudienceValue = "students" | "business" | "both";
 export type CatalogPricingType = "fixed" | "starting" | "quotation";
+export type CatalogProductType = "ready_made" | "customizable_template" | "custom_service";
 
 export type CatalogCategoryRecord = {
   id: string;
@@ -15,6 +16,7 @@ export type CatalogSystemRecord = {
   slug: string;
   summary: string;
   audience: CatalogAudienceValue;
+  productType: CatalogProductType;
   pricingType: CatalogPricingType;
   priceMinor: number | null;
   regularPriceMinor: number | null;
@@ -32,6 +34,24 @@ export type CatalogData = {
   systems: CatalogSystemRecord[];
 };
 
+export type CatalogSystemFeature = {
+  id: string;
+  label: string;
+};
+
+export type CatalogSystemMedia = {
+  id: string;
+  mediaType: "image" | "video" | "demo";
+  url: string;
+  altText: string;
+  storageBacked: boolean;
+};
+
+export type CatalogSystemVersion = {
+  versionLabel: string;
+  releasedAt: string | null;
+};
+
 export type CatalogSystemDetail = CatalogSystemRecord & {
   description: string | null;
   requirements: string | null;
@@ -39,6 +59,10 @@ export type CatalogSystemDetail = CatalogSystemRecord & {
   exclusions: string | null;
   licenseSummary: string | null;
   supportSummary: string | null;
+  features: CatalogSystemFeature[];
+  media: CatalogSystemMedia[];
+  currentVersion: CatalogSystemVersion | null;
+  relatedSystems: CatalogSystemRecord[];
 };
 
 export type CatalogSystemDetailData = {

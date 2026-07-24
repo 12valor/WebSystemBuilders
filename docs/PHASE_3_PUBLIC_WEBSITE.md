@@ -2,11 +2,11 @@
 
 ## Status
 
-**Active workstream:** Phase 3 - Public website  
+**Local implementation:** Core public routes complete; production gates remain
 **Started:** July 24, 2026  
 **Dependency note:** Phase 2 code foundations are implemented, but live Supabase migration, authentication, RLS, and Storage verification remain pending owner-provided projects and credentials.
 
-Phase 3 interface work may continue locally without representing the provider-dependent Phase 2 exit criteria as complete.
+Phase 4 catalog work is active. Phase 3 production inquiry persistence, email, business contact details, and final legal wording remain gated by provider configuration and owner or legal review.
 
 ## 1. Target outcome
 

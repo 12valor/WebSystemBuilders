@@ -22,6 +22,8 @@ Phase 3 adds administrator-driven homepage catalog sections plus dedicated publi
 
 Contact and quotation forms use shared server validation, hashed rate-limit identifiers, and a private administrator-only inquiry table. Without complete server configuration, the forms remain visibly unavailable and do not send or store information. FAQ and pre-launch policy summaries expose approved product direction without presenting pending legal text as production-ready.
 
+Phase 4 now exposes published product features, screenshots, demo or video links, current versions, sale comparisons, and related systems through the public catalog detail route. Uploaded catalog images remain private at rest and receive time-limited signed access only when attached to a published system.
+
 ## Checks
 
 ```bash
@@ -37,10 +39,11 @@ npm run build
 - [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) - approved product decisions and production gates
 - [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) - approved design foundation and responsive wireframes
 - [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) - technical foundation, schema boundary, and setup gates
-- [`docs/PHASE_3_PUBLIC_WEBSITE.md`](docs/PHASE_3_PUBLIC_WEBSITE.md) - active public website routes, content rules, and remaining work
+- [`docs/PHASE_3_PUBLIC_WEBSITE.md`](docs/PHASE_3_PUBLIC_WEBSITE.md) - public website routes, content rules, and remaining production gates
+- [`docs/PHASE_4_SYSTEMS_CATALOG.md`](docs/PHASE_4_SYSTEMS_CATALOG.md) - active catalog scope, completed capabilities, and remaining gaps
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) - approved logo and brand usage
 - [`supabase/migrations`](supabase/migrations) - versioned database changes
 - [src/app/account/page.tsx](src/app/account/page.tsx) - configuration-aware customer account direction
 - [src/app/auth/sign-in/page.tsx](src/app/auth/sign-in/page.tsx) - passwordless email sign-in interface
 
-**Current phase:** Phase 3 - Public website (Phase 2 provider verification remains pending)
+**Current phase:** Phase 4 - Systems catalog (provider verification remains pending)
