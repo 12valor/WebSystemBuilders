@@ -4,13 +4,13 @@
 
 Before planning or changing application code, read [`docs/WEBSITE_BLUEPRINT.md`](docs/WEBSITE_BLUEPRINT.md). Treat it as the project's product and technical source of truth.
 
-The project is currently in Phase 1. Read [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) for confirmed product decisions and deferred production gates, then read [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) for active design tokens, component rules, responsive wireframes, and phase exit criteria. Do not present proposed or open items as approved policy.
+The project is currently in Phase 2. Read [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) for confirmed product decisions and deferred production gates, [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) for approved design rules, and [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) for the active schema, security, setup gates, and exit criteria. Do not present proposed or open items as approved policy.
 
 If the requested work conflicts with the blueprint, identify the conflict and ask for an owner decision before changing architecture, business rules, payment behavior, licensing, or delivery policy.
 
 ## Current project state
 
-The repository now contains a Next.js App Router, React, TypeScript, and Tailwind application foundation plus the responsive Phase 1 homepage. Supabase, authentication, PayMongo, Resend, migrations, and production environment configuration do not exist yet. Inspect the repository before every task and build on the actual current state.
+The repository contains the Phase 1 Next.js interface previews plus the initial Phase 2 Supabase environment boundaries, server authorization helpers, tests, and identity/catalog migration. The Supabase projects, credentials, generated types, authenticated routes, storage buckets, PayMongo, and Resend are not configured yet. Public catalog and admin screens remain non-persistent previews until they are connected through the Phase 2 data and authorization layers. Inspect the repository before every task and build on the actual current state.
 
 ## Product boundaries
 
