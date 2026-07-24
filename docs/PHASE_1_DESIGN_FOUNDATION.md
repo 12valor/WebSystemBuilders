@@ -370,7 +370,7 @@ Commerce statuses: `pending`, `paid`, `failed`, `expired`, `refunded`, and `disp
 - Audited rendered text contrast on the homepage, systems catalog, system detail, checkout, admin systems list, and admin editor. No non-disabled text failures remain.
 - Verified visible `2px` cobalt keyboard-focus outlines on public, checkout, and admin controls, including the skip links.
 - Verified the compiled `prefers-reduced-motion: reduce` rule removes smooth scrolling and reduces transition and animation duration to `0.01ms`.
-- Verified the customer-account preview compiles as a static Next.js route and returns successfully from the local application.
+- Verified the customer-account preview compiles as a Next.js route and returns successfully from the local application.
 
 ## 14. Phase 1 deliverables
 

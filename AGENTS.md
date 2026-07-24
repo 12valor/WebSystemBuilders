@@ -10,7 +10,7 @@ If the requested work conflicts with the blueprint, identify the conflict and as
 
 ## Current project state
 
-The repository contains the Phase 1 Next.js interfaces plus the Phase 2 Supabase environment boundaries, passwordless email sign-in and callback routes, session-refresh proxy, server administrator guard, authorization helpers, tests, and identity/catalog migration. Supabase projects, credentials, generated types, storage buckets, PayMongo, and Resend are not configured yet, so live authentication and RLS integration remain unverified. Local development may show the approved admin preview without credentials; production fails closed. Public catalog and admin data remain non-persistent until connected through the Phase 2 data layer. Inspect the repository before every task and build on the actual current state.
+The repository contains the Phase 1 interfaces plus Phase 2 authentication, server administrator protection, database-backed public/admin catalog repositories, validated private draft creation, identity/catalog migrations, and private Storage policy migrations. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, and Storage remain unverified. Local development shows explicit unconfigured states and may retain the approved admin preview; production fails closed. Editing, media uploads, versions, files, and publication mutations are not connected yet. Inspect the repository before every task and build on the actual current state.
 
 ## Product boundaries
 

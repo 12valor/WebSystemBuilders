@@ -3,13 +3,18 @@ import { CatalogExplorer } from "@/components/catalog/catalog-explorer";
 import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
+import { getPublicCatalogData } from "@/features/catalog/repository";
 
 export const metadata: Metadata = {
   title: "Systems catalog",
   description: "Browse ready-made systems for students and business owners, or request a custom software system.",
 };
 
-export default function SystemsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function SystemsPage() {
+  const catalog = await getPublicCatalogData();
+
   return (
     <>
       <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 bg-white px-3 py-2 text-sm font-semibold text-black transition-transform focus:translate-y-0">Skip to content</a>
@@ -21,7 +26,7 @@ export default function SystemsPage() {
             <p className="max-w-md text-lg leading-8 text-secondary">Browse administrator-published software by audience, category, and pricing mode. Every listing will show its exact inclusions before purchase.</p>
           </div>
         </section>
-        <CatalogExplorer />
+        <CatalogExplorer catalog={catalog} />
       </main>
       <SiteFooter />
     </>

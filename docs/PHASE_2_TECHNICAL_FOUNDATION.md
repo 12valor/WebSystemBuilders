@@ -17,7 +17,7 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 | Database and Auth | Supabase PostgreSQL and Auth |
 | Data changes | Versioned SQL migrations only |
 | Authorization | Server checks plus Row Level Security on every exposed table |
-| Storage | Supabase private Storage for deliverable files; bucket policies follow after the project is linked |
+| Storage | Supabase private Storage with versioned bucket and object policies ready to apply |
 | Payments | PayMongo behind a server-only adapter; no live integration until merchant onboarding |
 | Email | Resend behind a server-only adapter; no production sending until domain configuration |
 | Validation | Shared Zod schemas with authoritative validation on the server |
@@ -36,11 +36,14 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 - Administrator-managed launch categories seeded from the approved Phase 0 structure.
 - Catalog prices represented as integer minor units in canonical currency.
 - Private deliverable-file metadata with no public read policy.
-- Unit tests for environment validation, roles, and migration security invariants.
+- Unit tests for environment validation, roles, catalog money, draft validation, and migration security invariants.
+- Database-backed public catalog, dynamic published-system pages, and explicit unavailable/error states.
+- Administrator catalog list and validated private system-draft creation.
+- A second migration for manual sale state, private Storage buckets, object policies, and system audit triggers.
 
 ## 3. Initial schema boundary
 
-The first migration owns identity and catalog data only:
+The migrations currently own identity, catalog, and private Storage foundations:
 
 - Customer profiles
 - Administrator roles
@@ -64,6 +67,8 @@ Orders, payments, fulfillment, emails, downloads, inquiries, and support receive
 - Routine administrators may manage catalog data.
 - Only super administrators may grant or revoke administrator access.
 - Deliverable file rows are not publicly readable.
+- Product media and deliverable buckets remain private; only administrators receive direct object-management policies.
+- Customer delivery will use a later server eligibility check before creating a short-lived signed URL.
 - The first super administrator must be bootstrapped through a trusted server or Supabase administrative workflow.
 
 ## 5. External setup gates
@@ -76,7 +81,7 @@ The owner has not created the Supabase, PayMongo, or Resend production configura
 - Keep the service-role key in server-only secret storage.
 - Link the Supabase CLI and apply migrations.
 - Generate database types after the migration is applied.
-- Create private Storage buckets and policies.
+- Apply the private Storage bucket and policy migration to the configured projects.
 - Complete PayMongo merchant onboarding before live checkout.
 - Configure a verified Resend sending domain before production email.
 
@@ -97,9 +102,11 @@ Never commit real credentials. Use [`.env.example`](../.env.example) only as a k
 - [ ] Apply the migration and generate database types
 - [x] Add session-refresh proxy and authentication pages
 - [x] Protect administrator routes on the server
-- [ ] Replace preview catalog data with repository-backed queries
-- [ ] Connect the admin catalog forms to validated server mutations
-- [ ] Create private Storage buckets and object policies
+- [x] Replace preview catalog data with repository-backed queries
+- [x] Connect initial system-draft creation to a validated, authorized server mutation
+- [ ] Connect draft editing, media, versions, files, and publication mutations
+- [x] Add private Storage buckets and administrator object policies through a migration
+- [ ] Apply and verify the private Storage migration in configured projects
 - [ ] Add integration tests against a configured test project
 
 ## 7. Phase 2 exit criteria

@@ -16,6 +16,8 @@ Open `http://localhost:3000`. Supabase clients load configuration only when a da
 
 The email sign-in interface is available at /auth/sign-in. Without Supabase credentials it shows an explicit unavailable state and sends no email. Local development keeps the approved admin preview visible; a production environment without authentication configuration keeps /admin closed.
 
+The public systems catalog and published-system routes now read through server repositories. The admin editor creates only a private validated draft; media, versions, files, editing, and publication remain separate protected operations.
+
 ## Checks
 
 ```bash
