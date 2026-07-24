@@ -33,7 +33,7 @@ export function SiteHeader() {
 
         <div className="ml-auto hidden items-center gap-4 xl:flex">
           <Link href="/account" className="text-sm font-medium text-secondary transition-colors hover:text-foreground">Account</Link>
-          <Link href="/#contact" className="inline-flex min-h-10 items-center justify-center rounded-[10px] bg-foreground px-4 text-sm font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">
+          <Link href="/request-a-quote" className="inline-flex min-h-10 items-center justify-center rounded-[10px] bg-foreground px-4 text-sm font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">
             Request a quote
           </Link>
         </div>
@@ -59,7 +59,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link href="/account" onClick={() => setIsOpen(false)} className="border-b border-white/10 px-1 py-3 text-secondary">Account</Link>
-          <Link href="/#contact" onClick={() => setIsOpen(false)} className="mt-3 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-5 font-semibold text-[#08090a]">Request a quote</Link>
+          <Link href="/request-a-quote" onClick={() => setIsOpen(false)} className="mt-3 inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-5 font-semibold text-[#08090a]">Request a quote</Link>
         </div>
       </nav>
     </header>

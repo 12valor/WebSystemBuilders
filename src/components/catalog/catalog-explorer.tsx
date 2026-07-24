@@ -196,7 +196,7 @@ function CatalogEmptyState({ status, filtered, onClear }: { status: CatalogData[
         {filtered ? (
           <button type="button" onClick={onClear} className="inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-6 font-semibold text-background">Clear filters</button>
         ) : (
-          <Link href="/#contact" className="inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-6 font-semibold text-background">Request a custom system</Link>
+          <Link href="/request-a-quote" className="inline-flex min-h-12 items-center justify-center rounded-[10px] bg-foreground px-6 font-semibold text-background">Request a custom system</Link>
         )}
         <Link href="/systems/preview" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">View detail layout preview</Link>
       </div>

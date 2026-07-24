@@ -20,8 +20,8 @@ export default function CustomDevelopmentPage() {
         eyebrow="Custom software development"
         title="Build around the workflow, not a generic promise."
         description="Custom work begins with requirements review. Scope, price, deliverables, responsibilities, and delivery expectations must be agreed before development starts."
-        primary={{ label: "Review the process", href: "/process" }}
-        secondary={{ label: "Browse ready-made systems", href: "/systems" }}
+        primary={{ label: "Request a quotation", href: "/request-a-quote" }}
+        secondary={{ label: "Review the process", href: "/process" }}
       />
       <EditorialSection
         eyebrow="What can be scoped"
@@ -43,9 +43,9 @@ export default function CustomDevelopmentPage() {
       />
       <PublicCallToAction
         title="Prepare the workflow you want reviewed."
-        description="The detailed inquiry form will collect the requirements needed for a responsible quotation. Until that workflow is connected, use the public catalog to compare ready-made starting points."
-        primary={{ label: "Browse systems", href: "/systems" }}
-        secondary={{ label: "How development works", href: "/process" }}
+        description="Use the detailed inquiry form to submit the users, workflow, requirements, and constraints needed for a responsible review."
+        primary={{ label: "Request a quotation", href: "/request-a-quote" }}
+        secondary={{ label: "Browse systems", href: "/systems" }}
       />
     </PublicPageShell>
   );

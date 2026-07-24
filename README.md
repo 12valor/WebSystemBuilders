@@ -20,6 +20,8 @@ The public systems catalog and published-system routes now read through server r
 
 Phase 3 adds administrator-driven homepage catalog sections plus dedicated public routes for students, business owners, custom development, process, about, and portfolio. Sitemap and robots metadata include only implemented public pages and published systems.
 
+Contact and quotation forms use shared server validation, hashed rate-limit identifiers, and a private administrator-only inquiry table. Without complete server configuration, the forms remain visibly unavailable and do not send or store information. FAQ and pre-launch policy summaries expose approved product direction without presenting pending legal text as production-ready.
+
 ## Checks
 
 ```bash

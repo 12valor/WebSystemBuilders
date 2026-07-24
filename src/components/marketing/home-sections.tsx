@@ -106,7 +106,7 @@ export function FinalCallToAction() {
         <div><SectionEyebrow>Start with what you need</SectionEyebrow><h2 className="max-w-3xl text-[clamp(2.35rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">Ready to find or build your system?</h2></div>
         <div className="grid w-full shrink-0 gap-2.5 sm:flex lg:w-auto">
           <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a]">Browse systems <span aria-hidden="true">↗</span></Link>
-          <Link href="/services/custom-development" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
+          <Link href="/request-a-quote" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
         </div>
       </div>
     </section>

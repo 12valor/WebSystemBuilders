@@ -86,7 +86,7 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
             <p className="mt-3 text-2xl font-semibold tabular-nums tracking-[-0.035em]">{formatSystemPrice(system)}</p>
             <p className="mt-2 text-sm leading-6 text-secondary">The final charge currency and authoritative amount will be confirmed before hosted payment.</p>
             <button type="button" disabled className="mt-6 inline-flex min-h-12 w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-white/10 px-5 text-sm font-semibold text-muted">Checkout setup pending</button>
-            <Link href="/#contact" className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] border border-white/15 px-5 text-sm font-semibold hover:bg-white/[0.04]">Request customization</Link>
+            <Link href="/request-a-quote" className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] border border-white/15 px-5 text-sm font-semibold hover:bg-white/[0.04]">Request customization</Link>
           </aside>
         </div>
       </section>

@@ -10,7 +10,7 @@ If the requested work conflicts with the blueprint, identify the conflict and as
 
 ## Current project state
 
-The repository contains the Phase 1 interfaces, Phase 2 authentication and administrator-managed catalog foundations, and the first Phase 3 public website routes with a repository-driven homepage catalog. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, Storage, payment, and email remain unverified. Local development shows explicit unconfigured states and may retain the approved admin preview; production fails closed. Inspect the repository before every task and build on the actual current state.
+The repository contains the Phase 1 interfaces, Phase 2 authentication and administrator-managed catalog foundations, and Phase 3 public routes with a repository-driven homepage catalog, validated inquiry forms, FAQ, and noindex pre-launch policy summaries. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, Storage, inquiry persistence, payment, and email remain unverified. Local development shows explicit unconfigured states and may retain the approved admin preview; production fails closed. Inspect the repository before every task and build on the actual current state.
 
 ## Product boundaries
 

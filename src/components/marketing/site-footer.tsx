@@ -3,8 +3,8 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 
 const footerGroups = [
   { title: "Explore", links: [["Systems", "/systems"], ["For students", "/for-students"], ["For business", "/for-business"], ["Custom development", "/services/custom-development"]] },
-  { title: "Company", links: [["About", "/about"], ["Process", "/process"], ["Portfolio", "/portfolio"], ["Account", "/account"]] },
-  { title: "Policies", links: [["Delivery", "/legal/delivery"], ["License", "/legal/license"], ["Refunds", "/legal/refunds"], ["Privacy", "/legal/privacy"]] },
+  { title: "Company", links: [["About", "/about"], ["Process", "/process"], ["Portfolio", "/portfolio"], ["FAQ", "/faq"], ["Contact", "/contact"], ["Account", "/account"]] },
+  { title: "Policies", links: [["Delivery", "/legal/delivery"], ["License", "/legal/license"], ["Refunds", "/legal/refunds"], ["Privacy", "/legal/privacy"], ["Terms", "/legal/terms"]] },
 ];
 
 export function SiteFooter() {

@@ -30,9 +30,10 @@ Deliver a trustworthy, responsive public website that gives students and busines
 - [x] `/process`
 - [x] `/about`
 - [x] `/portfolio` with an honest no-published-case-studies state
-- [ ] `/contact` and `/request-a-quote` inquiry workflows
-- [ ] `/faq`
-- [ ] Approved legal routes
+- [x] `/contact` and `/request-a-quote` inquiry workflows with safe unconfigured states
+- [x] `/faq`
+- [x] Pre-launch legal summaries with noindex protection
+- [ ] Production-approved legal wording and review
 - [x] Public sitemap, robots rules, canonical metadata, and website structured data
 
 ## 4. Public navigation
@@ -58,4 +59,4 @@ The homepage catalog can render only after Supabase is configured and an adminis
 
 ## 7. Next action
 
-Implement the inquiry workflow and approved FAQ/legal content. Provider-backed form persistence and production email remain gated by owner-provided Supabase and Resend configuration.
+Apply the inquiry migration and verify persistence after the owner provides Supabase configuration. Finalize production policy wording only after legal review, then continue the remaining catalog and commerce phases.
