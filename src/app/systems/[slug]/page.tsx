@@ -1,21 +1,37 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getPublicSystemBySlug } from "@/features/catalog/repository";
 import type { CatalogSystemDetail } from "@/features/catalog/types";
 
-export const metadata: Metadata = {
-  title: "System details",
-  robots: { index: true, follow: true },
-};
-
 export const dynamic = "force-dynamic";
+
+const getSystem = cache(getPublicSystemBySlug);
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await getSystem(slug);
+
+  if (!result.system) {
+    return {
+      title: "System unavailable",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  return {
+    title: result.system.title,
+    description: result.system.summary,
+    robots: { index: true, follow: true },
+  };
+}
 
 export default async function SystemDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const result = await getPublicSystemBySlug(slug);
+  const result = await getSystem(slug);
 
   if (!result.system) {
     if (result.status === "ready") notFound();
