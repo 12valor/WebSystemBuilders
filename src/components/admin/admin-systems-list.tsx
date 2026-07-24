@@ -75,7 +75,10 @@ export function AdminSystemsList({ data, created }: { data: AdminCatalogData; cr
 function SystemRow({ system }: { system: AdminSystemRecord }) {
   return (
     <article className="grid gap-4 px-5 py-5 lg:grid-cols-[minmax(240px,1fr)_140px_120px_130px_150px] lg:items-center">
-      <div><h3 className="font-semibold">{system.title}</h3><p className="mt-1 text-xs text-muted">/{system.slug} · {system.categoryName ?? "Uncategorized"}</p></div>
+      <div>
+        <Link href={`/admin/systems/${system.id}/edit`} className="font-semibold hover:text-brand-hover">{system.title}</Link>
+        <p className="mt-1 text-xs text-muted">/{system.slug} - {system.categoryName ?? "Uncategorized"}</p>
+      </div>
       <DataCell label="Price">{formatPrice(system)}</DataCell>
       <DataCell label="Audience">{audienceLabel(system.audience)}</DataCell>
       <DataCell label="Status"><span className="capitalize">{system.status}</span></DataCell>

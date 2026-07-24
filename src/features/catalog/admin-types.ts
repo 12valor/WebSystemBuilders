@@ -20,7 +20,7 @@ export type AdminSystemRecord = {
 };
 
 export type AdminEditableSystem = AdminSystemRecord & {
-  categoryId: string;
+  categoryId: string | null;
   productType: "ready_made" | "customizable_template" | "custom_service";
   summary: string;
   description: string | null;

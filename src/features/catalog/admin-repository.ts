@@ -28,7 +28,7 @@ const systemListSchema = z.object({
 });
 
 const editableSystemSchema = systemListSchema.extend({
-  category_id: z.uuid(),
+  category_id: z.uuid().nullable(),
   product_type: z.enum(["ready_made", "customizable_template", "custom_service"]),
   summary: z.string(),
   description: z.string().nullable(),

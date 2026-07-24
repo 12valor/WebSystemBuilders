@@ -38,8 +38,9 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 - Private deliverable-file metadata with no public read policy.
 - Unit tests for environment validation, roles, catalog money, draft validation, and migration security invariants.
 - Database-backed public catalog, dynamic published-system pages, and explicit unavailable/error states.
-- Administrator catalog list and validated private system-draft creation.
+- Administrator catalog list, validated private system-draft creation, and existing-record editing.
 - A second migration for manual sale state, private Storage buckets, object policies, and system audit triggers.
+- A fail-closed publication action that checks product copy, features, media, and deliverable readiness before exposing a record.
 
 ## 3. Initial schema boundary
 
@@ -104,7 +105,8 @@ Never commit real credentials. Use [`.env.example`](../.env.example) only as a k
 - [x] Protect administrator routes on the server
 - [x] Replace preview catalog data with repository-backed queries
 - [x] Connect initial system-draft creation to a validated, authorized server mutation
-- [ ] Connect draft editing, media, versions, files, and publication mutations
+- [x] Connect existing-system editing and guarded publication mutations
+- [ ] Connect feature, media, version, and private-file management mutations
 - [x] Add private Storage buckets and administrator object policies through a migration
 - [ ] Apply and verify the private Storage migration in configured projects
 - [ ] Add integration tests against a configured test project
