@@ -24,6 +24,8 @@ Contact and quotation forms use shared server validation, hashed rate-limit iden
 
 Phase 4 now exposes published product features, screenshots, demo or video links, current versions, sale comparisons, and related systems through the public catalog detail route. Uploaded catalog images remain private at rest and receive time-limited signed access only when attached to a published system.
 
+Phase 5 begins the operational administrator workspace with real catalog and inquiry metrics, administrator-managed categories, safe archival rules, and a read-only audit trail. Order, payment, and delivery controls remain visibly deferred until their durable workflows exist.
+
 ## Checks
 
 ```bash
@@ -40,10 +42,11 @@ npm run build
 - [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) - approved design foundation and responsive wireframes
 - [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) - technical foundation, schema boundary, and setup gates
 - [`docs/PHASE_3_PUBLIC_WEBSITE.md`](docs/PHASE_3_PUBLIC_WEBSITE.md) - public website routes, content rules, and remaining production gates
-- [`docs/PHASE_4_SYSTEMS_CATALOG.md`](docs/PHASE_4_SYSTEMS_CATALOG.md) - active catalog scope, completed capabilities, and remaining gaps
+- [`docs/PHASE_4_SYSTEMS_CATALOG.md`](docs/PHASE_4_SYSTEMS_CATALOG.md) - catalog scope, completed capabilities, and remaining provider gaps
+- [`docs/PHASE_5_ADMIN_DASHBOARD.md`](docs/PHASE_5_ADMIN_DASHBOARD.md) - active administrator scope, dependency boundaries, and exit criteria
 - [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) - approved logo and brand usage
 - [`supabase/migrations`](supabase/migrations) - versioned database changes
 - [src/app/account/page.tsx](src/app/account/page.tsx) - configuration-aware customer account direction
 - [src/app/auth/sign-in/page.tsx](src/app/auth/sign-in/page.tsx) - passwordless email sign-in interface
 
-**Current phase:** Phase 4 - Systems catalog (provider verification remains pending)
+**Current phase:** Phase 5 - Admin dashboard (provider verification remains pending)

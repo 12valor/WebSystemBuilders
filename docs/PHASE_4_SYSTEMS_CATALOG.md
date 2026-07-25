@@ -2,7 +2,7 @@
 
 ## Status
 
-**Active workstream:** Phase 4 - Systems catalog  
+**Local implementation:** Catalog capability complete; live verification remains
 **Started:** July 25, 2026  
 **Dependency note:** Catalog code can continue locally, but live database, Storage, RLS, and administrator publishing verification remain pending owner-provided Supabase configuration.
 
@@ -49,4 +49,4 @@ Phase 4 exits when published systems can be searched, filtered, evaluated throug
 
 ## 6. Next action
 
-Apply the catalog migrations to the owner-provided Supabase project, publish owner-supplied product records, and verify live database, RLS, signed media, and private deliverable boundaries before Phase 4 exits.
+Apply the catalog migrations to the owner-provided Supabase project, publish owner-supplied product records, and verify live database, RLS, signed media, and private deliverable boundaries before Phase 4 exits. Phase 5 administrator operations may continue locally while this provider gate remains open.

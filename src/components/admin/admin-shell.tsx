@@ -5,13 +5,7 @@ const navigation = [
   ["Overview", "/admin"],
   ["Systems", "/admin/systems"],
   ["Categories", "/admin/categories"],
-  ["Orders", "/admin/orders"],
-  ["Customers", "/admin/customers"],
-  ["Inquiries", "/admin/inquiries"],
-  ["Content", "/admin/content"],
-  ["Media", "/admin/media"],
   ["Audit log", "/admin/audit-log"],
-  ["Settings", "/admin/settings"],
 ] as const;
 
 export function AdminShell({ children, active = "Systems" }: { children: React.ReactNode; active?: string }) {
@@ -27,8 +21,8 @@ export function AdminShell({ children, active = "Systems" }: { children: React.R
           ))}
         </nav>
         <div className="mt-auto border-t border-white/10 p-4">
-          <p className="text-xs font-semibold text-foreground">Phase 1 preview</p>
-          <p className="mt-1 text-xs leading-5 text-muted">Authentication and persistence are not connected.</p>
+          <p className="text-xs font-semibold text-foreground">Phase 5 operations</p>
+          <p className="mt-1 text-xs leading-5 text-muted">Only implemented, database-backed workspaces are listed.</p>
         </div>
       </aside>
 
