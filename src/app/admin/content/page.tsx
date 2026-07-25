@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { AdminContentWorkspace } from "@/components/admin/admin-content-workspace";
 import { getAdminPortfolioData } from "@/features/content/portfolio-repository";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -21,4 +21,3 @@ export default async function AdminContentPage({
   const result = results.find((item) => item === params.result);
   return <AdminShell active="Content"><AdminContentWorkspace data={data} portfolioData={portfolioData} testimonialData={testimonialData} result={result} /></AdminShell>;
 }
-

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
 import { CategorySection, TrustStrip } from "@/components/marketing/category-section";
 import { HeroSection } from "@/components/marketing/hero-section";
@@ -43,6 +43,7 @@ export default async function HomePage() {
         <EngagementModelsSection />
         <AudienceSection />
         <ProcessSection />
+        <TestimonialsSection items={testimonials} />
         <FinalCallToAction />
       </main>
       <SiteFooter />

@@ -1,4 +1,4 @@
-﻿import type { AdminActivityRecord } from "@/features/admin/types";
+import type { AdminActivityRecord } from "@/features/admin/types";
 
 const actionLabels: Record<string, string> = {
   "system.created": "Created a system draft",
@@ -39,7 +39,7 @@ export function formatActivityDetails(metadata: AdminActivityRecord["metadata"])
     const label = key === "is_active" ? "active" : key.replaceAll("_", " ");
     return [`${label}: ${String(value)}`];
   });
-  return details.join(" Â· ");
+  return details.join(" · ");
 }
 
 export function formatAdminDateTime(value: string) {
@@ -49,4 +49,3 @@ export function formatAdminDateTime(value: string) {
     timeZone: "Asia/Manila",
   }).format(new Date(value));
 }
-

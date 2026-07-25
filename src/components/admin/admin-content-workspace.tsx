@@ -2,6 +2,7 @@
 
 import { useActionState, useMemo, useState } from "react";
 import { AdminPortfolioSection } from "@/components/admin/admin-portfolio-section";
+import { AdminTestimonialSection } from "@/components/admin/admin-testimonial-section";
 import {
   createFaqItem,
   updateFaqItem,
@@ -9,8 +10,9 @@ import {
 } from "@/features/content/faq-actions";
 import type { AdminFaqData, FaqItem } from "@/features/content/faq-types";
 import type { AdminPortfolioData } from "@/features/content/portfolio-types";
+import type { AdminTestimonialData } from "@/features/content/testimonial-types";
 
-type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived";
+type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived" | "testimonial-created" | "testimonial-updated" | "testimonial-published" | "testimonial-archived";
 
 const initialState: FaqEditorState = { status: "idle" };
 const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none";
@@ -20,10 +22,12 @@ const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-lg
 export function AdminContentWorkspace({
   data,
   portfolioData,
+  testimonialData,
   result,
 }: {
   data: AdminFaqData;
   portfolioData: AdminPortfolioData;
+  testimonialData: AdminTestimonialData;
   result?: ContentResult;
 }) {
   const [query, setQuery] = useState("");
@@ -50,7 +54,7 @@ export function AdminContentWorkspace({
         <div className="border-b border-white/10 pb-7">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Public content</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">Content</h1>
-          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. FAQ and portfolio publishing are available; testimonials and site settings remain visibly planned.</p>
+          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. FAQ, portfolio, and verified testimonial publishing are available; remaining site-content settings stay visibly planned.</p>
         </div>
 
         <div className="mt-7 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:max-w-2xl">
@@ -92,11 +96,12 @@ export function AdminContentWorkspace({
         </section>
 
         <AdminPortfolioSection data={portfolioData} />
+        <AdminTestimonialSection data={testimonialData} />
 
         <section aria-labelledby="planned-content-title" className="mt-10 border-t border-white/10 pt-8">
           <h2 id="planned-content-title" className="text-lg font-semibold">Remaining content modules</h2>
-          <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 md:grid-cols-3">
-            {["Authentic testimonials", "Announcements and homepage content", "Company and contact settings"].map((item) => <div key={item} className="bg-surface p-5"><p className="font-semibold">{item}</p><p className="mt-2 text-xs leading-5 text-muted">Planned in the remaining Phase 5 content work.</p></div>)}
+          <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 md:grid-cols-2">
+            {["Announcements and homepage content", "Company and contact settings"].map((item) => <div key={item} className="bg-surface p-5"><p className="font-semibold">{item}</p><p className="mt-2 text-xs leading-5 text-muted">Planned in the remaining Phase 5 content work.</p></div>)}
           </div>
         </section>
       </div>
@@ -172,7 +177,7 @@ function Metric({ label, value }: { label: string; value: number }) {
 }
 
 function ResultNotice({ result }: { result: ContentResult }) {
-  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page." };
+  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page.", "testimonial-created": "The testimonial draft was created privately.", "testimonial-updated": "The testimonial and verification record were saved.", "testimonial-published": "The verified testimonial is published on the homepage.", "testimonial-archived": "The testimonial was archived and removed from the homepage." };
   return <p className="mb-6 rounded-xl border border-emerald-300/20 bg-emerald-300/[0.06] p-4 text-sm text-emerald-100" role="status">{messages[result]}</p>;
 }
 
