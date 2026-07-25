@@ -3,12 +3,15 @@ import type { AdminActivityRecord } from "@/features/admin/types";
 const actionLabels: Record<string, string> = {
   "system.created": "Created a system draft",
   "system.updated": "Updated a system",
+  "system.duplicated": "Duplicated a system",
+  "system.unpublished": "Unpublished a system",
+  "system.archived": "Archived a system",
   "category.created": "Created a category",
   "category.updated": "Updated a category",
   "inquiry.updated": "Updated an inquiry",
 };
 
-const safeMetadataKeys = ["name", "slug", "status", "audience", "is_active", "assigned", "inquiry_type"] as const;
+const safeMetadataKeys = ["name", "slug", "status", "previous_status", "audience", "is_active", "assigned", "inquiry_type"] as const;
 
 export function formatActivityAction(action: string) {
   return actionLabels[action] ?? action.replaceAll(".", " ");

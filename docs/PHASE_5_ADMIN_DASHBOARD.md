@@ -38,7 +38,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 - [x] Validated category creation and editing
 - [x] Safe category archiving that preserves linked catalog records
 - [x] Category and system database audit events
-- [ ] System duplication and explicit archive or unpublish controls
+- [x] System duplication and explicit archive or unpublish controls
 - [ ] Cross-catalog media workspace
 
 ### Operational records
@@ -79,18 +79,27 @@ Routes listed in the overall sitemap but not present in this table remain planne
 5. Category removal is a status change through `is_active`, not a destructive delete.
 6. Creation and update events record only the category identity and operational state needed for audit review.
 
-## 6. Dependency boundary
+## 6. System lifecycle rules
+
+1. Duplication creates a new private draft with a unique slug and no publication state.
+2. Product copy, pricing, features, and external media references may be copied.
+3. Uploaded media objects, versions, and private deliverable files are never shared with a duplicate.
+4. Unpublishing changes a published system to Unlisted and immediately removes it from public catalog reads.
+5. Archiving changes status without deleting the record, resources, or audit history.
+6. Lifecycle mutations use the last saved record and reject stale concurrent updates.
+
+## 7. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 7. Verification
+## 8. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 8. Exit criteria
+## 9. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 9. Next action
+## 10. Next action
 
-Continue with remaining catalog controls, content management, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with cross-catalog media, content management, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.

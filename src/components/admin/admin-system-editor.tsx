@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { AdminSystemLifecycle } from "@/components/admin/admin-system-lifecycle";
 import { AdminSystemResources } from "@/components/admin/admin-system-resources";
 import type {
   AdminCategoryRecord,
@@ -19,7 +20,7 @@ const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-backgro
 const textareaClass = `${inputClass} min-h-28 resize-y py-3 leading-6`;
 const initialState: SystemEditorState = { status: "idle" };
 
-type EditorSuccess = "created" | "saved" | "published" | null;
+type EditorSuccess = "created" | "saved" | "published" | "duplicated" | "unpublished" | "archived" | null;
 
 export function AdminSystemEditor({
   categories,
@@ -72,7 +73,7 @@ export function AdminSystemEditor({
               <button type="button" disabled className="min-h-10 cursor-not-allowed rounded-lg border border-white/10 px-4 text-xs font-semibold text-muted">Preview</button>
             )}
             <button form="system-editor-form" type="submit" name="intent" value="publish" disabled={!canSave || !isEditing} className="min-h-10 rounded-lg bg-foreground px-4 text-xs font-semibold text-background disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-muted">
-              {pending ? "Checking..." : system?.status === "published" ? "Republish" : "Publish"}
+              {pending ? "Checking..." : system?.status === "published" ? "Republish" : system?.status === "archived" ? "Restore and publish" : "Publish"}
             </button>
           </div>
         </div>
@@ -167,6 +168,7 @@ export function AdminSystemEditor({
             {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-300" aria-hidden="true">+</span><span>{item}</span></li>)}
           </ul>
           <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-muted">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
+          {system && <AdminSystemLifecycle systemId={system.id} status={system.status} />}
         </aside>
       </div>
       {system && resources && <AdminSystemResources systemId={system.id} resources={resources} />}
@@ -177,9 +179,15 @@ export function AdminSystemEditor({
 function SuccessNotice({ type }: { type: Exclude<EditorSuccess, null> }) {
   const copy = type === "created"
     ? "The private system draft was created."
-    : type === "published"
-      ? "The system passed the readiness checks and is now published."
-      : "The system changes were saved.";
+    : type === "duplicated"
+      ? "The private duplicate was created. Review its slug, media, versions, and delivery files before publishing."
+      : type === "unpublished"
+        ? "The system was removed from the public catalog and changed to Unlisted."
+        : type === "archived"
+          ? "The system was archived without deleting its content or resources."
+          : type === "published"
+            ? "The system passed the readiness checks and is now published."
+            : "The system changes were saved.";
   return <p className="rounded-xl border border-emerald-300/20 bg-emerald-300/[0.06] p-4 text-sm text-emerald-100" role="status">{copy}</p>;
 }
 

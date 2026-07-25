@@ -14,7 +14,7 @@ export default async function EditAdminSystemPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ created?: string; saved?: string; published?: string }>;
+  searchParams: Promise<{ created?: string; saved?: string; published?: string; duplicated?: string; unpublished?: string; archived?: string }>;
 }) {
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const data = await getAdminSystemEditorData(id);
@@ -39,13 +39,19 @@ export default async function EditAdminSystemPage({
     );
   }
 
-  const success = query.published === "1"
-    ? "published"
-    : query.created === "1"
-      ? "created"
-      : query.saved === "1"
-        ? "saved"
-        : null;
+  const success = query.duplicated === "1"
+    ? "duplicated"
+    : query.unpublished === "1"
+      ? "unpublished"
+      : query.archived === "1"
+        ? "archived"
+        : query.published === "1"
+          ? "published"
+          : query.created === "1"
+            ? "created"
+            : query.saved === "1"
+              ? "saved"
+              : null;
 
   return (
     <AdminShell>
