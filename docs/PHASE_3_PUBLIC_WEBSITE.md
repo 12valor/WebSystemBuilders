@@ -29,7 +29,7 @@ Deliver a trustworthy, responsive public website that gives students and busines
 - [x] `/services/custom-development`
 - [x] `/process`
 - [x] `/about`
-- [x] `/portfolio` with an honest no-published-case-studies state
+- [x] `/portfolio` with database-driven published case studies and honest empty, unconfigured, and failure states
 - [x] `/contact` and `/request-a-quote` inquiry workflows with safe unconfigured states
 - [x] `/faq`
 - [x] Pre-launch legal summaries with noindex protection

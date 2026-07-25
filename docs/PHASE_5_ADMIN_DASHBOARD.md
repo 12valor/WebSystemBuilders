@@ -52,7 +52,8 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 ### Content and administration
 
 - [x] FAQ creation, editing, publication, archiving, and public rendering
-- [ ] Portfolio, testimonials, featured-content, announcement, company, and contact management
+- [x] Portfolio creation, editing, featuring, publication, archiving, and public rendering
+- [ ] Testimonials, featured homepage content, announcements, company, and contact management
 - [ ] Super-administrator access management
 - [ ] Super-administrator settings and integration-health views
 - [x] Read-only searchable audit-log view with safe metadata summaries
@@ -67,7 +68,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
 | `/admin/media` | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
-| `/admin/content` | FAQ drafts, publication, archiving, ordering, and public-content status |
+| `/admin/content` | FAQ and portfolio drafts, publication, featuring, archiving, ordering, and public-content status |
 | `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
 
@@ -107,18 +108,26 @@ Routes listed in the overall sitemap but not present in this table remain planne
 4. Public FAQ reads are database-driven when Supabase is configured and retain the verified baseline only as an unconfigured or query-failure fallback.
 5. Mutations validate content on the server, reject stale concurrent edits, and record status-only audit metadata without storing answer text.
 
-## 9. Dependency boundary
+## 9. Portfolio content rules
+
+1. Portfolio records are never seeded; administrators must supply real project scope and approved public details.
+2. Every entry begins as a private draft and becomes public only through explicit publication.
+3. Outcome text and external project links are optional so missing evidence never pressures administrators to invent claims.
+4. Public links must use HTTPS, featured status affects ordering only, and archived records disappear from public reads without deletion.
+5. Mutations validate content on the server, reject stale concurrent edits, and audit only safe identity and lifecycle metadata.
+
+## 10. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 10. Verification
+## 11. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 11. Exit criteria
+## 12. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 12. Next action
+## 13. Next action
 
-Continue with portfolio, testimonial, featured-content, announcement, company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with testimonial, featured homepage content, announcement, company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
