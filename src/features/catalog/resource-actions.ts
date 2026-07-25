@@ -647,6 +647,7 @@ function isOwnedPath(path: string, prefix: string) {
 function revalidateResources(context: CatalogContext) {
   revalidatePath(`/admin/systems/${context.system.id}/edit`);
   revalidatePath("/admin/systems");
+  revalidatePath("/admin/media");
   revalidatePath("/systems");
   revalidatePath(`/systems/${context.system.slug}`);
 }

@@ -39,7 +39,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 - [x] Safe category archiving that preserves linked catalog records
 - [x] Category and system database audit events
 - [x] System duplication and explicit archive or unpublish controls
-- [ ] Cross-catalog media workspace
+- [x] Cross-catalog media workspace
 
 ### Operational records
 
@@ -65,6 +65,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/new` | Validated private system draft creation |
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
+| /admin/media | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
 | `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
 
@@ -88,18 +89,26 @@ Routes listed in the overall sitemap but not present in this table remain planne
 5. Archiving changes status without deleting the record, resources, or audit history.
 6. Lifecycle mutations use the last saved record and reject stale concurrent updates.
 
-## 7. Dependency boundary
+## 7. Cross-catalog media rules
+
+1. The media workspace reads only database-owned catalog metadata and never lists raw Storage objects without a matching media record.
+2. Uploaded image previews use short-lived signed URLs and never expose a permanent public object URL.
+3. Every media item retains an owning system; uploads, ordering, and metadata edits remain in that system's editor.
+4. Global removal uses the same server-authorized ownership and published-system safeguards as the system editor.
+5. Missing alternative text and unavailable signed previews are visible operational issues rather than silently hidden assets.
+
+## 8. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 8. Verification
+## 9. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 9. Exit criteria
+## 10. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 10. Next action
+## 11. Next action
 
-Continue with cross-catalog media, content management, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with content management and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
