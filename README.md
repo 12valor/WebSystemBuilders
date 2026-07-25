@@ -24,7 +24,7 @@ Contact and quotation forms use shared server validation, hashed rate-limit iden
 
 Phase 4 now exposes published product features, screenshots, demo or video links, current versions, sale comparisons, and related systems through the public catalog detail route. Uploaded catalog images remain private at rest and receive time-limited signed access only when attached to a published system.
 
-Phase 5 provides an operational administrator workspace with real catalog and inquiry metrics, administrator-managed categories, a cross-catalog media workspace, database-driven FAQ and portfolio content, permission-verified testimonials, safe system duplication and lifecycle controls, a searchable inquiry queue with durable status history, and a read-only audit trail. Order, payment, delivery, and outbound inquiry email remain visibly deferred until their durable workflows and providers exist.
+Phase 5 provides an operational administrator workspace with real catalog and inquiry metrics, administrator-managed categories, a cross-catalog media workspace, database-driven FAQ and portfolio content, permission-verified testimonials, administrator-published homepage features and announcements, safe system duplication and lifecycle controls, a searchable inquiry queue with durable status history, and a read-only audit trail. Order, payment, delivery, and outbound inquiry email remain visibly deferred until their durable workflows and providers exist.
 
 ## Checks
 

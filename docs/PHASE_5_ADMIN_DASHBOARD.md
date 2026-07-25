@@ -54,7 +54,8 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 - [x] FAQ creation, editing, publication, archiving, and public rendering
 - [x] Portfolio creation, editing, featuring, publication, archiving, and public rendering
 - [x] Authentic testimonial creation, private verification, permission-gated publication, featuring, archiving, and homepage rendering
-- [ ] Featured homepage content, announcements, company, and contact management
+- [x] Draft-first homepage feature and site-wide announcement management
+- [ ] Company and contact management
 - [ ] Super-administrator access management
 - [ ] Super-administrator settings and integration-health views
 - [x] Read-only searchable audit-log view with safe metadata summaries
@@ -69,7 +70,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
 | `/admin/media` | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
-| `/admin/content` | FAQ, portfolio, and verified testimonial drafts, publication, featuring, archiving, ordering, and public-content status |
+| `/admin/content` | FAQ, portfolio, verified testimonials, homepage features, and announcement publication workflows |
 | `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
 
@@ -125,18 +126,26 @@ Routes listed in the overall sitemap but not present in this table remain planne
 4. Public reads select only published testimonial fields and never read or return the private verification table.
 5. Mutations are atomic, server-validated, concurrency-safe, and audited with lifecycle metadata only; archiving preserves the statement and evidence without destructive deletion.
 
-## 11. Dependency boundary
+## 11. Homepage feature and announcement rules
+
+1. Content blocks are never seeded; an empty or unconfigured database produces no announcement or editorial feature.
+2. Every block begins as a private draft, and only one record per placement may be published at a time.
+3. Announcements use a concise message and optional internal action; homepage features require an eyebrow, title, and supporting copy.
+4. Calls to action are restricted to internal website paths so administrator content cannot create an external redirect.
+5. Archiving removes content from public routes without deletion, stale concurrent edits are rejected, and audit events exclude public copy.
+
+## 12. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 12. Verification
+## 13. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 13. Exit criteria
+## 14. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 14. Next action
+## 15. Next action
 
-Continue with featured homepage content, announcements, company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.

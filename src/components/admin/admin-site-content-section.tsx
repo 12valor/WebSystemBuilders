@@ -1,0 +1,50 @@
+"use client";
+
+import { useActionState, useMemo, useState } from "react";
+import { createSiteContentBlock, updateSiteContentBlock, type SiteContentEditorState } from "@/features/content/site-content-actions";
+import type { AdminSiteContentData, SiteContentBlock } from "@/features/content/site-content-types";
+
+const initialState: SiteContentEditorState = { status: "idle" };
+const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none";
+const textareaClass = `${inputClass} min-h-28 py-3 leading-6`;
+const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-4 text-xs font-semibold text-foreground hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:text-muted";
+
+export function AdminSiteContentSection({ data }: { data: AdminSiteContentData }) {
+  const [placement, setPlacement] = useState("all");
+  const [status, setStatus] = useState("all");
+  const items = useMemo(() => data.items.filter((item) => (placement === "all" || item.placement === placement) && (status === "all" || item.status === status)), [data.items, placement, status]);
+  const published = data.items.filter((item) => item.status === "published").length;
+  const drafts = data.items.filter((item) => item.status === "draft").length;
+  const archived = data.items.filter((item) => item.status === "archived").length;
+  return (
+    <section id="site-content" aria-labelledby="site-content-title" className="mt-12 scroll-mt-24 border-t border-white/10 pt-10">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Available module</p><h2 id="site-content-title" className="mt-2 text-2xl font-semibold tracking-[-0.035em]">Homepage features and announcements</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-secondary">Publish one announcement and one editorial homepage feature at a time. All actions remain within this website.</p></div><p className="text-xs text-muted">Draft-first, manual publication, no placeholder claims.</p></div>
+      <div className="mt-5 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:max-w-2xl"><Metric label="Published placements" value={published} /><Metric label="Private drafts" value={drafts} /><Metric label="Archived" value={archived} /></div>
+      <div className="mt-6 grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
+        <CreateForm />
+        <div><div className="grid gap-3 rounded-t-xl border border-white/10 bg-surface p-4 sm:grid-cols-2"><Filter label="Placement" value={placement} onChange={setPlacement} options={[["all", "All placements"], ["announcement", "Announcement"], ["homepage_feature", "Homepage feature"]]} /><Filter label="Status" value={status} onChange={setStatus} options={[["all", "All statuses"], ["draft", "Draft"], ["published", "Published"], ["archived", "Archived"]]} /></div><div className="overflow-hidden rounded-b-xl border-x border-b border-white/10 bg-surface-subtle">{items.length ? <div className="divide-y divide-white/10">{items.map((item) => <Editor key={`${item.id}-${item.updatedAt}`} item={item} />)}</div> : <EmptyState status={data.status} filtered={data.items.length > 0} />}</div></div>
+      </div>
+    </section>
+  );
+}
+
+function CreateForm() {
+  const [state, action, pending] = useActionState(createSiteContentBlock, initialState);
+  return <form action={action} className="self-start rounded-xl border border-white/10 bg-surface p-5"><h3 className="text-lg font-semibold">Create content draft</h3><p className="mt-2 text-xs leading-5 text-muted">New content stays private until an administrator publishes it.</p><Fields state={state} /><button type="submit" disabled={pending} className={`${buttonClass} mt-5 w-full bg-foreground text-background hover:bg-white disabled:text-background/50`}>{pending ? "Creating..." : "Create private draft"}</button><StatusNotice state={state} /></form>;
+}
+
+function Editor({ item }: { item: SiteContentBlock }) {
+  const [state, action, pending] = useActionState(updateSiteContentBlock.bind(null, item.id), initialState);
+  return <details className="group" open={item.status === "draft"}><summary className="grid cursor-pointer list-none gap-3 px-5 py-5 marker:hidden sm:grid-cols-[minmax(0,1fr)_130px_80px] sm:items-center"><div className="min-w-0"><p className="truncate font-semibold">{item.title}</p><p className="mt-1 text-xs text-muted">{placementLabel(item.placement)}</p></div><span className="text-xs capitalize text-secondary">{item.status}</span><span className="text-right text-xs font-semibold text-brand-hover group-open:hidden">Edit</span></summary><form action={action} className="border-t border-white/10 bg-background/40 px-5 py-5"><input type="hidden" name="updatedAt" value={item.updatedAt} /><Fields state={state} item={item} /><div className="mt-5 flex flex-wrap gap-3"><button name="intent" value="save" disabled={pending} className={buttonClass}>{pending ? "Saving..." : "Save changes"}</button><button name="intent" value="publish" disabled={pending} className={`${buttonClass} bg-foreground text-background hover:bg-white`}>{item.status === "archived" ? "Restore and publish" : item.status === "published" ? "Keep published" : "Publish content"}</button>{item.status !== "archived" && <button name="intent" value="archive" disabled={pending} className={`${buttonClass} text-red-300 hover:text-red-200`}>Archive</button>}</div><StatusNotice state={state} /></form></details>;
+}
+
+function Fields({ state, item }: { state: SiteContentEditorState; item?: SiteContentBlock }) {
+  return <div className="mt-5 grid gap-4"><Field label="Placement" error={state.fieldErrors?.placement}><select name="placement" defaultValue={item?.placement ?? "announcement"} className={inputClass}><option value="announcement">Site-wide announcement</option><option value="homepage_feature">Homepage feature</option></select></Field><Field label="Message or feature title" error={state.fieldErrors?.title}><textarea name="title" defaultValue={item?.title} className={`${textareaClass} min-h-24`} placeholder="Use factual, approved public copy." /></Field><div className="rounded-lg border border-white/10 bg-background/50 p-4"><p className="text-xs font-semibold text-foreground">Homepage feature fields</p><p className="mt-1 text-xs leading-5 text-muted">Required for homepage features. Leave both blank for announcements.</p><div className="mt-4 grid gap-4"><Field label="Eyebrow" error={state.fieldErrors?.eyebrow}><input name="eyebrow" defaultValue={item?.eyebrow ?? ""} className={inputClass} placeholder="Short context label" /></Field><Field label="Supporting copy" error={state.fieldErrors?.body}><textarea name="body" defaultValue={item?.body ?? ""} className={textareaClass} placeholder="Verified supporting detail." /></Field></div></div><div className="grid gap-4 sm:grid-cols-2"><Field label="Action label (optional)" error={state.fieldErrors?.actionLabel}><input name="actionLabel" defaultValue={item?.actionLabel ?? ""} className={inputClass} /></Field><Field label="Internal action path" error={state.fieldErrors?.actionHref}><input name="actionHref" defaultValue={item?.actionHref ?? ""} className={inputClass} placeholder="/systems" /></Field></div><Field label="Order" error={state.fieldErrors?.sortOrder}><input name="sortOrder" type="number" min="0" max="10000" defaultValue={item?.sortOrder ?? 0} className={inputClass} /></Field></div>;
+}
+
+function Field({ label, error, children }: { label: string; error?: string[]; children: React.ReactNode }) { return <label className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span>{children}{error?.[0] && <span className="font-normal text-red-300">{error[0]}</span>}</label>; }
+function Filter({ label, value, onChange, options }: { label: string; value: string; onChange: (value: string) => void; options: Array<[string, string]> }) { return <label className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className={inputClass}>{options.map(([key, text]) => <option key={key} value={key}>{text}</option>)}</select></label>; }
+function StatusNotice({ state }: { state: SiteContentEditorState }) { if (state.status === "idle" || !state.message) return null; return <p role="alert" className={`mt-4 rounded-lg border p-3 text-xs leading-5 ${state.status === "unavailable" ? "border-amber-300/20 bg-amber-300/[0.06] text-amber-100" : "border-red-300/20 bg-red-300/[0.06] text-red-100"}`}>{state.message}</p>; }
+function Metric({ label, value }: { label: string; value: number }) { return <div className="bg-surface p-5"><p className="text-xs font-semibold text-muted">{label}</p><p className="mt-3 text-2xl font-semibold tabular-nums">{value}</p></div>; }
+function EmptyState({ status, filtered }: { status: AdminSiteContentData["status"]; filtered: boolean }) { const title = status === "unconfigured" ? "The database is not connected." : status === "error" ? "Site content could not be loaded." : filtered ? "No content matches these filters." : "No site content blocks exist."; const copy = status === "unconfigured" ? "Connect Supabase and apply the site-content migration before managing persistent records." : status === "error" ? "No partial content is shown while the source cannot be verified." : filtered ? "Adjust the placement or status filter." : "Create a private block when approved public copy is ready."; return <div className="grid min-h-72 place-items-center px-6 py-12 text-center"><div className="max-w-md"><h3 className="text-lg font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-secondary">{copy}</p></div></div>; }
+function placementLabel(value: SiteContentBlock["placement"]) { return value === "announcement" ? "Site-wide announcement" : "Homepage feature"; }

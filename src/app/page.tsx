@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
 import { CategorySection, TrustStrip } from "@/components/marketing/category-section";
 import { HeroSection } from "@/components/marketing/hero-section";
+import { HomepageFeatureSection } from "@/components/marketing/homepage-feature-section";
 import { AudienceSection, EngagementModelsSection, FinalCallToAction, ProcessSection } from "@/components/marketing/home-sections";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
@@ -9,6 +10,7 @@ import { TestimonialsSection } from "@/components/marketing/testimonials-section
 import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicCatalogData } from "@/features/catalog/repository";
 import { getPublicTestimonials } from "@/features/content/testimonial-repository";
+import { getPublicSiteContent } from "@/features/content/site-content-repository";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [catalog, testimonials] = await Promise.all([getPublicCatalogData(), getPublicTestimonials()]);
+  const [catalog, testimonials, siteContent] = await Promise.all([getPublicCatalogData(), getPublicTestimonials(), getPublicSiteContent()]);
   const currency = await getCatalogCurrencySnapshot(
     catalog.systems.some((system) => system.pricingType !== "quotation" && system.priceMinor !== null),
   );
@@ -37,6 +39,7 @@ export default async function HomePage() {
       <main id="main-content">
         <HeroSection />
         <TrustStrip />
+        <HomepageFeatureSection feature={siteContent.homepageFeature} />
         <CatalogCurrencyProvider snapshot={currency}>
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>

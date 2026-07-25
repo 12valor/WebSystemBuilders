@@ -23,10 +23,14 @@ const actionLabels: Record<string, string> = {
   "testimonial.updated": "Updated a testimonial",
   "testimonial.published": "Published a testimonial",
   "testimonial.archived": "Archived a testimonial",
+  "content_block.created": "Created a site-content draft",
+  "content_block.updated": "Updated site content",
+  "content_block.published": "Published site content",
+  "content_block.archived": "Archived site content",
   "inquiry.updated": "Updated an inquiry",
 };
 
-const safeMetadataKeys = ["name", "slug", "status", "previous_status", "audience", "is_active", "assigned", "inquiry_type", "media_type", "source", "category", "is_featured"] as const;
+const safeMetadataKeys = ["name", "slug", "status", "previous_status", "audience", "is_active", "assigned", "inquiry_type", "media_type", "source", "category", "is_featured", "placement"] as const;
 
 export function formatActivityAction(action: string) {
   return actionLabels[action] ?? action.replaceAll(".", " ");
