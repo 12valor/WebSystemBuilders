@@ -28,7 +28,7 @@ export default async function SignInPage({
 
   return (
     <AuthShell>
-      <main className="mx-auto grid w-[min(calc(100%-40px),1120px)] gap-10 py-12 md:w-[min(calc(100%-64px),1120px)] md:py-20 lg:grid-cols-[minmax(0,1fr)_430px] lg:items-start lg:gap-20">
+      <main id="main-content" className="mx-auto grid w-[min(calc(100%-40px),1120px)] gap-10 py-12 md:w-[min(calc(100%-64px),1120px)] md:py-20 lg:grid-cols-[minmax(0,1fr)_430px] lg:items-start lg:gap-20">
         <section className="pt-2 lg:sticky lg:top-12">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-hover">Customer and administrator access</p>
           <h1 className="mt-5 max-w-2xl text-[clamp(2.7rem,6vw,5rem)] font-semibold leading-[0.97] tracking-[-0.065em]">One verified email. Your account stays private.</h1>

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={geist.variable} data-scroll-behavior="smooth">
-      <body>{children}</body>
+      <body><a href="#main-content" className="fixed left-4 top-3 z-[200] -translate-y-24 rounded bg-white px-3 py-2 text-sm font-semibold text-black transition-transform focus:translate-y-0">Skip to main content</a>{children}</body>
     </html>
   );
 }

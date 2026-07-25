@@ -4,6 +4,7 @@ import { InquiryForm } from "@/components/inquiries/inquiry-form";
 import { PublicPageHero, PublicPageShell } from "@/components/marketing/public-page";
 import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 import { isInquirySubmissionConfigured } from "@/lib/env/inquiries";
+import { getPublicCompanyProfile } from "@/features/content/company-profile-repository";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
-  const configured = isInquirySubmissionConfigured();
+export default async function ContactPage() {
+  const [configured, profile] = await Promise.all([Promise.resolve(isInquirySubmissionConfigured()), getPublicCompanyProfile()]);
 
   return (
     <PublicPageShell>
@@ -30,7 +31,7 @@ export default function ContactPage() {
             <h2 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.055em]">Keep the first message focused.</h2>
             <p className="mt-6 leading-7 text-secondary">Explain what you are trying to understand and include enough context for the request to be reviewed. Do not submit passwords, payment details, identification numbers, or confidential records.</p>
             <div className="mt-8 border-t border-white/15 pt-6 text-sm leading-6 text-secondary">
-              <p>Business contact details will be published only after the owner confirms them for public use.</p>
+              {profile.publicEmail || profile.publicPhone ? <div className="grid gap-2">{profile.publicEmail && <a href={`mailto:${profile.publicEmail}`} className="font-semibold text-foreground underline underline-offset-4">{profile.publicEmail}</a>}{profile.publicPhone && <a href={`tel:${profile.publicPhone.replace(/[^+0-9]/g, "")}`} className="font-semibold text-foreground underline underline-offset-4">{profile.publicPhone}</a>}</div> : <p>Business contact details will be published only after the owner confirms them for public use.</p>}
               <Link href="/faq" className="mt-4 inline-flex font-semibold text-foreground underline underline-offset-4">Check common questions first</Link>
             </div>
           </div>

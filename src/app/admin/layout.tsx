@@ -38,7 +38,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
 function AdminConfigurationRequired() {
   return (
-    <main className="grid min-h-screen place-items-center bg-background px-5 py-16 text-center">
+    <main id="main-content" className="grid min-h-screen place-items-center bg-background px-5 py-16 text-center">
       <div className="max-w-xl">
         <span className="mx-auto grid size-12 place-items-center rounded-xl border border-amber-300/20 bg-amber-300/[0.06] text-xs font-semibold text-amber-200" aria-hidden="true">SET</span>
         <h1 className="mt-6 text-[clamp(2.4rem,7vw,4.5rem)] font-semibold leading-none tracking-[-0.06em]">Administrator access is not configured.</h1>

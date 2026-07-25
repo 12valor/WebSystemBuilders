@@ -2,7 +2,7 @@
 
 ## Status
 
-**Active workstream:** Phase 5 - Admin dashboard  
+**Local implementation:** Complete - provider verification pending
 **Started:** July 25, 2026  
 **Dependency note:** Administrator operations can be implemented locally, but live authentication, Row Level Security, Storage, and audit verification remain pending owner-provided Supabase configuration. Order, payment, and fulfillment operations must not be simulated before Phases 6 and 7 create their durable records.
 
@@ -55,9 +55,9 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 - [x] Portfolio creation, editing, featuring, publication, archiving, and public rendering
 - [x] Authentic testimonial creation, private verification, permission-gated publication, featuring, archiving, and homepage rendering
 - [x] Draft-first homepage feature and site-wide announcement management
-- [ ] Company and contact management
-- [ ] Super-administrator access management
-- [ ] Super-administrator settings and integration-health views
+- [x] Approved company-profile and optional public contact management
+- [x] Super-administrator access management with protected self and final-super-admin invariants
+- [x] Super-administrator settings and configuration-presence health views
 - [x] Read-only searchable audit-log view with safe metadata summaries
 
 ## 4. Initial implemented routes
@@ -70,9 +70,10 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
 | `/admin/media` | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
-| `/admin/content` | FAQ, portfolio, verified testimonials, homepage features, and announcement publication workflows |
+| `/admin/content` | FAQ, portfolio, testimonials, homepage features, announcements, and company/contact publication workflows |
 | `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
+| `/admin/settings` | Super-administrator access management and secret-safe integration configuration status |
 
 Routes listed in the overall sitemap but not present in this table remain planned. They must not be linked as completed operations.
 
@@ -134,18 +135,34 @@ Routes listed in the overall sitemap but not present in this table remain planne
 4. Calls to action are restricted to internal website paths so administrator content cannot create an external redirect.
 5. Archiving removes content from public routes without deletion, stale concurrent edits are rejected, and audit events exclude public copy.
 
-## 12. Dependency boundary
+## 12. Company and contact profile rules
+
+1. The public identity remains locked to WebSystemBuilders, AG Evangelista, and the title Web Developer unless the owner approves a blueprint change.
+2. The approved company summary and founder biography are the truthful baseline; no registration, office, team-size, experience, or credential claims are added.
+3. Public email and phone fields are optional and appear only after an administrator publishes the profile.
+4. Archiving removes database-managed public contacts while retaining the approved baseline brand presentation.
+5. Updates are server-authorized, validated, concurrency-safe, and audited without storing company copy or contact values in audit metadata.
+
+## 13. Super-administrator rules
+
+1. The settings route requires a server-verified `super_admin` role whenever Supabase is configured.
+2. Direct client table mutations are removed; administrator role changes use a restricted database function and require an existing authenticated account.
+3. A super administrator cannot revoke their own access, demote their own protected role, or remove the final super administrator.
+4. Access events record target identifiers, role, and action without placing account email addresses in audit metadata.
+5. Integration health reports configuration presence only, never returns secret values, and labels live provider verification as pending.
+
+## 14. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 13. Verification
+## 15. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 14. Exit criteria
+## 16. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 15. Next action
+## 17. Next action
 
-Continue with company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Phase 5 is implemented locally. Proceed to Phase 6 commerce foundations while retaining live Supabase authorization, RLS, mutation, and integration-health verification as a launch gate. Outbound inquiry email remains deferred until Resend and the domain mailbox are configured.

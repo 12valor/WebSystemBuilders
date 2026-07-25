@@ -1,0 +1,11 @@
+"use client";
+
+import { useActionState } from "react";
+import { createSupportRequest, type CustomerSupportState } from "@/features/customer/actions";
+
+const initialState: CustomerSupportState = { status: "idle" };
+
+export function SupportForm({ orders }: { orders: { id: string; label: string }[] }) {
+  const [state, action, pending] = useActionState(createSupportRequest, initialState);
+  return <form action={action} className="mt-6 grid gap-4 rounded-xl border border-white/10 bg-surface p-5" noValidate>{state.message && <p role="status" className={`rounded-lg border p-3 text-sm ${state.status === "success" ? "border-emerald-400/20 text-emerald-200" : "border-red-400/20 text-red-200"}`}>{state.message}</p>}<label className="grid gap-2 text-sm font-semibold">Related order<select name="orderId" defaultValue={state.values?.orderId ?? ""} className="min-h-11 rounded-lg border border-white/15 bg-background px-3 font-normal"><option value="">Select an order</option>{orders.map((order) => <option key={order.id} value={order.id}>{order.label}</option>)}</select>{state.fieldErrors?.orderId?.[0] && <span className="text-xs font-normal text-red-300">{state.fieldErrors.orderId[0]}</span>}</label><label className="grid gap-2 text-sm font-semibold">Subject<input name="subject" defaultValue={state.values?.subject} className="min-h-11 rounded-lg border border-white/15 bg-background px-3 font-normal" />{state.fieldErrors?.subject?.[0] && <span className="text-xs font-normal text-red-300">{state.fieldErrors.subject[0]}</span>}</label><label className="grid gap-2 text-sm font-semibold">Describe the issue<textarea name="message" defaultValue={state.values?.message} rows={5} className="rounded-lg border border-white/15 bg-background p-3 font-normal leading-6" />{state.fieldErrors?.message?.[0] && <span className="text-xs font-normal text-red-300">{state.fieldErrors.message[0]}</span>}</label><p className="text-xs leading-5 text-muted">Do not include passwords, API keys, database credentials, or delivery tokens.</p><button disabled={pending || orders.length === 0} className="min-h-11 rounded-lg bg-foreground px-4 text-sm font-semibold text-background disabled:bg-white/10 disabled:text-muted">{pending ? "Creating request..." : "Create support request"}</button></form>;
+}

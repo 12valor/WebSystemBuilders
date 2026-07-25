@@ -54,7 +54,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             ))}
           </nav>
           <div className="mt-7 hidden border-t border-white/10 pt-5 lg:block">
-            <p className="text-xs leading-5 text-muted">Account access will require verification of the same email used at checkout.</p>
+            <p className="text-xs leading-5 text-muted">Account access requires verification of the same email used at checkout.</p>
             <Link href="/" className="mt-4 inline-flex text-xs font-semibold text-secondary hover:text-foreground">Back to public site</Link>
           </div>
         </aside>
@@ -63,9 +63,9 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
           <section id="overview" aria-labelledby="account-heading" className="scroll-mt-8 border-b border-white/10 pb-8 sm:pb-10">
             <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
               <div>
-                <span className="inline-flex min-h-8 items-center rounded-full border border-blue-400/20 bg-blue-500/[0.08] px-3 text-xs font-semibold text-brand-hover">Phase 1 design preview</span>
+                <span className="inline-flex min-h-8 items-center rounded-full border border-blue-400/20 bg-blue-500/[0.08] px-3 text-xs font-semibold text-brand-hover">Secure account access</span>
                 <h1 id="account-heading" className="mt-5 max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.06em]">Your systems, orders, and support in one place.</h1>
-                <p className="mt-5 max-w-2xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">{signedIn ? <>Signed in as <strong className="font-semibold text-foreground">{customerEmail ?? "a verified customer"}</strong>. Order history and protected-download data will appear after the commerce modules are connected.</> : <>This preview contains no customer records. Secure email verification is available after authentication is configured.</>}</p>
+                <p className="mt-5 max-w-2xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">{signedIn ? <>Signed in as <strong className="font-semibold text-foreground">{customerEmail ?? "a verified customer"}</strong>. Your claimed orders and protected downloads appear after the configured database verifies ownership.</> : <>This preview contains no customer records. Secure email verification is available after authentication is configured.</>}</p>
               </div>
               {signedIn ? (
                 <form action={signOut}><button type="submit" className="inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 px-5 text-sm font-semibold hover:bg-white/[0.04] sm:w-auto">Sign out</button></form>
@@ -109,7 +109,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
           <section id="support" aria-labelledby="support-heading" className="scroll-mt-8 pt-10 sm:pt-12">
             <SectionHeading eyebrow="Order support" title="Support" description="Keep order-linked questions, replies, and resolution status together with the purchase they concern." />
             <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-              <EmptyPanel marker="0" title="No support requests" description="Eligible customers will be able to open a request from an order and follow its status here." />
+              <EmptyPanel marker="0" title="No support requests" description="Signed-in customers can open an order-linked request and follow its status here." />
               <aside className="mt-6 rounded-xl border border-white/10 bg-surface p-5" aria-labelledby="support-policy-heading">
                 <h3 id="support-policy-heading" className="text-sm font-semibold">Before submitting</h3>
                 <ul className="mt-4 grid gap-3 text-sm leading-6 text-secondary">

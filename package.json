@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "launch:check": "node scripts/check-launch-readiness.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

@@ -1,6 +1,6 @@
 export default function AdminLoading() {
   return (
-    <main className="px-5 py-8 sm:px-8 lg:px-10 lg:py-10" aria-busy="true" aria-label="Loading administrator workspace">
+    <main id="main-content" className="px-5 py-8 sm:px-8 lg:px-10 lg:py-10" aria-busy="true" aria-label="Loading administrator workspace">
       <div className="mx-auto max-w-[1440px]">
         <div className="border-b border-white/10 pb-7">
           <div className="h-3 w-24 rounded bg-white/10" />

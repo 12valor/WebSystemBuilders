@@ -4,6 +4,7 @@ import { useActionState, useMemo, useState } from "react";
 import { AdminPortfolioSection } from "@/components/admin/admin-portfolio-section";
 import { AdminTestimonialSection } from "@/components/admin/admin-testimonial-section";
 import { AdminSiteContentSection } from "@/components/admin/admin-site-content-section";
+import { AdminCompanyProfileSection } from "@/components/admin/admin-company-profile-section";
 import {
   createFaqItem,
   updateFaqItem,
@@ -13,8 +14,9 @@ import type { AdminFaqData, FaqItem } from "@/features/content/faq-types";
 import type { AdminPortfolioData } from "@/features/content/portfolio-types";
 import type { AdminTestimonialData } from "@/features/content/testimonial-types";
 import type { AdminSiteContentData } from "@/features/content/site-content-types";
+import type { AdminCompanyProfileData } from "@/features/content/company-profile-types";
 
-type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived" | "testimonial-created" | "testimonial-updated" | "testimonial-published" | "testimonial-archived" | "content-created" | "content-updated" | "content-published" | "content-archived";
+type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived" | "testimonial-created" | "testimonial-updated" | "testimonial-published" | "testimonial-archived" | "content-created" | "content-updated" | "content-published" | "content-archived" | "company-updated" | "company-published" | "company-archived";
 
 const initialState: FaqEditorState = { status: "idle" };
 const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none";
@@ -26,12 +28,14 @@ export function AdminContentWorkspace({
   portfolioData,
   testimonialData,
   siteContentData,
+  companyProfileData,
   result,
 }: {
   data: AdminFaqData;
   portfolioData: AdminPortfolioData;
   testimonialData: AdminTestimonialData;
   siteContentData: AdminSiteContentData;
+  companyProfileData: AdminCompanyProfileData;
   result?: ContentResult;
 }) {
   const [query, setQuery] = useState("");
@@ -58,7 +62,7 @@ export function AdminContentWorkspace({
         <div className="border-b border-white/10 pb-7">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Public content</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">Content</h1>
-          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. FAQ, portfolio, testimonials, announcements, and homepage-feature publishing are available; company and contact settings remain planned.</p>
+          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. Manage FAQs, portfolio entries, testimonials, announcements, homepage features, and the approved company and public contact profile.</p>
         </div>
 
         <div className="mt-7 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:max-w-2xl">
@@ -102,13 +106,8 @@ export function AdminContentWorkspace({
         <AdminPortfolioSection data={portfolioData} />
         <AdminTestimonialSection data={testimonialData} />
         <AdminSiteContentSection data={siteContentData} />
+        <AdminCompanyProfileSection data={companyProfileData} />
 
-        <section aria-labelledby="planned-content-title" className="mt-10 border-t border-white/10 pt-8">
-          <h2 id="planned-content-title" className="text-lg font-semibold">Remaining content modules</h2>
-          <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10">
-            {["Company and contact settings"].map((item) => <div key={item} className="bg-surface p-5"><p className="font-semibold">{item}</p><p className="mt-2 text-xs leading-5 text-muted">Planned in the remaining Phase 5 content work.</p></div>)}
-          </div>
-        </section>
       </div>
     </main>
   );
@@ -182,7 +181,7 @@ function Metric({ label, value }: { label: string; value: number }) {
 }
 
 function ResultNotice({ result }: { result: ContentResult }) {
-  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page.", "testimonial-created": "The testimonial draft was created privately.", "testimonial-updated": "The testimonial and verification record were saved.", "testimonial-published": "The verified testimonial is published on the homepage.", "testimonial-archived": "The testimonial was archived and removed from the homepage.", "content-created": "The site-content draft was created.", "content-updated": "The site-content changes were saved.", "content-published": "The site content is published.", "content-archived": "The site content was archived and removed publicly." };
+  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page.", "testimonial-created": "The testimonial draft was created privately.", "testimonial-updated": "The testimonial and verification record were saved.", "testimonial-published": "The verified testimonial is published on the homepage.", "testimonial-archived": "The testimonial was archived and removed from the homepage.", "content-created": "The site-content draft was created.", "content-updated": "The site-content changes were saved.", "content-published": "The site content is published.", "content-archived": "The site content was archived and removed publicly.", "company-updated": "The approved company profile changes were saved.", "company-published": "The company and public contact profile is published.", "company-archived": "The stored profile was archived and public contact channels were removed." };
   return <p className="mb-6 rounded-xl border border-emerald-300/20 bg-emerald-300/[0.06] p-4 text-sm text-emerald-100" role="status">{messages[result]}</p>;
 }
 

@@ -104,10 +104,10 @@ function PublishedSystem({ system }: { system: CatalogSystemDetail }) {
           <aside className="h-fit rounded-2xl border border-white/10 bg-surface p-6 lg:sticky lg:top-24">
             <SystemPriceSummary system={system} />
 
-            {system.pricingType === "quotation" || system.productType === "custom_service" ? (
+            {system.pricingType !== "fixed" || system.productType === "custom_service" ? (
               <Link href="/request-a-quote" className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-foreground px-5 text-sm font-semibold text-background">Request a quotation</Link>
             ) : (
-              <button type="button" disabled className="mt-6 inline-flex min-h-12 w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-white/10 px-5 text-sm font-semibold text-muted">Checkout setup pending</button>
+              <Link href={`/checkout/${system.slug}`} className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-foreground px-5 text-sm font-semibold text-background">Buy system</Link>
             )}
             {system.productType !== "custom_service" && <Link href="/request-a-quote" className="mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-[10px] border border-white/15 px-5 text-sm font-semibold hover:bg-white/[0.04]">Request customization</Link>}
 

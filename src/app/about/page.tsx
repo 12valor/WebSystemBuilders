@@ -6,6 +6,9 @@ import {
   PublicPageShell,
   StatementSection,
 } from "@/components/marketing/public-page";
+import { getPublicCompanyProfile } from "@/features/content/company-profile-repository";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "About WebSystemBuilders",
@@ -13,13 +16,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const profile = await getPublicCompanyProfile();
   return (
     <PublicPageShell>
       <PublicPageHero
         eyebrow="About WebSystemBuilders"
         title="One professional platform for finding or building a system."
-        description="WebSystemBuilders helps students and business owners access ready-made software systems and request custom development through one professional platform."
+        description={profile.companySummary}
         primary={{ label: "Explore systems", href: "/systems" }}
         secondary={{ label: "How the process works", href: "/process" }}
       />
@@ -45,7 +49,7 @@ export default function AboutPage() {
       <section className="py-20 sm:py-24 lg:py-28">
         <div className="mx-auto grid w-[min(calc(100%-40px),1080px)] gap-8 md:w-[min(calc(100%-64px),1080px)] lg:grid-cols-[260px_1fr] lg:gap-20">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Founder</p>
-          <div className="border-t border-white/15 pt-8"><h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.06em]">AG Evangelista</h2><p className="mt-4 text-lg text-brand-hover">Web Developer</p><p className="mt-8 max-w-2xl text-lg leading-8 text-secondary">AG Evangelista is the founder of WebSystemBuilders and a web developer focused on creating practical software solutions for students and business owners.</p></div>
+          <div className="border-t border-white/15 pt-8"><h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-none tracking-[-0.06em]">{profile.founderName}</h2><p className="mt-4 text-lg text-brand-hover">{profile.founderTitle}</p><p className="mt-8 max-w-2xl text-lg leading-8 text-secondary">{profile.founderBio}</p></div>
         </div>
       </section>
       <PublicCallToAction

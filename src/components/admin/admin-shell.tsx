@@ -8,7 +8,10 @@ const navigation = [
   ["Media", "/admin/media"],
   ["Content", "/admin/content"],
   ["Inquiries", "/admin/inquiries"],
+  ["Orders", "/admin/orders"],
+  ["Support", "/admin/support"],
   ["Audit log", "/admin/audit-log"],
+  ["Settings", "/admin/settings"],
 ] as const;
 
 export function AdminShell({ children, active = "Systems" }: { children: React.ReactNode; active?: string }) {
