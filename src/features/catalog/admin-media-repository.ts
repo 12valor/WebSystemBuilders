@@ -9,7 +9,7 @@ const mediaRecordSchema = z.object({
   id: z.uuid(),
   media_type: z.enum(["image", "video", "demo"]),
   storage_path: z.string().nullable(),
-  external_url: z.url().nullable(),
+  external_url: z.url().refine((value) => value.startsWith("https://"), "External media must use HTTPS.").nullable(),
   alt_text: z.string().nullable(),
   sort_order: z.number().int().nonnegative(),
   created_at: z.string(),

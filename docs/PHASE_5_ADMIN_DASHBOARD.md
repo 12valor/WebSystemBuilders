@@ -94,7 +94,7 @@ Routes listed in the overall sitemap but not present in this table remain planne
 1. The media workspace reads only database-owned catalog metadata and never lists raw Storage objects without a matching media record.
 2. Uploaded image previews use short-lived signed URLs and never expose a permanent public object URL.
 3. Every media item retains an owning system; uploads, ordering, and metadata edits remain in that system's editor.
-4. Global removal uses the same server-authorized ownership and published-system safeguards as the system editor.
+4. Global removal uses the same server-authorized ownership and published-system safeguards as the system editor, and media mutations emit safe audit events.
 5. Missing alternative text and unavailable signed previews are visible operational issues rather than silently hidden assets.
 
 ## 8. Dependency boundary
