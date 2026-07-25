@@ -56,7 +56,7 @@ export async function updateAdminInquiry(
   const supabase = await createClient();
   const currentResult = await supabase
     .from("inquiries")
-    .select("id,status,assigned_to,responded_at,closed_at")
+    .select("id,status,assigned_to,responded_at,closed_at,updated_at")
     .eq("id", id.data)
     .maybeSingle<{
       id: string;
@@ -64,6 +64,7 @@ export async function updateAdminInquiry(
       assigned_to: string | null;
       responded_at: string | null;
       closed_at: string | null;
+      updated_at: string;
     }>();
 
   if (currentResult.error) {
@@ -90,7 +91,7 @@ export async function updateAdminInquiry(
     ? currentResult.data.closed_at ?? now
     : null;
 
-  const { error } = await supabase
+  const { data: updated, error } = await supabase
     .from("inquiries")
     .update({
       status: input.data.status,
@@ -98,9 +99,18 @@ export async function updateAdminInquiry(
       responded_at: respondedAt,
       closed_at: closedAt,
     })
-    .eq("id", id.data);
+    .eq("id", id.data)
+    .eq("updated_at", currentResult.data.updated_at)
+    .select("id")
+    .maybeSingle<{ id: string }>();
 
   if (error) return { status: "error", message: "The inquiry could not be updated." };
+  if (!updated) {
+    return {
+      status: "error",
+      message: "Another administrator changed this inquiry. Reload it before saving again.",
+    };
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/inquiries");

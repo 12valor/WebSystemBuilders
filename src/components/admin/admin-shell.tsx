@@ -5,6 +5,7 @@ const navigation = [
   ["Overview", "/admin"],
   ["Systems", "/admin/systems"],
   ["Categories", "/admin/categories"],
+  ["Inquiries", "/admin/inquiries"],
   ["Audit log", "/admin/audit-log"],
 ] as const;
 

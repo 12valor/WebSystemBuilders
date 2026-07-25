@@ -5,9 +5,10 @@ const actionLabels: Record<string, string> = {
   "system.updated": "Updated a system",
   "category.created": "Created a category",
   "category.updated": "Updated a category",
+  "inquiry.updated": "Updated an inquiry",
 };
 
-const safeMetadataKeys = ["name", "slug", "status", "audience", "is_active"] as const;
+const safeMetadataKeys = ["name", "slug", "status", "audience", "is_active", "assigned", "inquiry_type"] as const;
 
 export function formatActivityAction(action: string) {
   return actionLabels[action] ?? action.replaceAll(".", " ");

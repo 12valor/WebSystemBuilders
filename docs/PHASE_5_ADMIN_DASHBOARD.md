@@ -43,7 +43,8 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 
 ### Operational records
 
-- [ ] Inquiry queue, assignment, status changes, and response history
+- [x] Inquiry queue, assignment, status changes, and operational history
+- [ ] Outbound response delivery and message history after Resend and domain email are configured
 - [ ] Order and payment operations after Phase 6 creates the commerce workflow
 - [ ] Delivery, resend, revocation, and event operations after Phase 7 creates fulfillment
 - [ ] Customer history after durable orders and verified account linking exist
@@ -64,6 +65,7 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/new` | Validated private system draft creation |
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
+| `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
 
 Routes listed in the overall sitemap but not present in this table remain planned. They must not be linked as completed operations.
@@ -91,4 +93,4 @@ Phase 5 exits when all applicable checklist items are complete, administrator an
 
 ## 9. Next action
 
-Continue with inquiry operations, remaining catalog controls, content management, and super-administrator settings. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with remaining catalog controls, content management, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.

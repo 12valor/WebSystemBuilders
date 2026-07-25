@@ -64,16 +64,19 @@ export function AdminOverview({ data }: { data: AdminDashboardData }) {
           </section>
 
           <section aria-labelledby="recent-inquiries-title" className="overflow-hidden rounded-xl border border-white/10 bg-surface-subtle">
-            <div className="border-b border-white/10 px-5 py-4">
-              <h2 id="recent-inquiries-title" className="font-semibold">Recent inquiries</h2>
-              <p className="mt-1 text-xs text-muted">Latest contact and quotation requests.</p>
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
+              <div>
+                <h2 id="recent-inquiries-title" className="font-semibold">Recent inquiries</h2>
+                <p className="mt-1 text-xs text-muted">Latest contact and quotation requests.</p>
+              </div>
+              <Link href="/admin/inquiries" className="text-xs font-semibold text-brand-hover hover:text-foreground">View queue</Link>
             </div>
             {data.recentInquiries.length > 0 ? (
               <div className="divide-y divide-white/10">
                 {data.recentInquiries.map((inquiry) => (
                   <article key={inquiry.id} className="px-5 py-4">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="font-medium leading-5">{inquiry.subject}</h3>
+                      <h3 className="font-medium leading-5"><Link href={`/admin/inquiries?id=${inquiry.id}`} className="hover:text-brand-hover">{inquiry.subject}</Link></h3>
                       <span className="rounded-full border border-white/10 px-2 py-1 text-[11px] capitalize text-secondary">{inquiry.status.replace("_", " ")}</span>
                     </div>
                     <p className="mt-2 text-xs capitalize text-muted">{inquiry.audience} · {formatAdminDateTime(inquiry.createdAt)}</p>

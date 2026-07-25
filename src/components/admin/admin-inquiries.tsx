@@ -229,7 +229,7 @@ function StatusBadge({ status }: { status: InquiryStatus }) {
 }
 
 function Detail({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div><dt className="text-xs font-semibold text-muted">{label}</dt><dd className="mt-1 text-sm text-secondary">{children}</dd></div>;
+  return <div><p className="text-xs font-semibold text-muted">{label}</p><div className="mt-1 text-sm text-secondary">{children}</div></div>;
 }
 
 function Filter({ label, value, onChange, options }: { label: string; value: string; onChange: (value: string) => void; options: Array<[string, string]> }) {
