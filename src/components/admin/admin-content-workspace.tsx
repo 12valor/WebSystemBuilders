@@ -106,7 +106,7 @@ function CreateFaqForm() {
         <Field label="Question" error={state.fieldErrors?.question}><input name="question" className={inputClass} placeholder="What should visitors know?" /></Field>
         <Field label="Answer" error={state.fieldErrors?.answer}><textarea name="answer" className={textareaClass} placeholder="Give a complete, verified answer." /></Field>
         <div className="grid gap-4 sm:grid-cols-[1fr_110px] xl:grid-cols-1">
-          <Field label="Category" error={state.fieldErrors?.category}><input name="category" className={inputClass} placeholder="General" /></Field>
+          <Field label="Category" error={state.fieldErrors?.category}><input name="category" defaultValue="General" className={inputClass} /></Field>
           <Field label="Order" error={state.fieldErrors?.sortOrder}><input name="sortOrder" type="number" min="0" max="10000" defaultValue="0" className={inputClass} /></Field>
         </div>
       </div>
