@@ -1,12 +1,16 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
+import { AdminPortfolioSection } from "@/components/admin/admin-portfolio-section";
 import {
   createFaqItem,
   updateFaqItem,
   type FaqEditorState,
 } from "@/features/content/faq-actions";
 import type { AdminFaqData, FaqItem } from "@/features/content/faq-types";
+import type { AdminPortfolioData } from "@/features/content/portfolio-types";
+
+type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived";
 
 const initialState: FaqEditorState = { status: "idle" };
 const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none";
@@ -15,10 +19,12 @@ const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-lg
 
 export function AdminContentWorkspace({
   data,
+  portfolioData,
   result,
 }: {
   data: AdminFaqData;
-  result?: "created" | "updated" | "published" | "archived";
+  portfolioData: AdminPortfolioData;
+  result?: ContentResult;
 }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
@@ -44,7 +50,7 @@ export function AdminContentWorkspace({
         <div className="border-b border-white/10 pb-7">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Public content</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">Content</h1>
-          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. FAQ publishing is available first; portfolio and site settings remain visibly planned.</p>
+          <p className="mt-2 max-w-2xl text-secondary">Manage verified public information without editing application code. FAQ and portfolio publishing are available; testimonials and site settings remain visibly planned.</p>
         </div>
 
         <div className="mt-7 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:max-w-2xl">
@@ -85,10 +91,12 @@ export function AdminContentWorkspace({
           </div>
         </section>
 
+        <AdminPortfolioSection data={portfolioData} />
+
         <section aria-labelledby="planned-content-title" className="mt-10 border-t border-white/10 pt-8">
           <h2 id="planned-content-title" className="text-lg font-semibold">Remaining content modules</h2>
-          <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-4">
-            {["Portfolio and case studies", "Authentic testimonials", "Announcements and homepage content", "Company and contact settings"].map((item) => <div key={item} className="bg-surface p-5"><p className="font-semibold">{item}</p><p className="mt-2 text-xs leading-5 text-muted">Planned in the remaining Phase 5 content work.</p></div>)}
+          <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 md:grid-cols-3">
+            {["Authentic testimonials", "Announcements and homepage content", "Company and contact settings"].map((item) => <div key={item} className="bg-surface p-5"><p className="font-semibold">{item}</p><p className="mt-2 text-xs leading-5 text-muted">Planned in the remaining Phase 5 content work.</p></div>)}
           </div>
         </section>
       </div>
@@ -163,8 +171,8 @@ function Metric({ label, value }: { label: string; value: number }) {
   return <div className="bg-surface p-5"><p className="text-xs font-semibold text-muted">{label}</p><p className="mt-3 text-2xl font-semibold tabular-nums">{value}</p></div>;
 }
 
-function ResultNotice({ result }: { result: "created" | "updated" | "published" | "archived" }) {
-  const messages = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page." };
+function ResultNotice({ result }: { result: ContentResult }) {
+  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page." };
   return <p className="mb-6 rounded-xl border border-emerald-300/20 bg-emerald-300/[0.06] p-4 text-sm text-emerald-100" role="status">{messages[result]}</p>;
 }
 
