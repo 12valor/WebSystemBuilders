@@ -1,4 +1,4 @@
-import type { AdminActivityRecord } from "@/features/admin/types";
+﻿import type { AdminActivityRecord } from "@/features/admin/types";
 
 const actionLabels: Record<string, string> = {
   "system.created": "Created a system draft",
@@ -19,6 +19,10 @@ const actionLabels: Record<string, string> = {
   "portfolio.updated": "Updated a portfolio entry",
   "portfolio.published": "Published a portfolio entry",
   "portfolio.archived": "Archived a portfolio entry",
+  "testimonial.created": "Created a testimonial draft",
+  "testimonial.updated": "Updated a testimonial",
+  "testimonial.published": "Published a testimonial",
+  "testimonial.archived": "Archived a testimonial",
   "inquiry.updated": "Updated an inquiry",
 };
 
@@ -35,7 +39,7 @@ export function formatActivityDetails(metadata: AdminActivityRecord["metadata"])
     const label = key === "is_active" ? "active" : key.replaceAll("_", " ");
     return [`${label}: ${String(value)}`];
   });
-  return details.join(" · ");
+  return details.join(" Â· ");
 }
 
 export function formatAdminDateTime(value: string) {
@@ -45,3 +49,4 @@ export function formatAdminDateTime(value: string) {
     timeZone: "Asia/Manila",
   }).format(new Date(value));
 }
+
