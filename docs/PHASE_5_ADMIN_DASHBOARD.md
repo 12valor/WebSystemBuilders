@@ -51,7 +51,8 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 
 ### Content and administration
 
-- [ ] Portfolio, FAQ, featured-content, announcement, company, and contact management
+- [x] FAQ creation, editing, publication, archiving, and public rendering
+- [ ] Portfolio, testimonials, featured-content, announcement, company, and contact management
 - [ ] Super-administrator access management
 - [ ] Super-administrator settings and integration-health views
 - [x] Read-only searchable audit-log view with safe metadata summaries
@@ -65,7 +66,8 @@ Deliver a secure, database-driven workspace where authorized administrators can 
 | `/admin/systems/new` | Validated private system draft creation |
 | `/admin/systems/[id]/edit` | Catalog, pricing, media, versions, files, and publication management |
 | `/admin/categories` | Category creation, editing, ordering, activation, and safe archiving |
-| /admin/media | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
+| `/admin/media` | Searchable cross-catalog media review, signed previews, ownership links, and safe removal |
+| `/admin/content` | FAQ drafts, publication, archiving, ordering, and public-content status |
 | `/admin/inquiries` | Searchable request queue, complete request review, assignment, status, and history |
 | `/admin/audit-log` | Read-only recent administrator activity |
 
@@ -97,18 +99,26 @@ Routes listed in the overall sitemap but not present in this table remain planne
 4. Global removal uses the same server-authorized ownership and published-system safeguards as the system editor, and media mutations emit safe audit events.
 5. Missing alternative text and unavailable signed previews are visible operational issues rather than silently hidden assets.
 
-## 8. Dependency boundary
+## 8. FAQ content rules
+
+1. Existing verified FAQ policy copy is preserved as the initial published dataset; no testimonials, clients, or outcome claims are seeded.
+2. New FAQ records begin as private drafts and appear publicly only after explicit publication.
+3. Archiving removes an FAQ from public reads without deleting its record or audit history.
+4. Public FAQ reads are database-driven when Supabase is configured and retain the verified baseline only as an unconfigured or query-failure fallback.
+5. Mutations validate content on the server, reject stale concurrent edits, and record status-only audit metadata without storing answer text.
+
+## 9. Dependency boundary
 
 Phase 5 may summarize existing inquiry and catalog records. It does not create placeholder order, payment, customer, fulfillment, email, or download records. Those modules become actionable only after their owning schemas and idempotent workflows are implemented and tested.
 
-## 9. Verification
+## 10. Verification
 
 Each completed operation requires schema validation tests, migration-contract tests when the database changes, lint, type checking, the full unit suite, a production build, and route-level smoke checks. Live mutation, RLS, and audit verification remain a named provider gate until the Supabase projects are configured.
 
-## 10. Exit criteria
+## 11. Exit criteria
 
 Phase 5 exits when all applicable checklist items are complete, administrator and super-administrator boundaries are verified in a configured project, routine operational mutations produce safe audit events, primary desktop and mobile workflows are verified, and no route presents an unfinished commerce dependency as functional.
 
-## 11. Next action
+## 12. Next action
 
-Continue with content management and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
+Continue with portfolio, testimonial, featured-content, announcement, company, contact, and super-administrator settings. Add outbound inquiry email only after Resend and the domain mailbox are configured. Add order and delivery administration only through the durable workflows created in Phases 6 and 7.
