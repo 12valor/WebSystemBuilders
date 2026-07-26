@@ -3,36 +3,47 @@ import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { fulfillPaidCheckout } from "@/features/delivery/service";
 import { parsePaidCheckoutEvent } from "@/features/payments/webhook-event";
-import { verifyPayMongoSignature } from "@/features/payments/webhook-signature";
-import { getPayMongoEnv, isPayMongoConfigured } from "@/lib/env/paymongo";
+import { verifyLemonSqueezySignature } from "@/features/payments/webhook-signature";
+import { getLemonSqueezyEnv, isLemonSqueezyConfigured } from "@/lib/env/lemonsqueezy";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 const processingResultSchema = z.enum(["paid", "duplicate", "rejected"]);
 
 export async function POST(request: Request) {
-  if (!isSupabasePubliclyConfigured() || !isPayMongoConfigured()) {
+  if (!isSupabasePubliclyConfigured() || !isLemonSqueezyConfigured()) {
     return NextResponse.json({ received: false, reason: "unconfigured" }, { status: 503 });
   }
+
   const declaredLength = Number(request.headers.get("content-length") ?? "0");
   if (Number.isFinite(declaredLength) && declaredLength > 262_144) {
     return NextResponse.json({ received: false }, { status: 413 });
   }
+
   const rawBody = await request.text();
   if (Buffer.byteLength(rawBody, "utf8") > 262_144) {
     return NextResponse.json({ received: false }, { status: 413 });
   }
-  const env = getPayMongoEnv();
-  const signature = verifyPayMongoSignature(rawBody, request.headers.get("paymongo-signature"), env.PAYMONGO_WEBHOOK_SECRET);
-  if (!signature.valid) return NextResponse.json({ received: false }, { status: 401 });
+
+  const env = getLemonSqueezyEnv();
+  const signatureHeader = request.headers.get("x-signature");
+  const signature = verifyLemonSqueezySignature(rawBody, signatureHeader, env.LEMON_SQUEEZY_WEBHOOK_SECRET);
+  if (!signature.valid) {
+    return NextResponse.json({ received: false }, { status: 401 });
+  }
 
   const payloadHash = createHash("sha256").update(rawBody).digest("hex");
   let payload: unknown;
-  try { payload = JSON.parse(rawBody) as unknown; }
-  catch { return NextResponse.json({ received: false }, { status: 400 }); }
+  try {
+    payload = JSON.parse(rawBody) as unknown;
+  } catch {
+    return NextResponse.json({ received: false }, { status: 400 });
+  }
+
   const event = parsePaidCheckoutEvent(payload, payloadHash);
-  if (!event) return NextResponse.json({ received: true, ignored: true });
-  if (event.livemode !== signature.livemode) return NextResponse.json({ received: false }, { status: 401 });
+  if (!event) {
+    return NextResponse.json({ received: true, ignored: true });
+  }
 
   const supabase = createAdminClient();
   const result = await supabase.rpc("record_paid_checkout_event", {
@@ -45,10 +56,15 @@ export async function POST(request: Request) {
     p_livemode: event.livemode,
     p_payload_sha256: payloadHash,
   });
+
   const processed = processingResultSchema.safeParse(result.data);
-  if (result.error || !processed.success) return NextResponse.json({ received: false }, { status: 500 });
+  if (result.error || !processed.success) {
+    return NextResponse.json({ received: false }, { status: 500 });
+  }
+
   if (processed.data === "paid") {
     after(() => fulfillPaidCheckout(event.checkoutSessionId).then(() => undefined).catch(() => undefined));
   }
+
   return NextResponse.json({ received: true, result: processed.data });
 }

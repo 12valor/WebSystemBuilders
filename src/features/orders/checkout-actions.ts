@@ -1,12 +1,11 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { checkoutFormSchema, pendingOrderRowSchema, type CheckoutField } from "@/features/orders/checkout-schema";
 import { createOrderReturnToken } from "@/features/orders/token";
-import { createPayMongoCheckout } from "@/features/payments/paymongo";
+import { createLemonSqueezyCheckout } from "@/features/payments/lemonsqueezy";
+import { getLemonSqueezyEnv, isLemonSqueezyConfigured } from "@/lib/env/lemonsqueezy";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { getPayMongoEnv, isPayMongoConfigured } from "@/lib/env/paymongo";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export type CheckoutState = {
@@ -36,7 +35,7 @@ export async function startCheckout(_previousState: CheckoutState, formData: For
       fieldErrors: parsed.error.flatten().fieldErrors as Partial<Record<CheckoutField, string[]>>,
     };
   }
-  if (!isSupabasePubliclyConfigured() || !isPayMongoConfigured()) {
+  if (!isSupabasePubliclyConfigured() || !isLemonSqueezyConfigured()) {
     return {
       status: "unavailable",
       message: "Secure payment setup is not connected yet. No order or charge was created.",
@@ -44,7 +43,7 @@ export async function startCheckout(_previousState: CheckoutState, formData: For
     };
   }
 
-  const env = getPayMongoEnv();
+  const env = getLemonSqueezyEnv();
   const supabase = createAdminClient();
   const returnToken = createOrderReturnToken();
   const orderResult = await supabase.rpc("create_pending_order", {
@@ -65,8 +64,9 @@ export async function startCheckout(_previousState: CheckoutState, formData: For
   let hosted;
   try {
     const siteUrl = new URL(env.SITE_URL);
-    hosted = await createPayMongoCheckout({
-      secretKey: env.PAYMONGO_SECRET_KEY,
+    hosted = await createLemonSqueezyCheckout({
+      apiKey: env.LEMON_SQUEEZY_API_KEY,
+      storeId: env.LEMON_SQUEEZY_STORE_ID,
       orderId: order.order_id,
       orderNumber: order.order_number,
       productName: order.product_name,
@@ -101,5 +101,8 @@ export async function startCheckout(_previousState: CheckoutState, formData: For
     };
   }
 
-  redirect(hosted.checkoutUrl);
+  return {
+    status: "idle",
+    values: retained,
+  };
 }

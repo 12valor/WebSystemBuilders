@@ -1,37 +1,20 @@
 import { z } from "zod";
 
-const paymentSchema = z.object({
-  id: z.string().regex(/^pay_[A-Za-z0-9]+$/),
-  attributes: z.object({
-    amount: z.number().int().positive(),
-    currency: z.string().length(3),
-    status: z.literal("paid"),
+const lemonSqueezyEventSchema = z.object({
+  meta: z.object({
+    event_name: z.string(),
+    custom_data: z.object({
+      order_id: z.string().optional(),
+      order_number: z.string().optional(),
+    }).optional(),
   }),
-});
-
-const checkoutSchema = z.object({
-  id: z.string().regex(/^cs_[A-Za-z0-9]+$/),
-  attributes: z.object({
-    payments: z.array(paymentSchema).min(1),
-    reference_number: z.string().min(1),
-  }),
-});
-
-const currentEventSchema = z.object({
   data: z.object({
-    type: z.literal("checkout_session.payment.paid"),
-    livemode: z.boolean(),
-    data: checkoutSchema,
-  }),
-});
-
-const legacyEventSchema = z.object({
-  data: z.object({
-    id: z.string().min(8),
+    id: z.string().min(1),
     attributes: z.object({
-      type: z.literal("checkout_session.payment.paid"),
-      livemode: z.boolean(),
-      data: checkoutSchema,
+      status: z.string(),
+      total: z.number().int().positive(),
+      currency: z.string().default("USD"),
+      order_number: z.union([z.number(), z.string()]).optional(),
     }),
   }),
 });
@@ -47,30 +30,27 @@ export type PaidCheckoutEvent = {
 };
 
 export function parsePaidCheckoutEvent(value: unknown, payloadSha256: string): PaidCheckoutEvent | null {
-  const current = currentEventSchema.safeParse(value);
-  if (current.success) {
-    return mapEvent(`payload_${payloadSha256}`, current.data.data, current.data.data.data);
-  }
-  const legacy = legacyEventSchema.safeParse(value);
-  if (legacy.success) {
-    return mapEvent(legacy.data.data.id, legacy.data.data.attributes, legacy.data.data.attributes.data);
-  }
-  return null;
-}
+  const parsed = lemonSqueezyEventSchema.safeParse(value);
+  if (!parsed.success) return null;
 
-function mapEvent(
-  providerEventId: string,
-  event: { type: "checkout_session.payment.paid"; livemode: boolean },
-  checkout: z.infer<typeof checkoutSchema>,
-): PaidCheckoutEvent {
-  const payment = checkout.attributes.payments.at(-1) as z.infer<typeof paymentSchema>;
+  const { meta, data } = parsed.data;
+  if (meta.event_name !== "order_created" && meta.event_name !== "order_paid") {
+    return null;
+  }
+
+  if (data.attributes.status !== "paid") {
+    return null;
+  }
+
+  const checkoutSessionId = meta.custom_data?.order_id ?? data.id;
+
   return {
-    providerEventId,
-    eventType: event.type,
-    checkoutSessionId: checkout.id,
-    providerPaymentId: payment.id,
-    amountMinor: payment.attributes.amount,
-    currency: payment.attributes.currency.toUpperCase(),
-    livemode: event.livemode,
+    providerEventId: `ls_${data.id}_${payloadSha256.slice(0, 8)}`,
+    eventType: "checkout_session.payment.paid",
+    checkoutSessionId,
+    providerPaymentId: data.id,
+    amountMinor: data.attributes.total,
+    currency: data.attributes.currency.toUpperCase(),
+    livemode: true,
   };
 }

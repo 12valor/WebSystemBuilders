@@ -1,24 +1,19 @@
 import { createHmac } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { verifyPayMongoSignature } from "@/features/payments/webhook-signature";
+import { verifyLemonSqueezySignature } from "@/features/payments/webhook-signature";
 
-const body = '{"data":{"type":"checkout_session.payment.paid"}}';
-const secret = "whsk_test_example_secret";
-const timestamp = 1_900_000_000;
-const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
+const body = '{"meta":{"event_name":"order_created"},"data":{"id":"order_123"}}';
+const secret = "whsecret_example_12345";
+const signature = createHmac("sha256", secret).update(body).digest("hex");
 
-describe("PayMongo webhook signature", () => {
-  it("accepts the test signature slot and reports test mode", () => {
-    expect(verifyPayMongoSignature(body, `t=${timestamp},te=${signature},li=`, secret, timestamp)).toEqual({ valid: true, livemode: false, timestamp });
+describe("Lemon Squeezy webhook signature", () => {
+  it("accepts valid X-Signature header", () => {
+    expect(verifyLemonSqueezySignature(body, signature, secret)).toEqual({ valid: true });
   });
 
-  it("accepts the live signature slot and reports live mode", () => {
-    expect(verifyPayMongoSignature(body, `t=${timestamp},te=,li=${signature}`, secret, timestamp)).toEqual({ valid: true, livemode: true, timestamp });
-  });
-
-  it("rejects altered bodies, malformed signatures, and stale requests", () => {
-    expect(verifyPayMongoSignature(`${body} `, `t=${timestamp},te=${signature},li=`, secret, timestamp).valid).toBe(false);
-    expect(verifyPayMongoSignature(body, `t=${timestamp},te=short,li=`, secret, timestamp).valid).toBe(false);
-    expect(verifyPayMongoSignature(body, `t=${timestamp},te=${signature},li=`, secret, timestamp + 301).valid).toBe(false);
+  it("rejects altered bodies and malformed signatures", () => {
+    expect(verifyLemonSqueezySignature(`${body} `, signature, secret).valid).toBe(false);
+    expect(verifyLemonSqueezySignature(body, "invalid_signature", secret).valid).toBe(false);
+    expect(verifyLemonSqueezySignature(body, signature, "wrong_secret").valid).toBe(false);
   });
 });

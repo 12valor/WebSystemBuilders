@@ -2,18 +2,35 @@
 
 ## 1. Outcome
 
-Phase 6 adds the durable commerce boundary for ready-made fixed-price systems. It creates an internal pending order before sending a customer to PayMongo, records immutable product and policy snapshots, verifies signed payment webhooks, reconciles expected values idempotently, and exposes a private return-status page plus an administrator order ledger.
+Phase 6 adds the durable commerce boundary for ready-made fixed-price systems. It creates an internal pending order before sending a customer to Lemon Squeezy, records immutable product and policy snapshots, verifies signed payment webhooks, reconciles expected values idempotently, and exposes a private return-status page plus an administrator order ledger.
 
-The local implementation is complete. Test-mode and production provider verification remain blocked until the owner creates and configures Supabase and PayMongo accounts.
+The local implementation is complete. Test-mode and production provider verification remain blocked until the owner configures Lemon Squeezy account credentials.
 
-## 2. Implemented routes
+## Completed phase architecture
 
-| Route | Purpose |
-|---|---|
-| `/checkout/[slug]` | Reviews the authoritative PHP order and collects buyer acknowledgements |
-| `/checkout/status/[orderNumber]` | Shows a token-protected, non-authoritative browser return status |
-| `/api/webhooks/paymongo` | Verifies raw signed PayMongo events before payment reconciliation |
-| `/admin/orders` | Provides an administrator-only read-only order and payment ledger |
+- Internal checkout action creating `pending_orders` records before provider session creation
+- `/api/webhooks/lemonsqueezy` route handler for raw signed payment reconciliation
+- Verification of Lemon Squeezy signatures and events
+- Idempotent `record_paid_checkout_event` procedure handling duplicated webhooks
+- Private `/checkout/status/[orderNumber]` outcome page backed by return-token validation
+- Admin order ledger at `/admin/orders` displaying payment details, fulfillment state, and retry options
+
+## Key technical flows
+
+### 1. Checkout initiation
+
+1. Buyer submits checkout form at `/checkout/[systemSlug]`.
+2. Server action validates input, terms, and environment presence.
+3. The server creates a Lemon Squeezy checkout session using API `POST /v1/checkouts`.
+4. The database attaches the returned checkout-session identifier and checkout URL.
+5. The customer is redirected to Lemon Squeezy.
+
+### 2. Webhook verification and fulfillment
+
+1. `/api/webhooks/lemonsqueezy` receives a `POST` request.
+2. Parse the `X-Signature` header and verify HMAC-SHA256 digest against `LEMON_SQUEEZY_WEBHOOK_SECRET`.
+3. Ensure the event type is `order_created` or `subscription_payment_success`.
+4. Update the order status to paid and flag as ready for fulfillment.
 
 ## 3. Purchase eligibility
 

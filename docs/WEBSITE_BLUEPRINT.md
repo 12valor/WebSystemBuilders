@@ -98,7 +98,7 @@ flowchart LR
     App --> Database["Supabase PostgreSQL"]
     App --> Auth["Supabase Auth"]
     App --> Storage["Private Supabase Storage"]
-    App --> Payment["PayMongo Hosted Checkout"]
+    App --> Payment["Lemon Squeezy Merchant of Record"]
     App --> Email["Resend transactional email"]
 
     Payment --> Webhook["Verified payment webhook"]
@@ -131,7 +131,7 @@ Use a modular monolith:
 | Database | Supabase PostgreSQL | Primary relational data store |
 | Authentication | Supabase Auth | Customer and administrator identity |
 | Storage | Supabase Storage | Private systems, media, and documents |
-| Payments | PayMongo Hosted Checkout | Philippine payment methods and hosted payment UI |
+| Payments | Lemon Squeezy Merchant of Record | Global card/PayPal digital product checkout without business registration requirement |
 | Email | Resend | Transactional purchase and inquiry email |
 | Validation | Zod | Shared input and environment validation |
 | Forms | React Hook Form | Complex user and administrator forms |

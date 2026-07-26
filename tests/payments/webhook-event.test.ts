@@ -1,14 +1,40 @@
 import { describe, expect, it } from "vitest";
 import { parsePaidCheckoutEvent } from "@/features/payments/webhook-event";
 
-describe("PayMongo paid checkout event", () => {
+describe("Lemon Squeezy paid checkout event", () => {
   it("extracts only the values required for reconciliation", () => {
-    const event = parsePaidCheckoutEvent({ data: { type: "checkout_session.payment.paid", livemode: false, data: { id: "cs_abc123", attributes: { reference_number: "WSB-20260725-ABCDEF1234", payments: [{ id: "pay_abc123", attributes: { amount: 125000, currency: "php", status: "paid" } }] } } } }, "a".repeat(64));
-    expect(event).toEqual({ providerEventId: `payload_${"a".repeat(64)}`, eventType: "checkout_session.payment.paid", checkoutSessionId: "cs_abc123", providerPaymentId: "pay_abc123", amountMinor: 125000, currency: "PHP", livemode: false });
+    const payload = {
+      meta: {
+        event_name: "order_created",
+        custom_data: {
+          order_id: "order_abc123",
+          order_number: "WSB-20260725-ABCDEF1234",
+        },
+      },
+      data: {
+        id: "ls_order_123",
+        attributes: {
+          status: "paid",
+          total: 125000,
+          currency: "USD",
+        },
+      },
+    };
+    const sha = "a".repeat(64);
+    const event = parsePaidCheckoutEvent(payload, sha);
+    expect(event).toEqual({
+      providerEventId: `ls_ls_order_123_${sha.slice(0, 8)}`,
+      eventType: "checkout_session.payment.paid",
+      checkoutSessionId: "order_abc123",
+      providerPaymentId: "ls_order_123",
+      amountMinor: 125000,
+      currency: "USD",
+      livemode: true,
+    });
   });
 
   it("ignores unsupported and unpaid events", () => {
-    expect(parsePaidCheckoutEvent({ data: { type: "payment.failed" } }, "b".repeat(64))).toBeNull();
-    expect(parsePaidCheckoutEvent({ data: { type: "checkout_session.payment.paid", livemode: false, data: { id: "cs_abc123", attributes: { reference_number: "order", payments: [{ id: "pay_abc123", attributes: { amount: 100, currency: "PHP", status: "failed" } }] } } } }, "c".repeat(64))).toBeNull();
+    expect(parsePaidCheckoutEvent({ meta: { event_name: "order_updated" }, data: { id: "123", attributes: { status: "pending", total: 100, currency: "USD" } } }, "b".repeat(64))).toBeNull();
+    expect(parsePaidCheckoutEvent({ meta: { event_name: "order_created" }, data: { id: "123", attributes: { status: "failed", total: 100, currency: "USD" } } }, "c".repeat(64))).toBeNull();
   });
 });

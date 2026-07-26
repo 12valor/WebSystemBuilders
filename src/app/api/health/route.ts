@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
+import { isLemonSqueezyConfigured } from "@/lib/env/lemonsqueezy";
 import { isInquirySubmissionConfigured } from "@/lib/env/inquiries";
-import { isPayMongoConfigured } from "@/lib/env/paymongo";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { isResendConfigured } from "@/lib/env/resend";
 
@@ -12,8 +12,7 @@ export function GET() {
     && typeof process.env.SUPABASE_SERVICE_ROLE_KEY === "string"
     && process.env.SUPABASE_SERVICE_ROLE_KEY.length >= 20
     && isInquirySubmissionConfigured()
-    && isPayMongoConfigured()
-    && process.env.PAYMONGO_SECRET_KEY?.startsWith("sk_live_") === true
+    && isLemonSqueezyConfigured()
     && isResendConfigured();
   const status = production ? (ready ? "ready" : "blocked") : "development";
   return NextResponse.json(
