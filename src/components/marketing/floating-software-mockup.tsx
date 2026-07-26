@@ -4,18 +4,21 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import {
+  ShoppingCart,
   Boxes,
   Stethoscope,
-  ShieldCheck,
-  Activity,
+  GraduationCap,
   Sparkles,
+  CheckCircle,
 } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
-  const card3Ref = useRef<HTMLDivElement>(null);
+  const laptopRef = useRef<HTMLDivElement>(null);
+  const cardTLRef = useRef<HTMLDivElement>(null);
+  const cardBLRef = useRef<HTMLDivElement>(null);
+  const cardTRRef = useRef<HTMLDivElement>(null);
+  const cardBRRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -27,28 +30,44 @@ export function FloatingSoftwareMockup() {
       const x = (clientX - (left + width / 2)) / width;
       const y = (clientY - (top + height / 2)) / height;
 
-      if (card1Ref.current) {
-        gsap.to(card1Ref.current, {
-          x: x * 15,
-          y: y * 15,
-          rotationY: x * 4,
-          rotationX: -y * 4,
+      if (laptopRef.current) {
+        gsap.to(laptopRef.current, {
+          x: x * 10,
+          y: y * 10,
+          rotationY: x * 3,
+          rotationX: -y * 3,
           duration: 1.2,
           ease: "power2.out",
         });
       }
-      if (card2Ref.current) {
-        gsap.to(card2Ref.current, {
-          x: -x * 25,
-          y: -y * 25,
+      if (cardTLRef.current) {
+        gsap.to(cardTLRef.current, {
+          x: -x * 20,
+          y: -y * 15,
           duration: 1.4,
           ease: "power2.out",
         });
       }
-      if (card3Ref.current) {
-        gsap.to(card3Ref.current, {
-          x: x * 25,
-          y: -y * 20,
+      if (cardBLRef.current) {
+        gsap.to(cardBLRef.current, {
+          x: -x * 18,
+          y: y * 20,
+          duration: 1.5,
+          ease: "power2.out",
+        });
+      }
+      if (cardTRRef.current) {
+        gsap.to(cardTRRef.current, {
+          x: x * 22,
+          y: -y * 18,
+          duration: 1.4,
+          ease: "power2.out",
+        });
+      }
+      if (cardBRRef.current) {
+        gsap.to(cardBRRef.current, {
+          x: x * 20,
+          y: y * 22,
           duration: 1.6,
           ease: "power2.out",
         });
@@ -62,94 +81,151 @@ export function FloatingSoftwareMockup() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-5xl mx-auto rounded-[32px] border border-slate-200/80 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 p-4 sm:p-8 md:p-10 shadow-[0_30px_90px_-20px_rgba(15,23,42,0.35)] overflow-hidden perspective-[1200px]"
+      className="relative w-full max-w-6xl mx-auto py-8 sm:py-12 md:py-16 px-2 sm:px-4 perspective-[1200px]"
     >
-      {/* Subtle Studio Grid Overlay & Ambient Radial Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
-      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-blue-500/25 via-indigo-500/15 to-transparent blur-[100px] pointer-events-none" />
+      {/* Background Soft Lighting Backdrop */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[400px] bg-gradient-to-r from-blue-400/20 via-indigo-400/15 to-emerald-400/15 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="relative z-10 flex items-center justify-center">
-        {/* Main Mac Application Window Frame */}
+      {/* Main Container Stage */}
+      <div className="relative flex items-center justify-center">
+        {/* Sleek Laptop Showcase Frame */}
         <div
-          ref={card1Ref}
-          className="relative z-20 w-full max-w-[840px] rounded-[24px] bg-slate-900 text-white p-3 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border border-slate-700/80 backdrop-blur-2xl overflow-hidden"
+          ref={laptopRef}
+          className="relative z-20 w-full max-w-[760px] md:max-w-[820px] transition-transform duration-300"
         >
-          {/* Mac Header Window Controls */}
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 px-2">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-rose-500 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" />
-              <span className="ml-3 text-xs font-mono text-slate-400 hidden sm:inline">
-                WebSystemBuilders Enterprise POS & Inventory Suite v4.2
-              </span>
+          {/* Laptop Screen Bezel */}
+          <div className="relative rounded-[22px] sm:rounded-[26px] bg-[#0F172A] p-2.5 sm:p-4 shadow-[0_30px_90px_-20px_rgba(15,23,42,0.28),0_0_0_1px_rgba(15,23,42,0.08)] border border-slate-800">
+            {/* Top Webcam Notch Area */}
+            <div className="flex items-center justify-between pb-2.5 px-2 border-b border-slate-800/80 mb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500/90 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500/90 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 inline-block" />
+                <span className="ml-3 text-[11px] font-medium text-slate-400 hidden sm:inline">
+                  websystembuilders.com/dashboard/analytics
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[10px] bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/20 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Live System Demo</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-xs bg-emerald-500/15 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/30 font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Live System</span>
+
+            {/* Dashboard Display Screen */}
+            <div className="relative w-full aspect-[16/10] rounded-lg sm:rounded-xl overflow-hidden bg-slate-950 border border-slate-800/60 shadow-inner">
+              <Image
+                src="/images/dashboard-hero.png"
+                alt="WebSystemBuilders System Dashboard Preview"
+                fill
+                sizes="(max-width: 1200px) 100vw, 820px"
+                className="object-cover object-top transition-transform duration-700 hover:scale-[1.01]"
+                priority
+              />
             </div>
           </div>
 
-          {/* Generated High Resolution Software Dashboard Screenshot */}
-          <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-slate-800 shadow-inner">
-            <Image
-              src="/images/dashboard-hero.png"
-              alt="WebSystemBuilders Software System Dashboard"
-              fill
-              sizes="(max-width: 1200px) 100vw, 840px"
-              className="object-cover object-top hover:scale-[1.01] transition-transform duration-500"
-              priority
-            />
+          {/* Laptop Base Stand Standout */}
+          <div className="relative mx-auto -mt-0.5 h-3.5 sm:h-4 w-[105%] -left-[2.5%] rounded-b-xl bg-gradient-to-b from-[#cbd5e1] via-[#94a3b8] to-[#64748b] shadow-[0_20px_40px_rgba(15,23,42,0.15)] border-t border-slate-400/30 flex justify-center">
+            <div className="w-16 sm:w-24 h-1 bg-slate-400/60 rounded-b-md" />
           </div>
         </div>
 
-        {/* Floating Satellite Card 1 (Inventory System - Top Right) */}
+        {/* Floating Satellite Card 1: POS & Sales (Top Left) */}
         <div
-          ref={card2Ref}
-          className="absolute z-30 top-4 right-2 md:right-6 w-60 rounded-2xl bg-slate-900/90 text-white p-3.5 shadow-2xl border border-slate-700/80 backdrop-blur-xl hidden lg:block"
+          ref={cardTLRef}
+          className="absolute z-30 -top-4 -left-4 sm:top-2 sm:-left-8 md:top-4 md:-left-12 w-[220px] sm:w-[250px] rounded-[20px] bg-white p-4 shadow-[0_15px_35px_-5px_rgba(15,23,42,0.12),0_0_0_1px_rgba(15,23,42,0.06)] border border-[#E5E7EB] hover:-translate-y-1 transition-all duration-300 hidden lg:block"
         >
-          <div className="flex items-center gap-2.5 mb-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white shadow-md">
-              <Boxes className="w-4 h-4" />
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#10B981] flex items-center justify-center shrink-0 border border-emerald-100 shadow-xs">
+              <ShoppingCart className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-100">Inventory Sync</div>
-              <div className="text-[10px] text-slate-400">Multi-warehouse Ready</div>
+              <h4 className="text-xs font-bold text-[#0F172A] tracking-tight">POS & Sales System</h4>
+              <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
+                Instant receipting & daily sales reports.
+              </p>
             </div>
           </div>
-          <div className="space-y-1.5">
-            <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-              <div className="bg-indigo-500 h-full rounded-full w-[85%]" />
+          <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-semibold text-[#10B981]">
+            <span className="flex items-center gap-1">
+              <CheckCircle className="w-3 h-3" /> Ready to Deploy
+            </span>
+            <span className="text-slate-400 font-normal">v4.2</span>
+          </div>
+        </div>
+
+        {/* Floating Satellite Card 2: Inventory Sync (Bottom Left) */}
+        <div
+          ref={cardBLRef}
+          className="absolute z-30 bottom-2 -left-6 sm:bottom-6 sm:-left-10 md:bottom-8 md:-left-14 w-[230px] sm:w-[260px] rounded-[20px] bg-white p-4 shadow-[0_15px_35px_-5px_rgba(15,23,42,0.12),0_0_0_1px_rgba(15,23,42,0.06)] border border-[#E5E7EB] hover:-translate-y-1 transition-all duration-300 hidden lg:block"
+        >
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100 shadow-xs">
+              <Boxes className="w-5 h-5" />
             </div>
-            <div className="flex justify-between text-[10px] font-bold text-slate-400">
-              <span>Sync Speed</span>
-              <span className="text-indigo-400">Instant</span>
+            <div>
+              <h4 className="text-xs font-bold text-[#0F172A] tracking-tight">Inventory & Warehouse</h4>
+              <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
+                Multi-location stock & barcode sync.
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 space-y-1">
+            <div className="flex justify-between text-[10px] font-semibold text-slate-500">
+              <span>Stock Accuracy</span>
+              <span className="text-[#2563EB]">99.9%</span>
+            </div>
+            <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div className="bg-[#2563EB] h-full rounded-full w-[94%]" />
             </div>
           </div>
         </div>
 
-        {/* Floating Satellite Card 2 (Clinic & Healthcare - Bottom Left) */}
+        {/* Floating Satellite Card 3: Clinic & Healthcare (Top Right) */}
         <div
-          ref={card3Ref}
-          className="absolute z-30 bottom-4 left-2 md:left-6 w-64 rounded-2xl bg-slate-900/90 text-white p-3.5 shadow-2xl border border-slate-700/80 backdrop-blur-xl hidden lg:block"
+          ref={cardTRRef}
+          className="absolute z-30 -top-4 -right-4 sm:top-2 sm:-right-8 md:top-4 md:-right-12 w-[220px] sm:w-[250px] rounded-[20px] bg-white p-4 shadow-[0_15px_35px_-5px_rgba(15,23,42,0.12),0_0_0_1px_rgba(15,23,42,0.06)] border border-[#E5E7EB] hover:-translate-y-1 transition-all duration-300 hidden lg:block"
         >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-sm">
-                <Stethoscope className="w-4 h-4" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-100">Clinic & Health</div>
-                <div className="text-[10px] text-slate-400">Patient Appointments</div>
-              </div>
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0 border border-indigo-100 shadow-xs">
+              <Stethoscope className="w-5 h-5" />
             </div>
-            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">
-              EMR Active
+            <div>
+              <h4 className="text-xs font-bold text-[#0F172A] tracking-tight">Clinic & Healthcare</h4>
+              <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
+                Patient EMR & queue management.
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-medium text-slate-500">
+            <span>HIPAA Compliant UI</span>
+            <span className="px-2 py-0.5 bg-indigo-50 text-[#4F46E5] font-bold rounded-full text-[9px] border border-indigo-100">
+              Active EMR
             </span>
           </div>
-          <div className="text-[10px] text-slate-300 bg-slate-800/60 rounded-lg p-2 flex items-center gap-2 border border-slate-700/40">
-            <Activity className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span className="truncate">Schedule: Dr. Santos (10:30 AM)</span>
+        </div>
+
+        {/* Floating Satellite Card 4: Academic Capstone Systems (Bottom Right) */}
+        <div
+          ref={cardBRRef}
+          className="absolute z-30 bottom-2 -right-6 sm:bottom-6 sm:-right-10 md:bottom-8 md:-right-14 w-[240px] sm:w-[270px] rounded-[20px] bg-white p-4 shadow-[0_15px_35px_-5px_rgba(15,23,42,0.12),0_0_0_1px_rgba(15,23,42,0.06)] border border-[#E5E7EB] hover:-translate-y-1 transition-all duration-300 hidden lg:block"
+        >
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100 shadow-xs">
+              <GraduationCap className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-[#0F172A] tracking-tight">Capstone & Academic</h4>
+              <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
+                Defense-ready full stack packages.
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-semibold text-slate-600">
+            <span className="flex items-center gap-1 text-amber-600">
+              <Sparkles className="w-3 h-3" /> Full Source Included
+            </span>
+            <span className="text-slate-400 font-normal">Docs + SQL</span>
           </div>
         </div>
       </div>

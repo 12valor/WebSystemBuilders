@@ -31,16 +31,16 @@ const standards = [
 
 export function TrustStrip() {
   return (
-    <section aria-label="Service standards" className="border-y border-slate-200/80 bg-slate-50/60 py-6">
-      <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] sm:grid-cols-2 md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)] xl:grid-cols-4 gap-6">
+    <section aria-label="Service standards" className="border-y border-[#E5E7EB] bg-[#FAFAFC] py-6">
+      <div className="mx-auto grid w-[min(calc(100%-32px),1280px)] sm:grid-cols-2 md:w-[min(calc(100%-64px),1280px)] xl:grid-cols-4 gap-6">
         {standards.map((standard) => (
-          <div key={standard.id} className="flex items-center gap-3.5 p-3 rounded-2xl bg-white/70 border border-slate-200/60 shadow-xs">
-            <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-xs font-bold text-white shadow-xs">
+          <div key={standard.id} className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white border border-[#E5E7EB] shadow-[0_2px_8px_rgba(15,23,42,0.03)]">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white shadow-xs">
               {standard.id}
             </span>
             <div>
-              <h4 className="text-xs font-bold text-slate-900">{standard.title}</h4>
-              <p className="text-[11px] text-slate-500 font-medium">{standard.desc}</p>
+              <h4 className="text-xs font-bold text-[#0F172A]">{standard.title}</h4>
+              <p className="text-[11px] text-[#64748B] font-normal">{standard.desc}</p>
             </div>
           </div>
         ))}
@@ -54,7 +54,7 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
 
   return (
-    <section id="systems" className="bg-white py-20 sm:py-28">
+    <section id="systems" className="bg-[#FAFAFC] py-20 sm:py-28">
       <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
         {/* Featured Systems Heading */}
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">

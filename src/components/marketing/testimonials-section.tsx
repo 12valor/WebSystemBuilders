@@ -20,36 +20,36 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
   };
 
   return (
-    <section aria-labelledby="testimonials-title" className="bg-slate-50/70 py-20 sm:py-28 relative overflow-hidden border-b border-slate-200/80">
-      <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
+    <section aria-labelledby="testimonials-title" className="bg-[#FAFAFC] py-20 sm:py-28 relative overflow-hidden border-b border-[#E5E7EB]">
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#2563EB] text-xs font-bold uppercase tracking-wider border border-blue-100 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Verified Client Feedback</span>
             </div>
-            <h2 id="testimonials-title" className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 id="testimonials-title" className="text-3xl font-bold tracking-[-0.02em] text-[#0F172A] sm:text-4xl lg:text-5xl">
               Trusted by Students & Businesses
             </h2>
-            <p className="mt-3 max-w-xl text-base text-slate-600 font-medium">
+            <p className="mt-3 max-w-xl text-base text-[#64748B] font-normal">
               Real feedback from business owners and students who built and deployed software with WebSystemBuilders.
             </p>
           </div>
 
           {/* Carousel Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={handlePrev}
               aria-label="Previous testimonial"
-              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-xs transition-all focus-visible:outline-none"
+              className="p-3 rounded-full bg-white border border-[#E5E7EB] text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-xs transition-all focus-visible:outline-none"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Next testimonial"
-              className="p-3 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-xs transition-all focus-visible:outline-none"
+              className="p-3 rounded-full bg-white border border-[#E5E7EB] text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-xs transition-all focus-visible:outline-none"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -61,11 +61,10 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
           {displayItems.map((item, idx) => {
             const isSelected = idx === activeIndex;
             return (
-              <TactileCard
+              <div
                 key={item.id}
-                bg="white"
-                className={`flex flex-col justify-between p-8 transition-all duration-300 ${
-                  isSelected ? "ring-2 ring-blue-600 shadow-xl" : ""
+                className={`rounded-[20px] bg-white p-8 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300 ${
+                  isSelected ? "border-[#2563EB] ring-1 ring-[#2563EB]" : ""
                 }`}
               >
                 <div>
@@ -79,24 +78,24 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
                     <Quote className="w-6 h-6 text-slate-200" />
                   </div>
 
-                  <blockquote className="mt-3 text-sm sm:text-base leading-relaxed font-medium text-slate-700">
+                  <blockquote className="mt-3 text-sm sm:text-base leading-relaxed font-normal text-[#0F172A]">
                     “{item.quote}”
                   </blockquote>
                 </div>
 
                 {/* Author Info */}
                 <div className="mt-8 pt-6 border-t border-slate-100 flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-extrabold text-base flex items-center justify-center shadow-md">
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#4F46E5] text-white font-bold text-base flex items-center justify-center shadow-xs">
                     {item.attributionName.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="text-sm font-extrabold text-slate-900">{item.attributionName}</h3>
-                    <p className="text-xs text-slate-500 font-medium">
+                    <h3 className="text-sm font-bold text-[#0F172A]">{item.attributionName}</h3>
+                    <p className="text-xs text-[#64748B] font-normal">
                       {[item.attributionRole, item.attributionOrganization].filter(Boolean).join(" · ") || item.relationshipContext}
                     </p>
                   </div>
                 </div>
-              </TactileCard>
+              </div>
             );
           })}
         </div>
