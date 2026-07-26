@@ -4,12 +4,10 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { SellerOnboardingModal } from "@/components/dashboard/seller-onboarding-modal";
 import { createClient } from "@/lib/supabase/client";
 
 export default function UnifiedDashboardPage() {
   const [activeTab, setActiveTab] = useState("overview");
-  const [isSellerModalOpen, setIsSellerModalOpen] = useState(false);
   const [profile, setProfile] = useState<{
     full_name?: string;
     email?: string;
@@ -52,7 +50,6 @@ export default function UnifiedDashboardPage() {
   }, []);
 
   const isSellerApproved = profile?.seller_status === "approved" && profile?.seller_enabled === true;
-  const isSellerPending = profile?.seller_status === "pending_review";
 
   const buyerNav = [
     { id: "overview", label: "Dashboard" },
@@ -86,14 +83,14 @@ export default function UnifiedDashboardPage() {
               {profile?.full_name ? profile.full_name.charAt(0).toUpperCase() : "U"}
             </div>
             <div className="truncate">
-              <p className="text-xs font-bold text-slate-900 truncate">{profile?.full_name || "Developer"}</p>
+              <p className="text-xs font-bold text-slate-900 truncate">{profile?.full_name || "User"}</p>
               <p className="text-[0.68rem] text-slate-500 truncate">@{profile?.username || "user"}</p>
             </div>
           </div>
 
           {/* Buyer Navigation */}
           <nav className="mt-6 space-y-1">
-            <span className="px-3 text-[0.68rem] font-bold uppercase tracking-wider text-slate-400">Buyer Workspace</span>
+            <span className="px-3 text-[0.68rem] font-bold uppercase tracking-wider text-slate-400">Workspace</span>
             {buyerNav.map((item) => (
               <button
                 key={item.id}
@@ -109,7 +106,7 @@ export default function UnifiedDashboardPage() {
               </button>
             ))}
 
-            {/* Dynamic Seller Navigation */}
+            {/* Dynamic Seller Navigation (For Existing Admins/Approved Sellers) */}
             {isSellerApproved && (
               <div className="pt-4 space-y-1 border-t border-slate-100 mt-4">
                 <span className="px-3 text-[0.68rem] font-bold uppercase tracking-wider text-emerald-600">Seller Workspace</span>
@@ -132,29 +129,11 @@ export default function UnifiedDashboardPage() {
           </nav>
         </div>
 
-        {/* Bottom Seller Action Button */}
+        {/* Bottom Sign Out */}
         <div className="pt-6 border-t border-slate-100 mt-6">
-          {isSellerApproved ? (
-            <span className="inline-flex w-full items-center justify-center rounded-xl bg-emerald-50 border border-emerald-200/60 py-2.5 text-xs font-bold text-emerald-700">
-              Verified Seller
-            </span>
-          ) : isSellerPending ? (
-            <span className="inline-flex w-full items-center justify-center rounded-xl bg-amber-50 border border-amber-200/60 py-2.5 text-xs font-bold text-amber-700">
-              Application Pending
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setIsSellerModalOpen(true)}
-              className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow hover:bg-blue-600 transition"
-            >
-              Become a Seller
-            </button>
-          )}
-
           <Link
             href="/auth/sign-out"
-            className="mt-3 block text-center text-xs font-semibold text-slate-400 hover:text-red-600 transition"
+            className="block w-full text-center rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-red-600 transition"
           >
             Sign Out
           </Link>
@@ -163,16 +142,6 @@ export default function UnifiedDashboardPage() {
 
       {/* Main Content Workspace */}
       <main className="flex-1 p-6 sm:p-10 max-w-6xl">
-        {/* Banner for Pending Sellers */}
-        {isSellerPending && (
-          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-800 flex items-center justify-between">
-            <div>
-              <span className="font-bold">Seller Application Under Review:</span> Our team is reviewing your developer profile. Once approved, your seller features (Products, Payouts, Sales) will unlock automatically.
-            </div>
-            <span className="rounded-full bg-amber-200 px-2.5 py-1 font-bold text-[0.68rem]">Pending</span>
-          </div>
-        )}
-
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 10 }}
@@ -183,7 +152,7 @@ export default function UnifiedDashboardPage() {
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Dashboard Overview</h1>
-                <p className="text-xs text-slate-500 mt-1">Welcome to your WebSystemBuilders command center.</p>
+                <p className="text-xs text-slate-500 mt-1">Welcome to your WebSystemBuilders customer portal.</p>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-3">
@@ -196,10 +165,8 @@ export default function UnifiedDashboardPage() {
                   <p className="mt-2 text-3xl font-bold text-slate-900">0</p>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <span className="text-xs font-semibold text-slate-400">Account Role</span>
-                  <p className="mt-2 text-xl font-bold text-blue-600">
-                    {isSellerApproved ? "Buyer & Seller" : "Buyer"}
-                  </p>
+                  <span className="text-xs font-semibold text-slate-400">Account Status</span>
+                  <p className="mt-2 text-xl font-bold text-blue-600">Active Customer</p>
                 </div>
               </div>
             </div>
@@ -223,7 +190,7 @@ export default function UnifiedDashboardPage() {
                 </button>
               </div>
               <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center text-xs text-slate-500">
-                No products published yet. Click &quot;Publish New Product&quot; to list your web system.
+                No products published yet.
               </div>
             </div>
           )}
@@ -239,12 +206,6 @@ export default function UnifiedDashboardPage() {
           )}
         </motion.div>
       </main>
-
-      {/* Seller Application Modal */}
-      <SellerOnboardingModal
-        isOpen={isSellerModalOpen}
-        onClose={() => setIsSellerModalOpen(false)}
-      />
     </div>
   );
 }

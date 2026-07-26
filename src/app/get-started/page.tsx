@@ -6,7 +6,7 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 
 export default function GetStartedPage() {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-500 selection:text-white flex flex-col justify-between">
       {/* Navigation Header */}
       <header className="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8">
@@ -22,117 +22,67 @@ export default function GetStartedPage() {
               Sign In
             </Link>
             <Link
-              href="/get-started"
+              href="/auth/sign-up"
               className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
             >
-              Get Started
+              Create Account
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Role Selection Onboarding */}
-      <main className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
-        <div className="text-center max-w-2xl mx-auto">
-          <motion.span
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-block rounded-full bg-blue-50 px-3.5 py-1 text-xs font-semibold text-blue-600 border border-blue-200/60 mb-4"
+      {/* Account Creation Entry */}
+      <main className="mx-auto max-w-3xl px-6 py-16 sm:py-24 text-center my-auto">
+        <motion.span
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-block rounded-full bg-blue-50 px-3.5 py-1 text-xs font-semibold text-blue-600 border border-blue-200/60 mb-4"
+        >
+          Welcome to WebSystemBuilders
+        </motion.span>
+        <motion.h1
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl"
+        >
+          Explore & purchase ready-made web systems
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mt-4 text-base leading-7 text-slate-600 max-w-xl mx-auto"
+        >
+          Create an account to browse ready-to-deploy software systems, request custom development, track purchases, and instantly access digital deliverables.
+        </motion.p>
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            href="/auth/sign-up"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-blue-600 px-8 text-sm font-bold text-white shadow-lg shadow-blue-500/25 hover:bg-blue-700 transition"
           >
-            Welcome to WebSystemBuilders
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl"
+            Create Your Account &rarr;
+          </Link>
+          <Link
+            href="/systems"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
           >
-            What would you like to do?
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-4 text-base leading-7 text-slate-600"
-          >
-            Select how you want to start. Don&apos;t worry—you can easily buy or sell anytime with a single account.
-          </motion.p>
+            Browse Systems Catalog
+          </Link>
         </div>
 
-        {/* Cards Container */}
-        <div className="mt-14 grid gap-8 md:grid-cols-2">
-          {/* Buyer Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            whileHover={{ y: -4 }}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 transition hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10"
-          >
-            <div>
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100">
-                <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-              </div>
-              <h2 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
-                Buy Systems
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-slate-600">
-                Browse premium web systems, templates, source codes, capstone projects, and digital products created by verified developers.
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <Link
-                href="/auth/sign-up?role=buyer"
-                className="inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-md transition group-hover:bg-blue-600"
-              >
-                Continue as Buyer &rarr;
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Seller Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            whileHover={{ y: -4 }}
-            className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 transition hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10"
-          >
-            <div>
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100">
-                <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h2 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
-                Sell Systems
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-slate-600">
-                Publish your own web systems, manage digital products, earn money, and grow your developer portfolio with buyers worldwide.
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <Link
-                href="/auth/sign-up?role=seller"
-                className="inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-md transition group-hover:bg-blue-600"
-              >
-                Continue as Seller &rarr;
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="mt-12 text-center text-xs text-slate-500">
+        <div className="mt-12 text-xs text-slate-500">
           Already have an account?{" "}
           <Link href="/auth/sign-in" className="font-semibold text-blue-600 hover:underline">
             Sign In here
           </Link>
         </div>
       </main>
+
+      <footer className="py-8 text-center text-xs text-slate-400 border-t border-slate-200/80 bg-white">
+        WebSystemBuilders • Operational Software Marketplace
+      </footer>
     </div>
   );
 }
