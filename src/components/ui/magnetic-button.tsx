@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "indigo";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "indigo" | "white" | "glass";
   size?: "sm" | "md" | "lg";
   className?: string;
   onClick?: () => void;
@@ -38,7 +38,7 @@ export function MagneticButton({
   };
 
   const baseStyles =
-    "relative inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none overflow-hidden group";
+    "relative inline-flex items-center justify-center font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none overflow-hidden group cursor-pointer";
 
   const sizeStyles = {
     sm: "h-9 px-4 rounded-xl text-xs gap-1.5",
@@ -57,6 +57,10 @@ export function MagneticButton({
       "bg-white/80 backdrop-blur-md text-slate-900 border border-slate-200 shadow-xs hover:bg-slate-50 hover:border-slate-300",
     ghost:
       "bg-transparent text-slate-700 hover:bg-slate-100 hover:text-slate-900",
+    white:
+      "bg-white text-slate-900 font-extrabold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.25)] hover:bg-slate-50 hover:shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)] border border-white/90",
+    glass:
+      "bg-white/15 text-white font-semibold backdrop-blur-md border border-white/30 hover:bg-white/25 shadow-xs",
   };
 
   return (
@@ -71,7 +75,7 @@ export function MagneticButton({
       {...(props as any)}
     >
       {/* Subtle shine sheen effect on hover */}
-      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+      <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
       <span className="relative z-10 flex items-center gap-2">{children}</span>
     </motion.button>
   );
