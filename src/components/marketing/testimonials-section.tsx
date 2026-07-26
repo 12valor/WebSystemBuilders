@@ -66,6 +66,7 @@ const fallbackTestimonials: PublicTestimonial[] = [
     attributionRole: "Retail Store Owner",
     attributionOrganization: "Vance Trading",
     relationshipContext: "Verified Business Customer",
+    isFeatured: true,
   },
   {
     id: "sample-2",
@@ -74,6 +75,7 @@ const fallbackTestimonials: PublicTestimonial[] = [
     attributionRole: "BS Information Technology Student",
     attributionOrganization: "State University",
     relationshipContext: "Verified Student Customer",
+    isFeatured: true,
   },
   {
     id: "sample-3",
@@ -82,5 +84,6 @@ const fallbackTestimonials: PublicTestimonial[] = [
     attributionRole: "Operations Manager",
     attributionOrganization: "Logistics Core",
     relationshipContext: "Verified Business Customer",
+    isFeatured: true,
   },
 ];
