@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { AdminSystemLifecycle } from "@/components/admin/admin-system-lifecycle";
 import { AdminSystemResources } from "@/components/admin/admin-system-resources";
 import type {
@@ -15,6 +15,7 @@ import {
   updateSystem,
   type SystemEditorState,
 } from "@/features/catalog/actions";
+import { createClient } from "@/lib/supabase/client";
 
 const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 const textareaClass = `${inputClass} min-h-28 resize-y py-3 leading-6`;
@@ -40,8 +41,44 @@ export function AdminSystemEditor({
     ? updateSystem.bind(null, system.id)
     : createSystemDraft;
   const [state, formAction, pending] = useActionState(action, initialState);
+  const [qrUrl, setQrUrl] = useState(system?.paymentQrUrl ?? "");
+  const [qrUploading, setQrUploading] = useState(false);
   const canSave = dataStatus === "ready" && categories.length > 0 && !pending;
   const statusLabel = system ? capitalize(system.status) : "Draft";
+
+  const handleQrUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setQrUploading(true);
+
+    try {
+      const supabase = createClient();
+      const ext = file.name.split(".").pop() || "png";
+      const filePath = `qr-codes/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+      const { data, error } = await supabase.storage.from("payment-qrs").upload(filePath, file);
+
+      if (error) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setQrUrl(reader.result as string);
+          setQrUploading(false);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const { data: publicUrlData } = supabase.storage.from("payment-qrs").getPublicUrl(data.path);
+        setQrUrl(publicUrlData.publicUrl);
+        setQrUploading(false);
+      }
+    } catch {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setQrUrl(reader.result as string);
+        setQrUploading(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <main id="admin-content">
@@ -81,7 +118,7 @@ export function AdminSystemEditor({
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
         <nav aria-label="System editor sections" className="hidden h-fit rounded-xl border border-white/10 bg-surface p-2 lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment QR & Instructions", "scan-to-pay"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
@@ -145,7 +182,42 @@ export function AdminSystemEditor({
             <TextAreaField name="supportSummary" label="Support summary" defaultValue={system?.supportSummary} />
           </EditorSection>
 
-          <EditorSection id="technical" number="04" title="Technical, delivery, and search details" description="Keep product facts structured so the public page and search metadata stay accurate.">
+          <EditorSection id="scan-to-pay" number="04" title="Payment QR Code & Instructions" description="Upload custom GCash/QRPh payment QR image and edit specific payment instructions for this system.">
+            <div className="grid gap-5">
+              <div>
+                <label className="block text-xs font-semibold text-secondary">Upload Payment QR Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleQrUpload}
+                  className="mt-2 block w-full text-xs text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-white/10 file:px-4 file:py-2.5 file:text-xs file:font-semibold file:text-white hover:file:bg-white/20"
+                />
+                {qrUploading && <p className="mt-2 text-xs text-amber-300">Uploading QR image...</p>}
+                <input type="hidden" name="paymentQrUrl" value={qrUrl} />
+              </div>
+
+              {qrUrl && (
+                <div className="flex items-center gap-4 rounded-xl border border-white/10 bg-background p-4">
+                  {/* eslint-disable-next-html-element-suppression */}
+                  <img src={qrUrl} alt="Current Payment QR" className="size-20 rounded-lg object-contain bg-white p-1" />
+                  <div>
+                    <span className="text-xs font-semibold text-emerald-400">✓ QR Image Set</span>
+                    <p className="mt-1 text-xs text-muted truncate max-w-md">{qrUrl}</p>
+                    <button type="button" onClick={() => setQrUrl("")} className="mt-2 text-xs text-red-400 underline">Remove QR</button>
+                  </div>
+                </div>
+              )}
+
+              <TextAreaField
+                name="paymentInstructions"
+                label="Custom Payment Instructions"
+                defaultValue={system?.paymentInstructions}
+                hint="Default: Please scan the QR code using GCash or any QRPH-supported banking app. After payment, upload your proof of payment together with the transaction reference number. Your order will be verified within 24 hours."
+              />
+            </div>
+          </EditorSection>
+
+          <EditorSection id="technical" number="05" title="Technical, delivery, and search details" description="Keep product facts structured so the public page and search metadata stay accurate.">
             <TextAreaField name="technologyStack" label="Technology stack" defaultValue={system?.technologyStack.join("\n")} hint="Add one technology per line or separate entries with commas. At least one is required before publication." error={firstError(state, "technologyStack")} />
             <TextAreaField name="deliverySummary" label="Delivery summary" defaultValue={system?.deliverySummary} hint="Explain when and how the buyer receives access. Do not promise delivery before verified payment." error={firstError(state, "deliverySummary")} />
             <TextAreaField name="demoInstructions" label="Demo instructions" defaultValue={system?.demoInstructions} hint="Optional access steps or safe test credentials shown only when a demo link is published." error={firstError(state, "demoInstructions")} />
@@ -153,7 +225,7 @@ export function AdminSystemEditor({
             <TextAreaField name="seoDescription" label="SEO description" defaultValue={system?.seoDescription} hint="Optional search description, up to 180 characters. The product summary remains the fallback." error={firstError(state, "seoDescription")} />
           </EditorSection>
 
-          <EditorSection id="next" number="05" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
+          <EditorSection id="next" number="06" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
             <div className="grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
               {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Run the server publication check"].map((item, index) => <div key={item} className="bg-background p-4 text-sm text-secondary"><span className="mr-3 text-xs text-muted">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
             </div>

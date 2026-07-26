@@ -14,7 +14,7 @@ export type AdminAccessData = {
 };
 
 export type IntegrationHealthItem = {
-  id: "supabase" | "inquiries" | "lemonsqueezy" | "resend" | "site_url";
+  id: "supabase" | "inquiries" | "resend" | "site_url";
   label: string;
   status: "configured" | "not_configured";
   detail: string;

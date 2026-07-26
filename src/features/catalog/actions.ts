@@ -101,72 +101,78 @@ export async function updateSystem(
   }
 
   const supabase = await createClient();
-  const [categoryFailure, currentResult] = await Promise.all([
-    validateCategory(supabase, result.data.categoryId, result.data.audience),
-    supabase
-      .from("systems")
-      .select("id,status,published_at,slug")
-      .eq("id", id.data)
-      .maybeSingle<{
-        id: string;
-        status: "draft" | "published" | "unlisted" | "archived";
-        published_at: string | null;
-        slug: string;
-      }>(),
-  ]);
 
+  const { data: existing, error: existingError } = await supabase
+    .from("systems")
+    .select("id,slug,status,published_at")
+    .eq("id", id.data)
+    .maybeSingle<{
+      id: string;
+      slug: string;
+      status: "draft" | "published" | "unlisted" | "archived";
+      published_at: string | null;
+    }>();
+
+  if (existingError || !existing) {
+    return { status: "error", message: "The system was not found." };
+  }
+
+  const categoryFailure = await validateCategory(
+    supabase,
+    result.data.categoryId,
+    result.data.audience,
+  );
   if (categoryFailure) return categoryFailure;
-  if (currentResult.error) {
-    return { status: "error", message: "The existing system could not be verified." };
-  }
-  if (!currentResult.data) {
-    return { status: "error", message: "The system no longer exists or is not accessible." };
-  }
-
-  let nextStatus = currentResult.data.status;
-  let publishedAt = currentResult.data.published_at;
 
   if (intent.data === "publish") {
     const readiness = await loadPublicationReadiness(supabase, id.data);
     if (readiness.status === "error") {
-      return {
-        status: "error",
-        message: "Publication readiness could not be verified. The system remains unchanged.",
-      };
+      return { status: "error", message: "Publication checks could not be loaded safely." };
     }
 
-    const publicationIssues = getPublicationIssues(result.data, readiness.assets);
-    if (publicationIssues.length > 0) {
+    const issues = getPublicationIssues(
+      {
+        productType: result.data.productType,
+        description: result.data.description,
+        inclusions: result.data.inclusions,
+        exclusions: result.data.exclusions,
+        technologyStack: result.data.technologyStack,
+        deliverySummary: result.data.deliverySummary,
+        licenseSummary: result.data.licenseSummary,
+        supportSummary: result.data.supportSummary,
+      },
+      readiness.assets,
+    );
+
+    if (issues.length > 0) {
       return {
         status: "error",
-        message: "Complete the publication checklist before making this system public.",
-        publicationIssues,
+        message: "Resolve all publication issues before publishing this system.",
+        publicationIssues: issues,
       };
     }
-
-    nextStatus = "published";
-    publishedAt = publishedAt ?? new Date().toISOString();
   }
 
-  const { data: updated, error } = await supabase
+  const newStatus = intent.data === "publish" ? "published" : existing.status;
+  const newPublishedAt =
+    intent.data === "publish" ? existing.published_at ?? new Date().toISOString() : existing.published_at;
+
+  const { error: updateError } = await supabase
     .from("systems")
     .update({
       ...toSystemMutation(result.data),
-      status: nextStatus,
-      published_at: publishedAt,
+      status: newStatus,
+      published_at: newPublishedAt,
       updated_by: admin.identity.id,
     })
-    .eq("id", id.data)
-    .select("id")
-    .maybeSingle<{ id: string }>();
+    .eq("id", id.data);
 
-  if (error || !updated) {
-    return mutationFailure(error);
+  if (updateError) {
+    return mutationFailure(updateError);
   }
 
-  revalidateCatalog(id.data, currentResult.data.slug, result.data.slug);
-  const resultFlag = intent.data === "publish" ? "published" : "saved";
-  redirect(`/admin/systems/${id.data}/edit?${resultFlag}=1`);
+  revalidateCatalog(id.data, existing.slug, result.data.slug);
+  return { status: "idle", message: intent.data === "publish" ? "System published successfully." : "Draft saved." };
 }
 
 function parseSystemInput(formData: FormData) {
@@ -188,6 +194,8 @@ function parseSystemInput(formData: FormData) {
     technologyStack: formData.get("technologyStack"),
     deliverySummary: formData.get("deliverySummary"),
     demoInstructions: formData.get("demoInstructions"),
+    paymentQrUrl: formData.get("paymentQrUrl"),
+    paymentInstructions: formData.get("paymentInstructions"),
     licenseSummary: formData.get("licenseSummary"),
     supportSummary: formData.get("supportSummary"),
     seoTitle: formData.get("seoTitle"),
@@ -215,6 +223,8 @@ function toSystemMutation(input: SystemDraftInput) {
     technology_stack: input.technologyStack,
     delivery_summary: input.deliverySummary,
     demo_instructions: input.demoInstructions,
+    payment_qr_url: input.paymentQrUrl,
+    payment_instructions: input.paymentInstructions,
     license_summary: input.licenseSummary,
     support_summary: input.supportSummary,
     seo_title: input.seoTitle,

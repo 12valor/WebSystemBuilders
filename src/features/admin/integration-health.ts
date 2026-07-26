@@ -9,14 +9,12 @@ const emailSchema = z.email();
 
 export function getIntegrationHealth(): IntegrationHealthItem[] {
   const supabase = isSupabasePubliclyConfigured() && hasMinimum(process.env.SUPABASE_SERVICE_ROLE_KEY, 20);
-  const lemonsqueezy = hasMinimum(process.env.LEMON_SQUEEZY_API_KEY, 10) && hasMinimum(process.env.LEMON_SQUEEZY_STORE_ID, 1) && hasMinimum(process.env.LEMON_SQUEEZY_WEBHOOK_SECRET, 8);
   const resend = hasMinimum(process.env.RESEND_API_KEY, 10) && emailSchema.safeParse(process.env.RESEND_FROM_EMAIL).success;
   const siteUrl = validSiteUrl(process.env.SITE_URL);
 
   return [
     item("supabase", "Supabase database and authentication", supabase, "Configuration presence only; live RLS and connectivity still require provider verification."),
     item("inquiries", "Inquiry security", isInquirySubmissionConfigured(), "Requires Supabase service access and a private fingerprint salt."),
-    item("lemonsqueezy", "Lemon Squeezy payments", lemonsqueezy, "Requires API key, store ID, and webhook secret."),
     item("resend", "Resend transactional email", resend, "Requires a server API key and verified sender address."),
     item("site_url", "Canonical site origin", siteUrl, "Requires a valid HTTPS production origin or localhost during development."),
   ];

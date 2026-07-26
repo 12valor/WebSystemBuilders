@@ -43,6 +43,8 @@ const systemDetailRowSchema = systemRowSchema.extend({
   technology_stack: z.array(z.string()),
   delivery_summary: z.string().nullable(),
   demo_instructions: z.string().nullable(),
+  payment_qr_url: z.string().nullable(),
+  payment_instructions: z.string().nullable(),
   license_summary: z.string().nullable(),
   support_summary: z.string().nullable(),
   seo_title: z.string().nullable(),
@@ -113,7 +115,7 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
   const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("systems")
-    .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,technology_stack,delivery_summary,demo_instructions,license_summary,support_summary,seo_title,seo_description`)
+    .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,technology_stack,delivery_summary,demo_instructions,payment_qr_url,payment_instructions,license_summary,support_summary,seo_title,seo_description`)
     .eq("status", "published")
     .eq("slug", slug)
     .maybeSingle();
@@ -186,6 +188,8 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
       technologyStack: parsed.data.technology_stack,
       deliverySummary: parsed.data.delivery_summary,
       demoInstructions: parsed.data.demo_instructions,
+      paymentQrUrl: parsed.data.payment_qr_url,
+      paymentInstructions: parsed.data.payment_instructions,
       licenseSummary: parsed.data.license_summary,
       supportSummary: parsed.data.support_summary,
       seoTitle: parsed.data.seo_title,
@@ -200,51 +204,60 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
   };
 }
 
-async function resolvePublicMedia(
-  supabase: ReturnType<typeof createPublicClient>,
-  media: z.infer<typeof mediaRowSchema>[],
-): Promise<CatalogSystemMedia[]> {
-  const imagePaths = media
-    .filter((item) => item.media_type === "image" && item.storage_path)
-    .map((item) => item.storage_path as string);
-  const signedByPath = new Map<string, string>();
-
-  if (imagePaths.length > 0) {
-    const { data } = await supabase.storage.from("system-media").createSignedUrls(imagePaths, 3600);
-    data?.forEach((item) => {
-      if (item.path && item.signedUrl) signedByPath.set(item.path, item.signedUrl);
-    });
-  }
-
-  return media.flatMap((item) => {
-    const url = item.storage_path ? signedByPath.get(item.storage_path) : item.external_url;
-    if (!url || !item.alt_text) return [];
-    return [{
-      id: item.id,
-      mediaType: item.media_type,
-      url,
-      altText: item.alt_text,
-      storageBacked: Boolean(item.storage_path),
-    }];
-  });
+function mapSystemRow(row: z.infer<typeof systemRowSchema>) {
+  return {
+    id: row.id,
+    title: row.title,
+    slug: row.slug,
+    summary: row.summary,
+    audience: row.audience,
+    productType: row.product_type,
+    pricingType: row.pricing_type,
+    priceMinor: row.price_minor,
+    regularPriceMinor: row.regular_price_minor,
+    salePriceMinor: row.sale_price_minor,
+    saleActive: row.sale_active,
+    currency: row.currency,
+    featured: row.is_featured,
+    updatedAt: row.updated_at,
+    category: row.category,
+  };
 }
 
-function mapSystemRow(system: z.infer<typeof systemRowSchema>) {
-  return {
-    id: system.id,
-    title: system.title,
-    slug: system.slug,
-    summary: system.summary,
-    audience: system.audience,
-    productType: system.product_type,
-    pricingType: system.pricing_type,
-    priceMinor: system.price_minor,
-    regularPriceMinor: system.regular_price_minor,
-    salePriceMinor: system.sale_price_minor,
-    saleActive: system.sale_active,
-    currency: system.currency,
-    featured: system.is_featured,
-    updatedAt: system.updated_at,
-    category: system.category,
-  };
+async function resolvePublicMedia(
+  supabase: ReturnType<typeof createPublicClient>,
+  rows: z.infer<typeof mediaRowSchema>[],
+): Promise<CatalogSystemMedia[]> {
+  return Promise.all(
+    rows.map(async (row) => {
+      if (row.external_url) {
+        return {
+          id: row.id,
+          mediaType: row.media_type,
+          url: row.external_url,
+          altText: row.alt_text ?? "",
+          storageBacked: false,
+        };
+      }
+
+      if (row.storage_path) {
+        const { data } = supabase.storage.from("public-catalog-media").getPublicUrl(row.storage_path);
+        return {
+          id: row.id,
+          mediaType: row.media_type,
+          url: data.publicUrl,
+          altText: row.alt_text ?? "",
+          storageBacked: true,
+        };
+      }
+
+      return {
+        id: row.id,
+        mediaType: row.media_type,
+        url: "",
+        altText: row.alt_text ?? "",
+        storageBacked: false,
+      };
+    }),
+  );
 }

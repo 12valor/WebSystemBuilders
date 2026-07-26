@@ -131,7 +131,7 @@ Use a modular monolith:
 | Database | Supabase PostgreSQL | Primary relational data store |
 | Authentication | Supabase Auth | Customer and administrator identity |
 | Storage | Supabase Storage | Private systems, media, and documents |
-| Payments | Lemon Squeezy Merchant of Record | Global card/PayPal digital product checkout without business registration requirement |
+| Payments | Scan to Pay (GCash / QRPh) | Manual QR payment & transaction reference submission with administrator verification |
 | Email | Resend | Transactional purchase and inquiry email |
 | Validation | Zod | Shared input and environment validation |
 | Forms | React Hook Form | Complex user and administrator forms |
