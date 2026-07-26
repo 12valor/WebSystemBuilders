@@ -95,7 +95,9 @@ export function CatalogExplorer({
                 placeholder="Search systems, categories, or tech stack..."
                 className="w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
               />
-              <span className="absolute left-3.5 top-3 text-slate-400 text-sm">🔍</span>
+              <svg className="absolute left-3.5 top-3.5 size-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -184,9 +186,9 @@ export function CatalogExplorer({
               <button
                 type="button"
                 onClick={clearFilters}
-                className="shrink-0 rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-100 transition ml-auto"
+                className="shrink-0 rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-100 transition ml-auto flex items-center gap-1"
               >
-                ✕ Clear All
+                Clear All
               </button>
             )}
           </div>
@@ -271,7 +273,7 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
           </div>
 
           <span className="inline-flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
-            View Details →
+            View Details &rarr;
           </span>
         </div>
       </div>
@@ -299,8 +301,10 @@ function CatalogEmptyState({
 }) {
   return (
     <div className="mt-8 rounded-3xl border border-dashed border-slate-200 bg-white px-8 py-16 text-center shadow-xs">
-      <div className="mx-auto flex size-20 items-center justify-center rounded-3xl bg-blue-50 text-blue-600 text-3xl border border-blue-100">
-        📦
+      <div className="mx-auto flex size-20 items-center justify-center rounded-3xl bg-blue-50 text-blue-600 border border-blue-100">
+        <svg className="size-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
       </div>
       <h3 className="mt-6 text-2xl font-extrabold text-slate-900">
         New systems are on the way

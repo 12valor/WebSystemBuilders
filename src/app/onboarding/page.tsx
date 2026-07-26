@@ -106,8 +106,10 @@ export default function OnboardingWizardPage() {
                     /* eslint-disable-next-html-element-suppression */
                     <img src={avatarUrl} alt="Avatar Preview" className="size-24 rounded-full object-cover border-2 border-blue-500 shadow" />
                   ) : (
-                    <div className="size-24 rounded-full bg-slate-200 flex items-center justify-center text-3xl text-slate-400">
-                      👤
+                    <div className="size-24 rounded-full bg-slate-200 flex items-center justify-center border border-slate-300">
+                      <svg className="size-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
                     </div>
                   )}
 
@@ -150,9 +152,9 @@ export default function OnboardingWizardPage() {
                       {usernameChecking ? (
                         <span className="text-xs text-amber-500">Checking...</span>
                       ) : usernameAvailable === true ? (
-                        <span className="text-xs font-bold text-emerald-600">✓ Available</span>
+                        <span className="text-xs font-bold text-emerald-600">Available</span>
                       ) : usernameAvailable === false ? (
-                        <span className="text-xs font-bold text-red-500">✕ Unavailable</span>
+                        <span className="text-xs font-bold text-red-500">Unavailable</span>
                       ) : null}
                     </div>
                   </div>
@@ -218,7 +220,7 @@ export default function OnboardingWizardPage() {
                             : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
                         }`}
                       >
-                        {interest} {active ? "✓" : "+"}
+                        {interest} {active ? "Selected" : "+"}
                       </button>
                     );
                   })}
@@ -234,8 +236,10 @@ export default function OnboardingWizardPage() {
                 exit={{ opacity: 0, x: -20 }}
                 className="space-y-6 text-center py-4"
               >
-                <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-3xl">
-                  🎉
+                <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200">
+                  <svg className="size-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
                 <div>
                   <h2 className="text-2xl font-extrabold text-slate-900">You&apos;re All Set!</h2>
@@ -256,7 +260,7 @@ export default function OnboardingWizardPage() {
                     type="submit"
                     className="w-full min-h-12 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
                   >
-                    Enter Dashboard →
+                    Enter Dashboard &rarr;
                   </button>
                 </form>
               </motion.div>
@@ -272,7 +276,7 @@ export default function OnboardingWizardPage() {
                   onClick={prevStep}
                   className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
                 >
-                  ← Back
+                  &larr; Back
                 </button>
               ) : <div />}
 
@@ -282,7 +286,7 @@ export default function OnboardingWizardPage() {
                 disabled={step === 2 && (!usernameAvailable || !username)}
                 className="rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition disabled:opacity-50"
               >
-                Continue →
+                Continue &rarr;
               </button>
             </div>
           )}
@@ -290,7 +294,7 @@ export default function OnboardingWizardPage() {
       </main>
 
       <footer className="sm:mx-auto sm:w-full sm:max-w-xl text-center text-xs text-slate-400">
-        WebSystemBuilders © 2026 • Premium Software Marketplace
+        WebSystemBuilders • Premium Software Marketplace
       </footer>
     </div>
   );

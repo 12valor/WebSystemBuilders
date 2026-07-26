@@ -55,20 +55,20 @@ export default function UnifiedDashboardPage() {
   const isSellerPending = profile?.seller_status === "pending_review";
 
   const buyerNav = [
-    { id: "overview", label: "Dashboard", icon: "📊" },
-    { id: "purchases", label: "My Purchases", icon: "📦" },
-    { id: "wishlist", label: "Wishlist", icon: "❤️" },
-    { id: "profile", label: "Profile", icon: "👤" },
-    { id: "settings", label: "Settings", icon: "⚙️" },
+    { id: "overview", label: "Dashboard" },
+    { id: "purchases", label: "My Purchases" },
+    { id: "wishlist", label: "Wishlist" },
+    { id: "profile", label: "Profile" },
+    { id: "settings", label: "Settings" },
   ];
 
   const sellerNav = [
-    { id: "products", label: "Products", icon: "💻" },
-    { id: "sales", label: "Sales", icon: "💰" },
-    { id: "orders", label: "Seller Orders", icon: "📋" },
-    { id: "analytics", label: "Analytics", icon: "📈" },
-    { id: "payouts", label: "Payouts", icon: "🏦" },
-    { id: "customers", label: "Customers", icon: "👥" },
+    { id: "products", label: "Products" },
+    { id: "sales", label: "Sales" },
+    { id: "orders", label: "Seller Orders" },
+    { id: "analytics", label: "Analytics" },
+    { id: "payouts", label: "Payouts" },
+    { id: "customers", label: "Customers" },
   ];
 
   return (
@@ -105,12 +105,11 @@ export default function UnifiedDashboardPage() {
                     : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                 }`}
               >
-                <span>{item.icon}</span>
                 <span>{item.label}</span>
               </button>
             ))}
 
-            {/* Dynamic Seller Navigation (Revealed when approved) */}
+            {/* Dynamic Seller Navigation */}
             {isSellerApproved && (
               <div className="pt-4 space-y-1 border-t border-slate-100 mt-4">
                 <span className="px-3 text-[0.68rem] font-bold uppercase tracking-wider text-emerald-600">Seller Workspace</span>
@@ -125,7 +124,6 @@ export default function UnifiedDashboardPage() {
                         : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                     }`}
                   >
-                    <span>{item.icon}</span>
                     <span>{item.label}</span>
                   </button>
                 ))}
@@ -138,11 +136,11 @@ export default function UnifiedDashboardPage() {
         <div className="pt-6 border-t border-slate-100 mt-6">
           {isSellerApproved ? (
             <span className="inline-flex w-full items-center justify-center rounded-xl bg-emerald-50 border border-emerald-200/60 py-2.5 text-xs font-bold text-emerald-700">
-              ✓ Verified Seller
+              Verified Seller
             </span>
           ) : isSellerPending ? (
             <span className="inline-flex w-full items-center justify-center rounded-xl bg-amber-50 border border-amber-200/60 py-2.5 text-xs font-bold text-amber-700">
-              ⏳ Application Pending
+              Application Pending
             </span>
           ) : (
             <button
@@ -150,7 +148,7 @@ export default function UnifiedDashboardPage() {
               onClick={() => setIsSellerModalOpen(true)}
               className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow hover:bg-blue-600 transition"
             >
-              💻 Become a Seller
+              Become a Seller
             </button>
           )}
 

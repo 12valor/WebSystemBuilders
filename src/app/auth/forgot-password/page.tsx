@@ -57,8 +57,10 @@ export default function ForgotPasswordPage() {
         <div className="bg-white py-8 px-6 shadow-xl shadow-slate-200/50 border border-slate-200 rounded-2xl sm:px-10">
           {sent ? (
             <div className="text-center space-y-4">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blue-50 text-blue-600 text-2xl">
-                ✉️
+              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
               <h3 className="text-lg font-bold text-slate-900">Check your inbox</h3>
               <p className="text-xs leading-5 text-slate-600">

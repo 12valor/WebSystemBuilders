@@ -9,7 +9,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
 
   return (
-    <main id="main-content" className="px-5 py-8 sm:px-8">
+    <main id="main-content" className="px-5 py-8 sm:px-8 font-sans">
       <div className="mx-auto max-w-[1500px]">
         <div className="flex flex-col gap-4 border-b border-white/10 pb-7 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -84,7 +84,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                           onClick={() => setSelectedOrder(order)}
                           className="inline-flex items-center gap-1 text-xs font-semibold text-brand-hover hover:underline"
                         >
-                          🔍 View Proof
+                          View Proof
                         </button>
                       ) : (
                         <span className="text-xs text-muted">None</span>
@@ -145,7 +145,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                   onClick={() => setSelectedOrder(null)}
                   className="rounded-lg border border-white/10 px-3 py-1 text-xs font-semibold text-muted hover:text-white"
                 >
-                  ✕ Close
+                  Close
                 </button>
               </div>
 
@@ -170,7 +170,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       rel="noreferrer"
                       className="mt-2 inline-block text-xs text-brand-hover hover:underline"
                     >
-                      Open Full Size Image ↗
+                      Open Full Size Image
                     </a>
                   </div>
                 ) : (
@@ -230,7 +230,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       onClick={() => setSelectedOrder(null)}
                       className="min-h-10 flex-1 rounded-xl bg-emerald-600 px-4 text-xs font-semibold text-white hover:bg-emerald-500"
                     >
-                      ✓ Verify & Unlock Delivery
+                      Verify & Unlock Delivery
                     </button>
                     <button
                       type="submit"
@@ -239,7 +239,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       onClick={() => setSelectedOrder(null)}
                       className="min-h-10 flex-1 rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white hover:bg-blue-500"
                     >
-                      ★ Mark Completed
+                      Mark Completed
                     </button>
                     <button
                       type="submit"
@@ -248,7 +248,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       onClick={() => setSelectedOrder(null)}
                       className="min-h-10 rounded-xl border border-red-500/40 bg-red-500/10 px-4 text-xs font-semibold text-red-300 hover:bg-red-500/20"
                     >
-                      ✕ Reject Payment
+                      Reject Payment
                     </button>
                   </div>
                 </form>

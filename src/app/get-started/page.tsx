@@ -70,8 +70,10 @@ export default function GetStartedPage() {
             className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 transition hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10"
           >
             <div>
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl border border-blue-100">
-                🛒
+              <div className="flex size-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100">
+                <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
               </div>
               <h2 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
                 Buy Systems
@@ -86,7 +88,7 @@ export default function GetStartedPage() {
                 href="/auth/sign-up?role=buyer"
                 className="inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-md transition group-hover:bg-blue-600"
               >
-                Continue as Buyer →
+                Continue as Buyer &rarr;
               </Link>
             </div>
           </motion.div>
@@ -100,8 +102,10 @@ export default function GetStartedPage() {
             className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50 transition hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10"
           >
             <div>
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 text-2xl border border-emerald-100">
-                💻
+              <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+                <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
               <h2 className="mt-6 text-2xl font-bold tracking-tight text-slate-900">
                 Sell Systems
@@ -116,7 +120,7 @@ export default function GetStartedPage() {
                 href="/auth/sign-up?role=seller"
                 className="inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-md transition group-hover:bg-blue-600"
               >
-                Continue as Seller →
+                Continue as Seller &rarr;
               </Link>
             </div>
           </motion.div>
