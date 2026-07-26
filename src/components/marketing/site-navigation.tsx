@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { ArrowUpRight, User, Menu, X, Sparkles } from "lucide-react";
 
@@ -15,10 +17,35 @@ const navigation = [
 
 export function SiteNavigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-3 md:top-4 z-50 mx-auto w-[min(calc(100%-24px),1240px)] transition-all">
-      <div className="flex h-16 items-center justify-between gap-4 rounded-full bg-white/90 px-4 md:px-6 backdrop-blur-xl border border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.06)] transition-all duration-300 hover:border-slate-300/80">
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`sticky top-4 md:top-6 z-50 mx-auto w-[min(calc(100%-24px),1240px)] transition-all duration-300 ${
+        scrolled ? "top-2 md:top-3" : "top-4 md:top-6"
+      }`}
+    >
+      <div
+        className={`flex items-center justify-between gap-4 rounded-full bg-white/85 px-6 md:px-8 backdrop-blur-xl border border-slate-200/80 transition-all duration-300 ${
+          scrolled
+            ? "h-[60px] shadow-[0_16px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] bg-white/92 backdrop-blur-2xl"
+            : "h-[68px] shadow-[0_12px_40px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset]"
+        }`}
+      >
         {/* Left: Brand Logo */}
         <Link
           href="/"
@@ -28,38 +55,65 @@ export function SiteNavigation() {
           <BrandLogo
             variant="light"
             priority
-            className="h-auto w-[150px] sm:w-[170px] transition-transform duration-300 group-hover:scale-[1.02]"
+            className="h-auto w-[185px] sm:w-[210px] transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </Link>
 
-        {/* Center: Navigation Links */}
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1 xl:flex">
-          {navigation.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 rounded-full transition-all duration-200 hover:text-slate-950 hover:bg-slate-100/80"
-            >
-              {item.label}
-            </Link>
-          ))}
+        {/* Center: Navigation Links with Animated Indicator */}
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-1 xl:flex relative"
+          onMouseLeave={() => setHoveredHref(null)}
+        >
+          {navigation.map((item) => {
+            const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
+            const isHovered = hoveredHref === item.href;
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                onMouseEnter={() => setHoveredHref(item.href)}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full select-none ${
+                  isActive ? "text-[#2563EB] font-semibold" : "text-[#0F172A] hover:text-[#2563EB]"
+                }`}
+              >
+                {/* Hover Pill Background */}
+                {isHovered && !isActive && (
+                  <motion.span
+                    layoutId="nav-hover"
+                    className="absolute inset-0 rounded-full bg-slate-100/80 -z-10"
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  />
+                )}
+
+                {/* Active Page Pill Background */}
+                {isActive && (
+                  <span className="absolute inset-0 rounded-full bg-blue-50/90 border border-blue-100 -z-10 shadow-2xs" />
+                )}
+
+                <span className="relative z-10">{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right: Action Controls */}
-        <div className="hidden items-center gap-3 xl:flex">
+        <div className="hidden items-center gap-4 xl:flex">
           <Link
             href="/account"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-950 transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
           >
-            <User className="w-3.5 h-3.5 text-slate-500" />
+            <User className="w-4 h-4 text-slate-500" />
             <span>Account</span>
           </Link>
+
           <Link
             href="/request-a-quote"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] to-[#4F46E5] shadow-sm hover:shadow-md hover:opacity-95 transition-all duration-200 group"
+            className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-[0_8px_22px_-4px_rgba(37,99,235,0.38)] hover:shadow-[0_12px_28px_-4px_rgba(37,99,235,0.48)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
           >
             <span>Request a Quote</span>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
@@ -70,53 +124,67 @@ export function SiteNavigation() {
           aria-controls="mobile-menu"
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
           onClick={() => setIsOpen((open) => !open)}
-          className="relative ml-auto grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-xs hover:bg-slate-50 xl:hidden"
+          className="relative ml-auto grid size-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-xs hover:bg-slate-50 active:scale-95 transition-all xl:hidden"
         >
-          {isOpen ? <X className="w-4 h-4 text-slate-800" /> : <Menu className="w-4 h-4 text-slate-800" />}
+          {isOpen ? <X className="w-5 h-5 text-slate-800" /> : <Menu className="w-5 h-5 text-slate-800" />}
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      {isOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label="Mobile navigation"
-          className="mt-2 rounded-2xl border border-slate-200/90 bg-white/98 p-4 backdrop-blur-2xl shadow-2xl xl:hidden animate-in fade-in slide-in-from-top-2 duration-200"
-        >
-          <div className="grid gap-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
-              >
-                <span>{item.label}</span>
-                <ArrowUpRight className="w-4 h-4 text-slate-400" />
-              </Link>
-            ))}
-            <div className="mt-2 pt-3 border-t border-slate-100 flex flex-col gap-2">
-              <Link
-                href="/account"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-xl"
-              >
-                <User className="w-4 h-4 text-slate-500" />
-                <span>Account Login</span>
-              </Link>
-              <Link
-                href="/request-a-quote"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#2563EB] to-[#4F46E5] shadow-sm"
-              >
-                <span>Request a Quote</span>
-                <Sparkles className="w-4 h-4" />
-              </Link>
+      {/* Mobile Animated Dropdown */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.nav
+            id="mobile-menu"
+            aria-label="Mobile navigation"
+            initial={{ opacity: 0, y: -12, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.97 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mt-3 rounded-3xl border border-slate-200/90 bg-white/95 p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] xl:hidden"
+          >
+            <div className="grid gap-1.5">
+              {navigation.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-semibold transition-colors ${
+                      isActive
+                        ? "bg-blue-50 text-[#2563EB] border border-blue-100"
+                        : "text-[#0F172A] hover:bg-slate-50"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowUpRight className="w-4.5 h-4.5 text-slate-400" />
+                  </Link>
+                );
+              })}
+              <div className="mt-3 pt-4 border-t border-slate-100 flex flex-col gap-3">
+                <Link
+                  href="/account"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2.5 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
+                >
+                  <User className="w-4.5 h-4.5 text-slate-500" />
+                  <span>Account Login</span>
+                </Link>
+                <Link
+                  href="/request-a-quote"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-md"
+                >
+                  <span>Request a Quote</span>
+                  <Sparkles className="w-4.5 h-4.5" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </nav>
-      )}
-    </header>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
+
 
