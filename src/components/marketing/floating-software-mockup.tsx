@@ -93,29 +93,29 @@ export function FloatingSoftwareMockup() {
           ref={laptopRef}
           className="relative z-20 w-full max-w-[760px] md:max-w-[820px] transition-transform duration-300"
         >
-          {/* Laptop Screen Bezel */}
-          <div className="relative rounded-[22px] sm:rounded-[26px] bg-[#0F172A] p-2.5 sm:p-4 shadow-[0_30px_90px_-20px_rgba(15,23,42,0.28),0_0_0_1px_rgba(15,23,42,0.08)] border border-slate-800">
-            {/* Top Webcam Notch Area */}
-            <div className="flex items-center justify-between pb-2.5 px-2 border-b border-slate-800/80 mb-2">
+          {/* Laptop Screen Bezel (Light Theme) */}
+          <div className="relative rounded-[22px] sm:rounded-[26px] bg-white p-2.5 sm:p-4 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.12),0_0_0_1px_rgba(15,23,42,0.08)] border border-[#E5E7EB]">
+            {/* Top Window Control Notch Bar */}
+            <div className="flex items-center justify-between pb-2.5 px-2 border-b border-slate-200/80 mb-2">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500/90 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500/90 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 inline-block" />
-                <span className="ml-3 text-[11px] font-medium text-slate-400 hidden sm:inline">
+                <span className="ml-3 text-[11px] font-medium text-slate-600 hidden sm:inline">
                   websystembuilders.com/dashboard/analytics
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/20 font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="flex items-center gap-1.5 text-[10px] bg-emerald-50 text-[#10B981] px-2.5 py-0.5 rounded-full border border-emerald-200 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
                 <span>Live System Demo</span>
               </div>
             </div>
 
             {/* Dashboard Display Screen */}
-            <div className="relative w-full aspect-[16/10] rounded-lg sm:rounded-xl overflow-hidden bg-slate-950 border border-slate-800/60 shadow-inner">
+            <div className="relative w-full aspect-[16/10] rounded-lg sm:rounded-xl overflow-hidden bg-white border border-[#E5E7EB] shadow-inner">
               <Image
-                src="/images/dashboard-hero.png"
-                alt="WebSystemBuilders System Dashboard Preview"
+                src="/images/dashboard-hero-light.png"
+                alt="WebSystemBuilders Software System Dashboard Preview"
                 fill
                 sizes="(max-width: 1200px) 100vw, 820px"
                 className="object-cover object-top transition-transform duration-700 hover:scale-[1.01]"
@@ -124,9 +124,9 @@ export function FloatingSoftwareMockup() {
             </div>
           </div>
 
-          {/* Laptop Base Stand Standout */}
-          <div className="relative mx-auto -mt-0.5 h-3.5 sm:h-4 w-[105%] -left-[2.5%] rounded-b-xl bg-gradient-to-b from-[#cbd5e1] via-[#94a3b8] to-[#64748b] shadow-[0_20px_40px_rgba(15,23,42,0.15)] border-t border-slate-400/30 flex justify-center">
-            <div className="w-16 sm:w-24 h-1 bg-slate-400/60 rounded-b-md" />
+          {/* Laptop Base Stand */}
+          <div className="relative mx-auto -mt-0.5 h-3.5 sm:h-4 w-[105%] -left-[2.5%] rounded-b-xl bg-gradient-to-b from-[#e2e8f0] via-[#cbd5e1] to-[#94a3b8] shadow-[0_20px_40px_rgba(15,23,42,0.1)] border-t border-slate-300/80 flex justify-center">
+            <div className="w-16 sm:w-24 h-1 bg-slate-400/50 rounded-b-md" />
           </div>
         </div>
 
