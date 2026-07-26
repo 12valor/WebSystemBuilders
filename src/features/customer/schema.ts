@@ -1,16 +1,28 @@
 import { z } from "zod";
 
 export const portalOrderRowSchema = z.object({
-  order_id: z.uuid(), order_number: z.string(),
-  order_status: z.enum(["pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
-  total_minor: z.number().int(), currency: z.string(), product_name: z.string(), product_slug: z.string(),
-  purchased_version: z.string(), current_version: z.string().nullable(), created_at: z.string(), paid_at: z.string().nullable(),
-  fulfillment_status: z.enum(["processing", "delivered", "failed", "revoked"]).nullable(), delivery_available: z.boolean().nullable(),
+  order_id: z.uuid(),
+  order_number: z.string(),
+  order_status: z.enum(["pending_verification", "verified", "rejected", "completed", "pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
+  total_minor: z.number().int(),
+  currency: z.string(),
+  product_name: z.string(),
+  product_slug: z.string(),
+  purchased_version: z.string(),
+  current_version: z.string().nullable(),
+  created_at: z.string(),
+  paid_at: z.string().nullable(),
+  fulfillment_status: z.enum(["processing", "delivered", "failed", "revoked"]).nullable(),
+  delivery_available: z.boolean().nullable(),
 });
 
 export const supportRowSchema = z.object({
-  id: z.uuid(), order_id: z.uuid(), subject: z.string(), status: z.enum(["open", "in_progress", "resolved", "closed"]),
-  created_at: z.string(), updated_at: z.string(),
+  id: z.uuid(),
+  order_id: z.uuid(),
+  subject: z.string(),
+  status: z.enum(["open", "in_progress", "resolved", "closed"]),
+  created_at: z.string(),
+  updated_at: z.string(),
 });
 
 export const supportRequestSchema = z.object({
