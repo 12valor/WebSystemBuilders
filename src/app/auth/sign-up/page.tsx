@@ -1,43 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { createClient } from "@/lib/supabase/client";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const roleParam = searchParams.get("role") || "buyer";
+
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!agreed) {
+      setError("You must agree to the Terms and Privacy Policy.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const supabase = createClient();
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName,
+            initial_role: roleParam,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        },
       });
 
-      if (signInError) {
-        setError(signInError.message);
+      if (signUpError) {
+        setError(signUpError.message);
         setLoading(false);
         return;
       }
 
       if (data.user) {
-        router.push("/dashboard");
+        router.push(`/auth/verify-email?email=${encodeURIComponent(email)}`);
       }
     } catch {
-      setError("An unexpected error occurred during sign in.");
+      setError("An unexpected error occurred during registration.");
       setLoading(false);
     }
   };
@@ -48,7 +76,7 @@ export default function SignInPage() {
       await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
         },
       });
     } catch {
@@ -63,10 +91,10 @@ export default function SignInPage() {
           <BrandLogo priority className="h-auto w-44 mx-auto" />
         </Link>
         <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-slate-900">
-          Sign in to your account
+          Create your account
         </h2>
         <p className="mt-2 text-sm text-slate-600">
-          Welcome back to WebSystemBuilders
+          Join WebSystemBuilders as a {roleParam === "seller" ? "Seller & Developer" : "Buyer"}
         </p>
       </div>
 
@@ -84,6 +112,18 @@ export default function SignInPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
+              <label className="block text-xs font-semibold text-slate-700">Full Name</label>
+              <input
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Jane Doe"
+                className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
+              />
+            </div>
+
+            <div>
               <label className="block text-xs font-semibold text-slate-700">Email Address</label>
               <input
                 type="email"
@@ -96,34 +136,47 @@ export default function SignInPage() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label className="block text-xs font-semibold text-slate-700">Password</label>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-xs font-semibold text-blue-600 hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+              <label className="block text-xs font-semibold text-slate-700">Password</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="At least 8 characters"
                 className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
               />
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <label className="flex items-center text-xs text-slate-600">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                />
-                <span className="ml-2">Remember me</span>
+            <div>
+              <label className="block text-xs font-semibold text-slate-700">Confirm Password</label>
+              <input
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter password"
+                className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
+              />
+            </div>
+
+            <div className="flex items-start pt-2">
+              <input
+                id="terms"
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label htmlFor="terms" className="ml-2.5 text-xs leading-5 text-slate-600">
+                I agree to the{" "}
+                <Link href="/legal/terms" target="_blank" className="font-semibold text-blue-600 hover:underline">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link href="/legal/privacy" target="_blank" className="font-semibold text-blue-600 hover:underline">
+                  Privacy Policy
+                </Link>
+                .
               </label>
             </div>
 
@@ -132,7 +185,7 @@ export default function SignInPage() {
               disabled={loading}
               className="mt-2 w-full min-h-12 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 
@@ -164,9 +217,9 @@ export default function SignInPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-500">
-          Don&apos;t have an account?{" "}
-          <Link href="/get-started" className="font-semibold text-blue-600 hover:underline">
-            Get Started
+          Already have an account?{" "}
+          <Link href="/auth/sign-in" className="font-semibold text-blue-600 hover:underline">
+            Sign In
           </Link>
         </p>
       </motion.div>
