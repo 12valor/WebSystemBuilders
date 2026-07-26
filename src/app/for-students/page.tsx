@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { StudentLandingPage } from "@/components/marketing/student-landing-page";
+import { SiteFooter } from "@/components/marketing/site-footer";
+import { SiteHeader } from "@/components/marketing/site-header";
+import { StudentLandingContent } from "@/components/marketing/student-landing-content";
 
 export const metadata: Metadata = {
   title: "Systems and Technical Support for Students | WebSystemBuilders",
@@ -8,5 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function ForStudentsPage() {
-  return <StudentLandingPage />;
+  return (
+    <>
+      <SiteHeader />
+      <main id="main-content">
+        <StudentLandingContent />
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
