@@ -4,7 +4,7 @@ import { isPayMongoConfigured } from "@/lib/env/paymongo";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { isResendConfigured } from "@/lib/env/resend";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export function GET() {
   const production = process.env.NODE_ENV === "production" && process.env.SITE_URL === "https://websystembuilders.com";
@@ -16,5 +16,11 @@ export function GET() {
     && process.env.PAYMONGO_SECRET_KEY?.startsWith("sk_live_") === true
     && isResendConfigured();
   const status = production ? (ready ? "ready" : "blocked") : "development";
-  return NextResponse.json({ status }, { status: production && !ready ? 503 : 200, headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json(
+    { status },
+    {
+      status: production && !ready ? 503 : 200,
+      headers: { "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300" },
+    },
+  );
 }

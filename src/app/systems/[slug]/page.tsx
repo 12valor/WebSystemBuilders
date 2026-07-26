@@ -8,14 +8,20 @@ import { LocalizedCatalogPrice, SystemPriceSummary } from "@/components/catalog/
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
-import { getPublicSystemBySlug } from "@/features/catalog/repository";
+import { getPublicCatalogData, getPublicSystemBySlug } from "@/features/catalog/repository";
 import type {
   CatalogSystemDetail,
   CatalogSystemMedia,
   CatalogSystemRecord,
 } from "@/features/catalog/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const catalog = await getPublicCatalogData();
+  if (catalog.status !== "ready") return [];
+  return catalog.systems.map((system) => ({ slug: system.slug }));
+}
 
 const getSystem = cache(getPublicSystemBySlug);
 

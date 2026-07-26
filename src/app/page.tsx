@@ -14,7 +14,7 @@ import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicCatalogData } from "@/features/catalog/repository";
 import { getPublicTestimonials } from "@/features/content/testimonial-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

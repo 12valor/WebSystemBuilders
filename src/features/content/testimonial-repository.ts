@@ -3,7 +3,7 @@ import "server-only";
 import { z } from "zod";
 import type { AdminTestimonialData, PublicTestimonial, TestimonialItem } from "@/features/content/testimonial-types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 
 const testimonialRowSchema = z.object({
   id: z.uuid(), quote: z.string(), attribution_name: z.string(), attribution_role: z.string().nullable(),
@@ -35,7 +35,7 @@ export async function getAdminTestimonialData(): Promise<AdminTestimonialData> {
 
 export async function getPublicTestimonials(): Promise<PublicTestimonial[]> {
   if (!isSupabasePubliclyConfigured()) return [];
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const result = await supabase.from("testimonials").select(columns).eq("status", "published")
     .order("is_featured", { ascending: false }).order("sort_order").order("published_at", { ascending: false });
   if (result.error) return [];

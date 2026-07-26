@@ -3,6 +3,8 @@ import { getPublicCatalogData } from "@/features/catalog/repository";
 
 const siteUrl = "https://websystembuilders.com";
 
+export const revalidate = 86400;
+
 const publicRoutes = [
   "",
   "/systems",

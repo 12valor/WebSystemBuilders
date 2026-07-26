@@ -8,7 +8,7 @@ import {
 } from "@/components/marketing/public-page";
 import { getPublicCompanyProfile } from "@/features/content/company-profile-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "About WebSystemBuilders",

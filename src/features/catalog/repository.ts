@@ -6,7 +6,7 @@ import type {
   CatalogSystemMedia,
 } from "@/features/catalog/types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 
 const categoryRowSchema = z.object({
   id: z.uuid(),
@@ -74,7 +74,7 @@ export async function getPublicCatalogData(): Promise<CatalogData> {
     return { status: "unconfigured", categories: [], systems: [] };
   }
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const [categoriesResult, systemsResult] = await Promise.all([
     supabase
       .from("system_categories")
@@ -110,7 +110,7 @@ export async function getPublicCatalogData(): Promise<CatalogData> {
 export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystemDetailData> {
   if (!isSupabasePubliclyConfigured()) return { status: "unconfigured", system: null };
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from("systems")
     .select(`${systemSelect},category_id,description,requirements,inclusions,exclusions,technology_stack,delivery_summary,demo_instructions,license_summary,support_summary,seo_title,seo_description`)
@@ -201,7 +201,7 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
 }
 
 async function resolvePublicMedia(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createPublicClient>,
   media: z.infer<typeof mediaRowSchema>[],
 ): Promise<CatalogSystemMedia[]> {
   const imagePaths = media

@@ -3,7 +3,7 @@ import { PublicPageHero, PublicPageShell } from "@/components/marketing/public-p
 import { PublicPortfolioList } from "@/components/marketing/public-portfolio-list";
 import { getPublicPortfolioData } from "@/features/content/portfolio-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Portfolio",

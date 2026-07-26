@@ -4,12 +4,14 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useId,
   useMemo,
   useState,
 } from "react";
 import {
   catalogCurrencies,
+  normalizeCatalogCurrency,
   type CatalogCurrencyCode,
   type CatalogCurrencySnapshot,
 } from "@/features/catalog/currency";
@@ -28,6 +30,14 @@ export function CatalogCurrencyProvider({
   children: React.ReactNode;
 }) {
   const [selectedCurrency, setSelectedCurrencyState] = useState(snapshot.selectedCurrency);
+
+  useEffect(() => {
+    const match = document.cookie.match(/(?:^|; )wsb_currency=([^;]*)/);
+    const normalized = normalizeCatalogCurrency(match ? decodeURIComponent(match[1]) : null);
+    if (normalized && snapshot.rates[normalized]) {
+      setSelectedCurrencyState(normalized);
+    }
+  }, [snapshot.rates]);
 
   const setSelectedCurrency = useCallback((currency: CatalogCurrencyCode) => {
     if (!snapshot.rates[currency]) return;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PublicCallToAction, PublicPageHero, PublicPageShell } from "@/components/marketing/public-page";
 import { getPublicFaqItems } from "@/features/content/faq-repository";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Frequently asked questions",

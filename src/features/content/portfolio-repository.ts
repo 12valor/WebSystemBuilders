@@ -7,7 +7,7 @@ import type {
   PublicPortfolioData,
 } from "@/features/content/portfolio-types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 
 const portfolioRowSchema = z.object({
   id: z.uuid(),
@@ -48,7 +48,7 @@ export async function getAdminPortfolioData(): Promise<AdminPortfolioData> {
 export async function getPublicPortfolioData(): Promise<PublicPortfolioData> {
   if (!isSupabasePubliclyConfigured()) return { status: "unconfigured", items: [] };
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const result = await supabase
     .from("portfolio_items")
     .select(portfolioColumns)

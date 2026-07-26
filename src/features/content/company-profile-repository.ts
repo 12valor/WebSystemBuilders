@@ -5,7 +5,7 @@ import { z } from "zod";
 import { approvedCompanyProfile, toPublicCompanyProfile } from "@/features/content/company-profile-defaults";
 import type { AdminCompanyProfileData, CompanyProfile, PublicCompanyProfile } from "@/features/content/company-profile-types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 
 const rowSchema = z.object({ id: z.literal(1), company_summary: z.string(), founder_bio: z.string(), public_email: z.string().nullable(), public_phone: z.string().nullable(), status: z.enum(["draft", "published", "archived"]), published_at: z.string().nullable(), updated_at: z.string() });
 const columns = "id,company_summary,founder_bio,public_email,public_phone,status,published_at,updated_at";
@@ -22,7 +22,7 @@ export async function getAdminCompanyProfileData(): Promise<AdminCompanyProfileD
 export const getPublicCompanyProfile = cache(async (): Promise<PublicCompanyProfile> => {
   const fallback = toPublicCompanyProfile(approvedCompanyProfile);
   if (!isSupabasePubliclyConfigured()) return fallback;
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const result = await supabase.from("company_profile").select(columns).eq("id", 1).eq("status", "published").maybeSingle();
   if (result.error || !result.data) return fallback;
   const row = rowSchema.safeParse(result.data);

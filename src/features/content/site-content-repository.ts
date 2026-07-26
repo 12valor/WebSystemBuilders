@@ -4,7 +4,7 @@ import { cache } from "react";
 import { z } from "zod";
 import type { AdminSiteContentData, PublicSiteContent, SiteContentBlock } from "@/features/content/site-content-types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 
 const rowSchema = z.object({
   id: z.uuid(), placement: z.enum(["announcement", "homepage_feature"]), eyebrow: z.string().nullable(), title: z.string(),
@@ -25,7 +25,7 @@ export async function getAdminSiteContentData(): Promise<AdminSiteContentData> {
 export const getPublicSiteContent = cache(async (): Promise<PublicSiteContent> => {
   const empty = { announcement: null, homepageFeature: null };
   if (!isSupabasePubliclyConfigured()) return empty;
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const result = await supabase.from("site_content_blocks").select(columns).eq("status", "published").order("sort_order").order("published_at", { ascending: false });
   if (result.error) return empty;
   const rows = z.array(rowSchema).safeParse(result.data);

@@ -5,7 +5,7 @@ import { defaultFaqItems } from "@/features/content/faq-defaults";
 import type { PublicFaqItem } from "@/features/content/faq-public-types";
 import type { AdminFaqData, FaqItem } from "@/features/content/faq-types";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createPublicClient } from "@/lib/supabase/server";
 
 const faqRowSchema = z.object({
   id: z.uuid(),
@@ -43,7 +43,7 @@ export async function getAdminFaqData(): Promise<AdminFaqData> {
 export async function getPublicFaqItems(): Promise<PublicFaqItem[]> {
   if (!isSupabasePubliclyConfigured()) return [...defaultFaqItems];
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const result = await supabase
     .from("faq_items")
     .select(faqColumns)
