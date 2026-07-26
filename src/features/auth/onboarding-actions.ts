@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getCurrentIdentity } from "@/lib/auth/current-user";
 import { createClient } from "@/lib/supabase/server";
 
-export async function completeOnboardingAction(formData: FormData) {
+export async function completeOnboardingAction(formData: FormData): Promise<void> {
   const identity = await getCurrentIdentity();
   if (!identity) redirect("/auth/sign-in");
 
@@ -15,7 +15,7 @@ export async function completeOnboardingAction(formData: FormData) {
   const rawInterests = formData.getAll("interests").map(String);
 
   if (!username || username.length < 3) {
-    return { error: "Please enter a valid username." };
+    return;
   }
 
   const supabase = await createClient();
@@ -27,7 +27,7 @@ export async function completeOnboardingAction(formData: FormData) {
   });
 
   if (error) {
-    return { error: "Could not save onboarding. Username may already be taken." };
+    return;
   }
 
   revalidatePath("/dashboard");
