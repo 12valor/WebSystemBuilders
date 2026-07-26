@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { openPortalDownload } from "@/features/customer/actions";
-import type { CustomerPortalOrder } from "@/features/customer/schema";
+import type { CustomerPortalOrder } from "@/features/customer/repository";
 
 export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }) {
   if (orders.length === 0) {
@@ -10,7 +10,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
       <div className="rounded-2xl border border-dashed border-white/15 p-8 text-center sm:p-12">
         <h2 className="text-xl font-semibold tracking-[-0.03em]">No purchases found</h2>
         <p className="mt-2 text-sm leading-6 text-secondary max-w-md mx-auto">
-          If you submitted a Scan to Pay purchase before signing in, click &quot;Claim Orders&quot; on the Overview page using your registered email.
+          If you submitted a Scan to Pay purchase before signing in, your orders link automatically when signed in with the same email.
         </p>
         <Link
           href="/systems"

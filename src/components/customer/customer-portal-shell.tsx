@@ -8,7 +8,7 @@ export function CustomerPortalShell({
   userEmail,
 }: {
   children: React.ReactNode;
-  userEmail: string;
+  userEmail: string | null;
 }) {
   const pathname = usePathname();
 
@@ -28,7 +28,7 @@ export function CustomerPortalShell({
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Customer Portal</span>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">My Account</h1>
             <p className="mt-2 text-sm leading-6 text-secondary">
-              Signed in as <span className="font-semibold text-white">{userEmail}</span>
+              Signed in as <span className="font-semibold text-white">{userEmail ?? "Customer"}</span>
             </p>
           </div>
 
