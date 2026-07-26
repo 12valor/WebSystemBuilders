@@ -8,9 +8,9 @@ import { ArrowRight, Sparkles, ShieldCheck, Code2, Zap, Star } from "lucide-reac
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-12 md:pt-16 pb-20 md:pb-28 bg-gradient-to-b from-white via-slate-50/50 to-white">
+    <section className="relative overflow-hidden pt-12 md:pt-16 pb-20 md:pb-28 bg-gradient-to-b from-white via-slate-50/60 to-white">
       {/* Background Soft Radial Lighting Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-blue-500/10 via-indigo-500/5 to-transparent blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] bg-gradient-to-b from-blue-500/12 via-indigo-500/6 to-transparent blur-[120px] pointer-events-none -z-10" />
       <div className="absolute top-40 right-10 w-96 h-96 bg-indigo-500/8 blur-[100px] pointer-events-none -z-10" />
       <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/8 blur-[100px] pointer-events-none -z-10" />
 
@@ -22,7 +22,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex justify-center mb-6"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white shadow-lg border border-slate-800 text-xs font-semibold tracking-wide">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white shadow-lg border border-slate-800 text-xs font-bold tracking-wide">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             <Sparkles className="w-3.5 h-3.5 text-blue-400" />
             <span>Marketplace for Production & Capstone Ready Software</span>
@@ -30,7 +30,7 @@ export function HeroSection() {
         </motion.div>
 
         {/* Hero Headline & Subtitle */}
-        <div className="text-center max-w-4xl mx-auto mb-10">
+        <div className="text-center max-w-4xl mx-auto mb-12">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,34 +74,36 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-          {/* Key Value Micro Badges */}
+          {/* Anchored Trust Pill Bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-600"
+            className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 sm:gap-6 px-6 py-3 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-xs text-xs font-bold text-slate-700"
           >
-            <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>Full Source Code Package Included</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
-              <Zap className="w-4 h-4 text-amber-500" />
+            <div className="hidden sm:block text-slate-300">•</div>
+            <div className="flex items-center gap-1.5">
+              <Zap className="w-4 h-4 text-amber-500 shrink-0" />
               <span>30 Days Defect Support</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
-              <Star className="w-4 h-4 text-blue-600 fill-blue-600" />
+            <div className="hidden sm:block text-slate-300">•</div>
+            <div className="flex items-center gap-1.5">
+              <Star className="w-4 h-4 text-blue-600 fill-blue-600 shrink-0" />
               <span>Verified Commercial Licensing</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Floating Interactive Parallax Software Mockups */}
+        {/* Studio Stage Illuminated Software Mockup */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
-          className="mt-6"
+          className="mt-4"
         >
           <FloatingSoftwareMockup />
         </motion.div>
