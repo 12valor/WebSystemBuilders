@@ -7,11 +7,11 @@ export const approvedCompanyProfile: CompanyProfile = {
   founderName: "AG Evangelista",
   founderTitle: "Web Developer",
   founderBio: "AG Evangelista is the founder of WebSystemBuilders and a web developer focused on creating practical software solutions for students and business owners.",
-  publicEmail: null,
+  publicEmail: "evangelista.agdiaz@gmail.com",
   publicPhone: null,
-  status: "draft",
-  publishedAt: null,
-  updatedAt: "1970-01-01T00:00:00.000Z",
+  status: "published",
+  publishedAt: "2026-07-26T00:00:00.000Z",
+  updatedAt: "2026-07-26T00:00:00.000Z",
 };
 
 export function toPublicCompanyProfile(profile: CompanyProfile): PublicCompanyProfile {
