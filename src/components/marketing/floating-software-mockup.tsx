@@ -10,28 +10,25 @@ import {
   GraduationCap,
   Sparkles,
   CheckCircle,
-  Lock,
-  RotateCw,
-  ChevronLeft,
-  ChevronRight,
   ShieldCheck,
-  Activity,
   ArrowUpRight,
+  Command,
+  Option,
 } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Motion values for smooth 3D mouse parallax tilt
+  // Mouse tilt motion values for subtle natural perspective
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth springs for fluid, natural physics decay
-  const springConfig = { stiffness: 140, damping: 18, mass: 0.6 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3.5, -3.5]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
-  const frameX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
-  const frameY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-8, 8]), springConfig);
+  // Smooth springs centered around ~7° base RotateX angle
+  const springConfig = { stiffness: 120, damping: 20, mass: 0.7 };
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, 4]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
+  const frameX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), springConfig);
+  const frameY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-6, 6]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -52,21 +49,21 @@ export function FloatingSoftwareMockup() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-6xl mx-auto py-6 sm:py-10 md:py-14 px-3 sm:px-6 perspective-[1400px] select-none"
+      className="relative w-full max-w-6xl mx-auto py-6 sm:py-10 md:py-14 px-2 sm:px-6 perspective-[1400px] select-none"
     >
-      {/* Dynamic Multi-Layer Ambient Lighting Backdrop */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] max-w-[960px] h-[360px] sm:h-[480px] pointer-events-none -z-10">
-        {/* Soft Blue Glow */}
-        <div className="absolute top-0 left-1/4 w-[380px] h-[380px] bg-[#2563EB]/15 rounded-full blur-[140px] animate-pulse duration-[4000ms]" />
-        {/* Soft Purple Glow */}
-        <div className="absolute bottom-0 right-1/4 w-[380px] h-[380px] bg-[#7C3AED]/15 rounded-full blur-[140px] animate-pulse duration-[5000ms]" />
-        {/* Center Contact Diffusion */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 rounded-full blur-[120px]" />
+      {/* Dynamic Ambient Lighting Backdrop */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[1000px] h-[400px] sm:h-[500px] pointer-events-none -z-10">
+        {/* Soft Blue Glow Underneath Chassis */}
+        <div className="absolute top-1/3 left-1/4 w-[420px] h-[420px] bg-[#2563EB]/18 rounded-full blur-[140px] animate-pulse duration-[4500ms]" />
+        {/* Soft Purple Ambient Light */}
+        <div className="absolute bottom-10 right-1/4 w-[420px] h-[420px] bg-[#7C3AED]/18 rounded-full blur-[140px] animate-pulse duration-[5500ms]" />
+        {/* Ground Contact Shadow Base */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-12 bg-slate-950/40 rounded-full blur-2xl" />
       </div>
 
       {/* Main Showcase Stage */}
       <div className="relative flex flex-col items-center justify-center">
-        {/* Handcrafted Premium Browser Mockup Window */}
+        {/* Full MacBook Pro Mockup Container (75-85% Hero Width Focal Point) */}
         <motion.div
           style={{
             rotateX,
@@ -75,95 +72,166 @@ export function FloatingSoftwareMockup() {
             y: frameY,
             transformStyle: "preserve-3d",
           }}
-          initial={{ opacity: 0, y: 30, scale: 0.97 }}
+          initial={{ opacity: 0, y: 35, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 w-full max-w-[840px] md:max-w-[920px] transition-shadow duration-300"
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-20 w-full max-w-[840px] md:max-w-[940px] xl:max-w-[1020px] transition-shadow duration-300"
         >
-          {/* Multi-Layered Shadow & Precision Glass Border Wrapper */}
-          <div className="relative rounded-[20px] sm:rounded-[24px] bg-slate-900/90 p-1.5 sm:p-2.5 shadow-[0_30px_90px_-15px_rgba(15,23,42,0.22),0_20px_50px_-10px_rgba(37,99,235,0.18),0_0_0_1px_rgba(226,232,240,0.8)] border border-slate-200/90 backdrop-blur-md overflow-hidden bg-white/95">
-            {/* Top Glass Sheen Highlight Line */}
-            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90 z-30" />
-
-            {/* Browser Header / Toolbar */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-50/90 border-b border-slate-200/80 rounded-t-[16px] sm:rounded-t-[20px] gap-2">
-              {/* macOS Traffic Lights Controls */}
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="group relative flex items-center justify-center w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/60 shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
-                  <span className="w-1 h-1 rounded-full bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="group relative flex items-center justify-center w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/60 shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
-                  <span className="w-1 h-1 rounded-full bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="group relative flex items-center justify-center w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/60 shadow-[0_1px_2px_rgba(0,0,0,0.1)]">
-                  <span className="w-1 h-1 rounded-full bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-
-                {/* Subtle Navigation Buttons (Desktop) */}
-                <div className="hidden sm:flex items-center gap-1 ml-2 text-slate-400">
-                  <button type="button" aria-label="Go back" className="p-1 hover:text-slate-600 rounded transition-colors">
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <button type="button" aria-label="Go forward" className="p-1 hover:text-slate-600 rounded transition-colors">
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                  <button type="button" aria-label="Reload page" className="p-1 hover:text-slate-600 rounded transition-colors">
-                    <RotateCw className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Realistic Omnibox / Search & Address Bar */}
-              <div className="flex-1 max-w-xs sm:max-w-md mx-auto flex items-center justify-center gap-2 px-3 py-1 sm:py-1.5 bg-white rounded-full border border-slate-200/90 shadow-[0_1px_3px_rgba(15,23,42,0.04),0_1px_1px_rgba(255,255,255,0.8)_inset] text-[11px] sm:text-xs text-slate-600 font-medium tracking-tight">
-                <Lock className="w-3 h-3 text-[#10B981] shrink-0" />
-                <span className="truncate select-none">
-                  <span className="text-slate-400">https://</span>
-                  <span className="text-slate-800 font-semibold">websystembuilders.com</span>
-                  <span className="text-slate-500">/dashboard</span>
-                </span>
-                <span className="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-100 text-slate-500 border border-slate-200/60 uppercase">
-                  SSL Encrypted
-                </span>
-              </div>
-
-              {/* Status Badge */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-[#059669] border border-emerald-200/80 text-[10px] sm:text-xs font-semibold shadow-2xs">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
-                  </span>
-                  <span className="hidden xs:inline">Production Ready</span>
-                </div>
-              </div>
+          {/* ================= MACBOOK PRO DISPLAY LID ================= */}
+          <div className="relative rounded-t-[20px] sm:rounded-t-[26px] bg-[#0c0c0e] p-2 sm:p-3 border-t border-x border-slate-700/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
+            {/* Top Display Bezel Notch with Camera */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-3.5 sm:h-4 bg-[#0c0c0e] rounded-b-xl z-30 flex items-center justify-center gap-2 border-b border-x border-slate-800/80">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#161619] border border-slate-700/80 inline-block" />
+              <span className="w-1 h-1 rounded-full bg-[#092b1a] border border-emerald-900/80 inline-block" />
             </div>
 
-            {/* Dashboard Screenshot Frame Viewport */}
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9.8] rounded-b-[14px] sm:rounded-b-[18px] overflow-hidden bg-slate-900 border border-slate-200/60 shadow-inner group">
+            {/* Screen Inner Bezel & Display Viewport */}
+            <div className="relative w-full aspect-[16/10] rounded-t-[14px] sm:rounded-t-[18px] overflow-hidden bg-black border border-slate-900 shadow-inner">
               <Image
                 src="/images/dashboard-hero-light.png"
-                alt="WebSystemBuilders Full Featured Software Dashboard Showcase"
+                alt="WebSystemBuilders Full Dashboard Application Showcase"
                 fill
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 920px"
-                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.012]"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 85vw, 1020px"
+                className="object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.01]"
               />
 
-              {/* Soft Surface Glare Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
+              {/* Realistic Glass Surface Reflection Line */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-white/[0.08] pointer-events-none" />
+              {/* Gloss Sheen Diagonal Glint */}
+              <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.03] to-transparent pointer-events-none" />
+            </div>
+          </div>
 
-              {/* Bottom Interactive Floating Hint Pill */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/85 text-white text-xs font-medium backdrop-blur-md shadow-lg border border-white/10">
-                  <Activity className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
-                  <span>Interactive System Preview</span>
+          {/* ================= MACBOOK PRO ALUMINUM HINGE ================= */}
+          <div className="relative w-[85%] mx-auto h-2 sm:h-2.5 bg-gradient-to-b from-[#0a0a0c] via-[#18181a] to-[#242426] border-t border-slate-800 shadow-inner z-20" />
+
+          {/* ================= MACBOOK PRO LOWER CHASSIS & KEYBOARD ================= */}
+          <div className="relative rounded-b-[22px] sm:rounded-b-[30px] bg-gradient-to-b from-[#242426] via-[#1a1a1d] to-[#121214] p-3 sm:p-5 border-b border-x border-slate-700/70 shadow-[0_35px_90px_-15px_rgba(15,23,42,0.4),0_20px_50px_-10px_rgba(37,99,235,0.25),0_1px_1px_rgba(255,255,255,0.15)_inset]">
+            {/* Top Chassis Bevel Highlight Line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-400/30 to-transparent" />
+
+            {/* Main Recessed Keyboard Well & Speaker Grilles */}
+            <div className="flex items-stretch gap-2 sm:gap-4 max-w-[94%] mx-auto">
+              {/* Left Speaker Grille */}
+              <div className="hidden sm:block w-3 sm:w-4 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:3px_3px] opacity-60 rounded-md my-1" />
+
+              {/* Recessed Keyboard Bed */}
+              <div className="flex-1 bg-[#09090b] p-2 sm:p-3 rounded-xl border border-slate-800/90 shadow-[0_2px_8px_rgba(0,0,0,0.8)_inset]">
+                {/* Function Key Row */}
+                <div className="grid grid-cols-14 gap-1 mb-1 sm:mb-1.5 text-[8px] sm:text-[9px] text-slate-400 font-mono text-center">
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 shadow-2xs font-semibold">esc</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F1</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F2</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F3</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F4</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F5</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F6</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F7</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F8</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F9</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F10</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F11</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F12</span>
+                  <span className="bg-[#18181b] rounded py-0.5 border border-white/10 flex items-center justify-center">
+                    <span className="w-2 h-2 rounded-full bg-[#111] border border-slate-700" />
+                  </span>
+                </div>
+
+                {/* Number Row */}
+                <div className="grid grid-cols-14 gap-1 mb-1 sm:mb-1.5 text-[8px] sm:text-[10px] text-slate-300 font-mono text-center">
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">~</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">1</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">2</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">3</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">4</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">5</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">6</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">7</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">8</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">9</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">0</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">-</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">+</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 text-[7px] sm:text-[8px]">delete</span>
+                </div>
+
+                {/* QWERTY Row 1 */}
+                <div className="grid grid-cols-14 gap-1 mb-1 sm:mb-1.5 text-[8px] sm:text-[10px] text-slate-300 font-mono text-center">
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 text-[7px] sm:text-[8px]">tab</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">Q</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">W</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">E</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">R</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">T</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">Y</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">U</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">I</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">O</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">P</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">[</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">]</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">\</span>
+                </div>
+
+                {/* QWERTY Row 2 */}
+                <div className="grid grid-cols-14 gap-1 mb-1 sm:mb-1.5 text-[8px] sm:text-[10px] text-slate-300 font-mono text-center">
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 text-[7px] sm:text-[8px]">caps</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">A</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">S</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">D</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">F</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">G</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">H</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">J</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">K</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">L</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">;</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 font-semibold">&apos;</span>
+                  <span className="col-span-2 bg-[#18181b] rounded py-1 border border-white/5 text-[7px] sm:text-[8px] font-semibold">return</span>
+                </div>
+
+                {/* Bottom Modifier Row */}
+                <div className="grid grid-cols-12 gap-1 text-[7px] sm:text-[9px] text-slate-400 font-mono text-center items-center">
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">fn</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5">ctrl</span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 flex items-center justify-center gap-0.5">
+                    <Option className="w-2.5 h-2.5" />
+                  </span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 flex items-center justify-center gap-0.5">
+                    <Command className="w-2.5 h-2.5" />
+                  </span>
+                  <span className="col-span-4 bg-[#18181b] rounded py-1 border border-white/10 text-slate-500 shadow-2xs">
+                    Spacebar
+                  </span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 flex items-center justify-center gap-0.5">
+                    <Command className="w-2.5 h-2.5" />
+                  </span>
+                  <span className="bg-[#18181b] rounded py-1 border border-white/5 flex items-center justify-center gap-0.5">
+                    <Option className="w-2.5 h-2.5" />
+                  </span>
+                  <span className="col-span-2 bg-[#18181b] rounded py-1 border border-white/5 text-[7px] sm:text-[8px]">◀ ▲ ▶</span>
                 </div>
               </div>
+
+              {/* Right Speaker Grille */}
+              <div className="hidden sm:block w-3 sm:w-4 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:3px_3px] opacity-60 rounded-md my-1" />
+            </div>
+
+            {/* Trackpad & Palm Rests Section */}
+            <div className="relative mt-2.5 sm:mt-4 flex flex-col items-center">
+              {/* Force Touch Trackpad */}
+              <div className="w-36 sm:w-56 md:w-64 h-14 sm:h-20 bg-[#161618] rounded-xl border border-white/[0.08] shadow-[0_1px_3px_rgba(0,0,0,0.6)_inset] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+              </div>
+
+              {/* Front Lip Thumb Notch */}
+              <div className="w-16 sm:w-24 h-1.5 bg-[#09090b] rounded-b-md border-t border-slate-700/80 mt-1 shadow-inner" />
             </div>
           </div>
         </motion.div>
 
-        {/* Floating Satellite Feature Cards — Desktop Positioned (lg+) */}
+        {/* Floating Satellite Feature Cards — Desktop Wrapped (lg+) */}
         {/* Satellite 1: POS & Sales (Top Left) */}
         <motion.div
           initial={{ opacity: 0, x: -30, y: -20 }}
@@ -177,8 +245,8 @@ export function FloatingSoftwareMockup() {
             x: { duration: 0.6, delay: 0.4 },
             y: { repeat: Infinity, duration: 5.2, ease: "easeInOut" },
           }}
-          whileHover={{ scale: 1.04, y: -6, rotate: 0 }}
-          className="hidden lg:block absolute z-30 -top-2 -left-8 xl:-left-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2.5deg] transition-all duration-300"
+          whileHover={{ scale: 1.04, y: -6 }}
+          className="hidden lg:block absolute z-30 -top-4 -left-10 xl:-left-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2deg] transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90 shadow-xs">
@@ -196,7 +264,7 @@ export function FloatingSoftwareMockup() {
           </div>
           <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-semibold text-[#059669]">
             <span className="flex items-center gap-1">
-              <CheckCircle className="w-3.5 h-3.5 text-[#10B981]" /> Verified Production Build
+              <CheckCircle className="w-3.5 h-3.5 text-[#10B981]" /> Verified Commercial System
             </span>
             <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
           </div>
@@ -215,8 +283,8 @@ export function FloatingSoftwareMockup() {
             x: { duration: 0.6, delay: 0.5 },
             y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.5 },
           }}
-          whileHover={{ scale: 1.04, y: -6, rotate: 0 }}
-          className="hidden lg:block absolute z-30 bottom-4 -left-10 xl:-left-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2deg] transition-all duration-300"
+          whileHover={{ scale: 1.04, y: -6 }}
+          className="hidden lg:block absolute z-30 bottom-12 -left-12 xl:-left-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2deg] transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100/90 shadow-xs">
@@ -253,8 +321,8 @@ export function FloatingSoftwareMockup() {
             x: { duration: 0.6, delay: 0.45 },
             y: { repeat: Infinity, duration: 5.6, ease: "easeInOut", delay: 0.2 },
           }}
-          whileHover={{ scale: 1.04, y: -6, rotate: 0 }}
-          className="hidden lg:block absolute z-30 -top-2 -right-8 xl:-right-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2.5deg] transition-all duration-300"
+          whileHover={{ scale: 1.04, y: -6 }}
+          className="hidden lg:block absolute z-30 -top-4 -right-10 xl:-right-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2deg] transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0 border border-indigo-100/90 shadow-xs">
@@ -290,8 +358,8 @@ export function FloatingSoftwareMockup() {
             x: { duration: 0.6, delay: 0.55 },
             y: { repeat: Infinity, duration: 6.4, ease: "easeInOut", delay: 0.7 },
           }}
-          whileHover={{ scale: 1.04, y: -6, rotate: 0 }}
-          className="hidden lg:block absolute z-30 bottom-4 -right-10 xl:-right-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2deg] transition-all duration-300"
+          whileHover={{ scale: 1.04, y: -6 }}
+          className="hidden lg:block absolute z-30 bottom-12 -right-12 xl:-right-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2deg] transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100/90 shadow-xs">
