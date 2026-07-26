@@ -12,8 +12,6 @@ import {
   CheckCircle,
   ShieldCheck,
   ArrowUpRight,
-  Command,
-  Option,
 } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
@@ -26,7 +24,7 @@ export function FloatingSoftwareMockup() {
         {/* Soft Ambient Purple Glow */}
         <div className="absolute bottom-10 right-1/4 w-[420px] h-[420px] bg-[#7C3AED]/10 rounded-full blur-[140px]" />
         {/* Soft Ground Contact Shadow */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[85%] h-12 bg-slate-950/20 rounded-full blur-xl" />
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[88%] h-10 bg-slate-950/40 rounded-full blur-xl" />
       </div>
 
       {/* 3-Column Layout for Desktop (lg+): Left Cards | Laptop Mockup | Right Cards */}
@@ -102,23 +100,23 @@ export function FloatingSoftwareMockup() {
           </motion.div>
         </div>
 
-        {/* CENTER COLUMN: Vecteezy Style Photorealistic Laptop Mockup */}
+        {/* CENTER COLUMN: Premium Clean MacBook Pro Render */}
         <motion.div
-          initial={{ opacity: 0, y: 16, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-20 w-full flex flex-col items-center justify-center mx-auto"
         >
-          {/* ================= LAPTOP SCREEN LID (80% Visual Height) ================= */}
-          <div className="relative w-full rounded-t-[18px] sm:rounded-t-[22px] bg-[#141416] p-2 sm:p-3 border-t border-x border-slate-700/60 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.06)_inset] overflow-hidden">
+          {/* ================= LAPTOP SCREEN LID (Primary Visual Focus) ================= */}
+          <div className="relative w-full rounded-t-[18px] sm:rounded-t-[22px] bg-[#161618] p-2 sm:p-2.5 border-t border-x border-slate-700/50 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
             {/* Top Display Notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-3 sm:h-3.5 bg-[#0a0a0c] rounded-b-lg z-30 flex items-center justify-center gap-1.5 border-b border-x border-slate-800/80">
               <span className="w-1.5 h-1.5 rounded-full bg-[#18181b] border border-slate-700/80 inline-block" />
               <span className="w-1 h-1 rounded-full bg-[#092b1a] border border-emerald-900/80 inline-block" />
             </div>
 
-            {/* Screen Viewport */}
-            <div className="relative w-full aspect-[16/10] rounded-t-[12px] sm:rounded-t-[16px] overflow-hidden bg-black border border-slate-900 shadow-inner">
+            {/* Screen Viewport (Crisp Dashboard Display) */}
+            <div className="relative w-full aspect-[16/10] rounded-t-[12px] sm:rounded-t-[14px] overflow-hidden bg-black border border-slate-900 shadow-inner">
               <Image
                 src="/images/dashboard-hero-light.png"
                 alt="WebSystemBuilders Full Dashboard Application Showcase"
@@ -134,110 +132,77 @@ export function FloatingSoftwareMockup() {
           </div>
 
           {/* ================= LAPTOP CENTER HINGE ================= */}
-          <div className="relative w-[80%] mx-auto h-1.5 sm:h-2 bg-gradient-to-b from-[#0a0a0c] via-[#18181a] to-[#202022] border-t border-slate-800 z-20" />
+          <div className="relative w-[82%] mx-auto h-1.5 sm:h-2 bg-gradient-to-b from-[#0a0a0c] via-[#161619] to-[#1e1e22] border-t border-slate-800/80 rounded-b-sm z-20" />
 
-          {/* ================= FORESHORTENED LAPTOP LOWER DECK (20% Visual Height) ================= */}
-          <div className="relative w-full rounded-b-[18px] sm:rounded-b-[24px] bg-gradient-to-b from-[#222224] via-[#18181a] to-[#101012] p-2.5 sm:p-4 border-b border-x border-slate-700/70 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.35),0_15px_35px_-10px_rgba(37,99,235,0.15)]">
-            {/* Top Bevel Highlight Line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-400/30 to-transparent" />
+          {/* ================= FORESHORTENED LAPTOP LOWER DECK (Secondary Visual Texture) ================= */}
+          <div className="relative w-full rounded-b-[18px] sm:rounded-b-[24px] bg-gradient-to-b from-[#242427] via-[#1a1a1d] to-[#121214] p-2.5 sm:p-4 border-b border-x border-slate-700/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5),0_15px_35px_-10px_rgba(37,99,235,0.12)]">
+            {/* Metallic Top Edge Highlight */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-400/40 to-transparent" />
 
-            {/* Compact Foreshortened Keyboard & Speaker Deck */}
-            <div className="flex items-stretch gap-2 max-w-[92%] mx-auto">
-              {/* Left Speaker */}
-              <div className="hidden sm:block w-2.5 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:3px_3px] opacity-50 rounded my-0.5" />
+            {/* Compact Speaker & Soft Legend-Free Keyboard Deck */}
+            <div className="flex items-stretch gap-2.5 max-w-[94%] mx-auto">
+              {/* Left Speaker Grille */}
+              <div className="hidden sm:block w-3 bg-[radial-gradient(#252528_1px,transparent_1px)] [background-size:3px_3px] opacity-40 rounded my-0.5" />
 
-              {/* Recessed Compact Keyboard Bed */}
-              <div className="flex-1 bg-[#08080a] p-1.5 sm:p-2 rounded-lg border border-slate-800/90 shadow-[0_1.5px_4px_rgba(0,0,0,0.8)_inset]">
-                {/* Function Key Row */}
-                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5 text-[7px] sm:text-[8px] text-slate-400 font-mono text-center">
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">esc</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F1</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F2</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F3</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F4</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F5</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F6</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F7</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F8</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F9</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F10</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F11</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">F12</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/10 flex items-center justify-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#111] border border-slate-700" />
-                  </span>
+              {/* Understated Recessed Keyboard Bed (Blank Keycaps, Soft Low Contrast Texture) */}
+              <div className="flex-1 bg-[#09090b] p-1.5 sm:p-2 rounded-lg border border-slate-800/80 shadow-[0_2px_5px_rgba(0,0,0,0.9)_inset] opacity-80 backdrop-blur-[0.5px]">
+                {/* Row 1: Function Keycaps (14 blank keys) */}
+                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <div key={`fn-${i}`} className="bg-[#151518] rounded-[2px] h-1.5 sm:h-2 border border-white/[0.03]" />
+                  ))}
                 </div>
 
-                {/* Main Key Matrix (Compact Visual Key Grid) */}
-                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5 text-[7px] sm:text-[9px] text-slate-300 font-mono text-center">
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">~</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">1</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">2</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">3</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">4</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">5</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">6</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">7</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">8</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">9</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">0</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">-</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">+</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 text-[6px] sm:text-[7px]">del</span>
+                {/* Row 2: Number Row Keycaps (13 standard keys + 1 backspace key) */}
+                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5">
+                  {Array.from({ length: 13 }).map((_, i) => (
+                    <div key={`r2-${i}`} className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  ))}
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
                 </div>
 
-                {/* QWERTY Row */}
-                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5 text-[7px] sm:text-[9px] text-slate-300 font-mono text-center">
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 text-[6px] sm:text-[7px]">tab</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">Q</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">W</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">E</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">R</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">T</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">Y</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">U</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">I</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">O</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 font-semibold">P</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">[</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">]</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">\</span>
+                {/* Row 3: QWERTY Row Keycaps (14 blank keys) */}
+                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <div key={`r3-${i}`} className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  ))}
                 </div>
 
-                {/* Modifier & Spacebar Row */}
-                <div className="grid grid-cols-12 gap-0.5 sm:gap-1 text-[6px] sm:text-[8px] text-slate-400 font-mono text-center items-center">
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">fn</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5">ctrl</span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 flex items-center justify-center">
-                    <Option className="w-2 h-2" />
-                  </span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 flex items-center justify-center">
-                    <Command className="w-2 h-2" />
-                  </span>
-                  <span className="col-span-4 bg-[#18181b] rounded py-0.5 border border-white/10 text-slate-500">
-                    Spacebar
-                  </span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 flex items-center justify-center">
-                    <Command className="w-2 h-2" />
-                  </span>
-                  <span className="bg-[#18181b] rounded py-0.5 border border-white/5 flex items-center justify-center">
-                    <Option className="w-2 h-2" />
-                  </span>
-                  <span className="col-span-2 bg-[#18181b] rounded py-0.5 border border-white/5 text-[6px]">◀ ▲ ▶</span>
+                {/* Row 4: ASDF Row Keycaps (14 blank keys) */}
+                <div className="grid grid-cols-14 gap-0.5 sm:gap-1 mb-0.5">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <div key={`r4-${i}`} className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  ))}
+                </div>
+
+                {/* Row 5: Bottom Modifier & Spacebar Row Keycaps */}
+                <div className="grid grid-cols-12 gap-0.5 sm:gap-1 items-center">
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  {/* Clean Blank Spacebar Keycap */}
+                  <div className="col-span-4 bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.04]" />
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  <div className="bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
+                  <div className="col-span-2 bg-[#151518] rounded-[2px] h-2 sm:h-3 border border-white/[0.03]" />
                 </div>
               </div>
 
-              {/* Right Speaker */}
-              <div className="hidden sm:block w-2.5 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:3px_3px] opacity-50 rounded my-0.5" />
+              {/* Right Speaker Grille */}
+              <div className="hidden sm:block w-3 bg-[radial-gradient(#252528_1px,transparent_1px)] [background-size:3px_3px] opacity-40 rounded my-0.5" />
             </div>
 
-            {/* Trackpad Section */}
-            <div className="relative mt-1.5 sm:mt-2.5 flex flex-col items-center">
-              <div className="w-28 sm:w-44 md:w-52 h-8 sm:h-12 bg-[#141416] rounded-lg border border-white/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.5)_inset] relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+            {/* Minimal Reflective Trackpad & Front Opening Lip Notch */}
+            <div className="relative mt-2 sm:mt-3 flex flex-col items-center">
+              {/* Centered Minimal Trackpad */}
+              <div className="w-32 sm:w-48 md:w-56 h-8 sm:h-12 bg-gradient-to-b from-[#18181c] via-[#141417] to-[#101012] rounded-lg border border-white/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.6)_inset] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
               </div>
-              {/* Front Lip Thumb Notch */}
-              <div className="w-12 sm:w-20 h-1 bg-[#08080a] rounded-b-md border-t border-slate-700/80 mt-1 shadow-inner" />
+
+              {/* Front Lip Thumb Opening Notch */}
+              <div className="w-14 sm:w-20 h-1 sm:h-1.5 bg-[#08080a] rounded-b-md border-t border-slate-700/60 shadow-inner mt-1 sm:mt-1.5 mx-auto" />
             </div>
           </div>
         </motion.div>
