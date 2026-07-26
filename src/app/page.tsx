@@ -5,6 +5,7 @@ import { ChoosePathSection } from "@/components/marketing/choose-path-section";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { FinalCallToAction } from "@/components/marketing/home-sections";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
+import { InteractiveProductShowcase } from "@/components/marketing/interactive-product-showcase";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { TestimonialsSection } from "@/components/marketing/testimonials-section";
@@ -24,7 +25,7 @@ export default async function HomePage() {
     getPublicCatalogData(),
     getPublicTestimonials(),
   ]);
-  
+
   const currency = await getCatalogCurrencySnapshot(
     catalog.systems.some((system) => system.pricingType !== "quotation" && system.priceMinor !== null),
   );
@@ -34,21 +35,15 @@ export default async function HomePage() {
     "@type": "WebSite",
     name: "WebSystemBuilders",
     url: "https://websystembuilders.com",
-    description: "Ready-made software systems and custom development for students and business owners.",
+    description: "Handcrafted software systems and custom development for students and business owners.",
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#111827] antialiased">
+    <div className="min-h-screen bg-white text-slate-900 antialiased font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
-      <a
-        href="#main-content"
-        className="fixed left-4 top-3 z-[100] -translate-y-24 bg-[#2563EB] px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0"
-      >
-        Skip to content
-      </a>
 
       <SiteHeader />
 
@@ -59,24 +54,27 @@ export default async function HomePage() {
         {/* Trust Bar */}
         <TrustStrip />
 
-        {/* Section 2: Choose Your Path (Who are you?) */}
+        {/* Section 2: Choose Your Path (Audience Split Showcase) */}
         <ChoosePathSection />
 
-        {/* Section 3 & 4: Featured Systems + Browse Categories */}
+        {/* Section 3: Featured Systems + Browse Categories */}
         <CatalogCurrencyProvider snapshot={currency}>
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>
 
-        {/* Section 5: Why Choose WebSystemBuilders */}
-        <WhyChooseUsSection />
+        {/* Section 4: Interactive Live System Simulation */}
+        <InteractiveProductShowcase />
 
-        {/* Section 6: How It Works */}
+        {/* Section 5: Step-by-Step Delivery Timeline */}
         <HowItWorksSection />
 
-        {/* Section 7: Testimonials */}
+        {/* Section 6: Asymmetric Bento Grid */}
+        <WhyChooseUsSection />
+
+        {/* Section 7: Floating Glass Testimonials */}
         <TestimonialsSection items={testimonials} />
 
-        {/* Section 8: Final CTA */}
+        {/* Section 8: High Impact Gradient CTA */}
         <FinalCallToAction />
       </main>
 

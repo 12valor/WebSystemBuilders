@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import { LenisProvider } from "@/components/layout/lenis-provider";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://websystembuilders.com"),
   title: {
-    default: "WebSystemBuilders — Systems for students and businesses",
+    default: "WebSystemBuilders — Handcrafted Systems for Students & Businesses",
     template: "%s | WebSystemBuilders",
   },
   description:
-    "WebSystemBuilders helps students and business owners access ready-made software systems and request custom development through one professional platform.",
+    "Discover ready-made software systems and request custom software development through a handcrafted, high-trust marketplace.",
   icons: {
     icon: "/brand/favicon.svg",
   },
@@ -23,8 +25,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={geist.variable} data-scroll-behavior="smooth">
-      <body><a href="#main-content" className="fixed left-4 top-3 z-[200] -translate-y-24 rounded bg-white px-3 py-2 text-sm font-semibold text-black transition-transform focus:translate-y-0">Skip to main content</a>{children}</body>
+    <html lang="en" className={plusJakartaSans.variable} data-scroll-behavior="smooth">
+      <body className="font-sans antialiased text-slate-900 bg-white selection:bg-blue-600 selection:text-white">
+        <a
+          href="#main-content"
+          className="fixed left-4 top-3 z-[200] -translate-y-24 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0 shadow-lg"
+        >
+          Skip to main content
+        </a>
+        <LenisProvider>{children}</LenisProvider>
+      </body>
     </html>
   );
 }

@@ -1,90 +1,142 @@
+"use client";
+
+import React from "react";
+import { TactileCard } from "@/components/ui/tactile-card";
+import { AppIconBadge } from "@/components/ui/app-icon-badge";
+import {
+  ShieldCheck,
+  Code2,
+  Lock,
+  Zap,
+  TrendingUp,
+  Award,
+  CheckCircle2,
+  Sparkles,
+  Database,
+  Terminal,
+} from "lucide-react";
+
 export function WhyChooseUsSection() {
   return (
-    <section className="bg-[#F8FAFC] py-20 sm:py-28">
+    <section className="py-20 sm:py-28 bg-white relative overflow-hidden border-b border-slate-200/80">
       <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
-        <div className="text-center">
-          <span className="text-xs font-semibold tracking-wider text-[#2563EB] uppercase">Why Work With Us</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl lg:text-5xl">
-            Why Choose WebSystemBuilders
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>The WebSystemBuilders Difference</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+            Built for total technical confidence
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-[#6B7280] sm:text-lg">
-            We deliver complete, production-ready software solutions with transparent pricing, full code ownership, and dedicated technical support.
+          <p className="mt-4 text-base sm:text-lg text-slate-600 font-medium">
+            Every system is developed with modular architecture, strict authorization security, and full commercial source rights.
           </p>
         </div>
 
-        {/* 6 Feature Cards Grid */}
-        <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="flex flex-col rounded-[20px] border border-[#E5E7EB] bg-white p-7 shadow-xs transition-all hover:border-blue-200 hover:shadow-md"
-            >
-              <div className="flex size-12 items-center justify-center rounded-xl bg-blue-50 text-[#2563EB]">
-                {feature.icon}
+        {/* Asymmetric Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Bento Card 1: Large Span (Col 8) - Full Source Code & Commercial License */}
+          <TactileCard bg="slate" className="md:col-span-8 p-8 md:p-10 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <AppIconBadge icon={Code2} color="blue" size="lg" />
+                <span className="text-xs font-extrabold text-blue-700 bg-blue-100/80 px-3 py-1 rounded-full border border-blue-200">
+                  Full Ownership Rights
+                </span>
               </div>
-              <h3 className="mt-6 text-xl font-bold text-[#111827]">{feature.title}</h3>
-              <p className="mt-2 text-base leading-relaxed text-[#6B7280]">{feature.description}</p>
+              <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                100% Commercial Source Code Included
+              </h3>
+              <p className="mt-4 text-slate-600 font-medium text-sm sm:text-base leading-relaxed max-w-xl">
+                You receive the complete, uncompiled source code package. Deploy, customize, modify, and redistribute with a broad perpetual commercial license.
+              </p>
             </div>
-          ))}
+
+            {/* Code Snippet Box */}
+            <div className="mt-8 bg-slate-900 rounded-2xl p-4 text-xs font-mono text-slate-300 border border-slate-800 shadow-lg">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+                <span className="text-emerald-400 font-bold flex items-center gap-2">
+                  <Terminal className="w-3.5 h-3.5" />
+                  npm run dev
+                </span>
+                <span className="text-[10px] text-slate-500">Next.js App Router + Supabase RLS</span>
+              </div>
+              <p className="text-slate-400">✓ Commercial non-exclusive license attached</p>
+              <p className="text-slate-400">✓ Signed expiring ZIP delivery enabled</p>
+            </div>
+          </TactileCard>
+
+          {/* Bento Card 2: Small Span (Col 4) - Verified Checkout */}
+          <TactileCard bg="white" className="md:col-span-4 p-8 flex flex-col justify-between">
+            <div>
+              <AppIconBadge icon={Lock} color="emerald" size="lg" className="mb-6" />
+              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                Encrypted & Verified Checkout
+              </h3>
+              <p className="mt-3 text-sm text-slate-600 font-medium leading-relaxed">
+                PayMongo integration verifying payment webhooks server-side before issuing fulfillment tokens.
+              </p>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+              <span>GCash • Maya • Cards</span>
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+          </TactileCard>
+
+          {/* Bento Card 3: Small Span (Col 4) - 30 Days Support */}
+          <TactileCard bg="white" className="md:col-span-4 p-8 flex flex-col justify-between">
+            <div>
+              <AppIconBadge icon={ShieldCheck} color="rose" size="lg" className="mb-6" />
+              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                30 Days Defect Support
+              </h3>
+              <p className="mt-3 text-sm text-slate-600 font-medium leading-relaxed">
+                Direct post-purchase assistance for installation setup and reproducible code defect repairs.
+              </p>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600">
+              <span>2 Business Days SLA</span>
+              <Award className="w-4 h-4" />
+            </div>
+          </TactileCard>
+
+          {/* Bento Card 4: Medium Span (Col 8) - Database & Security Foundations */}
+          <TactileCard bg="white" className="md:col-span-8 p-8 md:p-10 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <AppIconBadge icon={Database} color="indigo" size="lg" />
+                <span className="text-xs font-extrabold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                  Supabase PostgreSQL
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Production Database Schemas & Row Level Security
+              </h3>
+              <p className="mt-3 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
+                All ready-made systems ship with structured SQL migration files, explicit foreign keys, indexes, and battle-tested RLS policies to keep customer data isolated.
+              </p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 text-center">
+              <div>
+                <div className="text-xl font-extrabold text-slate-900">UTC</div>
+                <div className="text-[10px] text-slate-400 font-bold uppercase">Timestamps</div>
+              </div>
+              <div>
+                <div className="text-xl font-extrabold text-indigo-600">Minor Units</div>
+                <div className="text-[10px] text-slate-400 font-bold uppercase">Authoritative Money</div>
+              </div>
+              <div>
+                <div className="text-xl font-extrabold text-emerald-600">Idempotent</div>
+                <div className="text-[10px] text-slate-400 font-bold uppercase">Fulfillment</div>
+              </div>
+            </div>
+          </TactileCard>
         </div>
       </div>
     </section>
   );
 }
-
-const features = [
-  {
-    title: "Professional Source Code",
-    description: "Receive clean, well-structured, modular source code built with modern frameworks and maintainable architecture.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-      </svg>
-    ),
-  },
-  {
-    title: "Documentation Included",
-    description: "Comprehensive installation guides, database entity diagrams, and user manuals provided with every software package.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Deployment Assistance",
-    description: "Get direct technical support to deploy your system to Vercel, Supabase, cloud hosting, or local server environments.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Customization Available",
-    description: "Need specific features added or branding updated? Work directly with our developers to customize any ready-made system.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h97.5M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 18H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 12h9.75" />
-      </svg>
-    ),
-  },
-  {
-    title: "Affordable Pricing",
-    description: "Fair, upfront minor-unit pricing with zero hidden subscriptions or per-user seat penalties.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Fast Delivery",
-    description: "Automated instant deliverable access upon payment confirmation, or agreed quick timelines for custom requests.",
-    icon: (
-      <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-      </svg>
-    ),
-  },
-];
