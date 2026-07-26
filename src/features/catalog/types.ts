@@ -25,6 +25,8 @@ export type CatalogSystemRecord = {
   currency: string;
   featured: boolean;
   updatedAt: string;
+  coverImageUrl?: string | null;
+  media?: CatalogSystemMedia[];
   category: { name: string; slug: string } | null;
 };
 
