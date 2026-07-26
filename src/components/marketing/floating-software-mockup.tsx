@@ -3,21 +3,18 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  ShoppingCart,
-  Boxes,
-  Stethoscope,
-  GraduationCap,
-  Users,
-  Code2,
-  Sparkles,
-  ShieldCheck,
-} from "lucide-react";
+import { ShoppingCart, Boxes, Stethoscope, GraduationCap } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   return (
-    <div className="relative w-full max-w-[1360px] mx-auto py-2 sm:py-6 px-2 sm:px-4 select-none">
-      {/* Centerpiece Hero Product Mockup (mockup.svg) - UNCONSTRAINED FULL SIZE */}
+    <div className="relative w-full max-w-[1280px] mx-auto py-4 sm:py-8 px-2 sm:px-4 select-none">
+      {/* Background Soft Mint & Violet Ambient Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute -top-10 left-1/12 w-[450px] h-[450px] bg-emerald-400/12 rounded-full blur-[140px]" />
+        <div className="absolute -top-10 right-1/12 w-[450px] h-[450px] bg-indigo-400/12 rounded-full blur-[140px]" />
+      </div>
+
+      {/* Centerpiece Hero Product Showcase (mockup.svg) - UNCONSTRAINED FULL SIZE */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,211 +34,109 @@ export function FloatingSoftwareMockup() {
         </div>
       </motion.div>
 
-      {/* ABSOLUTE OVERLAY SATELLITE CARDS (Desktop lg+ - Arranged like AurallQ reference showcase) */}
+      {/* ABSOLUTE OVERLAY FLOATING CARDS WITH CURLY CONNECTOR LINES (Desktop lg+ Only) */}
       <div className="hidden lg:block absolute inset-0 z-30 pointer-events-none">
-        {/* --- LEFT SIDE CARDS --- */}
-
-        {/* 1. Top Left: POS & Sales System */}
+        {/* ================= CARD 1: TOP LEFT (POS & Sales) ================= */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.1 },
-            x: { duration: 0.6, delay: 0.1 },
-            y: { repeat: Infinity, duration: 5.2, ease: "easeInOut" },
-          }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute -top-[10%] left-[0%] xl:left-[-16px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100/90 shadow-xs">
-              <ShoppingCart className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">POS & Sales System</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Streamline sales, invoices, and transactions.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 2. Upper Mid-Left: Inventory & Warehouse */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.2 },
-            x: { duration: 0.6, delay: 0.2 },
-            y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.3 },
-          }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute top-[18%] left-[-20px] xl:left-[-40px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90 shadow-xs">
-              <Boxes className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Inventory & Warehouse</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Track stock, manage suppliers, and warehouses.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 3. Lower Mid-Left: Academic Management */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.3 },
-            x: { duration: 0.6, delay: 0.3 },
-            y: { repeat: Infinity, duration: 5.6, ease: "easeInOut", delay: 0.5 },
-          }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute top-[50%] left-[-24px] xl:left-[-48px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0 border border-purple-100/90 shadow-xs">
-              <GraduationCap className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Academic Management</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Complete solution for schools and universities.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 4. Bottom Left: Custom Development */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -7, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.4 },
-            x: { duration: 0.6, delay: 0.4 },
-            y: { repeat: Infinity, duration: 5.8, ease: "easeInOut", delay: 0.7 },
-          }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute bottom-[2%] left-[-8px] xl:left-[-20px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center shrink-0 border border-sky-100/90 shadow-xs">
-              <Code2 className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Custom Development</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Tailored systems built for your needs.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* --- RIGHT SIDE CARDS --- */}
-
-        {/* 5. Top Right: Clinic & Healthcare */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
+          initial={{ opacity: 0, x: -30, rotate: -4 }}
+          animate={{ opacity: 1, x: 0, rotate: -4, y: [0, -6, 0] }}
           transition={{
             opacity: { duration: 0.6, delay: 0.15 },
             x: { duration: 0.6, delay: 0.15 },
-            y: { repeat: Infinity, duration: 5.4, ease: "easeInOut", delay: 0.2 },
+            y: { repeat: Infinity, duration: 5.2, ease: "easeInOut" },
           }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute -top-[10%] right-[0%] xl:right-[-16px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
+          whileHover={{ y: -6, scale: 1.03, rotate: -2 }}
+          className="absolute top-[6%] left-[1%] xl:left-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-rose-50 text-[#E11D48] flex items-center justify-center shrink-0 border border-rose-100/90 shadow-xs">
-              <Stethoscope className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Clinic & Healthcare</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Manage patients, appointments, and records.
-              </p>
-            </div>
+          <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center border border-emerald-100/80 shadow-xs mb-3">
+            <ShoppingCart className="w-5.5 h-5.5" />
           </div>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">POS & Sales System</h4>
+          <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
+            Streamline sales, invoices, and transactions.
+          </p>
         </motion.div>
 
-        {/* 6. Upper Mid-Right: Payroll & HR */}
+        {/* Curly Connector Line 1 (Top Left) */}
+        <svg className="absolute top-[18%] left-[17%] xl:left-[16%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
+          <path d="M 10 10 Q 50 40 90 50" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
+          <circle cx="90" cy="50" r="3" fill="#94A3B8" />
+        </svg>
+
+        {/* ================= CARD 2: BOTTOM LEFT (Inventory & Warehouse) ================= */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
+          initial={{ opacity: 0, x: -30, rotate: 3 }}
+          animate={{ opacity: 1, x: 0, rotate: 3, y: [0, -7, 0] }}
           transition={{
             opacity: { duration: 0.6, delay: 0.25 },
             x: { duration: 0.6, delay: 0.25 },
-            y: { repeat: Infinity, duration: 6.1, ease: "easeInOut", delay: 0.4 },
+            y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.3 },
           }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute top-[18%] right-[-20px] xl:right-[-40px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
+          whileHover={{ y: -6, scale: 1.03, rotate: 1 }}
+          className="absolute bottom-[16%] left-[0%] xl:left-[-16px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0 border border-amber-100/90 shadow-xs">
-              <Users className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Payroll & HR</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Employee management, payroll, and attendance.
-              </p>
-            </div>
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
+            <Boxes className="w-5.5 h-5.5" />
           </div>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Inventory & Warehouse</h4>
+          <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
+            Track stock, manage suppliers, and warehouses.
+          </p>
         </motion.div>
 
-        {/* 7. Lower Mid-Right: Student Information System */}
+        {/* Curly Connector Line 2 (Bottom Left) */}
+        <svg className="absolute bottom-[24%] left-[16%] xl:left-[15%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
+          <path d="M 10 50 Q 50 10 90 20" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
+          <circle cx="90" cy="20" r="3" fill="#94A3B8" />
+        </svg>
+
+        {/* ================= CARD 3: TOP RIGHT (Clinic & Healthcare) ================= */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
+          initial={{ opacity: 0, x: 30, rotate: 4 }}
+          animate={{ opacity: 1, x: 0, rotate: 4, y: [0, -6, 0] }}
           transition={{
-            opacity: { duration: 0.6, delay: 0.35 },
-            x: { duration: 0.6, delay: 0.35 },
-            y: { repeat: Infinity, duration: 5.5, ease: "easeInOut", delay: 0.6 },
+            opacity: { duration: 0.6, delay: 0.2 },
+            x: { duration: 0.6, delay: 0.2 },
+            y: { repeat: Infinity, duration: 5.4, ease: "easeInOut", delay: 0.2 },
           }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute top-[50%] right-[-24px] xl:right-[-48px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
+          whileHover={{ y: -6, scale: 1.03, rotate: 2 }}
+          className="absolute top-[6%] right-[1%] xl:right-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0 border border-teal-100/90 shadow-xs">
-              <ShieldCheck className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Student Information System</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Organize student data and records easily.
-              </p>
-            </div>
+          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center border border-purple-100/80 shadow-xs mb-3">
+            <Stethoscope className="w-5.5 h-5.5" />
           </div>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Clinic & Healthcare</h4>
+          <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
+            Manage patients, appointments, and EMR records.
+          </p>
         </motion.div>
 
-        {/* 8. Bottom Right: Capstone & Defense Ready */}
+        {/* ================= CARD 4: BOTTOM RIGHT (Academic & Capstone) ================= */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0, y: [0, -7, 0] }}
+          initial={{ opacity: 0, x: 30, rotate: -3 }}
+          animate={{ opacity: 1, x: 0, rotate: -3, y: [0, -7, 0] }}
           transition={{
-            opacity: { duration: 0.6, delay: 0.45 },
-            x: { duration: 0.6, delay: 0.45 },
-            y: { repeat: Infinity, duration: 5.9, ease: "easeInOut", delay: 0.8 },
+            opacity: { duration: 0.6, delay: 0.3 },
+            x: { duration: 0.6, delay: 0.3 },
+            y: { repeat: Infinity, duration: 6.2, ease: "easeInOut", delay: 0.5 },
           }}
-          whileHover={{ y: -4, scale: 1.02 }}
-          className="absolute bottom-[2%] right-[-8px] xl:right-[-20px] w-[230px] xl:w-[250px] rounded-[18px] bg-white/95 p-3.5 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300 pointer-events-auto"
+          whileHover={{ y: -6, scale: 1.03, rotate: -1 }}
+          className="absolute bottom-[16%] right-[0%] xl:right-[-16px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0 border border-indigo-100/90 shadow-xs">
-              <Sparkles className="w-4.5 h-4.5" />
-            </div>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900 tracking-tight">Capstone & Defense Ready</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                Full source code, docs & SQL included.
-              </p>
-            </div>
+          <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center border border-amber-100/80 shadow-xs mb-3">
+            <GraduationCap className="w-5.5 h-5.5" />
           </div>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Academic & Capstone</h4>
+          <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
+            Defense-ready systems with source code & SQL.
+          </p>
         </motion.div>
+
+        {/* Curly Connector Line 4 (Bottom Right) */}
+        <svg className="absolute bottom-[24%] right-[16%] xl:right-[15%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
+          <path d="M 90 50 Q 50 10 10 20" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
+          <circle cx="10" cy="20" r="3" fill="#94A3B8" />
+        </svg>
       </div>
 
       {/* Mobile & Tablet Responsive Feature Cards Grid (< lg screens) */}
@@ -249,12 +144,12 @@ export function FloatingSoftwareMockup() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.35 }}
-        className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:hidden"
+        className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-3.5"
       >
         {/* Card 1 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
-            <ShoppingCart className="w-4 h-4" />
+        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
+            <ShoppingCart className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-900">POS & Sales System</h4>
@@ -263,9 +158,9 @@ export function FloatingSoftwareMockup() {
         </div>
 
         {/* Card 2 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
-            <Boxes className="w-4 h-4" />
+        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
+            <Boxes className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-900">Inventory & Warehouse</h4>
@@ -274,68 +169,24 @@ export function FloatingSoftwareMockup() {
         </div>
 
         {/* Card 3 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-rose-50 text-[#E11D48] flex items-center justify-center shrink-0 border border-rose-100">
-            <Stethoscope className="w-4 h-4" />
+        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0 border border-purple-100">
+            <Stethoscope className="w-5 h-5" />
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-900">Clinic & Healthcare</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Manage patients, appointments, and records.</p>
+            <p className="text-[11px] text-slate-500 mt-0.5">Manage patients, appointments, and EMR records.</p>
           </div>
         </div>
 
         {/* Card 4 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0 border border-amber-100">
-            <Users className="w-4 h-4" />
+        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0 border border-amber-100">
+            <GraduationCap className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-900">Payroll & HR</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Employee management, payroll, and attendance.</p>
-          </div>
-        </div>
-
-        {/* Card 5 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0 border border-purple-100">
-            <GraduationCap className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Academic Management</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Complete solution for schools and universities.</p>
-          </div>
-        </div>
-
-        {/* Card 6 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-teal-50 text-[#0D9488] flex items-center justify-center shrink-0 border border-teal-100">
-            <ShieldCheck className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Student Information</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Organize student data and records easily.</p>
-          </div>
-        </div>
-
-        {/* Card 7 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0284C7] flex items-center justify-center shrink-0 border border-sky-100">
-            <Code2 className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Custom Development</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Tailored systems built for your needs.</p>
-          </div>
-        </div>
-
-        {/* Card 8 */}
-        <div className="rounded-[16px] bg-white/95 p-3.5 border border-slate-200/90 shadow-sm backdrop-blur-md flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0 border border-indigo-100">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Capstone & Defense Ready</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Full source code, docs & SQL included.</p>
+            <h4 className="text-xs font-bold text-slate-900">Academic & Capstone</h4>
+            <p className="text-[11px] text-slate-500 mt-0.5">Defense-ready systems with source code & SQL.</p>
           </div>
         </div>
       </motion.div>
