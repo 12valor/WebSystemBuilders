@@ -1,71 +1,147 @@
 import Link from "next/link";
-import { BrandLogo } from "@/components/brand/brand-logo";
-import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 
 export function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden py-16 sm:py-20 lg:py-28">
-      <div className="pointer-events-none absolute -right-72 -top-80 -z-10 size-[660px] rounded-full border border-blue-500/10 shadow-[0_0_0_120px_rgba(59,130,246,0.018),0_0_0_240px_rgba(59,130,246,0.012)] max-lg:hidden" />
-      <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-14 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[minmax(0,1.04fr)_minmax(390px,.96fr)] lg:gap-14 xl:w-[min(calc(100%-96px),1280px)] xl:gap-20">
-        <div className="max-w-3xl">
-          <SectionEyebrow>Ready-made systems and custom development</SectionEyebrow>
-          <h1 className="max-w-[780px] text-[clamp(3rem,8vw,6rem)] font-semibold leading-[0.96] tracking-[-0.065em] text-foreground">Software systems for your next step.</h1>
-          <p className="mt-7 max-w-[650px] text-[1.05rem] leading-7 text-secondary sm:text-lg sm:leading-8">Explore practical systems for school and business, or work with us to build one around your exact requirements.</p>
-          <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap">
-            <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a] transition-transform hover:-translate-y-px hover:bg-white">Browse systems <span aria-hidden="true">↗</span></Link>
-            <Link href="/services/custom-development" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 bg-surface px-6 font-semibold transition-colors hover:bg-surface-raised">Request a custom system</Link>
+    <section id="top" className="relative overflow-hidden bg-white py-16 sm:py-24 lg:py-32">
+      {/* Background Subtle Gradient Glow */}
+      <div className="pointer-events-none absolute -right-40 -top-40 -z-10 size-[540px] rounded-full bg-blue-50/70 blur-3xl" />
+      <div className="pointer-events-none absolute -left-40 top-1/2 -z-10 size-[480px] rounded-full bg-slate-50/80 blur-3xl" />
+
+      <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-12 xl:w-[min(calc(100%-96px),1280px)] xl:gap-16">
+        {/* Left Column: Typography & CTAs */}
+        <div className="lg:col-span-7 xl:col-span-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/60 px-4 py-1.5 text-xs font-semibold text-[#2563EB]">
+            <span className="inline-block size-2 rounded-full bg-[#2563EB]" />
+            Software Marketplace & Custom Development
           </div>
-          <div className="mt-11 grid gap-3 sm:mt-14 sm:grid-cols-2" aria-label="Choose an audience">
-            <AudienceLink href="/for-students" kicker="For students">Capstone and thesis-related systems</AudienceLink>
-            <AudienceLink href="/for-business" kicker="For business">Systems for day-to-day operations</AudienceLink>
+
+          <h1 className="mt-6 text-[clamp(2.75rem,5.5vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.035em] text-[#111827]">
+            Ready-made Software <br className="hidden sm:inline" />
+            <span className="text-[#2563EB]">for Businesses and Students.</span>
+          </h1>
+
+          <p className="mt-6 max-w-[580px] text-lg leading-relaxed text-[#6B7280]">
+            Browse professionally developed software systems or request a custom-built solution tailored to your needs.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
+            <Link
+              href="/systems"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 text-base font-semibold text-white shadow-md transition-all hover:bg-[#1D4ED8] hover:shadow-lg focus:outline-hidden"
+            >
+              Browse Systems
+              <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+            <Link
+              href="/request-a-quote"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[#E5E7EB] bg-white px-7 text-base font-semibold text-[#111827] shadow-xs transition-all hover:border-gray-300 hover:bg-slate-50"
+            >
+              Request Quote
+            </Link>
+          </div>
+
+          {/* Quick Trust Badges */}
+          <div className="mt-12 flex flex-wrap items-center gap-6 border-t border-[#E5E7EB] pt-6 text-xs font-medium text-[#6B7280]">
+            <div className="flex items-center gap-2">
+              <svg className="size-4 text-[#22C55E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span>Full Source Code Included</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="size-4 text-[#22C55E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span>Documentation Included</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="size-4 text-[#22C55E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span>Deployment Assistance</span>
+            </div>
           </div>
         </div>
-        <SystemWorkspace />
+
+        {/* Right Column: Combined Integrated Software Illustration */}
+        <div className="lg:col-span-5 xl:col-span-6">
+          <IntegratedSoftwareIllustration />
+        </div>
       </div>
     </section>
   );
 }
 
-function AudienceLink({ href, kicker, children }: { href: string; kicker: string; children: React.ReactNode }) {
+function IntegratedSoftwareIllustration() {
   return (
-    <Link href={href} className="group relative grid min-h-[96px] gap-1 border-t border-white/15 px-5 py-5 pr-12 transition-colors hover:border-brand hover:bg-white/[0.018] sm:min-h-[108px]">
-      <span className="text-xs uppercase tracking-[0.08em] text-muted">{kicker}</span>
-      <strong className="text-[0.95rem] font-medium leading-snug">{children}</strong>
-      <span className="absolute right-5 top-5 text-muted transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
-    </Link>
-  );
-}
-
-function SystemWorkspace() {
-  return (
-    <div className="overflow-hidden rounded-[18px] border border-white/15 bg-[#0c0d0f] shadow-[0_32px_90px_rgba(0,0,0,.24)]">
-      <div className="flex h-14 items-center justify-between border-b border-white/10 px-5 text-xs text-muted">
-        <div className="flex items-center gap-2.5 font-semibold text-secondary"><BrandLogo compact className="h-auto w-7" /> System workspace</div>
-        <span>Overview</span>
-      </div>
-      <div className="p-3.5 sm:p-6">
-        <p className="mb-3 text-xs uppercase tracking-[0.09em] text-muted">Choose how you want to start</p>
-        <div className="rounded-[13px] border border-white/10 bg-surface p-5 sm:p-6">
-          <div className="flex items-center gap-2 text-xs text-secondary"><span className="size-[7px] rounded-full bg-emerald-400" />Ready-made systems</div>
-          <strong className="mt-5 block max-w-xs text-xl leading-tight tracking-[-0.03em] sm:text-2xl">Browse by audience and category</strong>
-          <div className="mt-6 grid grid-cols-3 gap-2" aria-hidden="true">{["POS", "Inventory", "Capstone"].map((item) => <span key={item} className="rounded-md border border-white/10 bg-[#0c0d0f] px-2 py-2 text-center text-[0.7rem] text-secondary">{item}</span>)}</div>
+    <div className="relative mx-auto w-full max-w-[540px]">
+      {/* Container Box */}
+      <div className="relative rounded-[24px] border border-[#E5E7EB] bg-gradient-to-b from-[#F8FAFC] to-white p-6 shadow-xl sm:p-8">
+        <div className="mb-6 flex items-center justify-between border-b border-[#E5E7EB] pb-4">
+          <div className="flex items-center gap-2">
+            <span className="size-3 rounded-full bg-red-400" />
+            <span className="size-3 rounded-full bg-amber-400" />
+            <span className="size-3 rounded-full bg-emerald-400" />
+          </div>
+          <span className="text-xs font-semibold tracking-wider text-[#6B7280] uppercase">We Build Software Systems</span>
         </div>
-        <div className="mt-2.5 grid gap-2.5 sm:grid-cols-2">
-          <WorkspaceCard index="01" title="Review the system" detail="Features, inclusions, requirements" />
-          <WorkspaceCard index="02" title="Purchase securely" detail="Verified payment before delivery" accent />
-        </div>
-        <div className="flex flex-col items-start gap-1 px-1 pt-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between"><span>Need something different?</span><strong className="font-medium text-secondary">Request custom development →</strong></div>
-      </div>
-    </div>
-  );
-}
 
-function WorkspaceCard({ index, title, detail, accent = false }: { index: string; title: string; detail: string; accent?: boolean }) {
-  return (
-    <div className={`min-h-36 rounded-xl border p-4 ${accent ? "border-blue-400/20 bg-blue-600/10" : "border-white/10 bg-[#101113]"}`}>
-      <span className={`text-[0.68rem] ${accent ? "text-brand-hover" : "text-muted"}`}>{index}</span>
-      <p className="mb-1 mt-5 text-sm font-semibold">{title}</p>
-      <small className="block text-[0.7rem] leading-5 text-muted">{detail}</small>
+        {/* Multi-System Grid Nodes Vector Illustration */}
+        <div className="grid grid-cols-2 gap-3.5 sm:gap-4">
+          {/* POS System Tile */}
+          <div className="group rounded-[18px] border border-[#E5E7EB] bg-white p-4 shadow-xs transition-all hover:border-[#3B82F6]/40 hover:shadow-md">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-blue-50 text-[#2563EB]">
+              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5h16.5a1.5 1.5 0 011.5 1.5v9.75a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6a1.5 1.5 0 011.5-1.5z" />
+              </svg>
+            </div>
+            <h3 className="mt-3 font-semibold text-[#111827]">Point of Sale</h3>
+            <p className="mt-1 text-xs text-[#6B7280]">Checkout, receipt, billing</p>
+          </div>
+
+          {/* Inventory System Tile */}
+          <div className="group rounded-[18px] border border-[#E5E7EB] bg-white p-4 shadow-xs transition-all hover:border-[#3B82F6]/40 hover:shadow-md">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-[#F0FDF4] text-[#22C55E]">
+              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+              </svg>
+            </div>
+            <h3 className="mt-3 font-semibold text-[#111827]">Inventory</h3>
+            <p className="mt-1 text-xs text-[#6B7280]">Stock, tracking, alerts</p>
+          </div>
+
+          {/* Warehouse System Tile */}
+          <div className="group rounded-[18px] border border-[#E5E7EB] bg-white p-4 shadow-xs transition-all hover:border-[#3B82F6]/40 hover:shadow-md">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36rem" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21v-9a3.75 3.75 0 013.75-3.75h9a3.75 3.75 0 013.75 3.75v9" />
+              </svg>
+            </div>
+            <h3 className="mt-3 font-semibold text-[#111827]">Warehouse</h3>
+            <p className="mt-1 text-xs text-[#6B7280]">Logistics & movement</p>
+          </div>
+
+          {/* School & Hospital Tile */}
+          <div className="group rounded-[18px] border border-[#E5E7EB] bg-white p-4 shadow-xs transition-all hover:border-[#3B82F6]/40 hover:shadow-md">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
+              </svg>
+            </div>
+            <h3 className="mt-3 font-semibold text-[#111827]">School & Capstone</h3>
+            <p className="mt-1 text-xs text-[#6B7280]">Grades, thesis, medical</p>
+          </div>
+        </div>
+
+        {/* Bottom Banner */}
+        <div className="mt-4 flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/50 p-3.5 text-xs">
+          <span className="font-semibold text-[#2563EB]">Clean Source Code & Documentation Included</span>
+          <span className="font-semibold text-[#111827]">Production Ready</span>
+        </div>
+      </div>
     </div>
   );
 }

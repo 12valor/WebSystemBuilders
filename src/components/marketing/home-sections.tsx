@@ -101,12 +101,44 @@ export function ProcessSection() {
 
 export function FinalCallToAction() {
   return (
-    <section id="contact" className="px-5 pb-20 pt-3 sm:px-8 sm:pb-24 lg:pb-32 xl:px-12">
-      <div className="mx-auto flex max-w-[1280px] flex-col items-start gap-10 rounded-2xl border border-white/15 bg-surface p-6 sm:p-12 lg:flex-row lg:items-end lg:justify-between lg:p-16">
-        <div><SectionEyebrow>Start with what you need</SectionEyebrow><h2 className="max-w-3xl text-[clamp(2.35rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.055em]">Ready to find or build your system?</h2></div>
-        <div className="grid w-full shrink-0 gap-2.5 sm:flex lg:w-auto">
-          <Link href="/systems" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[10px] bg-foreground px-6 font-semibold text-[#08090a]">Browse systems <span aria-hidden="true">↗</span></Link>
-          <Link href="/request-a-quote" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border border-white/15 px-6 font-semibold">Request a quote</Link>
+    <section id="contact" className="bg-white py-20 sm:py-28">
+      <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
+        <div className="relative overflow-hidden rounded-[24px] border border-blue-200/80 bg-gradient-to-r from-blue-600 to-indigo-600 p-8 sm:p-12 lg:p-16 shadow-xl text-white">
+          {/* Subtle Graphic Accents */}
+          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-white/10 blur-2xl" />
+          <div className="pointer-events-none absolute -bottom-20 left-1/3 size-64 rounded-full bg-blue-400/20 blur-2xl" />
+
+          <div className="relative z-10 flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
+            <div>
+              <span className="inline-block rounded-full bg-white/20 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-xs">
+                Get Started Today
+              </span>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                Ready to build your next software system?
+              </h2>
+              <p className="mt-3 max-w-xl text-base text-blue-100 sm:text-lg">
+                Explore our catalog of production-ready systems or request a custom-built technical solution tailored for your organization.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3.5 sm:flex-row sm:items-center shrink-0">
+              <Link
+                href="/systems"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-7 text-base font-semibold text-[#2563EB] shadow-md transition-all hover:bg-slate-50 hover:shadow-lg"
+              >
+                Browse Systems
+                <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+              <Link
+                href="/request-a-quote"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/40 bg-white/10 px-7 text-base font-semibold text-white backdrop-blur-xs transition-all hover:bg-white/20"
+              >
+                Request Quote
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
