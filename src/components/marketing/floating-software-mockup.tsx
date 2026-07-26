@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ShoppingCart,
   Boxes,
@@ -17,68 +17,29 @@ import {
 } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Mouse tilt motion values for subtle natural perspective
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Smooth springs centered around ~7° base RotateX angle
-  const springConfig = { stiffness: 120, damping: 20, mass: 0.7 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, 4]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
-  const frameX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-6, 6]), springConfig);
-  const frameY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-6, 6]), springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const normalizedX = (e.clientX - rect.left) / rect.width - 0.5;
-    const normalizedY = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(normalizedX);
-    mouseY.set(normalizedY);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   return (
-    <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-6xl mx-auto py-6 sm:py-10 md:py-14 px-2 sm:px-6 perspective-[1400px] select-none"
-    >
-      {/* Dynamic Ambient Lighting Backdrop */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[1000px] h-[400px] sm:h-[500px] pointer-events-none -z-10">
-        {/* Soft Blue Glow Underneath Chassis */}
-        <div className="absolute top-1/3 left-1/4 w-[420px] h-[420px] bg-[#2563EB]/18 rounded-full blur-[140px] animate-pulse duration-[4500ms]" />
-        {/* Soft Purple Ambient Light */}
-        <div className="absolute bottom-10 right-1/4 w-[420px] h-[420px] bg-[#7C3AED]/18 rounded-full blur-[140px] animate-pulse duration-[5500ms]" />
-        {/* Ground Contact Shadow Base */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-12 bg-slate-950/40 rounded-full blur-2xl" />
+    <div className="relative w-full max-w-6xl mx-auto py-6 sm:py-10 md:py-14 px-2 sm:px-6 select-none">
+      {/* Dynamic Soft Ambient Lighting Backdrop */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[1000px] h-[380px] sm:h-[460px] pointer-events-none -z-10">
+        {/* Subtle Blue Glow Underneath Chassis */}
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#2563EB]/10 rounded-full blur-[140px]" />
+        {/* Subtle Purple Ambient Light */}
+        <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-[#7C3AED]/10 rounded-full blur-[140px]" />
+        {/* Soft Ground Contact Shadow Base */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[88%] h-10 bg-slate-950/25 rounded-full blur-xl" />
       </div>
 
       {/* Main Showcase Stage */}
       <div className="relative flex flex-col items-center justify-center">
-        {/* Full MacBook Pro Mockup Container (75-85% Hero Width Focal Point) */}
+        {/* Static Front-Facing MacBook Pro Mockup (75-85% Hero Width Focal Point) */}
         <motion.div
-          style={{
-            rotateX,
-            rotateY,
-            x: frameX,
-            y: frameY,
-            transformStyle: "preserve-3d",
-          }}
-          initial={{ opacity: 0, y: 35, scale: 0.96 }}
+          initial={{ opacity: 0, y: 18, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 w-full max-w-[840px] md:max-w-[940px] xl:max-w-[1020px] transition-shadow duration-300"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-20 w-full max-w-[840px] md:max-w-[940px] xl:max-w-[1020px]"
         >
-          {/* ================= MACBOOK PRO DISPLAY LID ================= */}
-          <div className="relative rounded-t-[20px] sm:rounded-t-[26px] bg-[#0c0c0e] p-2 sm:p-3 border-t border-x border-slate-700/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
+          {/* ================= FRONT-FACING MACBOOK PRO DISPLAY LID ================= */}
+          <div className="relative rounded-t-[20px] sm:rounded-t-[26px] bg-[#0c0c0e] p-2 sm:p-3 border-t border-x border-slate-700/60 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.08)_inset] overflow-hidden">
             {/* Top Display Bezel Notch with Camera */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-3.5 sm:h-4 bg-[#0c0c0e] rounded-b-xl z-30 flex items-center justify-center gap-2 border-b border-x border-slate-800/80">
               <span className="w-1.5 h-1.5 rounded-full bg-[#161619] border border-slate-700/80 inline-block" />
@@ -93,13 +54,13 @@ export function FloatingSoftwareMockup() {
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 85vw, 1020px"
-                className="object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.01]"
+                className="object-cover object-top"
               />
 
               {/* Realistic Glass Surface Reflection Line */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-white/[0.08] pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.06] pointer-events-none" />
               {/* Gloss Sheen Diagonal Glint */}
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.03] to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none" />
             </div>
           </div>
 
@@ -107,7 +68,7 @@ export function FloatingSoftwareMockup() {
           <div className="relative w-[85%] mx-auto h-2 sm:h-2.5 bg-gradient-to-b from-[#0a0a0c] via-[#18181a] to-[#242426] border-t border-slate-800 shadow-inner z-20" />
 
           {/* ================= MACBOOK PRO LOWER CHASSIS & KEYBOARD ================= */}
-          <div className="relative rounded-b-[22px] sm:rounded-b-[30px] bg-gradient-to-b from-[#242426] via-[#1a1a1d] to-[#121214] p-3 sm:p-5 border-b border-x border-slate-700/70 shadow-[0_35px_90px_-15px_rgba(15,23,42,0.4),0_20px_50px_-10px_rgba(37,99,235,0.25),0_1px_1px_rgba(255,255,255,0.15)_inset]">
+          <div className="relative rounded-b-[22px] sm:rounded-b-[30px] bg-gradient-to-b from-[#242426] via-[#1a1a1d] to-[#121214] p-3 sm:p-5 border-b border-x border-slate-700/70 shadow-[0_30px_70px_-15px_rgba(15,23,42,0.35),0_15px_40px_-10px_rgba(37,99,235,0.18),0_1px_1px_rgba(255,255,255,0.15)_inset]">
             {/* Top Chassis Bevel Highlight Line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-400/30 to-transparent" />
 
@@ -234,19 +195,10 @@ export function FloatingSoftwareMockup() {
         {/* Floating Satellite Feature Cards — Desktop Wrapped (lg+) */}
         {/* Satellite 1: POS & Sales (Top Left) */}
         <motion.div
-          initial={{ opacity: 0, x: -30, y: -20 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            y: [0, -10, 0],
-          }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.4 },
-            x: { duration: 0.6, delay: 0.4 },
-            y: { repeat: Infinity, duration: 5.2, ease: "easeInOut" },
-          }}
-          whileHover={{ scale: 1.04, y: -6 }}
-          className="hidden lg:block absolute z-30 -top-4 -left-10 xl:-left-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2deg] transition-all duration-300"
+          initial={{ opacity: 0, x: -25 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="hidden lg:block absolute z-30 top-2 -left-10 xl:-left-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100/90 shadow-xs">
@@ -272,19 +224,10 @@ export function FloatingSoftwareMockup() {
 
         {/* Satellite 2: Inventory Sync (Bottom Left) */}
         <motion.div
-          initial={{ opacity: 0, x: -30, y: 20 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            y: [0, -12, 0],
-          }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.5 },
-            x: { duration: 0.6, delay: 0.5 },
-            y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.5 },
-          }}
-          whileHover={{ scale: 1.04, y: -6 }}
-          className="hidden lg:block absolute z-30 bottom-12 -left-12 xl:-left-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2deg] transition-all duration-300"
+          initial={{ opacity: 0, x: -25 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="hidden lg:block absolute z-30 bottom-16 -left-12 xl:-left-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100/90 shadow-xs">
@@ -310,19 +253,10 @@ export function FloatingSoftwareMockup() {
 
         {/* Satellite 3: Clinic & Healthcare (Top Right) */}
         <motion.div
-          initial={{ opacity: 0, x: 30, y: -20 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            y: [0, -10, 0],
-          }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.45 },
-            x: { duration: 0.6, delay: 0.45 },
-            y: { repeat: Infinity, duration: 5.6, ease: "easeInOut", delay: 0.2 },
-          }}
-          whileHover={{ scale: 1.04, y: -6 }}
-          className="hidden lg:block absolute z-30 -top-4 -right-10 xl:-right-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[2deg] transition-all duration-300"
+          initial={{ opacity: 0, x: 25 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="hidden lg:block absolute z-30 top-2 -right-10 xl:-right-16 w-[250px] xl:w-[270px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 text-[#4F46E5] flex items-center justify-center shrink-0 border border-indigo-100/90 shadow-xs">
@@ -347,19 +281,10 @@ export function FloatingSoftwareMockup() {
 
         {/* Satellite 4: Academic Capstone Systems (Bottom Right) */}
         <motion.div
-          initial={{ opacity: 0, x: 30, y: 20 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            y: [0, -11, 0],
-          }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.55 },
-            x: { duration: 0.6, delay: 0.55 },
-            y: { repeat: Infinity, duration: 6.4, ease: "easeInOut", delay: 0.7 },
-          }}
-          whileHover={{ scale: 1.04, y: -6 }}
-          className="hidden lg:block absolute z-30 bottom-12 -right-12 xl:-right-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md rotate-[-2deg] transition-all duration-300"
+          initial={{ opacity: 0, x: 25 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="hidden lg:block absolute z-30 bottom-16 -right-12 xl:-right-20 w-[260px] xl:w-[280px] rounded-[20px] bg-white/90 p-4 border border-slate-200/90 shadow-[0_15px_35px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset] backdrop-blur-md transition-all duration-300"
         >
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100/90 shadow-xs">
