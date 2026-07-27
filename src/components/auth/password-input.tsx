@@ -13,9 +13,9 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
   const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
-    <div className="w-full space-y-1.5">
+    <div className="w-full space-y-2">
       {label && (
-        <label htmlFor={inputId} className="block text-xs font-semibold text-slate-300">
+        <label htmlFor={inputId} className="block text-xs font-semibold tracking-wide text-slate-300">
           {label}
         </label>
       )}
@@ -23,8 +23,8 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
         <input
           id={inputId}
           type={showPassword ? "text" : "password"}
-          className={`block w-full min-h-11 rounded-xl border bg-slate-900/80 px-3.5 pr-11 text-sm text-slate-100 placeholder-slate-500 transition-all focus:border-blue-500 focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
-            error ? "border-red-500/70" : "border-slate-800"
+          className={`block w-full min-h-12 rounded-[10px] border bg-[#08090A] px-4 pr-11 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20 ${
+            error ? "border-red-400/60" : "border-white/15"
           } ${className}`}
           {...props}
         />
@@ -32,11 +32,11 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           tabIndex={-1}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors p-1"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? (
-            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -44,7 +44,7 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
               />
             </svg>
           ) : (
-            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

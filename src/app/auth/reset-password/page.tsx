@@ -56,43 +56,38 @@ export default function ResetPasswordPage() {
   return (
     <AuthShell>
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
+        transition={{ duration: 0.2 }}
         className="w-full max-w-md mx-auto"
       >
         <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-100">
             Create new password
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-400">
-            Choose a strong password with at least 8 characters
+            Set a strong new password with at least 8 characters
           </p>
         </div>
 
-        <div className="bg-[#0c0e12] py-8 px-6 sm:px-9 shadow-2xl border border-slate-800/90 rounded-2xl">
+        <div className="bg-[#111214] py-8 px-6 sm:px-9 border border-white/10 rounded-2xl shadow-xl">
           {success ? (
             <div className="text-center space-y-4 py-4">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-2xl"
-              >
+              <div className="mx-auto grid size-12 place-items-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400 text-xl font-bold">
                 ✓
-              </motion.div>
-              <h3 className="text-lg font-bold text-white">Password updated!</h3>
+              </div>
+              <h2 className="text-lg font-semibold text-slate-100">Password updated!</h2>
               <p className="text-xs text-slate-400">Redirecting you to sign in...</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <AnimatePresence mode="wait">
                 {error && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 text-xs font-semibold text-red-300"
+                    className="rounded-[8px] border border-red-500/20 bg-red-950/30 p-3.5 text-xs leading-relaxed text-red-300"
                   >
                     {error}
                   </motion.div>
@@ -101,7 +96,7 @@ export default function ResetPasswordPage() {
 
               <PasswordInput
                 id="password"
-                label="New Password"
+                label="New password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -110,7 +105,7 @@ export default function ResetPasswordPage() {
 
               <PasswordInput
                 id="confirmPassword"
-                label="Confirm New Password"
+                label="Confirm new password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -121,18 +116,18 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-11 rounded-xl bg-blue-600 px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full min-h-12 rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
-                    <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="size-4 animate-spin text-[#08090A]" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                     </svg>
                     <span>Updating...</span>
                   </>
                 ) : (
-                  "Reset Password"
+                  "Reset password"
                 )}
               </button>
             </form>

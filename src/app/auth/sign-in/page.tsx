@@ -60,40 +60,40 @@ function SignInForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
+      transition={{ duration: 0.2 }}
       className="w-full max-w-md mx-auto"
     >
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-100">
           Sign in to your account
         </h1>
         <p className="mt-2 text-xs sm:text-sm text-slate-400">
-          Welcome back to WebSystemBuilders
+          Access your ready-made systems, orders, and custom builds
         </p>
       </div>
 
-      <div className="bg-[#0c0e12] py-8 px-6 sm:px-9 shadow-2xl border border-slate-800/90 rounded-2xl">
+      <div className="bg-[#111214] py-8 px-6 sm:px-9 border border-white/10 rounded-2xl shadow-xl">
         <SocialAuthButtons onError={(err) => setError(err)} />
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <AnimatePresence mode="wait">
             {error && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 text-xs font-semibold text-red-300"
+                className="rounded-[8px] border border-red-500/20 bg-red-950/30 p-3.5 text-xs leading-relaxed text-red-300"
               >
                 {error}
               </motion.div>
             )}
           </AnimatePresence>
 
-          <div className="space-y-1.5">
-            <label htmlFor="email" className="block text-xs font-semibold text-slate-300">
-              Email Address
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-300">
+              Email address
             </label>
             <input
               id="email"
@@ -102,18 +102,18 @@ function SignInForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="block w-full min-h-11 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 text-sm text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+              className="block w-full min-h-12 rounded-[10px] border border-white/15 bg-[#08090A] px-4 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20"
             />
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="password" className="block text-xs font-semibold text-slate-300">
+            <div className="flex items-center justify-between mb-2">
+              <label htmlFor="password" className="block text-xs font-semibold tracking-wide text-slate-300">
                 Password
               </label>
               <Link
                 href="/auth/forgot-password"
-                className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-xs font-medium text-slate-400 hover:text-white transition-colors underline-offset-4 hover:underline"
               >
                 Forgot password?
               </Link>
@@ -133,27 +133,27 @@ function SignInForm() {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="size-4 rounded border-slate-800 bg-slate-900 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-950"
+                className="size-4 rounded border-white/20 bg-[#08090A] text-white focus:ring-white/20"
               />
-              <span className="ml-2">Remember me</span>
+              <span className="ml-2.5">Remember me</span>
             </label>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full min-h-11 rounded-xl bg-blue-600 px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full min-h-12 rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <svg className="size-4 animate-spin text-[#08090A]" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
-                <span>Signing In...</span>
+                <span>Signing in...</span>
               </>
             ) : (
-              "Sign In"
+              "Sign in with email"
             )}
           </button>
         </form>
@@ -161,8 +161,8 @@ function SignInForm() {
 
       <p className="mt-6 text-center text-xs text-slate-500">
         Don&apos;t have an account?{" "}
-        <Link href="/get-started" className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
-          Get Started
+        <Link href="/get-started" className="font-semibold text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
+          Get started
         </Link>
       </p>
     </motion.div>

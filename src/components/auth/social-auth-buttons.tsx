@@ -32,13 +32,13 @@ export function SocialAuthButtons({ redirectToNext = "/dashboard", onError }: So
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
           onClick={() => handleOAuth("google")}
           disabled={loadingProvider !== null}
-          className="flex min-h-11 items-center justify-center gap-2.5 rounded-xl border border-slate-800 bg-slate-900/90 px-4 text-xs font-semibold text-slate-200 hover:bg-slate-800/90 hover:border-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50"
+          className="flex min-h-12 items-center justify-center gap-2.5 rounded-[10px] border border-white/15 bg-white/[0.03] px-4 text-xs font-semibold text-slate-200 hover:bg-white/[0.08] hover:border-white/25 transition-all focus:outline-none focus:ring-1 focus:ring-white/30 disabled:opacity-50"
         >
           {loadingProvider === "google" ? (
             <svg className="size-4 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@ export function SocialAuthButtons({ redirectToNext = "/dashboard", onError }: So
           type="button"
           onClick={() => handleOAuth("github")}
           disabled={loadingProvider !== null}
-          className="flex min-h-11 items-center justify-center gap-2.5 rounded-xl border border-slate-800 bg-slate-900/90 px-4 text-xs font-semibold text-slate-200 hover:bg-slate-800/90 hover:border-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50"
+          className="flex min-h-12 items-center justify-center gap-2.5 rounded-[10px] border border-white/15 bg-white/[0.03] px-4 text-xs font-semibold text-slate-200 hover:bg-white/[0.08] hover:border-white/25 transition-all focus:outline-none focus:ring-1 focus:ring-white/30 disabled:opacity-50"
         >
           {loadingProvider === "github" ? (
             <svg className="size-4 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">
@@ -77,8 +77,8 @@ export function SocialAuthButtons({ redirectToNext = "/dashboard", onError }: So
       </div>
 
       <div className="relative flex items-center justify-center">
-        <div className="w-full border-t border-slate-800/80" />
-        <span className="absolute bg-[#0c0e12] px-3 text-[11px] uppercase tracking-wider font-semibold text-slate-500">
+        <div className="w-full border-t border-white/10" />
+        <span className="absolute bg-[#111214] px-3 text-[11px] uppercase tracking-widest font-medium text-slate-400">
           Or continue with
         </span>
       </div>

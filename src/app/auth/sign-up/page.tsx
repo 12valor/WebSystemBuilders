@@ -74,13 +74,13 @@ export default function SignUpPage() {
   return (
     <AuthShell>
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
+        transition={{ duration: 0.2 }}
         className="w-full max-w-md mx-auto"
       >
         <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-100">
             Create your account
           </h1>
           <p className="mt-2 text-xs sm:text-sm text-slate-400">
@@ -88,26 +88,26 @@ export default function SignUpPage() {
           </p>
         </div>
 
-        <div className="bg-[#0c0e12] py-8 px-6 sm:px-9 shadow-2xl border border-slate-800/90 rounded-2xl">
+        <div className="bg-[#111214] py-8 px-6 sm:px-9 border border-white/10 rounded-2xl shadow-xl">
           <SocialAuthButtons redirectToNext="/onboarding" onError={(err) => setError(err)} />
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-5">
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 text-xs font-semibold text-red-300"
+                  className="rounded-[8px] border border-red-500/20 bg-red-950/30 p-3.5 text-xs leading-relaxed text-red-300"
                 >
                   {error}
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <div className="space-y-1.5">
-              <label htmlFor="fullName" className="block text-xs font-semibold text-slate-300">
-                Full Name
+            <div className="space-y-2">
+              <label htmlFor="fullName" className="block text-xs font-semibold tracking-wide text-slate-300">
+                Full name
               </label>
               <input
                 id="fullName"
@@ -116,13 +116,13 @@ export default function SignUpPage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Alex Morgan"
-                className="block w-full min-h-11 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 text-sm text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+                className="block w-full min-h-12 rounded-[10px] border border-white/15 bg-[#08090A] px-4 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="email" className="block text-xs font-semibold text-slate-300">
-                Email Address
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-300">
+                Email address
               </label>
               <input
                 id="email"
@@ -131,7 +131,7 @@ export default function SignUpPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="block w-full min-h-11 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 text-sm text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+                className="block w-full min-h-12 rounded-[10px] border border-white/15 bg-[#08090A] px-4 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20"
               />
             </div>
 
@@ -147,7 +147,7 @@ export default function SignUpPage() {
             <div>
               <PasswordInput
                 id="confirmPassword"
-                label="Confirm Password"
+                label="Confirm password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -162,15 +162,15 @@ export default function SignUpPage() {
                 id="terms"
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
-                className="mt-0.5 size-4 rounded border-slate-800 bg-slate-900 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-950"
+                className="mt-0.5 size-4 rounded border-white/20 bg-[#08090A] text-white focus:ring-white/20"
               />
               <label htmlFor="terms" className="text-xs text-slate-400 leading-relaxed cursor-pointer select-none">
                 I agree to the{" "}
-                <Link href="/legal/terms" className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+                <Link href="/legal/terms" className="font-medium text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="/legal/privacy" className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+                <Link href="/legal/privacy" className="font-medium text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
                   Privacy Policy
                 </Link>
               </label>
@@ -179,18 +179,18 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full min-h-11 rounded-xl bg-blue-600 px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full min-h-12 rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
-                  <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                  <svg className="size-4 animate-spin text-[#08090A]" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
-                  <span>Creating Account...</span>
+                  <span>Creating account...</span>
                 </>
               ) : (
-                "Create Account"
+                "Create account"
               )}
             </button>
           </form>
@@ -198,8 +198,8 @@ export default function SignUpPage() {
 
         <p className="mt-6 text-center text-xs text-slate-500">
           Already have an account?{" "}
-          <Link href="/auth/sign-in" className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
-            Sign In
+          <Link href="/auth/sign-in" className="font-semibold text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
+            Sign in
           </Link>
         </p>
       </motion.div>
