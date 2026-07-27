@@ -16,6 +16,9 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) return NextResponse.redirect(new URL(nextPath, request.url));
+    
+    console.error("Auth callback exchangeCodeForSession error:", error);
+    return NextResponse.redirect(new URL(`/auth/sign-in?error=${encodeURIComponent(error.message)}`, request.url));
   }
 
   return NextResponse.redirect(new URL("/auth/sign-in?error=callback", request.url));
