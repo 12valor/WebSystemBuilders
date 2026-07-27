@@ -38,35 +38,35 @@ export default function ForgotPasswordPage() {
   return (
     <AuthShell>
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
         className="w-full max-w-md mx-auto"
       >
         <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-900">
             Reset your password
           </h1>
-          <p className="mt-2 text-xs sm:text-sm text-slate-400">
+          <p className="mt-2 text-xs sm:text-sm text-slate-600">
             Enter your email and we&apos;ll send you a secure password reset link
           </p>
         </div>
 
-        <div className="bg-[#111214] py-8 px-6 sm:px-9 border border-white/10 rounded-2xl shadow-xl">
+        <div className="bg-white py-8 px-6 sm:px-9 border border-slate-200/90 rounded-2xl shadow-sm">
           {sent ? (
             <div className="text-center space-y-4 py-2">
-              <div className="mx-auto grid size-12 place-items-center rounded-xl border border-white/15 bg-white/[0.04] text-slate-200">
+              <div className="mx-auto grid size-12 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800">
                 <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-lg font-semibold text-slate-100">Check your inbox</h2>
-              <p className="text-xs leading-relaxed text-slate-400">
-                We sent a password reset link to <span className="font-semibold text-slate-200">{email}</span>.
+              <h2 className="text-lg font-semibold text-slate-900">Check your inbox</h2>
+              <p className="text-xs leading-relaxed text-slate-600">
+                We sent a password reset link to <span className="font-semibold text-slate-900">{email}</span>.
               </p>
               <Link
                 href="/auth/sign-in"
-                className="mt-4 inline-flex w-full min-h-12 items-center justify-center rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors"
+                className="mt-4 inline-flex w-full min-h-12 items-center justify-center rounded-[10px] bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-800 transition-colors"
               >
                 Return to sign in
               </Link>
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="rounded-[8px] border border-red-500/20 bg-red-950/30 p-3.5 text-xs leading-relaxed text-red-300"
+                    className="rounded-[8px] border border-red-200 bg-red-50/80 p-3.5 text-xs leading-relaxed text-red-700 font-medium"
                   >
                     {error}
                   </motion.div>
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
               </AnimatePresence>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-300">
+                <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-700">
                   Email address
                 </label>
                 <input
@@ -97,18 +97,18 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="block w-full min-h-12 rounded-[10px] border border-white/15 bg-[#08090A] px-4 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20"
+                  className="block w-full min-h-12 rounded-[10px] border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900/10"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-12 rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full min-h-12 rounded-[10px] bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
-                    <svg className="size-4 animate-spin text-[#08090A]" fill="none" viewBox="0 0 24 24">
+                    <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                     </svg>
@@ -122,9 +122,9 @@ export default function ForgotPasswordPage() {
           )}
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-500">
+        <p className="mt-6 text-center text-xs text-slate-600">
           Remember your password?{" "}
-          <Link href="/auth/sign-in" className="font-semibold text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
+          <Link href="/auth/sign-in" className="font-semibold text-slate-900 hover:underline underline-offset-4 transition-colors">
             Sign in
           </Link>
         </p>

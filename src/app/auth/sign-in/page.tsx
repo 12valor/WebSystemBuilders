@@ -60,21 +60,21 @@ function SignInForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
       className="w-full max-w-md mx-auto"
     >
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-100">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-slate-900">
           Sign in to your account
         </h1>
-        <p className="mt-2 text-xs sm:text-sm text-slate-400">
+        <p className="mt-2 text-xs sm:text-sm text-slate-600">
           Access your ready-made systems, orders, and custom builds
         </p>
       </div>
 
-      <div className="bg-[#111214] py-8 px-6 sm:px-9 border border-white/10 rounded-2xl shadow-xl">
+      <div className="bg-white py-8 px-6 sm:px-9 border border-slate-200/90 rounded-2xl shadow-sm">
         <SocialAuthButtons onError={(err) => setError(err)} />
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -84,7 +84,7 @@ function SignInForm() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="rounded-[8px] border border-red-500/20 bg-red-950/30 p-3.5 text-xs leading-relaxed text-red-300"
+                className="rounded-[8px] border border-red-200 bg-red-50/80 p-3.5 text-xs leading-relaxed text-red-700 font-medium"
               >
                 {error}
               </motion.div>
@@ -92,7 +92,7 @@ function SignInForm() {
           </AnimatePresence>
 
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-300">
+            <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-slate-700">
               Email address
             </label>
             <input
@@ -102,18 +102,18 @@ function SignInForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="block w-full min-h-12 rounded-[10px] border border-white/15 bg-[#08090A] px-4 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20"
+              className="block w-full min-h-12 rounded-[10px] border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900/10"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="password" className="block text-xs font-semibold tracking-wide text-slate-300">
+              <label htmlFor="password" className="block text-xs font-semibold tracking-wide text-slate-700">
                 Password
               </label>
               <Link
                 href="/auth/forgot-password"
-                className="text-xs font-medium text-slate-400 hover:text-white transition-colors underline-offset-4 hover:underline"
+                className="text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors underline-offset-4 hover:underline"
               >
                 Forgot password?
               </Link>
@@ -128,12 +128,12 @@ function SignInForm() {
           </div>
 
           <div className="flex items-center justify-between pt-1">
-            <label className="flex items-center text-xs text-slate-400 cursor-pointer select-none">
+            <label className="flex items-center text-xs text-slate-600 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="size-4 rounded border-white/20 bg-[#08090A] text-white focus:ring-white/20"
+                className="size-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900/20"
               />
               <span className="ml-2.5">Remember me</span>
             </label>
@@ -142,11 +142,11 @@ function SignInForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full min-h-12 rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full min-h-12 rounded-[10px] bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <svg className="size-4 animate-spin text-[#08090A]" fill="none" viewBox="0 0 24 24">
+                <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
@@ -159,9 +159,9 @@ function SignInForm() {
         </form>
       </div>
 
-      <p className="mt-6 text-center text-xs text-slate-500">
+      <p className="mt-6 text-center text-xs text-slate-600">
         Don&apos;t have an account?{" "}
-        <Link href="/get-started" className="font-semibold text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
+        <Link href="/get-started" className="font-semibold text-slate-900 hover:underline underline-offset-4 transition-colors">
           Get started
         </Link>
       </p>

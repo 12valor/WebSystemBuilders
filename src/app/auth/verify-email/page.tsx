@@ -32,28 +32,28 @@ function VerifyEmailContent() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
       className="w-full max-w-md mx-auto"
     >
-      <div className="bg-[#111214] py-10 px-8 border border-white/10 rounded-2xl shadow-xl text-center">
-        {/* Animated Checkmark */}
-        <div className="mx-auto grid size-14 place-items-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400">
+      <div className="bg-white py-10 px-8 border border-slate-200/90 rounded-2xl shadow-sm text-center">
+        {/* Checkmark */}
+        <div className="mx-auto grid size-14 place-items-center rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-700">
           <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
-        <h1 className="mt-6 text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-slate-100">
+        <h1 className="mt-6 text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-slate-900">
           Verify your email
         </h1>
-        <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-400">
-          We&apos;ve sent a verification link to <span className="font-semibold text-slate-200">{email}</span>. Check your inbox and click the link to activate your account.
+        <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600">
+          We&apos;ve sent a verification link to <span className="font-semibold text-slate-900">{email}</span>. Check your inbox and click the link to activate your account.
         </p>
 
         {resent && (
-          <div className="mt-4 rounded-[8px] border border-emerald-500/20 bg-emerald-950/30 p-3 text-xs font-medium text-emerald-300">
+          <div className="mt-4 rounded-[8px] border border-emerald-300 bg-emerald-50 p-3 text-xs font-medium text-emerald-800">
             A new verification link has been sent to your email address.
           </div>
         )}
@@ -61,7 +61,7 @@ function VerifyEmailContent() {
         <div className="mt-8 space-y-3">
           <a
             href={`mailto:${email}`}
-            className="inline-flex w-full min-h-12 items-center justify-center rounded-[10px] bg-white px-5 text-sm font-semibold text-[#08090A] hover:bg-slate-200 transition-colors"
+            className="inline-flex w-full min-h-12 items-center justify-center rounded-[10px] bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-800 transition-colors"
           >
             Open email app
           </a>
@@ -70,14 +70,14 @@ function VerifyEmailContent() {
             type="button"
             onClick={handleResend}
             disabled={loading || resent}
-            className="inline-flex w-full min-h-12 items-center justify-center rounded-[10px] border border-white/15 bg-white/[0.03] px-5 text-xs font-semibold text-slate-300 hover:bg-white/[0.08] hover:border-white/25 transition-all disabled:opacity-50"
+            className="inline-flex w-full min-h-12 items-center justify-center rounded-[10px] border border-slate-200 bg-white px-5 text-xs font-semibold text-slate-800 hover:bg-slate-50 transition-all disabled:opacity-50"
           >
             {loading ? "Resending..." : resent ? "Link sent ✓" : "Resend verification email"}
           </button>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-6">
-          <Link href="/onboarding" className="text-xs font-semibold text-slate-300 hover:text-white transition-colors underline-offset-4 hover:underline">
+        <div className="mt-8 border-t border-slate-200 pt-6">
+          <Link href="/onboarding" className="text-xs font-semibold text-slate-900 hover:underline underline-offset-4 transition-colors">
             Already verified? Continue to onboarding &rarr;
           </Link>
         </div>

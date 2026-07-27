@@ -15,7 +15,7 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
   return (
     <div className="w-full space-y-2">
       {label && (
-        <label htmlFor={inputId} className="block text-xs font-semibold tracking-wide text-slate-300">
+        <label htmlFor={inputId} className="block text-xs font-semibold tracking-wide text-slate-700">
           {label}
         </label>
       )}
@@ -23,8 +23,8 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
         <input
           id={inputId}
           type={showPassword ? "text" : "password"}
-          className={`block w-full min-h-12 rounded-[10px] border bg-[#08090A] px-4 pr-11 text-sm text-slate-100 placeholder:text-slate-500 transition-all focus:border-white/40 focus:bg-[#08090A] focus:outline-none focus:ring-1 focus:ring-white/20 ${
-            error ? "border-red-400/60" : "border-white/15"
+          className={`block w-full min-h-12 rounded-[10px] border bg-white px-4 pr-11 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900/10 ${
+            error ? "border-red-500" : "border-slate-200"
           } ${className}`}
           {...props}
         />
@@ -32,7 +32,7 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           tabIndex={-1}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors p-1"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? (
@@ -59,7 +59,7 @@ export function PasswordInput({ label, error, className = "", id, ...props }: Pa
           )}
         </button>
       </div>
-      {error && <p className="text-xs font-medium text-red-400 mt-1">{error}</p>}
+      {error && <p className="text-xs font-medium text-red-600 mt-1">{error}</p>}
     </div>
   );
 }
