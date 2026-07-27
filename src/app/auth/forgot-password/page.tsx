@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { BrandLogo } from "@/components/brand/brand-logo";
+import { motion, AnimatePresence } from "framer-motion";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ForgotPasswordPage() {
@@ -36,69 +36,92 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-6 sm:px-8 font-sans text-slate-900">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-block">
-          <BrandLogo priority className="h-auto w-44 mx-auto" />
-        </Link>
-        <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-slate-900">
-          Reset your password
-        </h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Enter your email and we&apos;ll send you a password reset link
-        </p>
-      </div>
-
+    <AuthShell>
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
+        transition={{ duration: 0.25 }}
+        className="w-full max-w-md mx-auto"
       >
-        <div className="bg-white py-8 px-6 shadow-xl shadow-slate-200/50 border border-slate-200 rounded-2xl sm:px-10">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            Reset your password
+          </h1>
+          <p className="mt-2 text-xs sm:text-sm text-slate-400">
+            Enter your email and we&apos;ll send you a password reset link
+          </p>
+        </div>
+
+        <div className="bg-[#0c0e12] py-8 px-6 sm:px-9 shadow-2xl border border-slate-800/90 rounded-2xl">
           {sent ? (
-            <div className="text-center space-y-4">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+            <div className="text-center space-y-4 py-2">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="mx-auto flex size-14 items-center justify-center rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30"
+              >
                 <svg className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Check your inbox</h3>
-              <p className="text-xs leading-5 text-slate-600">
-                We sent a password reset link to <span className="font-semibold text-slate-900">{email}</span>.
+              </motion.div>
+              <h3 className="text-lg font-bold text-white">Check your inbox</h3>
+              <p className="text-xs leading-5 text-slate-400">
+                We sent a password reset link to <span className="font-semibold text-slate-200">{email}</span>.
               </p>
               <Link
                 href="/auth/sign-in"
-                className="mt-4 inline-flex w-full min-h-11 items-center justify-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-md hover:bg-blue-700"
+                className="mt-4 inline-flex w-full min-h-11 items-center justify-center rounded-xl bg-blue-600 px-4 text-xs font-semibold text-white shadow-lg hover:bg-blue-500 transition-all"
               >
                 Return to Sign In
               </Link>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-semibold text-red-600">
-                  {error}
-                </div>
-              )}
+              <AnimatePresence mode="wait">
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 text-xs font-semibold text-red-300"
+                  >
+                    {error}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">Email Address</label>
+              <div className="space-y-1.5">
+                <label htmlFor="email" className="block text-xs font-semibold text-slate-300">
+                  Email Address
+                </label>
                 <input
+                  id="email"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
+                  className="block w-full min-h-11 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 text-sm text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full min-h-12 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition disabled:opacity-50"
+                className="w-full min-h-11 rounded-xl bg-blue-600 px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {loading ? "Sending Link..." : "Send Reset Link"}
+                {loading ? (
+                  <>
+                    <svg className="size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    <span>Sending Link...</span>
+                  </>
+                ) : (
+                  "Send Reset Link"
+                )}
               </button>
             </form>
           )}
@@ -106,11 +129,11 @@ export default function ForgotPasswordPage() {
 
         <p className="mt-6 text-center text-xs text-slate-500">
           Remember your password?{" "}
-          <Link href="/auth/sign-in" className="font-semibold text-blue-600 hover:underline">
+          <Link href="/auth/sign-in" className="font-semibold text-blue-400 hover:text-blue-300 transition-colors">
             Sign In
           </Link>
         </p>
       </motion.div>
-    </div>
+    </AuthShell>
   );
 }

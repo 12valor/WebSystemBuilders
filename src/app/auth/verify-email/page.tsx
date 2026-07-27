@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { motion } from "framer-motion";
-import { BrandLogo } from "@/components/brand/brand-logo";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { createClient } from "@/lib/supabase/client";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "your email";
   const [resent, setResent] = useState(false);
@@ -31,69 +31,72 @@ export default function VerifyEmailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-6 sm:px-8 font-sans text-slate-900">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-block">
-          <BrandLogo priority className="h-auto w-44 mx-auto" />
-        </Link>
-      </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.25 }}
+      className="w-full max-w-md mx-auto"
+    >
+      <div className="bg-[#0c0e12] py-10 px-8 shadow-2xl border border-slate-800/90 rounded-2xl text-center">
+        {/* Large Animated Checkmark */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          className="mx-auto flex size-20 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border-4 border-emerald-500/20"
+        >
+          <svg className="size-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
-      >
-        <div className="bg-white py-10 px-8 shadow-xl shadow-slate-200/50 border border-slate-200 rounded-2xl text-center">
-          {/* Large Animated Checkmark */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="mx-auto flex size-20 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 border-4 border-emerald-50"
+        <h1 className="mt-6 text-2xl font-extrabold tracking-tight text-white">
+          Verify Your Email
+        </h1>
+        <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-400">
+          We&apos;ve sent a verification link to <span className="font-semibold text-slate-200">{email}</span>. Please check your inbox and click the link to activate your account.
+        </p>
+
+        {resent && (
+          <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs font-semibold text-emerald-300">
+            A new verification link has been sent to your email.
+          </div>
+        )}
+
+        <div className="mt-8 space-y-3">
+          <a
+            href={`mailto:${email}`}
+            className="inline-flex w-full min-h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all"
           >
-            <svg className="size-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </motion.div>
+            Open Email App
+          </a>
 
-          <h2 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
-            Verify Your Email
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-slate-600">
-            We&apos;ve sent a verification link to <span className="font-semibold text-slate-900">{email}</span>. Please check your inbox and click the link to activate your account.
-          </p>
-
-          {resent && (
-            <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs font-semibold text-emerald-700">
-              A new verification link has been sent to your email.
-            </div>
-          )}
-
-          <div className="mt-8 space-y-3">
-            <a
-              href={`mailto:${email}`}
-              className="inline-flex w-full min-h-12 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
-            >
-              Open Email App
-            </a>
-
-            <button
-              type="button"
-              onClick={handleResend}
-              disabled={loading || resent}
-              className="inline-flex w-full min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition disabled:opacity-50"
-            >
-              {loading ? "Resending..." : resent ? "Link Sent ✓" : "Resend Email"}
-            </button>
-          </div>
-
-          <div className="mt-8 border-t border-slate-100 pt-6">
-            <Link href="/onboarding" className="text-xs font-semibold text-blue-600 hover:underline">
-              Already verified? Continue to Onboarding →
-            </Link>
-          </div>
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={loading || resent}
+            className="inline-flex w-full min-h-11 items-center justify-center rounded-xl border border-slate-800 bg-slate-900 px-5 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all disabled:opacity-50"
+          >
+            {loading ? "Resending..." : resent ? "Link Sent ✓" : "Resend Email"}
+          </button>
         </div>
-      </motion.div>
-    </div>
+
+        <div className="mt-8 border-t border-slate-800/80 pt-6">
+          <Link href="/onboarding" className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors">
+            Already verified? Continue to Onboarding →
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <AuthShell>
+      <Suspense fallback={<div className="text-center text-xs text-slate-500 py-12">Loading...</div>}>
+        <VerifyEmailContent />
+      </Suspense>
+    </AuthShell>
   );
 }
