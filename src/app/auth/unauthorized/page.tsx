@@ -12,29 +12,29 @@ export default function UnauthorizedPage() {
   return (
     <AuthShell>
       <div id="main-content" className="mx-auto max-w-lg w-full py-12 text-center">
-        <div className="bg-[#0c0e12] p-8 sm:p-10 shadow-2xl border border-slate-800/90 rounded-2xl">
-          <span className="mx-auto grid size-12 place-items-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-sm font-bold text-amber-300" aria-hidden="true">
+        <div className="bg-white p-8 sm:p-10 border border-slate-200/90 rounded-2xl shadow-sm">
+          <span className="mx-auto grid size-12 place-items-center rounded-xl border border-amber-300 bg-amber-50 text-sm font-bold text-amber-800" aria-hidden="true">
             403
           </span>
-          <h1 className="mt-6 text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+          <h1 className="mt-6 text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-slate-900">
             This account does not have administrator access.
           </h1>
-          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-400">
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600">
             Signing in proves identity, but administrator access also requires an administrator role granted by a super administrator.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/account"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500 transition-all"
+              className="inline-flex min-h-12 items-center justify-center rounded-[10px] bg-slate-900 px-5 text-xs sm:text-sm font-semibold text-white hover:bg-slate-800 transition-colors"
             >
-              Open Customer Account
+              Open customer account
             </Link>
             <form action={signOut} className="w-full sm:w-auto">
               <button
                 type="submit"
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-slate-800 bg-slate-900 px-5 text-xs sm:text-sm font-semibold text-slate-300 hover:bg-slate-800 transition-all"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-[10px] border border-slate-200 bg-white px-5 text-xs sm:text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-all"
               >
-                Sign Out
+                Sign out
               </button>
             </form>
           </div>
