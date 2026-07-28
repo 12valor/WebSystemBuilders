@@ -1,6 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  ShieldCheck, 
+  Terminal, 
+  Copy, 
+  Check, 
+  Lock, 
+  AlertTriangle, 
+  ArrowRight, 
+  RefreshCw,
+  CheckCircle2
+} from "lucide-react";
 import { DiscoveryDiagram, CustomSprintDiagram } from "./process-diagrams";
 
 interface StepItem {
@@ -93,7 +105,7 @@ export function ProcessPipelineSwitcher() {
           <button
             type="button"
             onClick={() => handlePipelineChange("ready")}
-            className={`flex-1 sm:flex-initial rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+            className={`flex-1 sm:flex-initial rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               pipeline === "ready"
                 ? "bg-accent text-accent-contrast shadow-md"
                 : "text-text-secondary hover:text-text-primary hover:bg-white/5"
@@ -104,7 +116,7 @@ export function ProcessPipelineSwitcher() {
           <button
             type="button"
             onClick={() => handlePipelineChange("custom")}
-            className={`flex-1 sm:flex-initial rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+            className={`flex-1 sm:flex-initial rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               pipeline === "custom"
                 ? "bg-accent text-accent-contrast shadow-md"
                 : "text-text-secondary hover:text-text-primary hover:bg-white/5"
@@ -135,7 +147,7 @@ export function ProcessPipelineSwitcher() {
               key={step.number}
               type="button"
               onClick={() => setActiveStepIndex(idx)}
-              className={`group flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+              className={`group flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                 isActive
                   ? "border-accent bg-accent/[0.08] shadow-md shadow-accent/5"
                   : "border-white/10 bg-surface hover:border-white/20 hover:bg-surface-raised"
@@ -198,159 +210,309 @@ export function ProcessPipelineSwitcher() {
 }
 
 /**
- * Security & Fulfillment Simulator: Demonstrates server-side payment verification & signed link mechanics
+ * Enhanced Security & Fulfillment Simulator Component (UI/UX Pro Max Edition)
  */
 export function SecurityFulfillmentSimulator() {
   const [simStep, setSimStep] = useState<1 | 2 | 3>(1);
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
 
   const triggerNextStep = (step: 1 | 2 | 3) => {
     setIsSimulating(true);
     setSimStep(step);
-    setTimeout(() => setIsSimulating(false), 300);
+    setTimeout(() => setIsSimulating(false), 250);
+  };
+
+  const getPayloadText = () => {
+    if (simStep === 1) {
+      return JSON.stringify({
+        order_id: "ord_9f83a001",
+        status: "pending",
+        currency: "PHP",
+        amount_minor: 1490000,
+        signature_verified: false,
+        download_token: null
+      }, null, 2);
+    }
+    if (simStep === 2) {
+      return JSON.stringify({
+        event_id: "evt_pk_88201",
+        type: "payment.paid",
+        signature_header: "t=1785203,v1=9a8d7c4391e...",
+        hmac_verification: "VALID (MATCHES_SECRET)",
+        order_status: "paid",
+        fulfillment_status: "processing"
+      }, null, 2);
+    }
+    return JSON.stringify({
+      order_id: "ord_9f83a001",
+      deliverable_file: "websystem_v1.0.0.zip",
+      storage_bucket: "private_downloads",
+      signed_url: "https://[supabase]/storage/v1/object/sign/...?token=exp_3600",
+      expires_in_seconds: 3600,
+      revocable: true
+    }, null, 2);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(getPayloadText());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-surface p-6 md:p-8 space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
+    <div className="mx-auto max-w-4xl rounded-2xl border border-white/15 bg-[#0B0D10] p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+      {/* Subtle background gradient glow behind header */}
+      <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+
+      {/* Header Section */}
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-mono text-emerald-400 mb-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-mono font-medium text-emerald-400 mb-3">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>LIVE INTERACTIVE SIMULATION</span>
           </div>
-          <h3 className="text-xl font-bold text-text-primary">
+          <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            <ShieldCheck className="h-6 w-6 text-accent" />
             Payment & Delivery Verification Flow
           </h3>
-          <p className="mt-1 text-sm text-text-secondary">
-            Experience how our server ensures zero fraud by requiring cryptographically signed payment webhooks before generating download tokens.
+          <p className="mt-1.5 text-xs md:text-sm text-zinc-400 max-w-2xl leading-relaxed">
+            Experience how our server enforces zero-fraud fulfillment by validating cryptographically signed PayMongo webhooks before issuing private download links.
           </p>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-mono text-zinc-400">
+          <Lock className="h-3.5 w-3.5 text-emerald-400" />
+          <span>Server-Side Isolation</span>
         </div>
       </div>
 
-      {/* Simulator Step Selector Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Interactive Step Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative z-10">
+        {/* Step 1 */}
         <button
           type="button"
           onClick={() => triggerNextStep(1)}
-          className={`rounded-lg border p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          className={`group relative rounded-xl border p-4 text-left transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             simStep === 1
-              ? "border-accent bg-accent/10 text-text-primary"
-              : "border-white/10 bg-surface-subtle text-text-muted hover:border-white/20"
+              ? "border-accent bg-accent/15 text-white shadow-lg shadow-accent/10 border-t-2 border-t-accent"
+              : "border-white/10 bg-white/[0.02] text-zinc-400 hover:border-white/20 hover:bg-white/[0.05]"
           }`}
         >
-          <span className="font-mono text-xs font-semibold block text-accent">STEP 1</span>
-          <span className="text-xs font-semibold text-text-primary mt-1 block">Pending Order</span>
-          <span className="text-[11px] text-text-muted block mt-0.5">Authoritative amount set</span>
+          <div className="flex items-center justify-between">
+            <span className={`font-mono text-xs font-bold ${simStep === 1 ? "text-accent" : "text-zinc-500"}`}>
+              STEP 1
+            </span>
+            {simStep === 1 && (
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+            )}
+          </div>
+          <span className="text-sm font-semibold text-white mt-2 block group-hover:text-accent transition-colors">
+            Pending Order
+          </span>
+          <span className="text-xs text-zinc-400 block mt-0.5">
+            Authoritative price registered
+          </span>
         </button>
 
+        {/* Step 2 */}
         <button
           type="button"
           onClick={() => triggerNextStep(2)}
-          className={`rounded-lg border p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          className={`group relative rounded-xl border p-4 text-left transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             simStep === 2
-              ? "border-accent bg-accent/10 text-text-primary"
-              : "border-white/10 bg-surface-subtle text-text-muted hover:border-white/20"
+              ? "border-accent bg-accent/15 text-white shadow-lg shadow-accent/10 border-t-2 border-t-accent"
+              : "border-white/10 bg-white/[0.02] text-zinc-400 hover:border-white/20 hover:bg-white/[0.05]"
           }`}
         >
-          <span className="font-mono text-xs font-semibold block text-accent">STEP 2</span>
-          <span className="text-xs font-semibold text-text-primary mt-1 block">Webhook Signature</span>
-          <span className="text-[11px] text-text-muted block mt-0.5">HMAC signature checked</span>
+          <div className="flex items-center justify-between">
+            <span className={`font-mono text-xs font-bold ${simStep === 2 ? "text-accent" : "text-zinc-500"}`}>
+              STEP 2
+            </span>
+            {simStep === 2 && (
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+            )}
+          </div>
+          <span className="text-sm font-semibold text-white mt-2 block group-hover:text-accent transition-colors">
+            Webhook Signature
+          </span>
+          <span className="text-xs text-zinc-400 block mt-0.5">
+            HMAC signature verified
+          </span>
         </button>
 
+        {/* Step 3 */}
         <button
           type="button"
           onClick={() => triggerNextStep(3)}
-          className={`rounded-lg border p-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          className={`group relative rounded-xl border p-4 text-left transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
             simStep === 3
-              ? "border-accent bg-accent/10 text-text-primary"
-              : "border-white/10 bg-surface-subtle text-text-muted hover:border-white/20"
+              ? "border-accent bg-accent/15 text-white shadow-lg shadow-accent/10 border-t-2 border-t-accent"
+              : "border-white/10 bg-white/[0.02] text-zinc-400 hover:border-white/20 hover:bg-white/[0.05]"
           }`}
         >
-          <span className="font-mono text-xs font-semibold block text-accent">STEP 3</span>
-          <span className="text-xs font-semibold text-text-primary mt-1 block">Expiring Token Issued</span>
-          <span className="text-[11px] text-text-muted block mt-0.5">1-Hour signed link active</span>
+          <div className="flex items-center justify-between">
+            <span className={`font-mono text-xs font-bold ${simStep === 3 ? "text-accent" : "text-zinc-500"}`}>
+              STEP 3
+            </span>
+            {simStep === 3 && (
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+            )}
+          </div>
+          <span className="text-sm font-semibold text-white mt-2 block group-hover:text-accent transition-colors">
+            Expiring Token Issued
+          </span>
+          <span className="text-xs text-zinc-400 block mt-0.5">
+            1-Hour signed URL active
+          </span>
         </button>
       </div>
 
-      {/* Terminal / Payload Inspector Display */}
-      <div className="relative rounded-xl border border-white/10 bg-black/70 p-5 font-mono text-xs overflow-x-auto text-text-secondary">
-        <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 text-[11px] text-text-muted">
+      {/* Terminal / Code Inspector Box */}
+      <div className="relative rounded-xl border border-white/15 bg-[#050608] shadow-2xl font-mono text-xs overflow-hidden">
+        {/* Terminal Titlebar */}
+        <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-4 py-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
-            <span className="ml-2 font-mono text-text-muted">server-fulfillment-verifier.ts</span>
+            <span className="h-3 w-3 rounded-full bg-red-500/80 inline-block" />
+            <span className="h-3 w-3 rounded-full bg-yellow-500/80 inline-block" />
+            <span className="h-3 w-3 rounded-full bg-green-500/80 inline-block" />
+            <div className="flex items-center gap-1.5 ml-3 text-zinc-400 font-mono text-xs">
+              <Terminal className="h-3.5 w-3.5 text-accent" />
+              <span>server-fulfillment-verifier.ts</span>
+            </div>
           </div>
-          <span className="text-emerald-400">
-            {isSimulating ? "VERIFYING..." : "VERIFIED_STATE"}
-          </span>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-300 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+              title="Copy JSON Payload"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-3 w-3 text-emerald-400" />
+                  <span className="text-emerald-400">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-3 w-3 text-zinc-400" />
+                  <span>Copy Payload</span>
+                </>
+              )}
+            </button>
+            <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-400 font-medium">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              {isSimulating ? "VERIFYING..." : "VERIFIED_STATE"}
+            </span>
+          </div>
         </div>
 
-        {simStep === 1 && (
-          <div className="space-y-2">
-            <p className="text-blue-400">[INIT] Order registration initiated by client request</p>
-            <pre className="text-text-muted text-[11px] leading-relaxed">
-{`{
-  "order_id": "ord_9f83a001",
-  "status": "pending",
-  "currency": "PHP",
-  "amount_minor": 1490000, // ₱14,900.00
-  "signature_verified": false,
-  "download_token": null
-}`}
-            </pre>
-            <p className="text-amber-300 text-[11px] mt-2">
-              ⚠️ Browser payment return URL will NOT unlock delivery. Waiting for provider webhook event.
-            </p>
-          </div>
-        )}
+        {/* Dynamic Code Content Panel */}
+        <div className="p-5 overflow-x-auto min-h-[220px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={simStep}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.15 }}
+              className="space-y-4"
+            >
+              {simStep === 1 && (
+                <>
+                  <div className="flex items-center gap-2 text-sky-400 font-medium">
+                    <span>[INIT]</span>
+                    <span>Order registration created by server checkout handler</span>
+                  </div>
+                  <div className="rounded-lg bg-black/60 p-4 border border-white/5 text-[11px] leading-relaxed">
+                    <div><span className="text-zinc-500">01</span>  <span className="text-sky-300">&quot;order_id&quot;</span>: <span className="text-emerald-300">&quot;ord_9f83a001&quot;</span>,</div>
+                    <div><span className="text-zinc-500">02</span>  <span className="text-sky-300">&quot;status&quot;</span>: <span className="text-amber-300">&quot;pending&quot;</span>,</div>
+                    <div><span className="text-zinc-500">03</span>  <span className="text-sky-300">&quot;currency&quot;</span>: <span className="text-emerald-300">&quot;PHP&quot;</span>,</div>
+                    <div><span className="text-zinc-500">04</span>  <span className="text-sky-300">&quot;amount_minor&quot;</span>: <span className="text-amber-300">1490000</span>, <span className="text-zinc-500">{"// ₱14,900.00 authoritative total"}</span></div>
+                    <div><span className="text-zinc-500">05</span>  <span className="text-sky-300">&quot;signature_verified&quot;</span>: <span className="text-purple-400">false</span>,</div>
+                    <div><span className="text-zinc-500">06</span>  <span className="text-sky-300">&quot;download_token&quot;</span>: <span className="text-zinc-500">null</span></div>
+                  </div>
+                  <div className="flex items-start gap-2.5 rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 text-amber-200 text-xs">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Security Gate:</strong> Browser redirect return URL is untrusted and cannot unlock delivery. System waits for server-verified webhook payload.
+                    </span>
+                  </div>
+                </>
+              )}
 
-        {simStep === 2 && (
-          <div className="space-y-2">
-            <p className="text-emerald-400">[WEBHOOK] Received payment.paid webhook payload from PayMongo</p>
-            <pre className="text-text-muted text-[11px] leading-relaxed">
-{`{
-  "event_id": "evt_pk_88201",
-  "type": "payment.paid",
-  "signature_header": "t=1785203,v1=9a8d7c...",
-  "hmac_verification": "VALID (MATCHES_SECRET)",
-  "order_status": "paid",
-  "fulfillment_status": "processing"
-}`}
-            </pre>
-            <p className="text-emerald-300 text-[11px] mt-2">
-              ✓ Server confirmed HMAC signature. Order status updated to PAID. Idempotent fulfillment job triggered.
-            </p>
-          </div>
-        )}
+              {simStep === 2 && (
+                <>
+                  <div className="flex items-center gap-2 text-emerald-400 font-medium">
+                    <span>[WEBHOOK]</span>
+                    <span>Received payment.paid event from PayMongo</span>
+                  </div>
+                  <div className="rounded-lg bg-black/60 p-4 border border-white/5 text-[11px] leading-relaxed">
+                    <div><span className="text-zinc-500">01</span>  <span className="text-sky-300">&quot;event_id&quot;</span>: <span className="text-emerald-300">&quot;evt_pk_88201&quot;</span>,</div>
+                    <div><span className="text-zinc-500">02</span>  <span className="text-sky-300">&quot;type&quot;</span>: <span className="text-emerald-300">&quot;payment.paid&quot;</span>,</div>
+                    <div><span className="text-zinc-500">03</span>  <span className="text-sky-300">&quot;signature_header&quot;</span>: <span className="text-emerald-300">&quot;t=1785203,v1=9a8d7c4391e...&quot;</span>,</div>
+                    <div><span className="text-zinc-500">04</span>  <span className="text-sky-300">&quot;hmac_verification&quot;</span>: <span className="text-emerald-400 font-bold">&quot;VALID (MATCHES_SECRET)&quot;</span>,</div>
+                    <div><span className="text-zinc-500">05</span>  <span className="text-sky-300">&quot;order_status&quot;</span>: <span className="text-emerald-300">&quot;paid&quot;</span>,</div>
+                    <div><span className="text-zinc-500">06</span>  <span className="text-sky-300">&quot;fulfillment_status&quot;</span>: <span className="text-emerald-300">&quot;processing&quot;</span></div>
+                  </div>
+                  <div className="flex items-start gap-2.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-emerald-200 text-xs">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Signature Verified:</strong> HMAC key confirmed. Order idempotently updated to PAID. Fulfillment pipeline triggered once.
+                    </span>
+                  </div>
+                </>
+              )}
 
-        {simStep === 3 && (
-          <div className="space-y-2">
-            <p className="text-emerald-400">[DELIVERY] Signed download grant issued for customer account</p>
-            <pre className="text-text-muted text-[11px] leading-relaxed">
-{`{
-  "order_id": "ord_9f83a001",
-  "deliverable_file": "websystem_v1.0.0.zip",
-  "storage_bucket": "private_downloads",
-  "signed_url": "https://[supabase]/storage/v1/object/sign/...?token=exp_3600",
-  "expires_in_seconds": 3600,
-  "revocable": true
-}`}
-            </pre>
-            <p className="text-emerald-300 text-[11px] mt-2">
-              🔒 File delivered through temporary 1-hour signed URL. Direct storage file paths remain completely private.
-            </p>
-          </div>
-        )}
+              {simStep === 3 && (
+                <>
+                  <div className="flex items-center gap-2 text-emerald-400 font-medium">
+                    <span>[DELIVERY]</span>
+                    <span>Signed download grant issued for customer account</span>
+                  </div>
+                  <div className="rounded-lg bg-black/60 p-4 border border-white/5 text-[11px] leading-relaxed">
+                    <div><span className="text-zinc-500">01</span>  <span className="text-sky-300">&quot;order_id&quot;</span>: <span className="text-emerald-300">&quot;ord_9f83a001&quot;</span>,</div>
+                    <div><span className="text-zinc-500">02</span>  <span className="text-sky-300">&quot;deliverable_file&quot;</span>: <span className="text-emerald-300">&quot;websystem_v1.0.0.zip&quot;</span>,</div>
+                    <div><span className="text-zinc-500">03</span>  <span className="text-sky-300">&quot;storage_bucket&quot;</span>: <span className="text-emerald-300">&quot;private_downloads&quot;</span>,</div>
+                    <div><span className="text-zinc-500">04</span>  <span className="text-sky-300">&quot;signed_url&quot;</span>: <span className="text-sky-300">&quot;https://[supabase]/storage/v1/object/sign/...?token=exp_3600&quot;</span>,</div>
+                    <div><span className="text-zinc-500">05</span>  <span className="text-sky-300">&quot;expires_in_seconds&quot;</span>: <span className="text-amber-300">3600</span>,</div>
+                    <div><span className="text-zinc-500">06</span>  <span className="text-sky-300">&quot;revocable&quot;</span>: <span className="text-purple-400">true</span></div>
+                  </div>
+                  <div className="flex items-start gap-2.5 rounded-lg border border-blue-500/20 bg-blue-500/10 p-3 text-blue-200 text-xs">
+                    <Lock className="h-4 w-4 text-accent shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Private Vault:</strong> Files remain safely isolated in private storage. Downloads use expiring 1-hour signed URL links.
+                    </span>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 text-xs text-text-muted">
-        <span>Click the steps above to test each phase of the secure delivery process.</span>
+      {/* Footer Navigation Action */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 text-xs text-zinc-400 relative z-10">
+        <span className="text-zinc-400 text-center sm:text-left">
+          Click any step above or use the trigger button to test each verification stage.
+        </span>
         <button
           type="button"
           onClick={() => triggerNextStep(simStep === 3 ? 1 : ((simStep + 1) as 1 | 2 | 3))}
-          className="rounded-md border border-white/10 bg-surface-raised px-4 py-2 text-text-primary hover:border-white/20 hover:bg-white/10 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/15 px-4 py-2.5 text-xs font-semibold text-white hover:bg-accent hover:text-accent-contrast transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent shrink-0"
         >
-          {simStep === 3 ? "Restart Simulation" : "Next Stage →"}
+          {simStep === 3 ? (
+            <>
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Restart Simulation</span>
+            </>
+          ) : (
+            <>
+              <span>Next Stage ({simStep + 1}/3)</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </>
+          )}
         </button>
       </div>
     </div>
