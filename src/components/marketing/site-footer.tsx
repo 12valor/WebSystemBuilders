@@ -3,7 +3,7 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 import { BackToTop } from "@/components/marketing/back-to-top";
 import { getPublicCompanyProfile } from "@/features/content/company-profile-repository";
 import { getPublicCatalogData } from "@/features/catalog/repository";
-import { Mail } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 
 const footerGroups = [
   {
@@ -48,15 +48,23 @@ export async function SiteFooter() {
     .filter((s) => s.featured)
     .slice(0, 4);
 
+  const hasFeatured = featuredSystems.length > 0;
+
   return (
     <footer
-      id="about"
+      id="site-footer"
+      aria-labelledby="footer-heading"
       className="relative border-t border-white/10 bg-[#08090A] pt-16 text-[#F5F5F7] lg:pt-20"
     >
+      <h2 id="footer-heading" className="sr-only">
+        Site Footer
+      </h2>
+
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#3B82F6]/30 to-transparent" />
 
       <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] gap-12 pb-14 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-12 lg:gap-16 lg:pb-16 xl:w-[min(calc(100%-96px),1280px)]">
-        <div className="lg:col-span-4 space-y-6">
+        {/* Brand & Summary Column */}
+        <div className="space-y-6 lg:col-span-4">
           <BrandLogo variant="dark" priority className="h-auto w-[200px]" />
 
           <p className="max-w-md text-sm leading-relaxed text-[#A1A1AA]">
@@ -64,28 +72,39 @@ export async function SiteFooter() {
           </p>
 
           {profile.publicEmail && (
-            <a
-              href={`mailto:${profile.publicEmail}`}
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#3B82F6] hover:text-[#60A5FA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] rounded px-1 py-0.5"
-            >
-              <Mail className="h-4 w-4" />
-              <span>{profile.publicEmail}</span>
-            </a>
+            <div className="pt-1">
+              <a
+                href={`mailto:${profile.publicEmail}`}
+                className="group inline-flex items-center gap-3 rounded-xl border border-white/10 bg-[#121316] px-3.5 py-2.5 text-sm font-medium text-[#F5F5F7] transition-all duration-150 hover:border-white/20 hover:bg-[#17181C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                <Mail className="h-4 w-4 text-[#3B82F6] transition-transform duration-150 group-hover:scale-110" />
+                <span className="truncate">{profile.publicEmail}</span>
+              </a>
+            </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
+        {/* Dynamic Link Groups */}
+        <div
+          className={`grid grid-cols-2 gap-8 sm:grid-cols-3 ${
+            hasFeatured ? "lg:col-span-4" : "lg:col-span-8"
+          }`}
+        >
           {footerGroups.map((group) => (
             <div key={group.title} className="flex flex-col gap-3">
-              <strong className="text-xs font-mono font-bold uppercase tracking-wider text-[#F5F5F7]">
+              <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#F5F5F7]">
                 {group.title}
-              </strong>
-              <div className="flex flex-col gap-2.5">
+              </h3>
+              <div className="flex flex-col gap-1.5">
                 {group.links.map(([label, href]) => (
                   <Link
                     key={label}
                     href={href}
-                    className="text-sm font-medium text-[#A1A1AA] transition-colors hover:text-[#3B82F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] rounded py-0.5"
+                    className="-mx-1.5 inline-flex items-center rounded-md px-1.5 py-1 text-sm font-medium text-[#A1A1AA] transition-colors duration-150 hover:text-[#3B82F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
                   >
                     {label}
                   </Link>
@@ -95,24 +114,28 @@ export async function SiteFooter() {
           ))}
         </div>
 
-        {featuredSystems.length > 0 && (
+        {/* Popular Systems Column */}
+        {hasFeatured && (
           <div className="lg:col-span-4">
-            <strong className="text-xs font-mono font-bold uppercase tracking-wider text-[#F5F5F7]">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#F5F5F7]">
               Popular Systems
-            </strong>
-            <div className="mt-3 flex flex-col gap-2.5">
+            </h3>
+            <div className="mt-3 flex flex-col gap-2">
               {featuredSystems.map((system) => (
                 <Link
                   key={system.id}
                   href={`/systems/${system.slug}`}
-                  className="group flex flex-col gap-1 text-sm font-medium text-[#A1A1AA] transition-colors hover:text-[#3B82F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] rounded py-0.5"
+                  className="group -mx-2 flex items-center justify-between rounded-lg p-2 transition-colors duration-150 hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
                 >
-                  <span className="text-sm font-semibold text-[#F5F5F7] group-hover:text-[#3B82F6]">
-                    {system.title}
-                  </span>
-                  <span className="text-xs text-[#85858F]">
-                    {system.category?.name ?? "Web System"}
-                  </span>
+                  <div className="flex flex-col gap-0.5 min-w-0 pr-2">
+                    <span className="truncate text-sm font-semibold text-[#F5F5F7] group-hover:text-[#3B82F6] transition-colors duration-150">
+                      {system.title}
+                    </span>
+                    <span className="text-xs text-[#85858F]">
+                      {system.category?.name ?? "Web System"}
+                    </span>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-[#85858F] opacity-60 transition-all duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#3B82F6] group-hover:opacity-100" />
                 </Link>
               ))}
             </div>
@@ -120,15 +143,18 @@ export async function SiteFooter() {
         )}
       </div>
 
-      <div className="border-t border-white/10 pt-6">
-        <div className="mx-auto flex w-[min(calc(100%-40px),1280px)] flex-col items-center justify-between gap-4 text-sm font-medium text-[#85858F] sm:flex-row md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/10 py-6">
+        <div className="mx-auto flex w-[min(calc(100%-40px),1280px)] flex-col items-center justify-between gap-4 text-xs font-medium text-[#85858F] sm:flex-row md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 sm:justify-start">
             <span>
               &copy; {new Date().getFullYear()} WebSystemBuilders. All rights reserved.
             </span>
+            <span className="hidden select-none text-white/20 sm:inline">&middot;</span>
             <span className="text-[#A1A1AA]">
               {profile.founderName} &middot; {profile.founderTitle}
             </span>
+            <span className="hidden select-none text-white/20 sm:inline">&middot;</span>
             <span className="font-mono font-semibold text-[#F5F5F7]">
               websystembuilders.com
             </span>
