@@ -20,7 +20,12 @@ export function SiteNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
-  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
+  const [user, setUser] = useState<{
+    id: string;
+    email?: string;
+    avatarUrl?: string;
+    fullName?: string;
+  } | null>(null);
   const pathname = usePathname();
 
   // Reset hover state and mobile menu whenever pathname changes
@@ -45,7 +50,32 @@ export function SiteNavigation() {
         const supabase = createClient();
         const { data } = await supabase.auth.getUser();
         if (data?.user) {
-          setUser({ id: data.user.id, email: data.user.email });
+          let avatarUrl: string | undefined =
+            data.user.user_metadata?.avatar_url ||
+            data.user.user_metadata?.picture ||
+            data.user.user_metadata?.avatar;
+
+          const fullName: string | undefined =
+            data.user.user_metadata?.full_name ||
+            data.user.user_metadata?.name;
+
+          // Fetch real profile avatar_url and full_name from database profiles table
+          const { data: dbProfile } = await supabase
+            .from("profiles")
+            .select("avatar_url, full_name")
+            .eq("user_id", data.user.id)
+            .maybeSingle();
+
+          if (dbProfile?.avatar_url) {
+            avatarUrl = dbProfile.avatar_url;
+          }
+
+          setUser({
+            id: data.user.id,
+            email: data.user.email,
+            avatarUrl,
+            fullName: dbProfile?.full_name || fullName,
+          });
         }
       } catch {
         // ignore
@@ -124,19 +154,30 @@ export function SiteNavigation() {
           {user ? (
             <>
               <Link
-                href="/account"
-                className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
-              >
-                <User className="w-4 h-4 text-slate-500" />
-                <span>Account</span>
-              </Link>
-
-              <Link
                 href="/dashboard"
                 className="inline-flex items-center justify-center gap-2 px-5 h-10 text-sm font-semibold text-white rounded-full bg-slate-900 shadow-sm hover:bg-slate-800 transition-all duration-200"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
+              </Link>
+
+              <Link
+                href="/account"
+                title={user.fullName || "Account Profile"}
+                aria-label="View Account Profile"
+                className="group relative flex size-10 items-center justify-center rounded-full border border-slate-200/90 bg-slate-100 p-0.5 shadow-xs transition-all duration-200 hover:border-blue-500 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              >
+                {user.avatarUrl ? (
+                  <img
+                    src={user.avatarUrl}
+                    alt={user.fullName || "Account profile"}
+                    className="size-full rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="flex size-full items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-xs group-hover:scale-105 transition-transform">
+                    {user.email ? user.email.charAt(0).toUpperCase() : <User className="w-4 h-4 text-white" />}
+                  </div>
+                )}
               </Link>
             </>
           ) : (
@@ -205,22 +246,55 @@ export function SiteNavigation() {
                 );
               })}
               <div className="mt-3 pt-4 border-t border-slate-100 flex flex-col gap-3">
-                <Link
-                  href="/account"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-2.5 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
-                >
-                  <User className="w-4.5 h-4.5 text-slate-500" />
-                  <span>Account Login</span>
-                </Link>
-                <Link
-                  href="/request-a-quote"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-md"
-                >
-                  <span>Request a Quote</span>
-                  <Sparkles className="w-4.5 h-4.5" />
-                </Link>
+                {user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-slate-900 shadow-sm"
+                    >
+                      <LayoutDashboard className="w-4.5 h-4.5" />
+                      <span>Dashboard</span>
+                    </Link>
+                    <Link
+                      href="/account"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
+                    >
+                      {user.avatarUrl ? (
+                        <img
+                          src={user.avatarUrl}
+                          alt={user.fullName || "Account profile"}
+                          className="size-8 rounded-full object-cover border border-slate-200"
+                        />
+                      ) : (
+                        <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-xs">
+                          {user.email ? user.email.charAt(0).toUpperCase() : <User className="w-4 h-4 text-white" />}
+                        </div>
+                      )}
+                      <span className="truncate">{user.fullName || user.email || "My Account"}</span>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth/sign-in"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
+                    >
+                      <User className="w-4.5 h-4.5 text-slate-500" />
+                      <span>Account Login</span>
+                    </Link>
+                    <Link
+                      href="/request-a-quote"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-md"
+                    >
+                      <span>Request a Quote</span>
+                      <Sparkles className="w-4.5 h-4.5" />
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </motion.nav>
