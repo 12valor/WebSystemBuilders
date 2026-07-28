@@ -1,62 +1,135 @@
 import type { Metadata } from "next";
 import {
-  EditorialSection,
   PublicCallToAction,
   PublicPageHero,
   PublicPageShell,
   StatementSection,
 } from "@/components/marketing/public-page";
+import {
+  ProcessPipelineSwitcher,
+  SecurityFulfillmentSimulator,
+} from "@/components/marketing/process-interactive";
 
 export const metadata: Metadata = {
   title: "Development and delivery process",
-  description: "Understand how WebSystemBuilders handles ready-made system evaluation, custom requirements, payment verification, and private delivery.",
+  description:
+    "Understand how WebSystemBuilders handles ready-made system evaluation, custom requirements, payment verification, and private delivery.",
   alternates: { canonical: "/process" },
 };
 
 export default function ProcessPage() {
   return (
     <PublicPageShell>
+      {/* Hero Section */}
       <PublicPageHero
-        eyebrow="Process"
-        title="A clear route from requirements to access."
-        description="Ready-made purchases and custom-development requests follow different paths, but both depend on transparent scope, authoritative records, and verified actions."
+        eyebrow="Development Process"
+        title="A clear, transparent route from requirements to delivery."
+        description="Ready-made purchases and custom-development requests follow distinct, rigorous paths. Both depend on transparent scope, server-authoritative calculations, and verified actions."
         primary={{ label: "Browse systems", href: "/systems" }}
-        secondary={{ label: "Custom development", href: "/services/custom-development" }}
+        secondary={{ label: "Request custom quote", href: "/request-a-quote" }}
       />
-      <EditorialSection
-        eyebrow="Ready-made systems"
-        title="Evaluate first. Pay through a verified flow. Receive private access."
-        items={[
-          { title: "Discover", description: "Browse administrator-published systems by audience, category, and pricing mode." },
-          { title: "Evaluate", description: "Review features, requirements, inclusions, exclusions, license, support, version, and delivery information." },
-          { title: "Order and pay", description: "The server records a pending order and authoritative amount before opening hosted payment." },
-          { title: "Receive access", description: "Only verified server-side payment confirmation can start fulfillment and protected digital delivery." },
-        ]}
-      />
-      <EditorialSection
-        eyebrow="Custom development"
-        title="Review requirements before committing to scope."
-        tone="subtle"
-        items={[
-          { title: "Describe the need", description: "Provide the users, workflow, required outcomes, constraints, and available reference material." },
-          { title: "Review feasibility", description: "Clarify uncertain requirements, dependencies, responsibilities, and exclusions." },
-          { title: "Agree the proposal", description: "Confirm scope, price, deliverables, assumptions, and delivery expectations before work begins." },
-          { title: "Build and review", description: "Implement against the agreed scope and review the defined outputs before handoff." },
-        ]}
-      />
-      <StatementSection
-        eyebrow="System of record"
-        title="The website does not treat a browser redirect as proof."
-        copy={[
-          "Orders, payments, fulfillment, email, and download activity are recorded as separate events. Payment-provider webhooks must be verified before a purchase becomes eligible for delivery.",
-          "ZIP deliverables remain private. Customer access will use expiring, revocable links after the order and identity checks pass.",
-        ]}
-      />
+
+      {/* Main Interactive Process Switcher Section */}
+      <section className="px-5 py-12 md:py-16">
+        <div className="mx-auto max-w-6xl mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary">
+            Explore the Process Pipelines
+          </h2>
+          <p className="mt-2 text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
+            Select a pathway below to view the step-by-step technical execution, architectural diagrams, and stage assurances.
+          </p>
+        </div>
+
+        <ProcessPipelineSwitcher />
+      </section>
+
+      {/* System of Record & Security Verification Simulator */}
+      <section className="px-5 py-12 md:py-16 bg-surface-subtle border-y border-white/10">
+        <div className="mx-auto max-w-6xl space-y-12">
+          <StatementSection
+            eyebrow="System of Record & Security"
+            title="We never treat a browser return URL as proof of payment."
+            copy={[
+              "Orders, payments, fulfillment, email notifications, and download activity are logged as independent events in immutable server logs. Payment-provider webhooks must pass HMAC-SHA256 signature verification before any order is marked eligible for delivery.",
+              "Source code deliverables remain isolated in private Supabase Storage buckets. Authorized customers receive expiring, 1-hour revocable signed links after server-side identity and payment checks pass.",
+            ]}
+          />
+
+          {/* Interactive Security Simulator Component */}
+          <SecurityFulfillmentSimulator />
+        </div>
+      </section>
+
+      {/* Trust & Audience Guarantees Section */}
+      <section className="px-5 py-12 md:py-16">
+        <div className="mx-auto max-w-6xl space-y-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-text-primary">
+              Ethical Standards & Commercial Guarantees
+            </h2>
+            <p className="mt-2 text-sm text-text-secondary">
+              Clear boundaries built specifically for students and business owners.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* Student Assurance Card */}
+            <div className="rounded-xl border border-white/10 bg-surface p-6 md:p-8 space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-md border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-mono text-accent">
+                STUDENT AUDIENCE PATH
+              </div>
+              <h3 className="text-xl font-bold text-text-primary">
+                Ethical Technical Guidance
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                We provide ready-made system templates, clean source code, database ERDs, and architectural documentation for educational analysis. We strictly do not engage in academic dishonesty or ghostwriting.
+              </p>
+              <ul className="space-y-2 text-xs text-text-secondary pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="text-accent font-bold">✓</span> Full source code & database schemas provided
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-accent font-bold">✓</span> Detailed setup & architectural documentation
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-accent font-bold">✓</span> Clear ethical boundary policy
+                </li>
+              </ul>
+            </div>
+
+            {/* Business Assurance Card */}
+            <div className="rounded-xl border border-white/10 bg-surface p-6 md:p-8 space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-mono text-emerald-400">
+                BUSINESS OWNER PATH
+              </div>
+              <h3 className="text-xl font-bold text-text-primary">
+                Commercial Code Ownership
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                Deploy production-ready web applications built on Next.js, Supabase, and Tailwind. Receive explicit license terms, no recurring percentage fees, and comprehensive system documentation.
+              </p>
+              <ul className="space-y-2 text-xs text-text-secondary pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span> Clean TypeScript modular monolith codebase
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span> Explicit commercial software licenses
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span> Direct developer communication during custom sprints
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
       <PublicCallToAction
-        title="Choose the path that matches the work."
-        description="Start with the catalog when an existing system may fit. Use custom development when the workflow needs its own reviewed scope."
-        primary={{ label: "Browse systems", href: "/systems" }}
-        secondary={{ label: "View custom development", href: "/services/custom-development" }}
+        title="Choose the path that matches your project."
+        description="Start with the catalog when an existing system fits your requirements. Use custom development when your workflow needs a tailored scope."
+        primary={{ label: "Browse ready-made systems", href: "/systems" }}
+        secondary={{ label: "Request a custom quote", href: "/request-a-quote" }}
       />
     </PublicPageShell>
   );
