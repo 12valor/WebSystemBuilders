@@ -76,7 +76,7 @@ export function SiteNavigation() {
           />
         </Link>
 
-        {/* Center: Navigation Links with Animated Indicator */}
+        {/* Center: Navigation Links with Animated Solid Blue Pill Indicator */}
         <nav
           aria-label="Primary navigation"
           className="hidden items-center gap-1 xl:flex relative"
@@ -85,6 +85,7 @@ export function SiteNavigation() {
           {navigation.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
             const isHovered = hoveredHref === item.href;
+            const isHighlighted = isHovered || (isActive && !hoveredHref);
 
             return (
               <Link
@@ -92,21 +93,20 @@ export function SiteNavigation() {
                 href={item.href}
                 onMouseEnter={() => setHoveredHref(item.href)}
                 className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full select-none ${
-                  isActive ? "text-[#2563EB] font-semibold" : "text-[#0F172A] hover:text-[#2563EB]"
+                  isHighlighted
+                    ? "text-white font-semibold"
+                    : isActive
+                    ? "text-[#2563EB] font-semibold"
+                    : "text-[#0F172A]"
                 }`}
               >
-                {/* Hover Pill Background */}
-                {isHovered && !isActive && (
+                {/* Solid Blue Animated Pill Background */}
+                {isHighlighted && (
                   <motion.span
-                    layoutId="nav-hover"
-                    className="absolute inset-0 rounded-full bg-slate-100/80 -z-10"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    layoutId="nav-blue-pill"
+                    className="absolute inset-0 rounded-full bg-[#2563EB] -z-10 shadow-[0_4px_14px_0_rgba(37,99,235,0.35)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
                   />
-                )}
-
-                {/* Active Page Pill Background */}
-                {isActive && (
-                  <span className="absolute inset-0 rounded-full bg-blue-50/90 border border-blue-100 -z-10 shadow-2xs" />
                 )}
 
                 <span className="relative z-10">{item.label}</span>
@@ -189,14 +189,14 @@ export function SiteNavigation() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-semibold transition-colors ${
+                    className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-semibold transition-all duration-150 ${
                       isActive
-                        ? "bg-blue-50 text-[#2563EB] border border-blue-100"
-                        : "text-[#0F172A] hover:bg-slate-50"
+                        ? "bg-[#2563EB] text-white shadow-sm"
+                        : "text-[#0F172A] hover:bg-[#2563EB] hover:text-white"
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ArrowUpRight className="w-4.5 h-4.5 text-slate-400" />
+                    <ArrowUpRight className={`w-4.5 h-4.5 transition-colors duration-150 ${isActive ? "text-white" : "text-slate-400 group-hover:text-white"}`} />
                   </Link>
                 );
               })}
