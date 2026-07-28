@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
-  const nextPath = getSafeNextPath(request.nextUrl.searchParams.get("next"));
+  const nextPath = getSafeNextPath(request.nextUrl.searchParams.get("next"), "/?welcome=true");
 
   if (!isSupabasePubliclyConfigured()) {
     return NextResponse.redirect(new URL("/auth/sign-in?error=configuration", request.url));

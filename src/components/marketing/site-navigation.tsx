@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { ArrowUpRight, User, Menu, X, Sparkles } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { ArrowUpRight, User, Menu, X, Sparkles, LayoutDashboard } from "lucide-react";
 
 const navigation = [
   { label: "Systems Catalog", href: "/systems" },
@@ -19,6 +20,7 @@ export function SiteNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -28,6 +30,21 @@ export function SiteNavigation() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase.auth.getUser();
+        if (data?.user) {
+          setUser({ id: data.user.id, email: data.user.email });
+        }
+      } catch {
+        // ignore
+      }
+    }
+    checkAuth();
   }, []);
 
   return (
@@ -99,22 +116,44 @@ export function SiteNavigation() {
         </nav>
 
         {/* Right: Action Controls */}
-        <div className="hidden items-center gap-4 xl:flex">
-          <Link
-            href="/account"
-            className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
-          >
-            <User className="w-4 h-4 text-slate-500" />
-            <span>Account</span>
-          </Link>
+        <div className="hidden items-center gap-3 xl:flex">
+          {user ? (
+            <>
+              <Link
+                href="/account"
+                className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
+              >
+                <User className="w-4 h-4 text-slate-500" />
+                <span>Account</span>
+              </Link>
 
-          <Link
-            href="/request-a-quote"
-            className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-[0_8px_22px_-4px_rgba(37,99,235,0.38)] hover:shadow-[0_12px_28px_-4px_rgba(37,99,235,0.48)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
-          >
-            <span>Request a Quote</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center justify-center gap-2 px-5 h-10 text-sm font-semibold text-white rounded-full bg-slate-900 shadow-sm hover:bg-slate-800 transition-all duration-200"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                <span>Dashboard</span>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/sign-in"
+                className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
+              >
+                <User className="w-4 h-4 text-slate-500" />
+                <span>Sign In</span>
+              </Link>
+
+              <Link
+                href="/request-a-quote"
+                className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-[0_8px_22px_-4px_rgba(37,99,235,0.38)] hover:shadow-[0_12px_28px_-4px_rgba(37,99,235,0.48)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+              >
+                <span>Request a Quote</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Toggle Button */}

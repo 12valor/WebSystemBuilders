@@ -10,6 +10,7 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { TestimonialsSection } from "@/components/marketing/testimonials-section";
 import { WhyChooseUsSection } from "@/components/marketing/why-choose-us-section";
+import { WelcomeDashboardModal } from "@/components/auth/welcome-dashboard-modal";
 import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicCatalogData } from "@/features/catalog/repository";
 import { getPublicTestimonials } from "@/features/content/testimonial-repository";
@@ -46,6 +47,7 @@ export default async function HomePage() {
       />
 
       <SiteHeader />
+      <WelcomeDashboardModal />
 
       <main id="main-content">
         {/* Section 1: Hero Section */}

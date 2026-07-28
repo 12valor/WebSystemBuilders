@@ -50,7 +50,7 @@ function SignInForm() {
       }
 
       if (data.user) {
-        router.push("/dashboard");
+        router.push("/?welcome=true");
       }
     } catch {
       setError("An unexpected error occurred during sign in.");

@@ -8,7 +8,7 @@ interface SocialAuthButtonsProps {
   onError?: (errorMsg: string) => void;
 }
 
-export function SocialAuthButtons({ redirectToNext = "/dashboard", onError }: SocialAuthButtonsProps) {
+export function SocialAuthButtons({ redirectToNext = "/?welcome=true", onError }: SocialAuthButtonsProps) {
   const [loadingProvider, setLoadingProvider] = useState<"google" | "github" | null>(null);
 
   const handleOAuth = async (provider: "google" | "github") => {
