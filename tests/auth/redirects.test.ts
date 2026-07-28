@@ -9,8 +9,8 @@ describe("authentication redirects", () => {
   });
 
   it("rejects absolute and protocol-relative redirects", () => {
-    expect(getSafeNextPath("https://malicious.example/path")).toBe("/account");
-    expect(getSafeNextPath("//malicious.example/path")).toBe("/account");
+    expect(getSafeNextPath("https://malicious.example/path")).toBe("/dashboard");
+    expect(getSafeNextPath("//malicious.example/path")).toBe("/dashboard");
     expect(getSafeNextPath(null, "/admin/systems")).toBe("/admin/systems");
   });
 });

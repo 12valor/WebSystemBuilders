@@ -22,6 +22,6 @@ describe("secure sign-in input", () => {
 
     expect(
       signInLinkSchema.parse({ email: "customer@example.com", next: "//example.com" }).next,
-    ).toBe("/account");
+    ).toBe("/dashboard");
   });
 });
