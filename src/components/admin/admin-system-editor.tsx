@@ -17,7 +17,7 @@ import {
 } from "@/features/catalog/actions";
 import { createClient } from "@/lib/supabase/client";
 
-const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+const inputClass = "min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 transition-all";
 const textareaClass = `${inputClass} min-h-28 resize-y py-3 leading-6`;
 const initialState: SystemEditorState = { status: "idle" };
 
@@ -59,39 +59,33 @@ export function AdminSystemEditor({
       const { data, error } = await supabase.storage.from("payment-qrs").upload(filePath, file);
 
       if (error) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setQrUrl(reader.result as string);
-          setQrUploading(false);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        const { data: publicUrlData } = supabase.storage.from("payment-qrs").getPublicUrl(data.path);
-        setQrUrl(publicUrlData.publicUrl);
+        alert(`QR Upload failed: ${error.message}`);
         setQrUploading(false);
+        return;
       }
-    } catch {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setQrUrl(reader.result as string);
-        setQrUploading(false);
-      };
-      reader.readAsDataURL(file);
+
+      const { data: publicUrlData } = supabase.storage.from("payment-qrs").getPublicUrl(filePath);
+      setQrUrl(publicUrlData.publicUrl);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert(`QR Upload error: ${msg}`);
+    } finally {
+      setQrUploading(false);
     }
   };
 
   return (
     <main id="admin-content">
-      <div className="sticky top-16 z-10 border-b border-white/10 bg-[#090a0b]/95 px-5 py-4 backdrop-blur-md sm:px-8 lg:px-10">
+      <div className="sticky top-16 z-10 border-b border-slate-200/80 bg-white/95 px-5 py-4 backdrop-blur-md sm:px-8 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex items-center gap-4">
-            <Link href="/admin/systems" aria-label="Back to systems" className="grid size-10 shrink-0 place-items-center rounded-lg border border-white/10 text-secondary hover:text-foreground">&larr;</Link>
+            <Link href="/admin/systems" aria-label="Back to systems" className="grid size-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors">&larr;</Link>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-semibold tracking-[-0.03em]">{isEditing ? system.title : "New system"}</h1>
-                <span className="rounded-full border border-amber-400/20 bg-amber-400/[0.08] px-2 py-0.5 text-[0.68rem] font-semibold text-amber-300">{statusLabel}</span>
+                <h1 className="text-xl font-bold tracking-tight text-slate-900">{isEditing ? system.title : "New system"}</h1>
+                <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[0.68rem] font-bold text-amber-800">{statusLabel}</span>
               </div>
-              <p className="mt-1 text-xs text-muted">
+              <p className="mt-1 text-xs text-slate-500 font-medium">
                 {isEditing
                   ? "Save content changes or run the complete publication gate."
                   : dataStatus === "ready"
@@ -101,15 +95,15 @@ export function AdminSystemEditor({
             </div>
           </div>
           <div className="grid grid-cols-3 gap-2 sm:flex">
-            <button form="system-editor-form" type="submit" name="intent" value="save" disabled={!canSave} className="min-h-10 rounded-lg border border-white/15 px-4 text-xs font-semibold text-foreground hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:text-muted">
+            <button form="system-editor-form" type="submit" name="intent" value="save" disabled={!canSave} className="min-h-10 rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-900 hover:bg-slate-50 shadow-2xs disabled:cursor-not-allowed disabled:text-slate-400 transition-all">
               {pending ? "Saving..." : isEditing ? "Save changes" : "Save draft"}
             </button>
             {system?.status === "published" ? (
-              <Link href={`/systems/${system.slug}`} className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/15 px-4 text-xs font-semibold text-foreground hover:bg-white/[0.04]">View live</Link>
+              <Link href={`/systems/${system.slug}`} className="inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-900 hover:bg-slate-50 shadow-2xs transition-colors">View live</Link>
             ) : (
-              <button type="button" disabled className="min-h-10 cursor-not-allowed rounded-lg border border-white/10 px-4 text-xs font-semibold text-muted">Preview</button>
+              <button type="button" disabled className="min-h-10 cursor-not-allowed rounded-xl border border-slate-200 bg-slate-50 px-4 text-xs font-semibold text-slate-400">Preview</button>
             )}
-            <button form="system-editor-form" type="submit" name="intent" value="publish" disabled={!canSave || !isEditing} className="min-h-10 rounded-lg bg-foreground px-4 text-xs font-semibold text-background disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-muted">
+            <button form="system-editor-form" type="submit" name="intent" value="publish" disabled={!canSave || !isEditing} className="min-h-10 rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">
               {pending ? "Checking..." : system?.status === "published" ? "Republish" : system?.status === "archived" ? "Restore and publish" : "Publish"}
             </button>
           </div>
@@ -117,14 +111,14 @@ export function AdminSystemEditor({
       </div>
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
-        <nav aria-label="System editor sections" className="hidden h-fit rounded-xl border border-white/10 bg-surface p-2 lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment QR & Instructions", "scan-to-pay"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-lg px-3 py-2.5 text-sm text-secondary hover:bg-white/[0.04] hover:text-foreground">{label}</a>)}
+        <nav aria-label="System editor sections" className="hidden h-fit rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xs lg:sticky lg:top-36 lg:grid">
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment QR & Instructions", "scan-to-pay"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
           {success && <SuccessNotice type={success} />}
           {state.message && (
-            <div role="alert" className={`rounded-xl border p-4 text-sm leading-6 ${state.status === "unavailable" ? "border-amber-300/20 bg-amber-300/[0.06] text-amber-100" : "border-red-300/20 bg-red-300/[0.06] text-red-100"}`}>
+            <div role="alert" className={`rounded-2xl border p-4 text-sm leading-6 font-medium shadow-2xs ${state.status === "unavailable" ? "border-amber-200 bg-amber-50 text-amber-900" : "border-red-200 bg-red-50 text-red-900"}`}>
               <p>{state.message}</p>
               {state.publicationIssues && (
                 <ul className="mt-3 grid gap-1.5 pl-5">
@@ -172,7 +166,7 @@ export function AdminSystemEditor({
               <Field name="regularPrice" label="Regular price" inputMode="decimal" placeholder="Example: 12500.00" defaultValue={formatMinorUnits(system?.regularPriceMinor)} error={firstError(state, "regularPrice")} />
               <Field name="salePrice" label="Sale price" inputMode="decimal" placeholder="Optional" defaultValue={formatMinorUnits(system?.salePriceMinor)} error={firstError(state, "salePrice")} />
             </div>
-            <label className="flex items-start gap-3 rounded-xl border border-white/10 bg-background p-4 text-sm text-secondary"><input name="saleActive" type="checkbox" defaultChecked={system?.saleActive} className="mt-1 size-4 accent-blue-500" /><span><strong className="block text-foreground">Activate sale price manually</strong><span className="mt-1 block leading-6">A valid sale amount lower than the regular price is required.</span></span></label>
+            <label className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50/50 p-4 text-sm text-slate-600 font-medium"><input name="saleActive" type="checkbox" defaultChecked={system?.saleActive} className="mt-1 size-4 accent-blue-600" /><span><strong className="block text-slate-900 font-bold">Activate sale price manually</strong><span className="mt-1 block leading-6">A valid sale amount lower than the regular price is required.</span></span></label>
           </EditorSection>
 
           <EditorSection id="package" number="03" title="Package and policy boundaries" description="Save the customer-facing boundaries that must be reviewed before publication.">
@@ -185,25 +179,25 @@ export function AdminSystemEditor({
           <EditorSection id="scan-to-pay" number="04" title="Payment QR Code & Instructions" description="Upload custom GCash/QRPh payment QR image and edit specific payment instructions for this system.">
             <div className="grid gap-5">
               <div>
-                <label className="block text-xs font-semibold text-secondary">Upload Payment QR Image</label>
+                <label className="block text-xs font-bold text-slate-700">Upload Payment QR Image</label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleQrUpload}
-                  className="mt-2 block w-full text-xs text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-white/10 file:px-4 file:py-2.5 file:text-xs file:font-semibold file:text-white hover:file:bg-white/20"
+                  className="mt-2 block w-full text-xs text-slate-500 font-medium file:mr-4 file:rounded-xl file:border-0 file:bg-slate-100 file:px-4 file:py-2.5 file:text-xs file:font-semibold file:text-slate-700 hover:file:bg-slate-200 transition-all"
                 />
-                {qrUploading && <p className="mt-2 text-xs text-amber-300">Uploading QR image...</p>}
+                {qrUploading && <p className="mt-2 text-xs font-semibold text-amber-700">Uploading QR image...</p>}
                 <input type="hidden" name="paymentQrUrl" value={qrUrl} />
               </div>
 
               {qrUrl && (
-                <div className="flex items-center gap-4 rounded-xl border border-white/10 bg-background p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/50 p-4">
                   {/* eslint-disable-next-html-element-suppression */}
-                  <img src={qrUrl} alt="Current Payment QR" className="size-20 rounded-lg object-contain bg-white p-1" />
+                  <img src={qrUrl} alt="Current Payment QR" className="size-20 rounded-xl object-contain bg-white p-1.5 shadow-2xs" />
                   <div>
-                    <span className="text-xs font-semibold text-emerald-400">✓ QR Image Set</span>
-                    <p className="mt-1 text-xs text-muted truncate max-w-md">{qrUrl}</p>
-                    <button type="button" onClick={() => setQrUrl("")} className="mt-2 text-xs text-red-400 underline">Remove QR</button>
+                    <span className="text-xs font-bold text-emerald-700">✓ QR Image Set</span>
+                    <p className="mt-1 text-xs text-slate-500 font-medium truncate max-w-md">{qrUrl}</p>
+                    <button type="button" onClick={() => setQrUrl("")} className="mt-2 text-xs font-semibold text-red-600 underline">Remove QR</button>
                   </div>
                 </div>
               )}
@@ -226,20 +220,20 @@ export function AdminSystemEditor({
           </EditorSection>
 
           <EditorSection id="next" number="06" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
-            <div className="grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
-              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Run the server publication check"].map((item, index) => <div key={item} className="bg-background p-4 text-sm text-secondary"><span className="mr-3 text-xs text-muted">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-200/60 sm:grid-cols-2 shadow-xs">
+              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Run the server publication check"].map((item, index) => <div key={item} className="bg-white p-4 text-sm text-slate-600 font-medium"><span className="mr-3 text-xs text-slate-400 font-bold">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
             </div>
           </EditorSection>
         </form>
 
-        <aside className="h-fit rounded-xl border border-white/10 bg-surface p-5 lg:sticky lg:top-36">
-          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Publication gate</p>
-          <h2 className="mt-3 text-lg font-semibold tracking-[-0.025em]">Private until complete</h2>
-          <p className="mt-2 text-sm leading-6 text-secondary">Saving verifies administrator access, category compatibility, slug uniqueness, and authoritative price values.</p>
-          <ul className="mt-5 grid gap-3 text-sm text-secondary">
-            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-300" aria-hidden="true">+</span><span>{item}</span></li>)}
+        <aside className="h-fit rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs lg:sticky lg:top-36">
+          <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Publication gate</p>
+          <h2 className="mt-3 text-lg font-bold tracking-tight text-slate-900">Private until complete</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">Saving verifies administrator access, category compatibility, slug uniqueness, and authoritative price values.</p>
+          <ul className="mt-5 grid gap-3 text-sm text-slate-600 font-medium">
+            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-600 font-bold" aria-hidden="true">+</span><span>{item}</span></li>)}
           </ul>
-          <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-muted">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
+          <p className="mt-6 border-t border-slate-100 pt-4 text-xs leading-5 text-slate-500 font-medium">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
           {system && <AdminSystemLifecycle systemId={system.id} status={system.status} />}
         </aside>
       </div>
@@ -260,7 +254,7 @@ function SuccessNotice({ type }: { type: Exclude<EditorSuccess, null> }) {
           : type === "published"
             ? "The system passed the readiness checks and is now published."
             : "The system changes were saved.";
-  return <p className="rounded-xl border border-emerald-300/20 bg-emerald-300/[0.06] p-4 text-sm text-emerald-100" role="status">{copy}</p>;
+  return <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-900 shadow-2xs" role="status">{copy}</p>;
 }
 
 function firstError(state: SystemEditorState, field: string) {
@@ -277,20 +271,20 @@ function capitalize(value: string) {
 }
 
 function EditorSection({ id, number, title, description, children }: { id: string; number: string; title: string; description: string; children: React.ReactNode }) {
-  return <section id={id} className="scroll-mt-36 rounded-xl border border-white/10 bg-surface-subtle p-5 sm:p-7"><div className="mb-6 grid grid-cols-[28px_1fr] gap-3 border-b border-white/10 pb-5"><span className="text-xs text-muted">{number}</span><div><h2 className="text-xl font-semibold tracking-[-0.03em]">{title}</h2><p className="mt-1 text-sm leading-6 text-secondary">{description}</p></div></div><div className="grid gap-5">{children}</div></section>;
+  return <section id={id} className="scroll-mt-36 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-7 shadow-xs"><div className="mb-6 grid grid-cols-[28px_1fr] gap-3 border-b border-slate-100 pb-5"><span className="text-xs text-slate-400 font-bold">{number}</span><div><h2 className="text-xl font-bold tracking-tight text-slate-900">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-500 font-medium">{description}</p></div></div><div className="grid gap-5">{children}</div></section>;
 }
 
 function Field({ name, label, error, ...props }: React.InputHTMLAttributes<HTMLInputElement> & { name: string; label: string; error?: string }) {
   const errorId = error ? `${name}-error` : undefined;
-  return <label htmlFor={name} className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span><input id={name} name={name} aria-invalid={Boolean(error)} aria-describedby={errorId} className={inputClass} {...props} />{error && <span id={errorId} className="font-medium text-red-300">{error}</span>}</label>;
+  return <label htmlFor={name} className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span><input id={name} name={name} aria-invalid={Boolean(error)} aria-describedby={errorId} className={inputClass} {...props} />{error && <span id={errorId} className="font-semibold text-red-600">{error}</span>}</label>;
 }
 
 function SelectField({ name, label, options, error, disabled = false, defaultValue }: { name: string; label: string; options: Array<{ value: string; label: string }>; error?: string; disabled?: boolean; defaultValue?: string }) {
   const errorId = error ? `${name}-error` : undefined;
-  return <label htmlFor={name} className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span><select id={name} name={name} defaultValue={defaultValue ?? ""} disabled={disabled} aria-invalid={Boolean(error)} aria-describedby={errorId} className={inputClass}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>{error && <span id={errorId} className="font-medium text-red-300">{error}</span>}</label>;
+  return <label htmlFor={name} className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span><select id={name} name={name} defaultValue={defaultValue ?? ""} disabled={disabled} aria-invalid={Boolean(error)} aria-describedby={errorId} className={inputClass}>{options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select>{error && <span id={errorId} className="font-semibold text-red-600">{error}</span>}</label>;
 }
 
 function TextAreaField({ name, label, hint, error, required = false, defaultValue }: { name: string; label: string; hint?: string; error?: string; required?: boolean; defaultValue?: string | null }) {
   const descriptionIds = [hint ? `${name}-hint` : "", error ? `${name}-error` : ""].filter(Boolean).join(" ") || undefined;
-  return <label htmlFor={name} className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span><textarea id={name} name={name} required={required} defaultValue={defaultValue ?? ""} aria-invalid={Boolean(error)} aria-describedby={descriptionIds} className={textareaClass} />{hint && <span id={`${name}-hint`} className="font-normal leading-5 text-muted">{hint}</span>}{error && <span id={`${name}-error`} className="font-medium text-red-300">{error}</span>}</label>;
+  return <label htmlFor={name} className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span><textarea id={name} name={name} required={required} defaultValue={defaultValue ?? ""} aria-invalid={Boolean(error)} aria-describedby={descriptionIds} className={textareaClass} />{hint && <span id={`${name}-hint`} className="font-normal leading-5 text-slate-500">{hint}</span>}{error && <span id={`${name}-error`} className="font-semibold text-red-600">{error}</span>}</label>;
 }

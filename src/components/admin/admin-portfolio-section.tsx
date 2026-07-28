@@ -12,9 +12,9 @@ import type {
 } from "@/features/content/portfolio-types";
 
 const initialState: PortfolioEditorState = { status: "idle" };
-const inputClass = "min-h-11 w-full rounded-lg border border-white/15 bg-background px-3 text-sm text-foreground placeholder:text-muted focus:border-brand focus:outline-none";
+const inputClass = "min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none transition-all";
 const textareaClass = `${inputClass} min-h-32 py-3 leading-6`;
-const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 px-4 text-xs font-semibold text-foreground hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:text-muted";
+const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-900 hover:bg-slate-50 shadow-2xs disabled:cursor-not-allowed disabled:text-slate-400 transition-all";
 
 export function AdminPortfolioSection({ data }: { data: AdminPortfolioData }) {
   const [query, setQuery] = useState("");
@@ -34,17 +34,17 @@ export function AdminPortfolioSection({ data }: { data: AdminPortfolioData }) {
   const featured = data.items.filter((item) => item.status === "published" && item.isFeatured).length;
 
   return (
-    <section id="portfolio" aria-labelledby="portfolio-management-title" className="mt-12 border-t border-white/10 pt-10 scroll-mt-24">
+    <section id="portfolio" aria-labelledby="portfolio-management-title" className="mt-12 border-t border-slate-200/80 pt-10 scroll-mt-24">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Available module</p>
-          <h2 id="portfolio-management-title" className="mt-2 text-2xl font-semibold tracking-[-0.035em]">Portfolio and case studies</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-secondary">Publish only work, outcomes, links, and technology details that are accurate and approved for public use.</p>
+          <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Available module</p>
+          <h2 id="portfolio-management-title" className="mt-2 text-2xl font-bold tracking-tight text-slate-900">Portfolio and case studies</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 font-medium">Publish only work, outcomes, links, and technology details that are accurate and approved for public use.</p>
         </div>
-        <p className="text-xs text-muted">No sample projects or client claims are generated.</p>
+        <p className="text-xs text-slate-500 font-medium">No sample projects or client claims are generated.</p>
       </div>
 
-      <div className="mt-5 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:max-w-2xl">
+      <div className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-200/60 sm:grid-cols-3 lg:max-w-2xl shadow-xs">
         <Metric label="Published" value={published} />
         <Metric label="Drafts" value={drafts} />
         <Metric label="Featured" value={featured} />
@@ -54,14 +54,14 @@ export function AdminPortfolioSection({ data }: { data: AdminPortfolioData }) {
         <CreatePortfolioForm />
 
         <div>
-          <div className="grid gap-3 rounded-t-xl border border-white/10 bg-surface p-4 md:grid-cols-[minmax(220px,1fr)_160px_170px]">
-            <label className="grid gap-2 text-xs font-semibold text-secondary"><span>Search portfolio</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Title, slug, summary, or technology" className={inputClass} /></label>
+          <div className="grid gap-3 rounded-t-2xl border border-slate-200/80 bg-white p-4 md:grid-cols-[minmax(220px,1fr)_160px_170px]">
+            <label className="grid gap-2 text-xs font-bold text-slate-700"><span>Search portfolio</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Title, slug, summary, or technology" className={inputClass} /></label>
             <Filter label="Status" value={status} onChange={setStatus} options={[["all", "All statuses"], ["draft", "Draft"], ["published", "Published"], ["archived", "Archived"]]} />
             <Filter label="Audience" value={audience} onChange={setAudience} options={[["all", "All audiences"], ["students", "Students"], ["business", "Business"], ["both", "Both"]]} />
           </div>
-          <div className="overflow-hidden rounded-b-xl border-x border-b border-white/10 bg-surface-subtle">
+          <div className="overflow-hidden rounded-b-2xl border-x border-b border-slate-200/80 bg-white shadow-xs">
             {items.length > 0 ? (
-              <div className="divide-y divide-white/10">
+              <div className="divide-y divide-slate-100">
                 {items.map((item) => <PortfolioEditor key={`${item.id}-${item.updatedAt}`} item={item} />)}
               </div>
             ) : (
@@ -77,11 +77,11 @@ export function AdminPortfolioSection({ data }: { data: AdminPortfolioData }) {
 function CreatePortfolioForm() {
   const [state, action, pending] = useActionState(createPortfolioItem, initialState);
   return (
-    <form action={action} className="self-start rounded-xl border border-white/10 bg-surface p-5">
-      <h3 className="text-lg font-semibold">Create portfolio draft</h3>
-      <p className="mt-2 text-xs leading-5 text-muted">The entry remains private until every public claim is reviewed and it is explicitly published.</p>
+    <form action={action} className="self-start rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs">
+      <h3 className="text-lg font-bold text-slate-900">Create portfolio draft</h3>
+      <p className="mt-2 text-xs leading-5 text-slate-500 font-medium">The entry remains private until every public claim is reviewed and it is explicitly published.</p>
       <PortfolioFields state={state} />
-      <button type="submit" disabled={pending} className={`${buttonClass} mt-5 w-full bg-foreground text-background hover:bg-white disabled:text-background/50`}>{pending ? "Creating..." : "Create private draft"}</button>
+      <button type="submit" disabled={pending} className="mt-5 w-full inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">{pending ? "Creating..." : "Create private draft"}</button>
       <StatusNotice state={state} />
     </form>
   );
@@ -91,18 +91,18 @@ function PortfolioEditor({ item }: { item: PortfolioItem }) {
   const [state, action, pending] = useActionState(updatePortfolioItem.bind(null, item.id), initialState);
   return (
     <details className="group" open={item.status === "draft"}>
-      <summary className="grid cursor-pointer list-none gap-3 px-5 py-5 marker:hidden sm:grid-cols-[minmax(0,1fr)_110px_90px] sm:items-center">
-        <div className="min-w-0"><p className="truncate font-semibold">{item.title}</p><p className="mt-1 truncate text-xs text-muted">/{item.slug} · {audienceLabel(item.audience)}{item.isFeatured ? " · featured" : ""}</p></div>
-        <span className="text-xs capitalize text-secondary">{item.status}</span>
-        <span className="text-right text-xs font-semibold text-brand-hover group-open:hidden">Edit</span>
+      <summary className="grid cursor-pointer list-none gap-3 px-5 py-5 marker:hidden sm:grid-cols-[minmax(0,1fr)_110px_90px] sm:items-center hover:bg-slate-50 transition-colors">
+        <div className="min-w-0"><p className="truncate font-bold text-slate-900">{item.title}</p><p className="mt-1 truncate text-xs text-slate-500 font-medium">/{item.slug} · {audienceLabel(item.audience)}{item.isFeatured ? " · featured" : ""}</p></div>
+        <span className="text-xs font-bold capitalize text-slate-600">{item.status}</span>
+        <span className="text-right text-xs font-bold text-blue-600 group-open:hidden">Edit</span>
       </summary>
-      <form action={action} className="border-t border-white/10 bg-background/40 px-5 py-5">
+      <form action={action} className="border-t border-slate-200/80 bg-slate-50/50 px-5 py-5">
         <input type="hidden" name="updatedAt" value={item.updatedAt} />
         <PortfolioFields state={state} item={item} />
         <div className="mt-5 flex flex-wrap gap-3">
           <button name="intent" value="save" disabled={pending} className={buttonClass}>{pending ? "Saving..." : "Save changes"}</button>
-          <button name="intent" value="publish" disabled={pending} className={`${buttonClass} bg-foreground text-background hover:bg-white`}>{item.status === "archived" ? "Restore and publish" : item.status === "published" ? "Keep published" : "Publish entry"}</button>
-          {item.status !== "archived" && <button name="intent" value="archive" disabled={pending} className={`${buttonClass} text-red-300 hover:text-red-200`}>Archive</button>}
+          <button name="intent" value="publish" disabled={pending} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors">{item.status === "archived" ? "Restore and publish" : item.status === "published" ? "Keep published" : "Publish entry"}</button>
+          {item.status !== "archived" && <button name="intent" value="archive" disabled={pending} className="min-h-11 rounded-xl border border-red-200 bg-red-50 px-4 text-xs font-semibold text-red-700 hover:bg-red-100 transition-colors">Archive</button>}
         </div>
         <StatusNotice state={state} />
       </form>
@@ -125,33 +125,33 @@ function PortfolioFields({ state, item }: { state: PortfolioEditorState; item?: 
       <Field label="Approved project URL (optional)" error={state.fieldErrors?.projectUrl}><input name="projectUrl" type="url" defaultValue={item?.projectUrl ?? ""} className={inputClass} placeholder="https://" /></Field>
       <div className="grid gap-4 sm:grid-cols-[120px_1fr] sm:items-end">
         <Field label="Order" error={state.fieldErrors?.sortOrder}><input name="sortOrder" type="number" min="0" max="10000" defaultValue={item?.sortOrder ?? 0} className={inputClass} /></Field>
-        <label className="flex min-h-11 items-center gap-3 rounded-lg border border-white/10 bg-background px-3 text-xs font-semibold text-secondary"><input name="isFeatured" type="checkbox" defaultChecked={item?.isFeatured} className="size-4 accent-blue-500" /><span>Prioritize this entry in the public portfolio</span></label>
+        <label className="flex min-h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs font-bold text-slate-700"><input name="isFeatured" type="checkbox" defaultChecked={item?.isFeatured} className="size-4 accent-blue-600" /><span>Prioritize this entry in the public portfolio</span></label>
       </div>
     </div>
   );
 }
 
 function Field({ label, error, children }: { label: string; error?: string[]; children: React.ReactNode }) {
-  return <label className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span>{children}{error?.[0] && <span className="font-normal text-red-300">{error[0]}</span>}</label>;
+  return <label className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span>{children}{error?.[0] && <span className="font-semibold text-red-600">{error[0]}</span>}</label>;
 }
 
 function Filter({ label, value, onChange, options }: { label: string; value: string; onChange: (value: string) => void; options: Array<[string, string]> }) {
-  return <label className="grid gap-2 text-xs font-semibold text-secondary"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className={inputClass}>{options.map(([optionValue, optionLabel]) => <option key={optionValue} value={optionValue}>{optionLabel}</option>)}</select></label>;
+  return <label className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className={inputClass}>{options.map(([optionValue, optionLabel]) => <option key={optionValue} value={optionValue}>{optionLabel}</option>)}</select></label>;
 }
 
 function StatusNotice({ state }: { state: PortfolioEditorState }) {
   if (state.status === "idle" || !state.message) return null;
-  return <p role="alert" className={`mt-4 rounded-lg border p-3 text-xs leading-5 ${state.status === "unavailable" ? "border-amber-300/20 bg-amber-300/[0.06] text-amber-100" : "border-red-300/20 bg-red-300/[0.06] text-red-100"}`}>{state.message}</p>;
+  return <p role="alert" className={`mt-4 rounded-2xl border p-3 text-xs leading-5 font-semibold ${state.status === "unavailable" ? "border-amber-200 bg-amber-50 text-amber-900" : "border-red-200 bg-red-50 text-red-900"}`}>{state.message}</p>;
 }
 
 function Metric({ label, value }: { label: string; value: number }) {
-  return <div className="bg-surface p-5"><p className="text-xs font-semibold text-muted">{label}</p><p className="mt-3 text-2xl font-semibold tabular-nums">{value}</p></div>;
+  return <div className="bg-white p-5"><p className="text-xs font-bold text-slate-500">{label}</p><p className="mt-3 text-2xl font-bold text-slate-900 tabular-nums">{value}</p></div>;
 }
 
 function PortfolioEmptyState({ status, filtered }: { status: AdminPortfolioData["status"]; filtered: boolean }) {
   const title = status === "unconfigured" ? "The database is not connected." : status === "error" ? "Portfolio records could not be loaded." : filtered ? "No entries match these filters." : "No portfolio entries exist.";
   const copy = status === "unconfigured" ? "Connect Supabase and apply the portfolio migration before creating persistent records." : status === "error" ? "No partial content is shown until the database response can be verified." : filtered ? "Adjust the search or filters to review another entry." : "Create a private draft only when real project information is ready.";
-  return <div className="grid min-h-72 place-items-center px-6 py-12 text-center"><div className="max-w-md"><h3 className="text-lg font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-secondary">{copy}</p></div></div>;
+  return <div className="grid min-h-72 place-items-center px-6 py-12 text-center"><div className="max-w-md"><h3 className="text-lg font-bold text-slate-900">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-500 font-medium">{copy}</p></div></div>;
 }
 
 function audienceLabel(audience: PortfolioItem["audience"]) {
