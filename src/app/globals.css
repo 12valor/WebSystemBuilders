@@ -34,6 +34,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
   background: var(--background);
   color: var(--text-primary);
   font-family: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;

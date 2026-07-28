@@ -23,11 +23,18 @@ export function SiteNavigation() {
   const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
   const pathname = usePathname();
 
+  // Reset hover state and mobile menu whenever pathname changes
+  useEffect(() => {
+    setHoveredHref(null);
+    setIsOpen(false);
+  }, [pathname]);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -48,11 +55,8 @@ export function SiteNavigation() {
   }, []);
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`sticky top-4 md:top-6 z-50 mx-auto w-[min(calc(100%-24px),1240px)] transition-all duration-300 ${
+    <header
+      className={`sticky z-50 mx-auto w-[min(calc(100%-24px),1240px)] transition-all duration-300 ${
         scrolled ? "top-2 md:top-3" : "top-4 md:top-6"
       }`}
     >
@@ -222,7 +226,7 @@ export function SiteNavigation() {
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }
 
