@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
 import { TactileCard } from "@/components/ui/tactile-card";
 import { MagneticButton } from "@/components/ui/magnetic-button";
@@ -20,30 +22,96 @@ import {
   ShieldCheck,
   CheckCircle2,
   ExternalLink,
+  Code2,
+  CreditCard,
+  LifeBuoy,
 } from "lucide-react";
 
 const standards = [
-  { id: "01", title: "Full Source Code", desc: "Complete clean code & docs included" },
-  { id: "02", title: "Authoritative Pricing", desc: "Transparent PHP minor unit calculations" },
-  { id: "03", title: "Verified PayMongo", desc: "Encrypted GCash, Maya & Card checkout" },
-  { id: "04", title: "30-Day Defect Support", desc: "Technical guidance & installation support" },
+  {
+    id: "01",
+    title: "Full Source Code",
+    desc: "Complete clean code & docs included",
+    icon: Code2,
+  },
+  {
+    id: "02",
+    title: "Authoritative Pricing",
+    desc: "Transparent PHP minor unit calculations",
+    icon: CheckCircle2,
+  },
+  {
+    id: "03",
+    title: "Verified PayMongo",
+    desc: "Encrypted GCash, Maya & Card checkout",
+    icon: CreditCard,
+  },
+  {
+    id: "04",
+    title: "30-Day Defect Support",
+    desc: "Technical guidance & installation support",
+    icon: LifeBuoy,
+  },
 ];
 
+const marqueeItems = [...standards, ...standards, ...standards, ...standards];
+
 export function TrustStrip() {
+  const [isPaused, setIsPaused] = useState(false);
+
   return (
-    <section aria-label="Service standards" className="border-y border-[#E5E7EB] bg-[#FAFAFC] py-6">
-      <div className="mx-auto grid w-[min(calc(100%-32px),1280px)] sm:grid-cols-2 md:w-[min(calc(100%-64px),1280px)] xl:grid-cols-4 gap-6">
-        {standards.map((standard) => (
-          <div key={standard.id} className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white border border-[#E5E7EB] shadow-[0_2px_8px_rgba(15,23,42,0.03)]">
-            <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-bold text-white shadow-xs">
-              {standard.id}
-            </span>
-            <div>
-              <h4 className="text-xs font-bold text-[#0F172A]">{standard.title}</h4>
-              <p className="text-[11px] text-[#64748B] font-normal">{standard.desc}</p>
-            </div>
-          </div>
-        ))}
+    <section aria-label="Service standards" className="relative border-y border-[#E5E7EB] bg-[#FAFAFC] py-4.5 overflow-hidden select-none">
+      {/* Left & Right Gradient Edge Fade Masks */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#FAFAFC] via-[#FAFAFC]/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#FAFAFC] via-[#FAFAFC]/80 to-transparent" />
+
+      {/* Infinite Horizontal Marquee Track */}
+      <div
+        className="flex w-full overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <motion.div
+          className="flex shrink-0 items-center gap-6 pr-6"
+          animate={{ x: isPaused ? undefined : ["0%", "-50%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 28,
+              ease: "linear",
+            },
+          }}
+        >
+          {marqueeItems.map((standard, idx) => {
+            const Icon = standard.icon;
+            return (
+              <div
+                key={`${standard.id}-${idx}`}
+                className="group flex min-w-[285px] shrink-0 items-center gap-3.5 rounded-2xl border border-[#E5E7EB] bg-white p-3.5 shadow-[0_2px_8px_rgba(15,23,42,0.03)] transition-all duration-200 hover:border-blue-500/50 hover:shadow-md hover:scale-[1.02]"
+              >
+                {/* Dual Badge: Step Number + Icon Badge */}
+                <div className="relative flex shrink-0 items-center justify-center">
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-[#2563EB] text-xs font-extrabold text-white shadow-xs group-hover:bg-blue-600 transition-colors">
+                    {standard.id}
+                  </span>
+                  <span className="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-slate-900 border border-white text-white shadow-2xs">
+                    <Icon className="w-3 h-3 text-blue-400" />
+                  </span>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-bold text-[#0F172A] group-hover:text-blue-600 transition-colors">
+                    {standard.title}
+                  </h4>
+                  <p className="text-[11px] font-normal text-[#64748B]">
+                    {standard.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );
