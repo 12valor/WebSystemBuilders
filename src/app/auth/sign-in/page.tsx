@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useRef, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { PasswordInput } from "@/components/auth/password-input";
 import { SocialAuthButtons } from "@/components/auth/social-auth-buttons";
+import { TurnstileCaptcha, type TurnstileCaptchaRef } from "@/components/auth/turnstile-captcha";
 import { createClient } from "@/lib/supabase/client";
 
 function SignInForm() {
@@ -15,37 +16,48 @@ function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const turnstileRef = useRef<TurnstileCaptchaRef>(null);
 
-  useEffect(() => {
-    const errorParam = searchParams.get("error");
-    if (errorParam) {
-      if (errorParam === "callback") {
-        setError("Authentication callback failed. Please try signing in again.");
-      } else if (errorParam === "configuration") {
-        setError("Authentication is not configured on this environment.");
-      } else {
-        setError(errorParam);
-      }
-    }
-  }, [searchParams]);
+  const errorParam = searchParams.get("error");
+  const urlError = errorParam
+    ? errorParam === "callback"
+      ? "Authentication callback failed. Please try signing in again."
+      : errorParam === "configuration"
+      ? "Authentication is not configured on this environment."
+      : errorParam
+    : null;
+
+  const error = formError ?? urlError;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
+    setFormError(null);
     setLoading(true);
+
+    if (!captchaToken) {
+      setFormError("Please complete the security verification before signing in.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const supabase = createClient();
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
+        options: {
+          captchaToken,
+        },
       });
 
       if (signInError) {
-        setError(signInError.message);
+        setFormError(signInError.message);
         setLoading(false);
+        turnstileRef.current?.reset();
+        setCaptchaToken(null);
         return;
       }
 
@@ -53,8 +65,10 @@ function SignInForm() {
         router.push("/?welcome=true");
       }
     } catch {
-      setError("An unexpected error occurred during sign in.");
+      setFormError("An unexpected error occurred during sign in.");
       setLoading(false);
+      turnstileRef.current?.reset();
+      setCaptchaToken(null);
     }
   };
 
@@ -75,7 +89,7 @@ function SignInForm() {
       </div>
 
       <div className="bg-white py-8 px-6 sm:px-9 border border-slate-200/90 rounded-2xl shadow-sm">
-        <SocialAuthButtons onError={(err) => setError(err)} />
+        <SocialAuthButtons onError={(err) => setFormError(err)} />
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <AnimatePresence mode="wait">
@@ -138,6 +152,18 @@ function SignInForm() {
               <span className="ml-2.5">Remember me</span>
             </label>
           </div>
+
+          <TurnstileCaptcha
+            ref={turnstileRef}
+            onVerify={(token) => {
+              setCaptchaToken(token);
+              if (formError && formError.includes("security")) {
+                setFormError(null);
+              }
+            }}
+            onExpire={() => setCaptchaToken(null)}
+            onError={(err) => setFormError(err || "CAPTCHA verification failed.")}
+          />
 
           <button
             type="submit"
