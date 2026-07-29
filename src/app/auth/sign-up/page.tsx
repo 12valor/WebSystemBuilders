@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { PasswordInput } from "@/components/auth/password-input";
 import { SocialAuthButtons } from "@/components/auth/social-auth-buttons";
+import { TurnstileCaptcha, type TurnstileCaptchaRef } from "@/components/auth/turnstile-captcha";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignUpPage() {
@@ -17,8 +18,10 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const turnstileRef = useRef<TurnstileCaptchaRef>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +42,11 @@ export default function SignUpPage() {
       return;
     }
 
+    if (!captchaToken) {
+      setError("Please complete the security verification.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -47,6 +55,7 @@ export default function SignUpPage() {
         email,
         password,
         options: {
+          captchaToken,
           data: {
             full_name: fullName,
           },
@@ -57,6 +66,8 @@ export default function SignUpPage() {
       if (signUpError) {
         setError(signUpError.message);
         setLoading(false);
+        turnstileRef.current?.reset();
+        setCaptchaToken(null);
         return;
       }
 
@@ -175,6 +186,18 @@ export default function SignUpPage() {
                 </Link>
               </label>
             </div>
+
+            <TurnstileCaptcha
+              ref={turnstileRef}
+              onVerify={(token) => {
+                setCaptchaToken(token);
+                if (error && error.includes("security")) {
+                  setError(null);
+                }
+              }}
+              onExpire={() => setCaptchaToken(null)}
+              onError={(err) => setError(err || "CAPTCHA verification failed.")}
+            />
 
             <button
               type="submit"

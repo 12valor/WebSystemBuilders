@@ -1,35 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthShell } from "@/components/auth/auth-shell";
+import { TurnstileCaptcha, type TurnstileCaptchaRef } from "@/components/auth/turnstile-captcha";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const turnstileRef = useRef<TurnstileCaptchaRef>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!captchaToken) {
+      setError("Please complete the security verification.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const supabase = createClient();
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        captchaToken,
         redirectTo: `${window.location.origin}/auth/reset-password`,
       });
 
       if (resetError) {
         setError(resetError.message);
+        turnstileRef.current?.reset();
+        setCaptchaToken(null);
       } else {
         setSent(true);
       }
     } catch {
       setError("Could not send password reset email.");
+      turnstileRef.current?.reset();
+      setCaptchaToken(null);
     } finally {
       setLoading(false);
     }
@@ -100,6 +114,18 @@ export default function ForgotPasswordPage() {
                   className="block w-full min-h-12 rounded-[10px] border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900/10"
                 />
               </div>
+
+              <TurnstileCaptcha
+                ref={turnstileRef}
+                onVerify={(token) => {
+                  setCaptchaToken(token);
+                  if (error && error.includes("security")) {
+                    setError(null);
+                  }
+                }}
+                onExpire={() => setCaptchaToken(null)}
+                onError={(err) => setError(err || "CAPTCHA verification failed.")}
+              />
 
               <button
                 type="submit"
