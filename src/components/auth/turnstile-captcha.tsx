@@ -10,6 +10,7 @@ declare global {
         container: HTMLElement | string,
         options: {
           sitekey: string;
+          action?: string;
           callback?: (token: string) => void;
           "error-callback"?: (errorCode?: string) => void;
           "expired-callback"?: () => void;
@@ -24,8 +25,8 @@ declare global {
   }
 }
 
-// Cloudflare official testing keys:
-// '1x00000000000000000000AA' always passes (visible widget)
+// Cloudflare sitekey default
+const CLOUDFLARE_SITE_KEY = "0x4AAAAAAEAePr_u0WZWa_bF";
 const CLOUDFLARE_TEST_SITE_KEY = "1x00000000000000000000AA";
 
 export interface TurnstileCaptchaRef {
@@ -34,6 +35,7 @@ export interface TurnstileCaptchaRef {
 
 export interface TurnstileCaptchaProps {
   siteKey?: string;
+  action?: string;
   onVerify: (token: string) => void;
   onError?: (error?: string) => void;
   onExpire?: () => void;
@@ -44,7 +46,7 @@ export interface TurnstileCaptchaProps {
 
 export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptchaProps>(
   function TurnstileCaptcha(
-    { siteKey, onVerify, onError, onExpire, theme = "light", size = "normal", className = "" },
+    { siteKey, action = "turnstile-spin-v2", onVerify, onError, onExpire, theme = "light", size = "normal", className = "" },
     ref
   ) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptcha
 
     // Determine effective site key
     const configuredKey = siteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-    const effectiveSiteKey = configuredKey || CLOUDFLARE_TEST_SITE_KEY;
+    const effectiveSiteKey = configuredKey || CLOUDFLARE_SITE_KEY || CLOUDFLARE_TEST_SITE_KEY;
 
     useEffect(() => {
       if (!configuredKey && process.env.NODE_ENV !== "production") {
@@ -94,6 +96,7 @@ export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptcha
         try {
           const id = window.turnstile.render(containerRef.current, {
             sitekey: effectiveSiteKey,
+            action,
             callback: (token: string) => {
               if (isMounted) onVerify(token);
             },
@@ -164,7 +167,7 @@ export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptcha
           }
         }
       };
-    }, [effectiveSiteKey, theme, size, onVerify, onError, onExpire]);
+    }, [effectiveSiteKey, action, theme, size, onVerify, onError, onExpire]);
 
     return (
       <div className={`flex flex-col items-center justify-center space-y-2 py-2 ${className}`}>
@@ -181,7 +184,12 @@ export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptcha
         <div
           className="min-h-[65px] min-w-[300px] flex items-center justify-center rounded-xl bg-slate-50/50 p-1 border border-slate-100 transition-all"
         >
-          <div ref={containerRef} />
+          <div
+            ref={containerRef}
+            className="cf-turnstile"
+            data-sitekey={effectiveSiteKey}
+            data-action={action}
+          />
           {!isLoaded && (
             <div className="text-xs text-slate-400 font-medium flex items-center gap-2 py-4">
               <svg className="size-4 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">
