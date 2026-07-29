@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={plusJakartaSans.variable} data-scroll-behavior="smooth">
+    <html lang="en" className={plusJakartaSans.variable}>
       <body className="font-sans antialiased text-slate-900 bg-white selection:bg-blue-600 selection:text-white">
         <a
           href="#main-content"
