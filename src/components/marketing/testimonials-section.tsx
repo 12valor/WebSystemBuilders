@@ -14,7 +14,7 @@ interface EnhancedTestimonial extends PublicTestimonial {
 
 export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
   const [filter, setFilter] = useState<AudienceFilter>("all");
-  const rawItems: EnhancedTestimonial[] = items.length > 0 ? items : fallbackTestimonials;
+  const rawItems: EnhancedTestimonial[] = items;
 
   const filteredItems = rawItems.filter((item) => {
     if (filter === "business") {
@@ -36,6 +36,8 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
   });
 
   const [, setPageIndex] = useState(0);
+
+  if (rawItems.length === 0) return null;
 
   const handleNext = () => {
     setPageIndex((prev) => (prev + 1) % filteredItems.length);
@@ -204,39 +206,3 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
     </section>
   );
 }
-
-const fallbackTestimonials: EnhancedTestimonial[] = [
-  {
-    id: "sample-1",
-    quote: "The Point of Sale system was clean, reliable, and came with full documentation. Deployment to our retail store was smooth and completed in one afternoon.",
-    attributionName: "Marcus Vance",
-    attributionRole: "Retail Store Owner",
-    attributionOrganization: "Vance Trading",
-    relationshipContext: "Verified Business Customer",
-    categoryGroup: "business",
-    domainTag: "Point of Sale (POS)",
-    isFeatured: true,
-  },
-  {
-    id: "sample-2",
-    quote: "Our capstone system was technical, well-documented, and ethical. The source code architecture passed thesis defense with zero revisions.",
-    attributionName: "Jasmine Reyes",
-    attributionRole: "BS Information Technology Student",
-    attributionOrganization: "State University",
-    relationshipContext: "Verified Student Customer",
-    categoryGroup: "student",
-    domainTag: "Academic Capstone Suite",
-    isFeatured: true,
-  },
-  {
-    id: "sample-3",
-    quote: "Custom development was handled professionally. Requirements were agreed on before work started, and delivery was on schedule with full Supabase integration.",
-    attributionName: "David Chen",
-    attributionRole: "Operations Manager",
-    attributionOrganization: "Logistics Core",
-    relationshipContext: "Verified Business Customer",
-    categoryGroup: "business",
-    domainTag: "Warehouse & Logistics",
-    isFeatured: true,
-  },
-];

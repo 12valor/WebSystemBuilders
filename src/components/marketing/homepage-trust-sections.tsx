@@ -1,0 +1,218 @@
+import Link from "next/link";
+import {
+  ArrowRight,
+  CheckCircle2,
+  FileText,
+  LockKeyhole,
+  MessageSquareText,
+  ShieldCheck,
+} from "lucide-react";
+import type { PublicCompanyProfile } from "@/features/content/company-profile-types";
+import type { PublicFaqItem } from "@/features/content/faq-public-types";
+import type { PublicPortfolioData } from "@/features/content/portfolio-types";
+
+const purchaseSteps = [
+  {
+    id: "01",
+    title: "Review the exact listing",
+    description: "Check the authoritative price, requirements, inclusions, exclusions, support coverage, license, and delivery notes before ordering.",
+    icon: FileText,
+  },
+  {
+    id: "02",
+    title: "Create a recorded order",
+    description: "The server records the selected product and authoritative PHP amount before payment instructions are presented.",
+    icon: CheckCircle2,
+  },
+  {
+    id: "03",
+    title: "Submit GCash or QRPh proof",
+    description: "Use the administrator-provided QR details, then submit the transaction reference and required payment proof for review.",
+    icon: MessageSquareText,
+  },
+  {
+    id: "04",
+    title: "Receive protected delivery",
+    description: "Delivery becomes eligible only after payment review. Customer files remain behind expiring, revocable account access.",
+    icon: LockKeyhole,
+  },
+];
+
+const policyLinks = [
+  ["Delivery policy", "/legal/delivery"],
+  ["Commercial license", "/legal/license"],
+  ["Refund policy", "/legal/refunds"],
+  ["Privacy policy", "/legal/privacy"],
+  ["Terms", "/legal/terms"],
+] as const;
+
+export function PublishedWorkPreview({ data }: { data: PublicPortfolioData }) {
+  if (data.items.length === 0) return null;
+
+  const items = data.items.slice(0, 3);
+
+  return (
+    <section aria-labelledby="published-work-title" className="border-y border-slate-200 bg-white py-20 sm:py-28">
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+        <div className="grid gap-6 border-b border-slate-200 pb-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Published project evidence</p>
+            <h2 id="published-work-title" className="mt-4 text-3xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-5xl">
+              Review the work, not a marketing placeholder.
+            </h2>
+          </div>
+          <div className="lg:justify-self-end">
+            <p className="max-w-xl leading-7 text-slate-600">
+              Every entry below comes from an administrator-published project record. Outcomes appear only when they have been approved for public use.
+            </p>
+            <Link href="/portfolio" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">
+              View all published work <ArrowRight className="size-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="divide-y divide-slate-200">
+          {items.map((item, index) => (
+            <article key={item.id} className="grid gap-6 py-9 lg:grid-cols-[72px_minmax(0,1fr)_300px] lg:gap-10">
+              <p className="font-mono text-xs text-slate-400">{String(index + 1).padStart(2, "0")}</p>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-600">
+                    {audienceLabel(item.audience)}
+                  </span>
+                  {item.isFeatured && <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-blue-700">Featured</span>}
+                </div>
+                <h3 className="mt-4 text-2xl font-extrabold tracking-tight text-slate-950">{item.title}</h3>
+                <p className="mt-3 max-w-3xl leading-7 text-slate-600">{item.summary}</p>
+                {item.outcome && (
+                  <div className="mt-5 border-l-2 border-emerald-500 pl-4">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-emerald-700">Approved outcome</p>
+                    <p className="mt-2 leading-7 text-slate-800">{item.outcome}</p>
+                  </div>
+                )}
+              </div>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Technology disclosed</p>
+                {item.technologyStack.length > 0 ? (
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {item.technologyStack.map((technology) => <li key={technology} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">{technology}</li>)}
+                  </ul>
+                ) : <p className="mt-3 text-sm text-slate-500">No public technology list.</p>}
+                {item.projectUrl && <a href={item.projectUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">Open approved project <span aria-hidden="true">↗</span></a>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function PurchaseTransparencySection() {
+  return (
+    <section aria-labelledby="purchase-transparency-title" className="bg-slate-950 py-20 text-white sm:py-28">
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+        <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-blue-200">
+              <ShieldCheck className="size-4" /> Before you purchase
+            </div>
+            <h2 id="purchase-transparency-title" className="mt-5 text-3xl font-extrabold tracking-[-0.04em] sm:text-5xl">
+              Know the price, package, and delivery path first.
+            </h2>
+            <p className="mt-5 max-w-xl leading-7 text-slate-300">
+              Product-specific details remain authoritative. No browser return, screenshot, or transaction reference is treated as confirmed payment by itself.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3">
+              {policyLinks.map(([label, href]) => <Link key={href} href={href} className="text-sm font-semibold text-slate-300 underline decoration-white/30 underline-offset-4 hover:text-white">{label}</Link>)}
+            </div>
+          </div>
+
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
+            {purchaseSteps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <li key={step.id} className="bg-slate-950 p-6 sm:p-7">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-slate-500">{step.id}</span>
+                    <Icon className="size-5 text-blue-300" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-8 text-lg font-bold">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">{step.description}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function HomepageFaqPreview({ items }: { items: PublicFaqItem[] }) {
+  const selected = selectTrustQuestions(items);
+  if (selected.length === 0) return null;
+
+  return (
+    <section aria-labelledby="homepage-faq-title" className="border-y border-slate-200 bg-white py-20 sm:py-28">
+      <div className="mx-auto grid w-[min(calc(100%-32px),1180px)] gap-10 md:w-[min(calc(100%-64px),1180px)] lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-20">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Purchase questions</p>
+          <h2 id="homepage-faq-title" className="mt-4 text-3xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-4xl">Clear answers before commitment.</h2>
+          <p className="mt-4 leading-7 text-slate-600">Review the most common product, pricing, delivery, and policy questions before opening checkout or requesting a quotation.</p>
+          <Link href="/faq" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">Read every FAQ <ArrowRight className="size-4" /></Link>
+        </div>
+        <div className="border-t border-slate-200">
+          {selected.map((item, index) => (
+            <details key={item.id} className="group border-b border-slate-200 py-5">
+              <summary className="grid cursor-pointer list-none grid-cols-[32px_1fr_auto] gap-3 font-bold text-slate-950 marker:hidden">
+                <span className="font-mono text-xs font-normal text-slate-400">{String(index + 1).padStart(2, "0")}</span>
+                <span>{item.question}</span>
+                <span className="text-slate-400 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <p className="ml-[44px] mt-4 max-w-3xl text-sm leading-7 text-slate-600">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function FounderIdentitySection({ profile }: { profile: PublicCompanyProfile }) {
+  const initials = profile.founderName.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
+
+  return (
+    <section aria-labelledby="founder-identity-title" className="bg-[#FAFAFC] py-20 sm:py-28">
+      <div className="mx-auto grid w-[min(calc(100%-32px),1080px)] gap-8 rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.25)] sm:p-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14 lg:p-12">
+        <div className="flex size-28 items-center justify-center rounded-3xl bg-slate-950 text-3xl font-extrabold tracking-tight text-white lg:size-40">
+          {initials}
+        </div>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Founder and public contact</p>
+          <h2 id="founder-identity-title" className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">{profile.founderName}</h2>
+          <p className="mt-2 font-semibold text-blue-700">{profile.founderTitle}</p>
+          <p className="mt-5 max-w-3xl leading-7 text-slate-600">{profile.founderBio}</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href="/about" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-bold text-white hover:bg-slate-800">About WebSystemBuilders <ArrowRight className="size-4" /></Link>
+            {profile.publicEmail ? <a href={`mailto:${profile.publicEmail}`} className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 hover:bg-slate-50">{profile.publicEmail}</a> : <Link href="/contact" className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 hover:bg-slate-50">Contact WebSystemBuilders</Link>}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function selectTrustQuestions(items: PublicFaqItem[]) {
+  const preferredCategories = ["Products and services", "License and package", "Pricing", "Delivery", "Policies"];
+  const selected = preferredCategories.flatMap((category) => items.filter((item) => item.category === category).slice(0, 1));
+  if (selected.length >= 5) return selected.slice(0, 5);
+  const selectedIds = new Set(selected.map((item) => item.id));
+  return [...selected, ...items.filter((item) => !selectedIds.has(item.id))].slice(0, 5);
+}
+
+function audienceLabel(audience: PublicPortfolioData["items"][number]["audience"]) {
+  if (audience === "students") return "Students";
+  if (audience === "business") return "Business";
+  return "Students and business";
+}

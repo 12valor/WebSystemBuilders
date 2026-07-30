@@ -25,7 +25,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 text-slate-800 border border-slate-200/90 shadow-[0_2px_12px_rgba(15,23,42,0.05),0_1px_1px_rgba(255,255,255,0.8)_inset] text-xs font-semibold backdrop-blur-md">
             <span className="flex h-2 w-2 rounded-full bg-[#2563EB] animate-pulse" />
             <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
-            <span>Marketplace for Production & Capstone Ready Software</span>
+            <span>Ready-made systems and custom development</span>
           </div>
         </motion.div>
 
@@ -49,8 +49,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
             className="mt-6 text-lg sm:text-xl text-[#64748B] leading-relaxed font-normal max-w-[720px] mx-auto"
           >
-            Deploy ready-made POS, Inventory, Warehouse, Clinic, and Academic Capstone systems. 
-            Includes full source code, commercial license, and fast fulfillment.
+            Compare administrator-published systems for POS, inventory, warehouse, and approved academic use, or request clearly scoped custom development.
           </motion.p>
 
           {/* Action CTAs */}

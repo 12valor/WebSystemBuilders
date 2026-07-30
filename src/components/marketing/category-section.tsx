@@ -13,12 +13,8 @@ import {
   Sparkles,
   ShoppingBag,
   GraduationCap,
-  Utensils,
   Stethoscope,
-  Store,
   Boxes,
-  School,
-  FileText,
   ShieldCheck,
   CheckCircle2,
   ExternalLink,
@@ -30,31 +26,31 @@ import {
 const standards = [
   {
     id: "01",
-    title: "Full Source Code",
-    desc: "Complete clean code & docs included",
+    title: "Published Product Details",
+    desc: "Scope, requirements & inclusions per listing",
     icon: Code2,
   },
   {
     id: "02",
-    title: "Authoritative Pricing",
-    desc: "Transparent PHP minor unit calculations",
+    title: "Authoritative PHP Pricing",
+    desc: "Server-controlled product and order values",
     icon: CheckCircle2,
   },
   {
     id: "03",
-    title: "Verified PayMongo",
-    desc: "Encrypted GCash, Maya & Card checkout",
+    title: "Payment Review",
+    desc: "GCash or QRPh proof reviewed before delivery",
     icon: CreditCard,
   },
   {
     id: "04",
-    title: "30-Day Defect Support",
-    desc: "Technical guidance & installation support",
+    title: "Protected Delivery",
+    desc: "Expiring, revocable customer file access",
     icon: LifeBuoy,
   },
-];
+] as const;
 
-const marqueeItems = [...standards, ...standards, ...standards, ...standards];
+const marqueeItems = [...standards, ...standards, ...standards, ...standards] as const;
 
 export function TrustStrip() {
   const [isPaused, setIsPaused] = useState(false);
@@ -164,10 +160,10 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
               <span>Explore Verticals</span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-              Browse Systems by Industry
+              Browse Systems by Need
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 font-medium">
-              Find ready-to-use software tailored to specific business workflows and academic specialization.
+              Compare published systems and service paths by the workflow or approved technical need they address.
             </p>
           </div>
 
@@ -176,7 +172,7 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
               <Link key={cat.title} href={`/systems?category=${cat.slug}`}>
                 <TactileCard bg="white" className="h-full flex flex-col justify-between p-6 hover:border-blue-500/40">
                   <div>
-                    <AppIconBadge icon={cat.icon} color={cat.color as any} size="md" className="mb-4" />
+                    <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-4" />
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {cat.title}
                     </h3>
@@ -318,7 +314,7 @@ const categoriesList = [
   {
     title: "Capstone & Thesis",
     slug: "capstone-systems",
-    description: "Academic full-stack systems, schemas, and defense guides.",
+    description: "Approved academic software foundations and technical support.",
     icon: GraduationCap,
     color: "indigo",
   },
@@ -330,13 +326,13 @@ const categoriesList = [
     color: "emerald",
   },
   {
-    title: "Clinic & Healthcare",
+    title: "Custom System Development",
     slug: "custom-system-development",
-    description: "Patient records, appointment booking, and medical billing.",
+    description: "Requirements-reviewed software for workflows not covered by a published system.",
     icon: Stethoscope,
     color: "rose",
   },
-];
+] as const;
 
 function audienceLabel(audience: CatalogSystemRecord["audience"]) {
   if (audience === "students") return "For Students";

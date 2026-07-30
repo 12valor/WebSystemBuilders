@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { MagneticButton } from "@/components/ui/magnetic-button";
 import { ArrowRight, Sparkles, Code2, ShieldCheck, Zap, Lock, FileCheck } from "lucide-react";
 
 export function FinalCallToAction() {
@@ -43,7 +42,7 @@ export function FinalCallToAction() {
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-xs">
                   <Lock className="w-4 h-4 text-blue-300" />
-                  <span>Encrypted PayMongo Checkout</span>
+                  <span>Payment Review Required</span>
                 </div>
               </div>
             </div>
@@ -58,7 +57,7 @@ export function FinalCallToAction() {
                     WebSystemBuilders Delivery Blueprint
                   </span>
                   <span className="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-semibold text-[10px] border border-emerald-500/30">
-                    Instant Access
+                    Verified Delivery
                   </span>
                 </div>
 

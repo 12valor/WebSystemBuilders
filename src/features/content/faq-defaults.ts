@@ -32,7 +32,7 @@ export const defaultFaqItems = [
   {
     id: "fa000000-0000-4000-8000-000000000006",
     question: "When are purchased files delivered?",
-    answer: "A pending order is created before hosted checkout. Files are fulfilled only after verified server-side payment confirmation, never from the browser return page alone. Delivery uses private storage and expiring, revocable download access through email and the customer portal.",
+    answer: "A pending order is created before payment instructions are shown. For GCash or QRPh payments, the submitted transaction reference and proof are reviewed before fulfillment. A browser return, screenshot, or reference number alone never confirms payment. Delivery uses private storage and expiring, revocable access through email and the customer portal.",
     category: "Delivery",
   },
   {

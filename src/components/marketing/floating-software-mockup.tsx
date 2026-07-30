@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ShoppingCart, Boxes, Stethoscope, GraduationCap } from "lucide-react";
+import { ShoppingCart, Boxes, Code2, GraduationCap } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   return (
@@ -90,7 +90,7 @@ export function FloatingSoftwareMockup() {
           <circle cx="90" cy="20" r="3" fill="#94A3B8" />
         </svg>
 
-        {/* ================= CARD 3: TOP RIGHT (Clinic & Healthcare) ================= */}
+        {/* ================= CARD 3: TOP RIGHT (Custom Development) ================= */}
         <motion.div
           initial={{ opacity: 0, x: 30, rotate: 4 }}
           animate={{ opacity: 1, x: 0, rotate: 4, y: [0, -6, 0] }}
@@ -103,11 +103,11 @@ export function FloatingSoftwareMockup() {
           className="absolute top-[6%] right-[1%] xl:right-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
           <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center border border-purple-100/80 shadow-xs mb-3">
-            <Stethoscope className="w-5.5 h-5.5" />
+            <Code2 className="w-5.5 h-5.5" />
           </div>
-          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Clinic & Healthcare</h4>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Custom Development</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
-            Manage patients, appointments, and EMR records.
+            Requirements-reviewed software for a defined workflow.
           </p>
         </motion.div>
 
@@ -128,7 +128,7 @@ export function FloatingSoftwareMockup() {
           </div>
           <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Academic & Capstone</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
-            Defense-ready systems with source code & SQL.
+            Ethical technical foundations with disclosed scope.
           </p>
         </motion.div>
 
@@ -171,11 +171,11 @@ export function FloatingSoftwareMockup() {
         {/* Card 3 */}
         <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0 border border-purple-100">
-            <Stethoscope className="w-5 h-5" />
+            <Code2 className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-900">Clinic & Healthcare</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Manage patients, appointments, and EMR records.</p>
+            <h4 className="text-xs font-bold text-slate-900">Custom Development</h4>
+            <p className="text-[11px] text-slate-500 mt-0.5">Requirements-reviewed software for a defined workflow.</p>
           </div>
         </div>
 
@@ -186,12 +186,10 @@ export function FloatingSoftwareMockup() {
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-900">Academic & Capstone</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Defense-ready systems with source code & SQL.</p>
+            <p className="text-[11px] text-slate-500 mt-0.5">Ethical technical foundations with disclosed scope.</p>
           </div>
         </div>
       </motion.div>
     </div>
   );
 }
-
-

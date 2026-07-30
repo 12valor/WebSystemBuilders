@@ -26,7 +26,7 @@ export function WhyChooseUsSection() {
             Built for total technical confidence
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#64748B] font-normal leading-relaxed max-w-[700px] mx-auto">
-            Every system is developed with modular architecture, strict authorization security, and full commercial source rights.
+            Published system pages disclose their architecture, requirements, commercial rights, support coverage, and delivery terms before purchase.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export function WhyChooseUsSection() {
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-                100% Commercial Source Code Included
+                Commercial Source Code Package
               </h3>
               <p className="mt-3 text-[#64748B] font-normal text-sm sm:text-base leading-relaxed max-w-xl">
                 You receive the complete, uncompiled source code package. Deploy, customize, modify, and redistribute with a broad perpetual commercial license.
@@ -59,7 +59,7 @@ export function WhyChooseUsSection() {
                 <span className="text-[10px] text-slate-400">Next.js App Router + Supabase RLS</span>
               </div>
               <p className="text-slate-300">✓ Commercial non-exclusive license attached</p>
-              <p className="text-slate-300">✓ Signed expiring ZIP delivery enabled</p>
+              <p className="text-slate-300">✓ Delivery terms listed per product</p>
             </div>
           </div>
 
@@ -68,15 +68,15 @@ export function WhyChooseUsSection() {
             <div>
               <AppIconBadge icon={Lock} color="emerald" size="lg" className="mb-6" />
               <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
-                Encrypted & Verified Checkout
+                Payment Reviewed Before Delivery
               </h3>
               <p className="mt-3 text-sm text-[#64748B] font-normal leading-relaxed">
-                PayMongo integration verifying payment webhooks server-side before issuing fulfillment tokens.
+                GCash or QRPh references and submitted proof are reviewed before an order becomes eligible for protected delivery.
               </p>
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#10B981]">
-              <span>GCash • Maya • Cards</span>
+              <span>GCash · QRPh</span>
               <ShieldCheck className="w-4 h-4" />
             </div>
           </div>
@@ -94,7 +94,7 @@ export function WhyChooseUsSection() {
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-rose-600">
-              <span>2 Business Days SLA</span>
+              <span>First-response target</span>
               <Award className="w-4 h-4" />
             </div>
           </div>
@@ -105,14 +105,14 @@ export function WhyChooseUsSection() {
               <div className="flex items-center justify-between mb-6">
                 <AppIconBadge icon={Database} color="indigo" size="lg" />
                 <span className="text-xs font-semibold text-[#4F46E5] bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-                  Supabase PostgreSQL
+                  Product-specific details
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-                Production Database Schemas & Row Level Security
+                Disclosed Database and Security Requirements
               </h3>
               <p className="mt-3 text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
-                All ready-made systems ship with structured SQL migration files, explicit foreign keys, indexes, and battle-tested RLS policies to keep customer data isolated.
+                Each published listing identifies its technology stack, database requirements, included migrations, security boundaries, and deployment responsibilities.
               </p>
             </div>
 
@@ -136,4 +136,3 @@ export function WhyChooseUsSection() {
     </section>
   );
 }
-
