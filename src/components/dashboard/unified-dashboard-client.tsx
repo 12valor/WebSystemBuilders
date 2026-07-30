@@ -147,11 +147,20 @@ export function UnifiedDashboardClient({
         </button>
       </div>
 
+      {mobileMenuOpen && (
+        <button
+          type="button"
+          aria-label="Close workspace navigation"
+          onClick={() => setMobileMenuOpen(false)}
+          className="fixed inset-0 z-20 bg-slate-950/20 backdrop-blur-[2px] md:hidden"
+        />
+      )}
+
       {/* Sidebar Navigation */}
       <aside
         className={`${
-          mobileMenuOpen ? "block" : "hidden"
-        } z-30 w-full shrink-0 border-b border-slate-200/80 bg-white p-5 md:sticky md:top-5 md:ml-5 md:mt-5 md:flex md:h-[calc(100vh-2.5rem)] md:w-72 md:flex-col md:justify-between md:rounded-[28px] md:border md:border-white/80 md:p-5 md:shadow-[0_20px_55px_rgba(15,23,42,0.09)]`}
+          mobileMenuOpen ? "fixed inset-x-3 top-20 flex max-h-[calc(100vh-6rem)] flex-col justify-between overflow-y-auto rounded-[24px] border border-white/80 shadow-[0_22px_60px_rgba(15,23,42,0.20)]" : "hidden"
+        } z-30 shrink-0 border-b border-slate-200/80 bg-white p-5 md:sticky md:top-5 md:ml-5 md:mt-5 md:flex md:h-[calc(100vh-2.5rem)] md:w-72 md:flex-col md:justify-between md:rounded-[28px] md:border md:border-white/80 md:p-5 md:shadow-[0_20px_55px_rgba(15,23,42,0.09)]`}
       >
         <div className="space-y-6">
           <div className="hidden md:block">
@@ -314,6 +323,13 @@ export function UnifiedDashboardClient({
             </div>
           </div>
         </section>
+        {portalData.status === "error" && (
+          <div role="alert" className="mb-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/90 p-4 text-xs font-medium text-amber-800">
+            <AlertCircle className="mt-0.5 size-4 shrink-0 text-amber-600" />
+            <span>Some account records could not be loaded. Try refreshing, or contact support if the issue continues.</span>
+          </div>
+        )}
+
         {/* Global Result Banner */}
         {resultParam === "download-unavailable" && (
           <div role="alert" className="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50/80 p-4 text-xs font-medium text-red-700">
@@ -373,7 +389,7 @@ export function UnifiedDashboardClient({
                     <Sparkles className="size-5 text-violet-500" />
                   </div>
                   <div className="space-y-3">
-                    <Link href="/systems" className="group flex items-center gap-4 rounded-2xl border border-slate-200/80 p-4 transition hover:border-blue-200 hover:bg-blue-50/60">
+                    <Link href="/systems" className="group flex items-center gap-4 rounded-2xl border border-slate-200/80 p-4 text-left transition hover:border-blue-200 hover:bg-blue-50/60">
                       <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600"><Package className="size-5" /></span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm font-semibold text-slate-900">Explore ready-made systems</span>
@@ -381,7 +397,7 @@ export function UnifiedDashboardClient({
                       </span>
                       <ArrowUpRight className="size-4 shrink-0 text-slate-400 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-600" />
                     </Link>
-                    <Link href="/request-a-quote" className="group flex items-center gap-4 rounded-2xl border border-slate-200/80 p-4 transition hover:border-violet-200 hover:bg-violet-50/60">
+                    <Link href="/request-a-quote" className="group flex items-center gap-4 rounded-2xl border border-slate-200/80 p-4 text-left transition hover:border-violet-200 hover:bg-violet-50/60">
                       <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-violet-50 text-violet-600"><Sparkles className="size-5" /></span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm font-semibold text-slate-900">Plan a custom build</span>
@@ -451,7 +467,7 @@ export function UnifiedDashboardClient({
           {activeTab === "purchases" && (
             <div className="space-y-6">
               {portalData.orders.length === 0 ? (
-                <div className="rounded-2xl border border-slate-200/90 bg-white p-12 text-center shadow-xs">
+                <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-12 text-center shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
                   <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-slate-100 text-slate-500 mb-4">
                     <ShoppingBag className="size-7" />
                   </div>
@@ -461,7 +477,7 @@ export function UnifiedDashboardClient({
                   </p>
                   <Link
                     href="/systems"
-                    className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-slate-900 px-5 text-xs font-semibold text-white hover:bg-slate-800 transition-colors"
+                    className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] px-5 text-xs font-semibold text-white shadow-[0_10px_22px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
                   >
                     <span>Browse Ready-Made Systems</span>
                     <ArrowUpRight className="size-3.5" />
@@ -469,7 +485,7 @@ export function UnifiedDashboardClient({
                 </div>
               ) : (
                 <div className="space-y-5">
-                  <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs flex items-start gap-4">
+                  <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)] flex items-start gap-4">
                     <div className="grid size-10 place-items-center rounded-xl bg-slate-100 text-slate-700 shrink-0 mt-0.5">
                       <Lock className="size-5" />
                     </div>
@@ -483,7 +499,7 @@ export function UnifiedDashboardClient({
 
                   <div className="grid gap-5">
                     {portalData.orders.map((order) => (
-                      <div key={order.order_id} className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs space-y-6">
+                      <div key={order.order_id} className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-6 sm:p-7 shadow-[0_14px_40px_rgba(15,23,42,0.06)] space-y-6">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                           <div>
                             <span className="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">
@@ -531,7 +547,7 @@ export function UnifiedDashboardClient({
                             <form action={openPortalDownload.bind(null, order.order_id)}>
                               <button
                                 type="submit"
-                                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[10px] bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 transition-colors shadow-sm"
+                                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563EB] to-[#4F46E5] px-4 text-xs font-semibold text-white shadow-[0_10px_22px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5"
                               >
                                 <Download className="size-3.5" />
                                 <span>Generate Fresh 1-Hour Download Link</span>
@@ -556,7 +572,7 @@ export function UnifiedDashboardClient({
               </div>
 
               {portalData.supportRequests.length > 0 && (
-                <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs">
+                <div className="overflow-hidden rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
                   {portalData.supportRequests.map((request) => (
                     <div
                       key={request.id}
@@ -589,7 +605,7 @@ export function UnifiedDashboardClient({
           {/* TAB 4: WISHLIST */}
           {activeTab === "wishlist" && (
             <div className="space-y-6">
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-12 text-center shadow-xs">
+              <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-12 text-center shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
                 <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-slate-100 text-slate-500 mb-4">
                   <Heart className="size-7" />
                 </div>
@@ -599,7 +615,7 @@ export function UnifiedDashboardClient({
                 </p>
                 <Link
                   href="/systems"
-                  className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] bg-slate-900 px-5 text-xs font-semibold text-white hover:bg-slate-800 transition-colors"
+                  className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] px-5 text-xs font-semibold text-white shadow-[0_10px_22px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
                 >
                   <span>Explore Catalog</span>
                   <ArrowUpRight className="size-3.5" />
@@ -611,7 +627,7 @@ export function UnifiedDashboardClient({
           {/* TAB 5: PROFILE */}
           {activeTab === "profile" && (
             <div className="space-y-6">
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-xs max-w-2xl">
+              <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-8 shadow-[0_14px_40px_rgba(15,23,42,0.06)] max-w-2xl">
                 <h3 className="text-lg font-semibold text-slate-900 mb-6">Personal Details</h3>
                 <div className="space-y-5">
                   <div>
@@ -649,7 +665,7 @@ export function UnifiedDashboardClient({
           {/* TAB 6: SETTINGS */}
           {activeTab === "settings" && (
             <div className="space-y-6">
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-xs max-w-2xl">
+              <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-8 shadow-[0_14px_40px_rgba(15,23,42,0.06)] max-w-2xl">
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Account & Security Settings</h3>
                 <p className="text-xs text-slate-500 mb-6">Manage your security credentials and notification preferences.</p>
                 <div className="space-y-4">
@@ -667,13 +683,11 @@ export function UnifiedDashboardClient({
           {/* SELLER TABS */}
           {activeTab === "products" && isSellerApproved && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div>
                 <h2 className="text-xl font-semibold text-slate-900">Your Seller Catalog</h2>
-                <button type="button" className="rounded-[10px] bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-800 transition-colors">
-                  + Publish New Product
-                </button>
+                <p className="mt-1 text-xs text-slate-500">Published seller records will appear here when catalog management is connected.</p>
               </div>
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-12 text-center shadow-xs">
+              <div className="rounded-[24px] border border-white/90 bg-white/90 backdrop-blur-sm p-12 text-center shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
                 <p className="text-xs text-slate-500">No seller products published yet.</p>
               </div>
             </div>
@@ -681,12 +695,10 @@ export function UnifiedDashboardClient({
 
           {activeTab === "sales" && isSellerApproved && (
             <div className="space-y-6">
-              +
-+                <span className="text-xs font-semibold text-slate-500">Total Revenue</span>+
-+                <p className="mt-2 text-3xl font-semibold text-emerald-700">₱0.00</p>+
-+              </div>
-                <span className="text-xs font-semibold text-slate-500">Total Revenue</span>
-                <p className="mt-2 text-3xl font-semibold text-emerald-700">₱0.00</p>
+              <div className="rounded-[24px] border border-slate-200/90 bg-white p-7 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
+                <span className="text-xs font-semibold text-slate-500">Sales reporting</span>
+                <p className="mt-2 text-lg font-semibold text-slate-900">No verified sales data available</p>
+                <p className="mt-1 text-xs leading-5 text-slate-500">Revenue appears after seller orders are connected and verified.</p>
               </div>
             </div>
           )}
@@ -725,7 +737,7 @@ function MetricCard({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs font-semibold text-slate-500">{label}</p>
-          <p className="mt-3 truncate text-2xl font-bold tracking-[-0.04em] text-[#0F172A]">{value}</p>
+          <p className={`mt-3 font-bold tracking-[-0.04em] text-[#0F172A] ${typeof value === "string" ? "text-lg" : "text-2xl"}`}>{value}</p>
         </div>
         <span className={`grid size-10 shrink-0 place-items-center rounded-xl border ${tones[tone]}`}>
           <Icon className="size-4.5" />

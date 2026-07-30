@@ -8,6 +8,9 @@ describe("security and private-route headers", () => {
     const headers = new Map(global?.headers.map((header) => [header.key, header.value]));
     expect(headers.get("Content-Security-Policy")).toContain("frame-ancestors 'none'");
     expect(headers.get("Content-Security-Policy")).toContain("object-src 'none'");
+    expect(headers.get("Content-Security-Policy")).toContain("script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com");
+    expect(headers.get("Content-Security-Policy")).toContain("frame-src https://challenges.cloudflare.com");
+    expect(headers.get("Content-Security-Policy")).toContain("connect-src 'self' https://challenges.cloudflare.com");
     expect(headers.get("Strict-Transport-Security")).toContain("max-age=31536000");
     expect(headers.get("X-Content-Type-Options")).toBe("nosniff");
     expect(headers.get("X-Frame-Options")).toBe("DENY");

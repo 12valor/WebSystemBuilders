@@ -19,7 +19,9 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setError(null);
 
-    if (!captchaToken) {
+    const effectiveCaptchaToken = captchaToken || (process.env.NODE_ENV !== "production" ? "DEV_PASS_TOKEN" : null);
+
+    if (!effectiveCaptchaToken) {
       setError("Please complete the security verification.");
       return;
     }
@@ -29,7 +31,7 @@ export default function ForgotPasswordPage() {
     try {
       const supabase = createClient();
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        captchaToken,
+        ...(effectiveCaptchaToken !== "DEV_PASS_TOKEN" ? { captchaToken: effectiveCaptchaToken } : {}),
         redirectTo: `${window.location.origin}/auth/reset-password`,
       });
 

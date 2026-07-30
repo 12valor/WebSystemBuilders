@@ -1,8 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useCallback } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
-// Turnstile Window API Declarations
+const CLOUDFLARE_TEST_SITE_KEY = "1x00000000000000000000AA";
+const TURNSTILE_SCRIPT_ID = "cf-turnstile-script";
+const TURNSTILE_SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+const DEV_PASS_TOKEN = "DEV_PASS_TOKEN";
+
+type WidgetStatus = "loading" | "ready" | "verified" | "error" | "development";
+
 declare global {
   interface Window {
     turnstile?: {
@@ -16,16 +29,13 @@ declare global {
           "expired-callback"?: () => void;
           theme?: "light" | "dark" | "auto";
           size?: "normal" | "compact" | "flexible";
-        }
+        },
       ) => string;
       reset: (widgetId?: string) => void;
       remove: (widgetId?: string) => void;
     };
   }
 }
-
-// Cloudflare sitekey defaults
-const CLOUDFLARE_TEST_SITE_KEY = "1x00000000000000000000AA";
 
 export interface TurnstileCaptchaRef {
   reset: () => void;
@@ -44,170 +54,263 @@ export interface TurnstileCaptchaProps {
 
 export const TurnstileCaptcha = forwardRef<TurnstileCaptchaRef, TurnstileCaptchaProps>(
   function TurnstileCaptcha(
-    { siteKey, action = "turnstile-spin-v2", onVerify, onError, onExpire, theme = "light", size = "normal", className = "" },
-    ref
+    {
+      siteKey,
+      action = "turnstile-spin-v2",
+      onVerify,
+      onError,
+      onExpire,
+      theme = "light",
+      size = "flexible",
+      className = "",
+    },
+    ref,
   ) {
+    const configuredKey = siteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+    const isDevelopment = process.env.NODE_ENV !== "production";
+    const effectiveSiteKey = configuredKey || CLOUDFLARE_TEST_SITE_KEY;
+    const initialStatus: WidgetStatus = isDevelopment
+      ? "development"
+      : configuredKey
+        ? "loading"
+        : "error";
+
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetIdRef = useRef<string | null>(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [isDevFallback, setIsDevFallback] = useState(false);
+    const onVerifyRef = useRef(onVerify);
+    const onErrorRef = useRef(onError);
+    const onExpireRef = useRef(onExpire);
+    const [status, setStatus] = useState<WidgetStatus>(initialStatus);
+    const [errorMessage, setErrorMessage] = useState<string | null>(
+      configuredKey ? null : "Security verification is not configured on this environment.",
+    );
+    const [retryKey, setRetryKey] = useState(0);
 
-    // Determine effective site key
-    const configuredKey = siteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-    const effectiveSiteKey = configuredKey || CLOUDFLARE_TEST_SITE_KEY;
+    onVerifyRef.current = onVerify;
+    onErrorRef.current = onError;
+    onExpireRef.current = onExpire;
 
-    useEffect(() => {
-      if ((!configuredKey || configuredKey === CLOUDFLARE_TEST_SITE_KEY) && process.env.NODE_ENV !== "production") {
-        setIsDevFallback(true);
-      }
-    }, [configuredKey]);
-
-    // Imperative handle for parent resetting (e.g. after form error)
     useImperativeHandle(ref, () => ({
       reset: () => {
+        if (isDevelopment) {
+          onVerifyRef.current(DEV_PASS_TOKEN);
+          return;
+        }
+
         if (window.turnstile && widgetIdRef.current) {
           try {
             window.turnstile.reset(widgetIdRef.current);
+            setStatus("ready");
+            setErrorMessage(null);
           } catch {
-            // Safe fallback if widget was re-rendered
+            setStatus("error");
+            setErrorMessage("The security check could not be reset. Please retry it.");
           }
         }
       },
     }));
 
     const renderWidget = useCallback(() => {
-      if (!containerRef.current || !window.turnstile) return false;
-
-      // Clean up any existing widget instance before re-rendering
-      if (widgetIdRef.current) {
-        try {
-          window.turnstile.remove(widgetIdRef.current);
-        } catch {
-          // Ignore removal errors
-        }
-        widgetIdRef.current = null;
+      if (!containerRef.current || !window.turnstile || widgetIdRef.current) {
+        return false;
       }
 
       try {
-        const id = window.turnstile.render(containerRef.current, {
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: effectiveSiteKey,
           action,
           callback: (token: string) => {
-            onVerify(token);
+            setStatus("verified");
+            setErrorMessage(null);
+            onVerifyRef.current(token);
           },
-          "error-callback": (errCode?: string) => {
-            // Fallback for dev mode or unconfigured domain errors
-            if (process.env.NODE_ENV !== "production") {
-              onVerify("DEV_PASS_TOKEN");
-            } else if (onError) {
-              onError(errCode || "CAPTCHA verification failed.");
-            }
+          "error-callback": (errorCode?: string) => {
+            const message = errorCode
+              ? `Security verification failed (${errorCode}). Please retry.`
+              : "Security verification failed. Please retry.";
+            setStatus("error");
+            setErrorMessage(message);
+            onErrorRef.current?.(message);
           },
           "expired-callback": () => {
-            if (onExpire) onExpire();
+            onExpireRef.current?.();
           },
           theme,
           size,
         });
-
-        widgetIdRef.current = id;
-        setIsLoaded(true);
+        setStatus("ready");
         return true;
       } catch {
-        if (onError) {
-          onError("Unable to initialize CAPTCHA widget.");
-        }
+        const message = "Unable to initialize the security check. Please retry.";
+        setStatus("error");
+        setErrorMessage(message);
+        onErrorRef.current?.(message);
         return false;
       }
-    }, [effectiveSiteKey, action, theme, size, onVerify, onError, onExpire]);
+    }, [action, effectiveSiteKey, size, theme]);
 
     useEffect(() => {
-      let isMounted = true;
-      let checkInterval: NodeJS.Timeout | null = null;
-      let fallbackTimeout: NodeJS.Timeout | null = null;
-
-      // Check if turnstile is ready immediately
-      if (window.turnstile) {
-        renderWidget();
-      } else {
-        // Poll for window.turnstile in case script is already loading in DOM
-        checkInterval = setInterval(() => {
-          if (!isMounted) return;
-          if (window.turnstile) {
-            if (checkInterval) clearInterval(checkInterval);
-            renderWidget();
-          }
-        }, 100);
-
-        // Inject Cloudflare Turnstile API script if not already present
-        const scriptId = "cf-turnstile-script";
-        let script = document.getElementById(scriptId) as HTMLScriptElement | null;
-
-        if (!script) {
-          script = document.createElement("script");
-          script.id = scriptId;
-          script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-          script.async = true;
-          script.defer = true;
-          document.head.appendChild(script);
-        }
+      if (isDevelopment) {
+        onVerifyRef.current(DEV_PASS_TOKEN);
+        return;
       }
 
-      // Safety timeout: If script loading is blocked or delayed > 2.5s, unblock UI cleanly
-      fallbackTimeout = setTimeout(() => {
-        if (isMounted && !isLoaded) {
-          setIsLoaded(true);
-          // In local dev, auto-pass token if widget fails to load
-          if (process.env.NODE_ENV !== "production") {
-            onVerify("DEV_PASS_TOKEN");
-          }
+      if (!configuredKey) {
+        onErrorRef.current?.("Security verification is not configured on this environment.");
+        return;
+      }
+
+      let active = true;
+      const timers: {
+        poll?: ReturnType<typeof setInterval>;
+        timeout?: ReturnType<typeof setTimeout>;
+      } = {};
+      const existingScript = document.getElementById(TURNSTILE_SCRIPT_ID) as HTMLScriptElement | null;
+      const script = existingScript ?? document.createElement("script");
+
+      const tryRender = () => {
+        if (active && window.turnstile && renderWidget()) {
+          if (timers.poll) clearInterval(timers.poll);
+          if (timers.timeout) clearTimeout(timers.timeout);
         }
-      }, 2500);
+      };
+
+      const handleScriptError = () => {
+        if (!active) return;
+        const message = "The security check could not load. Check your connection and retry.";
+        setStatus("error");
+        setErrorMessage(message);
+        onErrorRef.current?.(message);
+      };
+
+      if (!existingScript) {
+        script.id = TURNSTILE_SCRIPT_ID;
+        script.src = TURNSTILE_SCRIPT_SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+
+      script.addEventListener("load", tryRender);
+      script.addEventListener("error", handleScriptError);
+
+      if (window.turnstile) {
+        tryRender();
+      } else {
+        timers.poll = setInterval(tryRender, 100);
+      }
+
+      timers.timeout = setTimeout(() => {
+        if (!active || widgetIdRef.current) return;
+        const message = "The security check took too long to load. Please retry.";
+        setStatus("error");
+        setErrorMessage(message);
+        onErrorRef.current?.(message);
+        if (timers.poll) clearInterval(timers.poll);
+      }, 8000);
 
       return () => {
-        isMounted = false;
-        if (checkInterval) clearInterval(checkInterval);
-        if (fallbackTimeout) clearTimeout(fallbackTimeout);
+        active = false;
+        if (timers.poll) clearInterval(timers.poll);
+        if (timers.timeout) clearTimeout(timers.timeout);
+        script.removeEventListener("load", tryRender);
+        script.removeEventListener("error", handleScriptError);
         if (window.turnstile && widgetIdRef.current) {
           try {
             window.turnstile.remove(widgetIdRef.current);
           } catch {
-            // Ignore cleanup error
+            // The provider may already have removed an expired widget.
           }
         }
+        widgetIdRef.current = null;
       };
-    }, [renderWidget, isLoaded, onVerify]);
+    }, [configuredKey, isDevelopment, renderWidget, retryKey]);
+
+    const retry = () => {
+      if (window.turnstile && widgetIdRef.current) {
+        try {
+          window.turnstile.remove(widgetIdRef.current);
+        } catch {
+          // Retry will create a clean widget instance.
+        }
+      }
+      widgetIdRef.current = null;
+
+      if (!window.turnstile) {
+        document.getElementById(TURNSTILE_SCRIPT_ID)?.remove();
+      }
+
+      setErrorMessage(null);
+      setStatus("loading");
+      setRetryKey((value) => value + 1);
+    };
+
+    if (status === "development") {
+      return (
+        <div className={`py-2 ${className}`}>
+          <div className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/70 px-4 text-left">
+            <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-blue-600 shadow-sm" aria-hidden="true">
+              ✓
+            </span>
+            <div>
+              <p className="text-xs font-semibold text-slate-800">Development security check active</p>
+              <p className="mt-0.5 text-[11px] leading-4 text-slate-500">Turnstile verification remains enforced in production.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     return (
-      <div className={`flex flex-col items-center justify-center space-y-2 py-2 ${className}`}>
-        {isDevFallback && (
-          <div className="w-full flex items-center justify-between px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200/80 text-[11px] font-medium text-amber-800">
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
-              Development CAPTCHA Mode
-            </span>
-            <span className="text-[10px] text-amber-600 font-mono">Test mode active</span>
-          </div>
-        )}
-
-        <div className="min-h-[65px] min-w-[300px] flex flex-col items-center justify-center rounded-xl bg-slate-50/50 p-1 border border-slate-100 transition-all">
+      <div className={`py-2 ${className}`}>
+        <div
+          className="flex min-h-[70px] w-full flex-col items-center justify-center rounded-xl border border-slate-200 bg-slate-50/70 p-2"
+          aria-live="polite"
+        >
           <div
             ref={containerRef}
-            className="cf-turnstile"
+            className={`cf-turnstile flex w-full justify-center ${status === "error" || status === "verified" ? "hidden" : ""}`}
             data-sitekey={effectiveSiteKey}
             data-action={action}
           />
-          {!isLoaded && (
-            <div className="text-xs text-slate-400 font-medium flex items-center gap-2 py-3">
-              <svg className="size-4 animate-spin text-slate-400" fill="none" viewBox="0 0 24 24">
+
+          {status === "verified" && (
+            <div className="flex w-full items-center gap-3 px-3 py-2 text-left">
+              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-emerald-100 font-bold text-emerald-700" aria-hidden="true">
+                ✓
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-slate-800">Security verification complete</p>
+                <p className="mt-0.5 text-[11px] leading-4 text-slate-500">You can continue signing in securely.</p>
+              </div>
+            </div>
+          )}
+          {status === "loading" && (
+            <div className="flex items-center gap-2 py-3 text-xs font-medium text-slate-500">
+              <svg className="size-4 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
               <span>Loading security check...</span>
             </div>
           )}
+
+          {status === "error" && (
+            <div className="w-full px-3 py-2 text-center">
+              <p className="text-xs font-semibold text-red-700">{errorMessage}</p>
+              {configuredKey && (
+                <button
+                  type="button"
+                  onClick={retry}
+                  className="mt-2 inline-flex min-h-9 items-center justify-center rounded-full border border-red-200 bg-white px-4 text-xs font-semibold text-red-700 transition hover:bg-red-50"
+                >
+                  Retry security check
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );
-  }
+  },
 );
