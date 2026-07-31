@@ -11,6 +11,10 @@ import {
   PurchaseTransparencySection,
 } from "@/components/marketing/homepage-trust-sections";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
+import {
+  BusinessWorkflowPlayground,
+  ProjectWorkspacePlayground,
+} from "@/components/marketing/interactive-workflow-sections";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { TestimonialsSection } from "@/components/marketing/testimonials-section";
@@ -69,9 +73,11 @@ export default async function HomePage() {
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>
 
+        <BusinessWorkflowPlayground />
         <PublishedWorkPreview data={portfolio} />
         <PurchaseTransparencySection />
         <HowItWorksSection />
+        <ProjectWorkspacePlayground />
         <WhyChooseUsSection />
         <TestimonialsSection items={testimonials} />
         <HomepageFaqPreview items={questions} />
