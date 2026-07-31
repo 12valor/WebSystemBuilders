@@ -1,135 +1,198 @@
-"use client";
-
-import React from "react";
-import { AppIconBadge } from "@/components/ui/app-icon-badge";
+import Link from "next/link";
 import {
-  ShieldCheck,
+  ArrowRight,
+  Check,
   Code2,
-  Lock,
-  Award,
-  Sparkles,
+  CreditCard,
   Database,
-  Terminal,
+  ShieldCheck,
 } from "lucide-react";
+
+const supportingProofs = [
+  {
+    eyebrow: "Payment review",
+    title: "Payment verified before delivery",
+    description:
+      "GCash or QRPh proof is matched to the recorded order before protected access is granted.",
+    href: "/legal/delivery",
+    linkLabel: "Review delivery policy",
+    icon: CreditCard,
+    accent: "emerald",
+  },
+  {
+    eyebrow: "Included support",
+    title: "30-day installation and defect support",
+    description:
+      "Support begins at fulfillment. First human response is targeted within two Philippine business days.",
+    href: "/faq",
+    linkLabel: "Read support answers",
+    icon: ShieldCheck,
+    accent: "rose",
+  },
+  {
+    eyebrow: "Product details",
+    title: "Requirements disclosed per system",
+    description:
+      "Listings identify the stack, database, migrations, security boundaries, and deployment responsibilities.",
+    href: "/systems",
+    linkLabel: "Browse published systems",
+    icon: Database,
+    accent: "indigo",
+  },
+] as const;
+
+const accentStyles = {
+  emerald: {
+    icon: "border-emerald-200 bg-emerald-50 text-emerald-700",
+    eyebrow: "text-emerald-700",
+  },
+  rose: {
+    icon: "border-rose-200 bg-rose-50 text-rose-700",
+    eyebrow: "text-rose-700",
+  },
+  indigo: {
+    icon: "border-indigo-200 bg-indigo-50 text-indigo-700",
+    eyebrow: "text-indigo-700",
+  },
+} as const;
 
 export function WhyChooseUsSection() {
   return (
-    <section className="py-20 sm:py-28 bg-[#FAFAFC] relative overflow-hidden border-b border-[#E5E7EB]">
+    <section
+      aria-labelledby="confidence-title"
+      className="border-b border-slate-200 bg-[#FAFAFC] py-20 font-sans text-slate-950 sm:py-24 lg:py-28"
+    >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#2563EB] text-xs font-bold uppercase tracking-wider border border-blue-100 mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>The WebSystemBuilders Difference</span>
+        <div className="grid gap-6 border-b border-slate-200 pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
+              What every purchase makes clear
+            </p>
+            <h2
+              id="confidence-title"
+              className="mt-4 max-w-xl text-4xl font-semibold leading-[1.04] tracking-[-0.055em] sm:text-5xl lg:text-6xl"
+            >
+              Know exactly what you receive.
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0F172A] tracking-[-0.02em]">
-            Built for total technical confidence
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#64748B] font-normal leading-relaxed max-w-[700px] mx-auto">
-            Published system pages disclose their architecture, requirements, commercial rights, support coverage, and delivery terms before purchase.
+          <p className="max-w-2xl text-base leading-8 text-slate-600 lg:justify-self-end lg:text-lg">
+            Published system pages identify the package, commercial license,
+            technical requirements, support coverage, and verified delivery
+            path before purchase.
           </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          {/* Bento Card 1: Large Span (Col 8) - Full Source Code */}
-          <div className="md:col-span-8 rounded-[20px] bg-white p-8 md:p-10 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300">
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <AppIconBadge icon={Code2} color="blue" size="lg" />
-                <span className="text-xs font-semibold text-[#2563EB] bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-                  Full Ownership Rights
-                </span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-                Commercial Source Code Package
+        <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(340px,0.7fr)]">
+          <article className="flex flex-col rounded-3xl border border-slate-800 bg-slate-950 p-7 text-white shadow-[0_24px_55px_-38px_rgba(15,23,42,0.7)] sm:p-9 lg:p-10">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <span className="flex size-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.07] text-blue-300">
+                <Code2 className="size-6" aria-hidden="true" />
+              </span>
+              <span className="rounded-full border border-blue-300/25 bg-blue-300/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-blue-200">
+                Non-exclusive commercial license
+              </span>
+            </div>
+
+            <div className="mt-10 max-w-3xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-300">
+                Source package
+              </p>
+              <h3 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl">
+                Source code with clear commercial permissions.
               </h3>
-              <p className="mt-3 text-[#64748B] font-normal text-sm sm:text-base leading-relaxed max-w-xl">
-                You receive the complete, uncompiled source code package. Deploy, customize, modify, and redistribute with a broad perpetual commercial license.
+              <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                Ready-made systems include their delivered source package with
+                broad, perpetual permissions to use, copy, modify, deploy,
+                resell, and redistribute, subject to the stated license and
+                third-party terms.
               </p>
             </div>
 
-            {/* Code Snippet Box */}
-            <div className="mt-8 bg-[#0F172A] rounded-xl p-4 text-xs font-mono text-slate-300 border border-slate-800 shadow-md">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
-                <span className="text-emerald-400 font-semibold flex items-center gap-2">
-                  <Terminal className="w-3.5 h-3.5" />
-                  npm run dev
-                </span>
-                <span className="text-[10px] text-slate-400">Next.js App Router + Supabase RLS</span>
-              </div>
-              <p className="text-slate-300">✓ Commercial non-exclusive license attached</p>
-              <p className="text-slate-300">✓ Delivery terms listed per product</p>
-            </div>
-          </div>
+            <ul className="mt-9 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+              <li className="flex items-start gap-3 bg-slate-950 p-4 sm:block sm:p-5">
+                <Check className="mt-0.5 size-4 shrink-0 text-blue-300 sm:mt-0" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-bold text-white sm:mt-5">
+                    Delivered source package
+                  </p>
+                  <p className="mt-1 text-xs leading-6 text-slate-400 sm:mt-2">
+                    The purchased version&apos;s source files and supplied
+                    documentation.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3 bg-slate-950 p-4 sm:block sm:p-5">
+                <Check className="mt-0.5 size-4 shrink-0 text-blue-300 sm:mt-0" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-bold text-white sm:mt-5">
+                    Commercial use and redistribution
+                  </p>
+                  <p className="mt-1 text-xs leading-6 text-slate-400 sm:mt-2">
+                    Use, modify, deploy, resell, and redistribute as permitted.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3 bg-slate-950 p-4 sm:block sm:p-5">
+                <Check className="mt-0.5 size-4 shrink-0 text-blue-300 sm:mt-0" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-bold text-white sm:mt-5">
+                    Original ownership retained
+                  </p>
+                  <p className="mt-1 text-xs leading-6 text-slate-400 sm:mt-2">
+                    WebSystemBuilders may continue selling and licensing the
+                    same system.
+                  </p>
+                </div>
+              </li>
+            </ul>
 
-          {/* Bento Card 2: Small Span (Col 4) - Verified Checkout */}
-          <div className="md:col-span-4 rounded-[20px] bg-white p-8 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300">
-            <div>
-              <AppIconBadge icon={Lock} color="emerald" size="lg" className="mb-6" />
-              <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
-                Payment Reviewed Before Delivery
-              </h3>
-              <p className="mt-3 text-sm text-[#64748B] font-normal leading-relaxed">
-                GCash or QRPh references and submitted proof are reviewed before an order becomes eligible for protected delivery.
-              </p>
-            </div>
+            <Link
+              href="/legal/license"
+              className="mt-8 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-bold text-white transition-colors hover:border-blue-300/50 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 motion-reduce:transition-none"
+            >
+              Review license summary
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </article>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-[#10B981]">
-              <span>GCash · QRPh</span>
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-          </div>
+          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+            {supportingProofs.map((proof) => {
+              const Icon = proof.icon;
+              const styles = accentStyles[proof.accent];
 
-          {/* Bento Card 3: Small Span (Col 4) - 30 Days Support */}
-          <div className="md:col-span-4 rounded-[20px] bg-white p-8 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300">
-            <div>
-              <AppIconBadge icon={ShieldCheck} color="rose" size="lg" className="mb-6" />
-              <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
-                30 Days Defect Support
-              </h3>
-              <p className="mt-3 text-sm text-[#64748B] font-normal leading-relaxed">
-                Direct post-purchase assistance for installation setup and reproducible code defect repairs.
-              </p>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-rose-600">
-              <span>First-response target</span>
-              <Award className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Bento Card 4: Medium Span (Col 8) - Database & Security */}
-          <div className="md:col-span-8 rounded-[20px] bg-white p-8 md:p-10 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300">
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <AppIconBadge icon={Database} color="indigo" size="lg" />
-                <span className="text-xs font-semibold text-[#4F46E5] bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-                  Product-specific details
-                </span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight">
-                Disclosed Database and Security Requirements
-              </h3>
-              <p className="mt-3 text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
-                Each published listing identifies its technology stack, database requirements, included migrations, security boundaries, and deployment responsibilities.
-              </p>
-            </div>
-
-            <div className="mt-8 grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 text-center">
-              <div>
-                <div className="text-xl font-bold text-[#0F172A]">UTC</div>
-                <div className="text-[10px] text-slate-400 font-semibold uppercase">Timestamps</div>
-              </div>
-              <div>
-                <div className="text-xl font-bold text-[#4F46E5]">Minor Units</div>
-                <div className="text-[10px] text-slate-400 font-semibold uppercase">Authoritative Money</div>
-              </div>
-              <div>
-                <div className="text-xl font-bold text-[#10B981]">Idempotent</div>
-                <div className="text-[10px] text-slate-400 font-semibold uppercase">Fulfillment</div>
-              </div>
-            </div>
+              return (
+                <article
+                  key={proof.title}
+                  className="group grid h-full grid-cols-[auto_minmax(0,1fr)] items-start gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.35)] transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_20px_45px_-32px_rgba(15,23,42,0.4)] motion-reduce:transform-none motion-reduce:transition-none"
+                >
+                  <div
+                    className={`flex size-10 items-center justify-center rounded-xl border ${styles.icon}`}
+                  >
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                  <div className="min-w-0">
+                    <p
+                      className={`text-[11px] font-extrabold uppercase tracking-[0.12em] ${styles.eyebrow}`}
+                    >
+                      {proof.eyebrow}
+                    </p>
+                    <h3 className="mt-1.5 text-lg font-semibold leading-snug tracking-[-0.03em] text-slate-950">
+                      {proof.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      {proof.description}
+                    </p>
+                    <Link
+                      href={proof.href}
+                      className="mt-4 inline-flex min-h-9 w-fit items-center gap-2 border-b border-slate-300 text-xs font-bold text-slate-700 transition-colors hover:border-blue-600 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 motion-reduce:transition-none"
+                    >
+                      {proof.linkLabel}
+                      <ArrowRight className="size-3.5" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
