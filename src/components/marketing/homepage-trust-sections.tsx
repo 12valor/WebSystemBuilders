@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
+  ExternalLink,
   FileText,
   LockKeyhole,
   MessageSquareText,
@@ -179,30 +181,111 @@ export function HomepageFaqPreview({ items }: { items: PublicFaqItem[] }) {
   );
 }
 
+function GitHubMark({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M12 .7a11.3 11.3 0 00-3.6 22c.6.1.8-.2.8-.5v-2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 1.9 3 1.4 3.7 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.6.8.5A11.3 11.3 0 0012 .7z" />
+    </svg>
+  );
+}
 export function FounderIdentitySection({ profile }: { profile: PublicCompanyProfile }) {
-  const initials = profile.founderName.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
+  const githubProfile = {
+    handle: "12valor",
+    url: "https://github.com/12valor",
+    avatarUrl: "https://avatars.githubusercontent.com/u/171469818?v=4",
+  } as const;
+  const portfolioUrl = "https://12valor.vercel.app/";
 
   return (
     <section aria-labelledby="founder-identity-title" className="bg-[#FAFAFC] py-20 sm:py-28">
       <div className="mx-auto grid w-[min(calc(100%-32px),1080px)] gap-8 rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.25)] sm:p-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14 lg:p-12">
-        <div className="flex size-28 items-center justify-center rounded-3xl bg-slate-950 text-3xl font-extrabold tracking-tight text-white lg:size-40">
-          {initials}
+        <div className="self-start">
+          <a
+            href={githubProfile.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`View ${profile.founderName} on GitHub`}
+            className="group block w-fit rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
+          >
+            <span className="relative block size-32 overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm lg:size-44">
+              <Image
+                src={githubProfile.avatarUrl}
+                alt={`${profile.founderName} GitHub profile photo`}
+                fill
+                sizes="(min-width: 1024px) 176px, 128px"
+                className="object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none"
+              />
+            </span>
+          </a>
+          <div className="mt-4 flex items-center gap-2 text-sm font-bold text-slate-700">
+            <GitHubMark className="size-4 text-slate-950" />
+            <span>@{githubProfile.handle}</span>
+          </div>
         </div>
+
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Founder and public contact</p>
-          <h2 id="founder-identity-title" className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">{profile.founderName}</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">
+            Founder and web developer
+          </p>
+          <h2
+            id="founder-identity-title"
+            className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl"
+          >
+            {profile.founderName}
+          </h2>
           <p className="mt-2 font-semibold text-blue-700">{profile.founderTitle}</p>
           <p className="mt-5 max-w-3xl leading-7 text-slate-600">{profile.founderBio}</p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/about" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-bold text-white hover:bg-slate-800">About WebSystemBuilders <ArrowRight className="size-4" /></Link>
-            {profile.publicEmail ? <a href={`mailto:${profile.publicEmail}`} className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 hover:bg-slate-50">{profile.publicEmail}</a> : <Link href="/contact" className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 hover:bg-slate-50">Contact WebSystemBuilders</Link>}
+            <a
+              href={githubProfile.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-bold text-white transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+            >
+              <GitHubMark className="size-4" />
+              View GitHub Profile
+            </a>
+            <a
+              href={portfolioUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+            >
+              <ExternalLink className="size-4" aria-hidden="true" />
+              View Portfolio
+            </a>
+            <Link
+              href="/about"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
+            >
+              About WebSystemBuilders <ArrowRight className="size-4" />
+            </Link>
+            {profile.publicEmail ? (
+              <a
+                href={`mailto:${profile.publicEmail}`}
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
+              >
+                {profile.publicEmail}
+              </a>
+            ) : (
+              <Link
+                href="/contact"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 px-5 text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
+              >
+                Contact WebSystemBuilders
+              </Link>
+            )}
           </div>
         </div>
       </div>
     </section>
   );
 }
-
 function selectTrustQuestions(items: PublicFaqItem[]) {
   const preferredCategories = ["Products and services", "License and package", "Pricing", "Delivery", "Policies"];
   const selected = preferredCategories.flatMap((category) => items.filter((item) => item.category === category).slice(0, 1));

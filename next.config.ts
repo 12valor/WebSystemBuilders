@@ -39,6 +39,15 @@ const privateRouteHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/u/**",
+      },
+    ],
+  },
   async headers() {
     const privatePrefixes = ["/account/:path*", "/admin/:path*", "/api/:path*", "/auth/:path*", "/checkout/:path*", "/downloads/:path*"];
     return [
