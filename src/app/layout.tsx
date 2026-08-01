@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Discover ready-made software systems and request custom software development through a handcrafted, high-trust marketplace.",
   icons: {
-    icon: "/brand/favicon.svg",
+    icon: "/brand/websystembuilders-logo.png",
   },
 };
 

@@ -11,7 +11,7 @@ export default function GetStartedPage() {
       <header className="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8">
           <Link href="/">
-            <BrandLogo priority className="h-auto w-48" />
+            <BrandLogo priority className="size-12" />
           </Link>
 
           <div className="flex items-center gap-4">

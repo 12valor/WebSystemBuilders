@@ -106,7 +106,7 @@ export function SiteNavigation() {
           <BrandLogo
             variant="light"
             priority
-            className="h-auto w-[185px] sm:w-[210px] transition-transform duration-300 group-hover:scale-[1.02]"
+            className="size-11 transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </Link>
 

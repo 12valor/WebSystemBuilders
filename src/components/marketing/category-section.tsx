@@ -143,10 +143,11 @@ export function TrustStrip() {
             >
               <span className="flex size-14 items-center justify-center rounded-2xl border border-slate-200 bg-white">
                 <Image
-                  src="/brand/websystembuilders-mark.svg"
+                  src="/brand/websystembuilders-logo.png"
                   alt=""
                   width={44}
-                  height={25}
+                  height={44}
+                  className="size-11 rounded-xl bg-[#08090A] object-contain"
                   aria-hidden="true"
                   className="h-auto w-10"
                 />

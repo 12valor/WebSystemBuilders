@@ -19,7 +19,7 @@ export function AdminShell({ children, active = "Systems" }: { children: React.R
     <div className="min-h-screen bg-[#FAFAFC] text-slate-900 text-sm">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-slate-200/80 bg-white lg:flex">
         <div className="flex h-16 items-center border-b border-slate-200/80 px-5">
-          <BrandLogo variant="light" priority className="h-auto w-[190px]" />
+          <BrandLogo variant="light" priority className="size-10" />
         </div>
         <nav aria-label="Admin navigation" className="grid gap-1 p-3">
           {navigation.map(([label, href]) => (

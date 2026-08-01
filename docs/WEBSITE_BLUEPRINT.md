@@ -615,12 +615,12 @@ These are starting values and should be refined during design-system implementat
 
 ### Approved brand identity
 
-The approved logo uses a continuous modular `W` with one restrained cobalt connecting stroke. It represents separate software components working together as one system. Production-ready SVG marks, horizontal wordmarks, a favicon, and usage guidance are maintained in `assets/brand`.
+The approved logo uses the supplied interlocking `WS` mark in blue and white. The production PNG is maintained in `assets/brand` and served from `public/brand`.
 
-- Use the off-white and cobalt variant on the primary dark interface.
-- Use the graphite and cobalt variant on light backgrounds.
-- Use Geist for the `WebSystemBuilders` wordmark presentation.
-- Keep the identity flat and restrained; do not add gradients, glow, shadows, bevels, or decorative animation to the logo.
+- Use the transparent mark directly on dark interfaces.
+- Place the unchanged mark on a restrained dark backing when it appears on a light surface so the white stroke remains legible.
+- Preserve the artwork's original colors and proportions.
+- Keep the presentation flat and restrained; do not add glow, shadows, bevels, or decorative animation to the logo.
 
 ### Visual rules
 

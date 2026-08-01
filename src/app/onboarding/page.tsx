@@ -76,7 +76,7 @@ export default function OnboardingWizardPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between py-10 px-6 sm:px-8 font-sans text-slate-900">
       <header className="sm:mx-auto sm:w-full sm:max-w-xl flex items-center justify-between">
         <Link href="/">
-          <BrandLogo priority className="h-auto w-40" />
+          <BrandLogo priority className="size-12" />
         </Link>
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
           Step {step} of 5

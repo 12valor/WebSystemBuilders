@@ -8,18 +8,20 @@ type BrandLogoProps = {
 };
 
 export function BrandLogo({ compact = false, priority = false, variant = "light", className }: BrandLogoProps) {
-  const src = compact
-    ? variant === "dark" ? "/brand/websystembuilders-mark-on-dark.svg" : "/brand/websystembuilders-mark.svg"
-    : variant === "dark" ? "/brand/websystembuilders-logo-on-dark.svg" : "/brand/websystembuilders-logo.svg";
-
   return (
-    <Image
-      src={src}
-      alt={compact ? "" : "WebSystemBuilders"}
-      width={compact ? 112 : 520}
-      height={compact ? 64 : 80}
-      priority={priority}
-      className={className}
-    />
+    <span
+      className={`relative inline-block aspect-square shrink-0 overflow-hidden ${
+        variant === "light" ? "rounded-xl bg-[#08090A]" : ""
+      } ${className ?? ""}`}
+    >
+      <Image
+        src="/brand/websystembuilders-logo.png"
+        alt={compact ? "" : "WebSystemBuilders"}
+        width={1920}
+        height={1920}
+        priority={priority}
+        className="absolute -left-[8.6%] -top-[9.4%] h-auto w-[118%] max-w-none"
+      />
+    </span>
   );
 }

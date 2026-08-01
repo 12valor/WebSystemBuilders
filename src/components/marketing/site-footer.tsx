@@ -65,7 +65,7 @@ export async function SiteFooter() {
       <div className="mx-auto grid w-[min(calc(100%-40px),1280px)] gap-12 pb-14 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-12 lg:gap-16 lg:pb-16 xl:w-[min(calc(100%-96px),1280px)]">
         {/* Brand & Summary Column */}
         <div className="space-y-6 lg:col-span-4">
-          <BrandLogo variant="dark" priority className="h-auto w-[200px]" />
+          <BrandLogo variant="dark" priority className="size-16" />
 
           <p className="max-w-md text-sm leading-relaxed text-[#A1A1AA]">
             {profile.companySummary}

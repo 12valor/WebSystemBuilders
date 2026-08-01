@@ -14,7 +14,7 @@ export function CheckoutPreview() {
       <header className="border-b border-white/10 bg-background">
         <div className="mx-auto flex min-h-[74px] w-[min(calc(100%-40px),1080px)] items-center justify-between gap-6 md:w-[min(calc(100%-64px),1080px)]">
           <Link href="/" aria-label="WebSystemBuilders home">
-            <BrandLogo priority className="h-auto w-[184px] sm:w-[214px]" />
+            <BrandLogo priority className="size-12" />
           </Link>
           <div className="text-right">
             <p className="text-xs font-semibold text-foreground">Secure checkout</p>

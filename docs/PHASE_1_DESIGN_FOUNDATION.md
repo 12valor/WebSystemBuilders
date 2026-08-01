@@ -19,7 +19,7 @@ Create a cohesive interface foundation for the public website, catalog, checkout
 
 | Area | Approved direction |
 |---|---|
-| Brand | WebSystemBuilders with the approved modular W identity |
+| Brand | WebSystemBuilders with the approved interlocking WS identity |
 | Audiences | Students and business owners with distinct entry paths |
 | Initial models | Ready-made systems and custom development |
 | Catalog | Database-driven and administrator-controlled |
@@ -43,11 +43,10 @@ Create a cohesive interface foundation for the public website, catalog, checkout
 
 Production assets live in [`../assets/brand`](../assets/brand).
 
-- Use `websystembuilders-logo-on-dark.svg` in the primary public header.
-- Use the standalone mark for compact navigation and account surfaces.
-- Use `favicon.svg` for browser identity.
-- Use the cobalt connecting stroke sparingly as the primary accent.
-- Do not add glow, gradients, bevels, shadows, or decorative animation to the logo.
+- Use `websystembuilders-logo.png` across public, account, checkout, and administrator surfaces.
+- Use the transparent artwork directly on dark backgrounds.
+- Place it on a restrained dark backing on light backgrounds for contrast.
+- Preserve its original colors and proportions, and do not add glow, bevels, shadows, or decorative animation.
 
 ## 5. Color tokens
 
