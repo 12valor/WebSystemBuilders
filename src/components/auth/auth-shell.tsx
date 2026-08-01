@@ -8,7 +8,7 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
         <div className="mx-auto flex min-h-[74px] w-[min(calc(100%-40px),1120px)] items-center justify-between gap-6 md:w-[min(calc(100%-64px),1120px)]">
           <Link href="/" aria-label="WebSystemBuilders home" className="transition-opacity hover:opacity-80">
-            <BrandLogo variant="light" priority className="size-12" />
+            <BrandLogo priority className="size-12" />
           </Link>
           <Link
             href="/systems"

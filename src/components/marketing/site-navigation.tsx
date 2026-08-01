@@ -104,7 +104,6 @@ export function SiteNavigation() {
           className="shrink-0 group flex items-center gap-2 focus-visible:outline-none"
         >
           <BrandLogo
-            variant="light"
             priority
             className="size-11 transition-transform duration-300 group-hover:scale-[1.02]"
           />

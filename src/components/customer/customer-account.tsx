@@ -44,7 +44,7 @@ export function CustomerAccount({
         <div className="mx-auto flex min-h-[74px] w-[min(calc(100%-40px),1240px)] items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="WebSystemBuilders home" className="transition-opacity hover:opacity-80">
-              <BrandLogo variant="light" priority className="size-12" />
+              <BrandLogo priority className="size-12" />
             </Link>
             <span className="hidden h-5 w-px bg-slate-200 sm:block" />
             <span className="hidden text-xs font-semibold uppercase tracking-wider text-slate-500 sm:block">

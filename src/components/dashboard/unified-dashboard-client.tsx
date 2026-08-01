@@ -134,7 +134,7 @@ export function UnifiedDashboardClient({
       {/* Mobile Header */}
       <div className="sticky top-0 z-40 flex items-center justify-between border-b border-white/70 bg-white/85 px-5 py-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] backdrop-blur-xl md:hidden">
         <Link href="/">
-          <BrandLogo variant="light" priority className="size-10" />
+          <BrandLogo priority className="size-10" />
         </Link>
         <button
           type="button"
@@ -165,7 +165,7 @@ export function UnifiedDashboardClient({
         <div className="space-y-6">
           <div className="hidden md:block">
             <Link href="/" className="inline-block transition-opacity hover:opacity-80">
-              <BrandLogo variant="light" priority className="size-12" />
+              <BrandLogo priority className="size-12" />
             </Link>
           </div>
 

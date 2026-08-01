@@ -17,154 +17,88 @@ import {
   ShieldCheck,
   CheckCircle2,
   ExternalLink,
-  PanelsTopLeft,
 } from "lucide-react";
 
-const serviceFacts = [
+const institutions = [
   {
-    value: "2",
-    title: "Audience Paths",
-    description:
-      "Dedicated journeys help students and business owners find the right system or service.",
+    name: "Technological University of the Philippines",
+    src: "/images/institutions/tup.png",
+    width: 1280,
+    height: 1280,
+    rotation: "lg:-rotate-3",
   },
   {
-    value: "4",
-    title: "Purchase Stages",
-    description:
-      "Choose, confirm, submit proof, and receive access only after payment verification.",
+    name: "Central Philippines State University",
+    src: "/images/institutions/cpsu.png",
+    width: 727,
+    height: 664,
+    rotation: "lg:rotate-2",
   },
   {
-    value: "30",
-    title: "Days of Included Support",
-    description:
-      "Installation and reproducible-defect support begins when the paid order is fulfilled.",
+    name: "Dr. Vicente F. Gustilo Memorial National High School",
+    src: "/images/institutions/dr-vicente-f-gustilo-mnhs.png",
+    width: 447,
+    height: 447,
+    rotation: "lg:-rotate-1",
+  },
+  {
+    name: "Negros Occidental High School",
+    src: "/images/institutions/negros-occidental-high-school.png",
+    width: 736,
+    height: 731,
+    rotation: "lg:rotate-3",
   },
 ] as const;
-
-function GitHubMark({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <path d="M12 .7a11.3 11.3 0 00-3.6 22c.6.1.8-.2.8-.5v-2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 1.9 3 1.4 3.7 1.1.1-.8.4-1.4.8-1.7-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.2c0 .3.2.6.8.5A11.3 11.3 0 0012 .7z" />
-    </svg>
-  );
-}
 
 export function TrustStrip() {
   return (
     <section
-      aria-labelledby="service-proof-title"
+      id="institutions"
+      aria-labelledby="institutions-title"
       className="border-y border-slate-200 bg-white font-sans text-slate-950"
     >
-      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <dl className="grid border-b border-slate-200 md:grid-cols-3">
-          {serviceFacts.map((fact) => (
-            <div
-              key={fact.title}
-              className="border-b border-slate-200 py-10 last:border-b-0 sm:py-12 md:border-r md:border-b-0 md:px-10 md:first:pl-0 md:last:border-r-0 md:last:pr-0 lg:px-14"
-            >
-              <dd className="text-[4.5rem] font-semibold leading-none tracking-[-0.07em] text-slate-950 sm:text-[5.5rem] lg:text-[6.5rem]">
-                {fact.value}
-              </dd>
-              <dt className="mt-5 text-sm font-extrabold tracking-tight text-slate-900 sm:text-base">
-                {fact.title}
-              </dt>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-slate-500">
-                {fact.description}
-              </p>
-            </div>
-          ))}
-        </dl>
-
-        <div className="grid gap-10 py-14 sm:py-16 lg:grid-cols-[0.68fr_1.32fr] lg:items-center lg:gap-16 lg:py-20">
+      <div className="mx-auto w-[min(calc(100%-40px),1280px)] py-16 md:w-[min(calc(100%-64px),1280px)] md:py-20 xl:w-[min(calc(100%-96px),1280px)] xl:py-24">
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-16">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
-              Explore our work
+              Academic community
             </p>
             <h2
-              id="service-proof-title"
+              id="institutions-title"
               className="mt-4 max-w-md text-4xl font-semibold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-6xl"
             >
-              Proof over promises.
+              Institutions represented.
             </h2>
-            <p className="mt-5 max-w-md text-sm leading-7 text-slate-600 sm:text-base">
-              Review the developer profile, live portfolio, and published
-              project records behind WebSystemBuilders.
-            </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3" aria-label="Work and profile links">
-            <a
-              href="https://github.com/12valor"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="View the 12valor GitHub profile in a new tab"
-              className="group flex min-h-44 flex-col justify-between rounded-3xl border border-slate-200 bg-slate-950 p-5 text-white transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-slate-400 hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 motion-reduce:transform-none motion-reduce:transition-none"
-            >
-              <span className="flex size-14 items-center justify-center rounded-2xl bg-white text-slate-950">
-                <GitHubMark className="size-8" />
-              </span>
-              <span>
-                <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.1em] text-slate-400">
-                  GitHub profile
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </span>
-                <span className="mt-1 block text-lg font-extrabold">@12valor</span>
-              </span>
-            </a>
-
-            <a
-              href="https://12valor.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open AG Evangelista's developer portfolio in a new tab"
-              className="group flex min-h-44 flex-col justify-between rounded-3xl border border-blue-200 bg-blue-600 p-5 text-white transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-blue-400 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 motion-reduce:transform-none motion-reduce:transition-none"
-            >
-              <span className="flex size-14 items-center justify-center rounded-2xl bg-white text-blue-700">
-                <PanelsTopLeft className="size-8" aria-hidden="true" />
-              </span>
-              <span>
-                <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.1em] text-blue-100">
-                  Developer portfolio
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </span>
-                <span className="mt-1 block text-lg font-extrabold">12valor.vercel.app</span>
-              </span>
-            </a>
-
-            <Link
-              href="/portfolio"
-              aria-label="View published WebSystemBuilders projects"
-              className="group flex min-h-44 flex-col justify-between rounded-3xl border border-slate-200 bg-slate-50 p-5 text-slate-950 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 motion-reduce:transform-none motion-reduce:transition-none"
-            >
-              <span className="flex size-14 items-center justify-center rounded-2xl border border-slate-200 bg-white">
+          <ul
+            aria-label="Educational institutions represented in the WebSystemBuilders community"
+            className="grid grid-cols-2 gap-4 sm:gap-5 lg:isolate lg:flex lg:items-center lg:justify-end lg:gap-0"
+          >
+            {institutions.map((institution, index) => (
+              <li
+                key={institution.name}
+                className={`flex aspect-square items-center justify-center rounded-3xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 lg:size-40 lg:shrink-0 lg:p-5 lg:shadow-[0_12px_30px_rgba(15,23,42,0.08)] ${
+                  index === 0 ? "lg:ml-0" : "lg:-ml-5"
+                } ${institution.rotation}`}
+              >
                 <Image
-                  src="/brand/websystembuilders-logo.png"
-                  alt=""
-                  width={44}
-                  height={44}
-                  className="size-11 rounded-xl bg-[#08090A] object-contain"
-                  aria-hidden="true"
-                  className="h-auto w-10"
+                  src={institution.src}
+                  alt={`${institution.name} logo`}
+                  width={institution.width}
+                  height={institution.height}
+                  sizes="(max-width: 1023px) 42vw, 160px"
+                  className="h-full w-full object-contain"
                 />
-              </span>
-              <span>
-                <span className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">
-                  Published projects
-                </span>
-                <span className="mt-1 block text-lg font-extrabold">WebSystemBuilders</span>
-              </span>
-            </Link>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
   );
 }
+
 export function CategorySection({ catalog }: { catalog: CatalogData }) {
   const featured = catalog.systems.filter((system) => system.featured);
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
