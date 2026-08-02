@@ -1,95 +1,93 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const startingPoints = [
   {
     number: "01",
-    label: "Published systems",
-    title: "Start with something ready.",
-    description:
-      "Compare the package, requirements, price, and included files before checkout.",
-    action: "Browse systems",
+    title: "Ready-made systems",
+    description: "Compare published packages, requirements, pricing, and included files.",
+    action: "Browse catalog",
     href: "/systems",
-    className: "bg-[#0B1224] text-white",
-    mutedClassName: "text-slate-300",
-    lineClassName: "border-white/20",
   },
   {
     number: "02",
-    label: "Custom development",
-    title: "Build around the work.",
-    description:
-      "Bring the workflow, users, and constraints. Scope and pricing are agreed before work begins.",
-    action: "Outline your project",
+    title: "Custom development",
+    description: "Define the workflow, users, and constraints before scope and pricing are agreed.",
+    action: "Request a quote",
     href: "/request-a-quote",
-    className: "bg-[#1769FF] text-white",
-    mutedClassName: "text-blue-100",
-    lineClassName: "border-white/25",
   },
 ] as const;
 
 export function FinalCallToAction() {
   return (
-    <section id="contact" className="bg-[#F5F5F1] py-20 sm:py-28">
+    <section id="contact" className="bg-[#FAFAFC] py-20 sm:py-28">
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="border-t border-slate-950 pt-6 sm:pt-8">
-          <div className="grid gap-8 lg:grid-cols-[minmax(180px,0.35fr)_1fr] lg:gap-16">
-            <div className="flex items-start gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
-              <span className="mt-1.5 size-2 bg-[#1769FF]" aria-hidden="true" />
-              Start here
-            </div>
+        <div className="relative overflow-hidden rounded-[28px] border border-slate-800 bg-[#0F172A] px-7 py-10 text-white shadow-[0_28px_70px_-32px_rgba(15,23,42,0.55)] sm:px-12 sm:py-14 lg:px-16 lg:py-16">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_88%_10%,rgba(124,58,237,0.22),transparent_34%),radial-gradient(circle_at_8%_95%,rgba(37,99,235,0.2),transparent_36%)]"
+            aria-hidden="true"
+          />
 
+          <div className="relative grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
             <div>
-              <h2 className="max-w-4xl text-[clamp(3rem,7vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.07em] text-[#0B1224]">
-                Ready to build
-                <span className="block text-[#1769FF]">what comes next?</span>
-              </h2>
-              <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Choose a production-ready package or start a custom build. Either way, the boundaries are clear before you commit.
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-blue-200">
+                <span className="size-2 rounded-full bg-blue-400" aria-hidden="true" />
+                Start your build
               </p>
+
+              <h2 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-5xl lg:text-6xl">
+                Build the system that fits what comes next.
+              </h2>
+
+              <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+                Start with a production-ready package or bring us a workflow that needs its own technical solution.
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/systems"
+                  className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_-8px_rgba(37,99,235,0.6)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] motion-reduce:transform-none"
+                >
+                  Browse systems
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/request-a-quote"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 bg-white/[0.06] px-6 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
+                >
+                  Request a custom build
+                </Link>
+              </div>
+            </div>
+
+            <div className="border-y border-white/15">
+              {startingPoints.map((path, index) => (
+                <Link
+                  key={path.number}
+                  href={path.href}
+                  className={[
+                    "group grid grid-cols-[auto_1fr_auto] gap-4 py-6 transition-colors hover:text-blue-200",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-300",
+                    "sm:gap-5 sm:py-7",
+                    index > 0 ? "border-t border-white/15" : "",
+                  ].join(" ")}
+                >
+                  <span className="pt-1 text-xs font-bold tracking-[0.14em] text-blue-300">{path.number}</span>
+                  <span>
+                    <span className="block text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{path.title}</span>
+                    <span className="mt-2 block max-w-md text-sm leading-6 text-slate-400">{path.description}</span>
+                    <span className="mt-4 block text-sm font-semibold text-white">{path.action}</span>
+                  </span>
+                  <ArrowRight className="mt-1 size-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              ))}
             </div>
           </div>
 
-          <div className="mt-12 grid gap-3 md:grid-cols-2 lg:ml-[calc(35%+2.5rem)] lg:mt-16">
-            {startingPoints.map((path) => (
-              <Link
-                key={path.number}
-                href={path.href}
-                className={[
-                  "group flex min-h-[330px] flex-col justify-between p-7 transition-transform duration-200",
-                  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1769FF]",
-                  "motion-safe:hover:-translate-y-1 sm:p-9",
-                  path.className,
-                ].join(" ")}
-              >
-                <div className={["flex items-center justify-between border-b pb-5", path.lineClassName].join(" ")}>
-                  <span className="text-sm font-semibold tracking-[0.12em]">{path.number}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.16em]">{path.label}</span>
-                </div>
-
-                <div className="pt-14">
-                  <h3 className="max-w-sm text-[clamp(2rem,3vw,3.25rem)] font-semibold leading-[0.96] tracking-[-0.055em]">
-                    {path.title}
-                  </h3>
-                  <p className={["mt-5 max-w-md text-sm leading-6 sm:text-base sm:leading-7", path.mutedClassName].join(" ")}>
-                    {path.description}
-                  </p>
-                  <span className="mt-8 flex items-center justify-between border-t border-current/25 pt-5 text-sm font-semibold">
-                    {path.action}
-                    <ArrowUpRight
-                      className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-12 grid border-y border-slate-300 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 sm:grid-cols-3 lg:ml-[calc(35%+2.5rem)]">
-            <p className="py-4 sm:pr-5">Source package included</p>
-            <p className="border-t border-slate-300 py-4 sm:border-l sm:border-t-0 sm:px-5">30-day setup and defect support</p>
-            <p className="border-t border-slate-300 py-4 sm:border-l sm:border-t-0 sm:pl-5">Payment reviewed before delivery</p>
+          <div className="relative mt-12 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/15 pt-5 text-xs font-semibold text-slate-400 sm:mt-14">
+            <span>Source package included</span>
+            <span>30-day setup and defect support</span>
+            <span>Payment reviewed before delivery</span>
           </div>
         </div>
       </div>
