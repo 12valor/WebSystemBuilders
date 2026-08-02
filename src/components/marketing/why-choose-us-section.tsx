@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Check, Code2, CreditCard, Database, ShieldCheck } from "lucide-react";
+import { ArrowRight, Code2, CreditCard, Database, ShieldCheck } from "lucide-react";
 
 const proofTopics = [
   {
@@ -96,54 +96,127 @@ const accentStyles = {
 
 type ProofTopicId = (typeof proofTopics)[number]["id"];
 
+function ProofIllustration({ variant }: { variant: ProofTopicId }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 760 560" className="size-full" fill="none">
+      <rect width="760" height="560" rx="42" fill="#DCE6FF" />
+      <circle cx="626" cy="102" r="112" fill="#C7D2FE" />
+      <circle cx="108" cy="470" r="144" fill="#BFDBFE" />
+
+      {variant === "source" && (
+        <g>
+          <rect x="70" y="94" width="430" height="310" rx="28" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+          <path d="M70 154H500" stroke="#0F172A" strokeWidth="7" />
+          <circle cx="102" cy="124" r="8" fill="#2563EB" />
+          <circle cx="128" cy="124" r="8" fill="#A78BFA" />
+          <path d="M132 232L96 266L132 300M252 232L288 266L252 300M211 206L172 326" stroke="#2563EB" strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M336 215H448M336 252H420M336 289H458M336 326H404" stroke="#7C3AED" strokeWidth="12" strokeLinecap="round" />
+          <path d="M473 326H560" stroke="#4F46E5" strokeWidth="9" strokeLinecap="round" strokeDasharray="10 13" />
+          <path d="M544 307L566 326L544 345" stroke="#4F46E5" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+          <g transform="translate(530 280)">
+            <path d="M0 52L84 9L168 52L84 95L0 52Z" fill="#EDE9FE" stroke="#0F172A" strokeWidth="7" strokeLinejoin="round" />
+            <path d="M0 52V139L84 182V95L0 52ZM168 52V139L84 182V95L168 52Z" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" strokeLinejoin="round" />
+            <path d="M65 42L104 62" stroke="#7C3AED" strokeWidth="10" strokeLinecap="round" />
+          </g>
+        </g>
+      )}
+
+      {variant === "payment" && (
+        <g>
+          <rect x="74" y="104" width="252" height="340" rx="28" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+          <rect x="108" y="142" width="112" height="14" rx="7" fill="#2563EB" />
+          <path d="M108 196H288M108 232H252M108 268H274" stroke="#CBD5E1" strokeWidth="11" strokeLinecap="round" />
+          <rect x="108" y="318" width="184" height="78" rx="18" fill="#ECFDF5" stroke="#10B981" strokeWidth="5" />
+          <path d="M139 357L155 373L184 340" stroke="#10B981" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M344 274H425" stroke="#4F46E5" strokeWidth="9" strokeLinecap="round" strokeDasharray="10 13" />
+          <path d="M409 255L431 274L409 293" stroke="#4F46E5" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+          <rect x="450" y="126" width="238" height="170" rx="28" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+          <rect x="480" y="160" width="178" height="28" rx="10" fill="#DBEAFE" />
+          <path d="M486 238H554M580 238H650" stroke="#2563EB" strokeWidth="12" strokeLinecap="round" />
+          <path d="M582 306C550 321 532 326 532 326V390C532 435 558 463 582 476C606 463 632 435 632 390V326C632 326 614 321 582 306Z" fill="#0F172A" stroke="#FFFFFF" strokeWidth="8" strokeLinejoin="round" />
+          <path d="M558 389L575 406L608 369" stroke="#60A5FA" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      )}
+
+      {variant === "support" && (
+        <g>
+          <rect x="70" y="120" width="452" height="300" rx="30" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+          <path d="M70 178H522" stroke="#0F172A" strokeWidth="7" />
+          <circle cx="104" cy="149" r="8" fill="#FB7185" />
+          <circle cx="131" cy="149" r="8" fill="#FDA4AF" />
+          <circle cx="294" cy="292" r="74" fill="#FFE4E6" />
+          <path d="M255 310L321 244M270 238L328 296" stroke="#E11D48" strokeWidth="18" strokeLinecap="round" />
+          <rect x="102" y="210" width="102" height="18" rx="9" fill="#CBD5E1" />
+          <rect x="102" y="248" width="78" height="14" rx="7" fill="#E2E8F0" />
+          <rect x="102" y="282" width="92" height="14" rx="7" fill="#E2E8F0" />
+          <g transform="translate(490 76)">
+            <rect width="186" height="170" rx="28" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+            <path d="M0 54H186" stroke="#0F172A" strokeWidth="7" />
+            <path d="M42 0V34M144 0V34" stroke="#2563EB" strokeWidth="12" strokeLinecap="round" />
+            <text x="93" y="124" textAnchor="middle" fill="#E11D48" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="58" fontWeight="800">30</text>
+          </g>
+          <g transform="translate(510 342)">
+            <rect width="176" height="100" rx="24" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+            <path d="M42 100L22 122V98" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" strokeLinejoin="round" />
+            <path d="M34 36H142M34 66H112" stroke="#7C3AED" strokeWidth="10" strokeLinecap="round" />
+          </g>
+        </g>
+      )}
+
+      {variant === "details" && (
+        <g>
+          <rect x="74" y="76" width="330" height="396" rx="30" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+          <rect x="112" y="118" width="126" height="16" rx="8" fill="#7C3AED" />
+          <rect x="112" y="156" width="214" height="11" rx="5.5" fill="#DDD6FE" />
+          <rect x="112" y="214" width="28" height="28" rx="7" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="5" />
+          <path d="M119 228L126 235L138 220" stroke="#7C3AED" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M164 221H340M164 240H292" stroke="#0F172A" strokeWidth="8" strokeLinecap="round" />
+          <rect x="112" y="286" width="28" height="28" rx="7" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="5" />
+          <path d="M119 300L126 307L138 292" stroke="#7C3AED" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M164 293H322M164 312H278" stroke="#0F172A" strokeWidth="8" strokeLinecap="round" />
+          <rect x="112" y="358" width="28" height="28" rx="7" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="5" />
+          <path d="M119 372L126 379L138 364" stroke="#7C3AED" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M164 365H306M164 384H252" stroke="#0F172A" strokeWidth="8" strokeLinecap="round" />
+          <g transform="translate(454 132)">
+            <ellipse cx="112" cy="36" rx="112" ry="36" fill="#C7D2FE" stroke="#0F172A" strokeWidth="7" />
+            <path d="M0 36V246C0 266 50 282 112 282C174 282 224 266 224 246V36" fill="#FFFFFF" stroke="#0F172A" strokeWidth="7" />
+            <path d="M0 106C0 126 50 142 112 142C174 142 224 126 224 106M0 176C0 196 50 212 112 212C174 212 224 196 224 176" stroke="#0F172A" strokeWidth="7" />
+            <ellipse cx="112" cy="36" rx="66" ry="16" fill="#7C3AED" />
+          </g>
+        </g>
+      )}
+    </svg>
+  );
+}
+
 export function WhyChooseUsSection() {
   const [activeTopicId, setActiveTopicId] = useState<ProofTopicId>("source");
   const activeTopic = proofTopics.find((topic) => topic.id === activeTopicId) ?? proofTopics[0];
-  const ActiveIcon = activeTopic.icon;
-  const activeStyles = accentStyles[activeTopic.accent];
 
   return (
-    <section aria-labelledby="confidence-title" className="border-b border-slate-200 bg-[#FAFAFC] py-20 font-sans text-slate-950 sm:py-24 lg:py-28">
-      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="grid gap-6 border-b border-slate-200 pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
-          <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">What every purchase makes clear</p>
-            <h2 id="confidence-title" className="mt-4 max-w-xl text-4xl font-semibold leading-[1.04] tracking-[-0.055em] sm:text-5xl lg:text-6xl">Know exactly what you receive.</h2>
+    <section aria-labelledby="confidence-title" className="relative overflow-hidden border-y border-indigo-200/70 bg-[#E8EEFF] py-20 font-sans text-slate-950 sm:py-24 lg:py-28">
+      <div aria-hidden="true" className="absolute right-0 top-0 size-64 rounded-full border-[56px] border-violet-200/40" />
+      <div className="relative mx-auto grid w-[min(calc(100%-32px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
+        <div className="overflow-hidden rounded-[32px] border border-indigo-200 bg-[#DCE6FF] p-3 shadow-[0_28px_70px_-36px_rgba(37,99,235,0.38)] sm:p-5">
+          <div key={activeTopic.id} className="aspect-[4/3] overflow-hidden rounded-[24px] animate-in fade-in-0 zoom-in-95 duration-200 motion-reduce:animate-none">
+            <ProofIllustration variant={activeTopic.id} />
           </div>
-          <p className="max-w-2xl text-base leading-8 text-slate-600 lg:justify-self-end lg:text-lg">Published system pages identify the package, commercial license, technical requirements, support coverage, and verified delivery path before purchase.</p>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(340px,0.7fr)]">
-          <article id="purchase-proof-panel" aria-live="polite" className="flex min-h-[600px] flex-col rounded-3xl border border-slate-800 bg-slate-950 p-7 text-white shadow-[0_24px_55px_-38px_rgba(15,23,42,0.7)] sm:p-9 lg:p-10">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <span className={["flex size-12 items-center justify-center rounded-2xl border", activeStyles.icon].join(" ")}><ActiveIcon className="size-6" aria-hidden="true" /></span>
-              <span className={["rounded-full border px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em]", activeStyles.icon].join(" ")}>{activeTopic.badge}</span>
-            </div>
+        <div>
+          <p className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/70 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">
+            What every purchase makes clear
+          </p>
+          <h2 id="confidence-title" className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
+            Know exactly what you receive.
+          </h2>
+          <p className="mt-5 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
+            Published system pages identify the package, commercial license, technical requirements, support coverage, and verified delivery path before purchase.
+          </p>
 
-            <div className="mt-10 max-w-3xl">
-              <p className={["text-xs font-extrabold uppercase tracking-[0.14em]", activeStyles.eyebrow].join(" ")}>{activeTopic.eyebrow}</p>
-              <h3 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl">{activeTopic.title}</h3>
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">{activeTopic.description}</p>
-            </div>
-
-            <ul className="mt-9 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
-              {activeTopic.facts.map(([title, description]) => (
-                <li key={title} className="flex items-start gap-3 bg-slate-950 p-4 sm:block sm:p-5">
-                  <Check className={["mt-0.5 size-4 shrink-0 sm:mt-0", activeStyles.eyebrow].join(" ")} aria-hidden="true" />
-                  <div><p className="text-sm font-bold text-white sm:mt-5">{title}</p><p className="mt-1 text-xs leading-6 text-slate-400 sm:mt-2">{description}</p></div>
-                </li>
-              ))}
-            </ul>
-
-            <Link href={activeTopic.href} className="mt-8 inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-white/15 px-5 text-sm font-bold text-white transition-colors hover:border-blue-300/50 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950 motion-reduce:transition-none">
-              {activeTopic.linkLabel}<ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </article>
-
-          <div aria-label="Purchase detail topics" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div aria-label="Purchase detail topics" className="mt-6 flex flex-wrap gap-2">
             {proofTopics.map((topic) => {
               const Icon = topic.icon;
-              const styles = accentStyles[topic.accent];
               const isActive = topic.id === activeTopicId;
 
               return (
@@ -151,26 +224,44 @@ export function WhyChooseUsSection() {
                   key={topic.id}
                   type="button"
                   aria-pressed={isActive}
-                  aria-controls="purchase-proof-panel"
+                  aria-controls="purchase-proof-details"
                   onClick={() => setActiveTopicId(topic.id)}
                   className={[
-                    "group grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 rounded-3xl border p-5 text-left",
-                    "transition-[transform,border-color,background-color,box-shadow] duration-200 focus-visible:outline-none",
-                    "focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none",
+                    "inline-flex min-h-10 items-center gap-2 rounded-full border px-3.5 text-xs font-bold transition",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2",
                     isActive
-                      ? "border-slate-900 bg-slate-950 text-white shadow-[0_18px_45px_-30px_rgba(15,23,42,0.7)]"
-                      : "border-slate-200 bg-white text-slate-950 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.35)] hover:-translate-y-0.5 hover:border-slate-300",
+                      ? "border-slate-950 bg-slate-950 text-white"
+                      : "border-indigo-200 bg-white/75 text-slate-700 hover:border-indigo-300 hover:bg-white",
                   ].join(" ")}
                 >
-                  <span className={["flex size-10 items-center justify-center rounded-xl border", isActive ? "border-white/15 bg-white/10 text-blue-200" : styles.selectorIcon].join(" ")}><Icon className="size-5" aria-hidden="true" /></span>
-                  <span className="min-w-0">
-                    <span className={["block text-[11px] font-extrabold uppercase tracking-[0.12em]", isActive ? "text-blue-200" : "text-slate-500"].join(" ")}>{topic.eyebrow}</span>
-                    <span className={["mt-1.5 block text-base font-semibold leading-snug tracking-[-0.025em]", isActive ? "text-white" : "text-slate-950"].join(" ")}>{topic.title}</span>
-                  </span>
-                  <ArrowRight className={["size-4 transition-transform group-hover:translate-x-0.5", isActive ? "text-blue-200" : "text-slate-400"].join(" ")} aria-hidden="true" />
+                  <Icon className="size-3.5" aria-hidden="true" />
+                  {topic.eyebrow}
                 </button>
               );
             })}
+          </div>
+
+          <div id="purchase-proof-details" aria-live="polite" className="mt-7">
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-indigo-700">{activeTopic.eyebrow}</p>
+            <h3 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-3xl">{activeTopic.title}</h3>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">{activeTopic.description}</p>
+            <div className="mt-5 space-y-3">
+              {activeTopic.facts.slice(0, 2).map(([title, description], index) => (
+                <div key={title} className="flex items-start gap-3 rounded-2xl border border-indigo-100 bg-white/85 p-4 shadow-[0_12px_30px_-28px_rgba(15,23,42,0.4)]">
+                  <span className={["grid size-10 shrink-0 place-items-center rounded-xl border text-sm font-bold", accentStyles[activeTopic.accent].selectorIcon].join(" ")}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-slate-950">{title}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-600">{description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link href={activeTopic.href} className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transform-none">
+              {activeTopic.linkLabel}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </div>
