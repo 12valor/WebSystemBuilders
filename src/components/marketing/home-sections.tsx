@@ -1,101 +1,95 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowRight, Sparkles, Code2, ShieldCheck, Zap, Lock, FileCheck } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+
+const startingPoints = [
+  {
+    number: "01",
+    label: "Published systems",
+    title: "Start with something ready.",
+    description:
+      "Compare the package, requirements, price, and included files before checkout.",
+    action: "Browse systems",
+    href: "/systems",
+    className: "bg-[#0B1224] text-white",
+    mutedClassName: "text-slate-300",
+    lineClassName: "border-white/20",
+  },
+  {
+    number: "02",
+    label: "Custom development",
+    title: "Build around the work.",
+    description:
+      "Bring the workflow, users, and constraints. Scope and pricing are agreed before work begins.",
+    action: "Outline your project",
+    href: "/request-a-quote",
+    className: "bg-[#1769FF] text-white",
+    mutedClassName: "text-blue-100",
+    lineClassName: "border-white/25",
+  },
+] as const;
 
 export function FinalCallToAction() {
   return (
-    <section id="contact" className="bg-[#FAFAFC] py-20 sm:py-28 relative overflow-hidden">
+    <section id="contact" className="bg-[#F5F5F1] py-20 sm:py-28">
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="relative overflow-hidden rounded-[28px] border border-blue-400/20 bg-gradient-to-br from-[#1E40AF] via-[#1E1B4B] to-[#0F172A] p-8 sm:p-14 lg:p-16 shadow-[0_25px_60px_-15px_rgba(37,99,235,0.25)] text-white">
-          {/* Ambient Lighting Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(#60a5fa_1px,transparent_1px)] [background-size:32px_32px] opacity-10 pointer-events-none" />
-          <div className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-blue-400/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 left-1/4 size-80 rounded-full bg-indigo-500/20 blur-3xl" />
+        <div className="border-t border-slate-950 pt-6 sm:pt-8">
+          <div className="grid gap-8 lg:grid-cols-[minmax(180px,0.35fr)_1fr] lg:gap-16">
+            <div className="flex items-start gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
+              <span className="mt-1.5 size-2 bg-[#1769FF]" aria-hidden="true" />
+              Start here
+            </div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Content Area */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md border border-white/20">
-                <span className="flex h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
-                <Sparkles className="w-3.5 h-3.5 text-blue-200" />
-                <span>Get Started Today</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-white leading-[1.08]">
-                Ready to deploy your next software system?
+            <div>
+              <h2 className="max-w-4xl text-[clamp(3rem,7vw,6.4rem)] font-semibold leading-[0.88] tracking-[-0.07em] text-[#0B1224]">
+                Ready to build
+                <span className="block text-[#1769FF]">what comes next?</span>
               </h2>
-
-              <p className="text-base sm:text-lg text-blue-100 font-normal leading-relaxed max-w-xl">
-                Explore our catalog of production-ready software packages or request a custom-built technical solution tailored for your school or business.
+              <p className="mt-7 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+                Choose a production-ready package or start a custom build. Either way, the boundaries are clear before you commit.
               </p>
-
-              {/* Inclusions Badges */}
-              <div className="pt-2 flex flex-wrap gap-3 text-xs font-semibold text-blue-100">
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-xs">
-                  <ShieldCheck className="w-4 h-4 text-[#10B981]" />
-                  <span>Full Commercial Source ZIP</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-xs">
-                  <Zap className="w-4 h-4 text-amber-300" />
-                  <span>30 Days Setup & Defect Support</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-xs">
-                  <Lock className="w-4 h-4 text-blue-300" />
-                  <span>Payment Review Required</span>
-                </div>
-              </div>
             </div>
+          </div>
 
-            {/* Right Card & Action Buttons Container */}
-            <div className="lg:col-span-5 space-y-6 flex flex-col justify-center">
-              {/* Mini Glass Card Blueprint Preview */}
-              <div className="rounded-2xl bg-[#0F172A]/90 backdrop-blur-xl p-5 border border-white/15 shadow-2xl text-xs space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-700/60 pb-2.5">
-                  <span className="font-mono text-slate-300 flex items-center gap-2">
-                    <FileCheck className="w-4 h-4 text-[#10B981]" />
-                    WebSystemBuilders Delivery Blueprint
-                  </span>
-                  <span className="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-semibold text-[10px] border border-emerald-500/30">
-                    Verified Delivery
-                  </span>
+          <div className="mt-12 grid gap-3 md:grid-cols-2 lg:ml-[calc(35%+2.5rem)] lg:mt-16">
+            {startingPoints.map((path) => (
+              <Link
+                key={path.number}
+                href={path.href}
+                className={[
+                  "group flex min-h-[330px] flex-col justify-between p-7 transition-transform duration-200",
+                  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1769FF]",
+                  "motion-safe:hover:-translate-y-1 sm:p-9",
+                  path.className,
+                ].join(" ")}
+              >
+                <div className={["flex items-center justify-between border-b pb-5", path.lineClassName].join(" ")}>
+                  <span className="text-sm font-semibold tracking-[0.12em]">{path.number}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em]">{path.label}</span>
                 </div>
 
-                <div className="space-y-1.5 text-slate-300">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Source Package:</span>
-                    <span className="font-semibold text-white">Full Source Included</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Commercial Rights:</span>
-                    <span className="font-semibold text-white">Perpetual License</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Database Engine:</span>
-                    <span className="font-semibold text-white">Supabase PostgreSQL</span>
-                  </div>
+                <div className="pt-14">
+                  <h3 className="max-w-sm text-[clamp(2rem,3vw,3.25rem)] font-semibold leading-[0.96] tracking-[-0.055em]">
+                    {path.title}
+                  </h3>
+                  <p className={["mt-5 max-w-md text-sm leading-6 sm:text-base sm:leading-7", path.mutedClassName].join(" ")}>
+                    {path.description}
+                  </p>
+                  <span className="mt-8 flex items-center justify-between border-t border-current/25 pt-5 text-sm font-semibold">
+                    {path.action}
+                    <ArrowUpRight
+                      className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </span>
                 </div>
-              </div>
+              </Link>
+            ))}
+          </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
-                <Link
-                  href="/systems"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-[#0F172A] bg-white rounded-full shadow-md hover:bg-slate-100 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 group"
-                >
-                  <span>Browse Systems</span>
-                  <ArrowRight className="w-4 h-4 text-[#2563EB] transition-transform duration-200 group-hover:translate-x-1" />
-                </Link>
-
-                <Link
-                  href="/request-a-quote"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 transition-all duration-200"
-                >
-                  <Code2 className="w-4 h-4 text-blue-200" />
-                  <span>Custom Quote</span>
-                </Link>
-              </div>
-            </div>
+          <div className="mt-12 grid border-y border-slate-300 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 sm:grid-cols-3 lg:ml-[calc(35%+2.5rem)]">
+            <p className="py-4 sm:pr-5">Source package included</p>
+            <p className="border-t border-slate-300 py-4 sm:border-l sm:border-t-0 sm:px-5">30-day setup and defect support</p>
+            <p className="border-t border-slate-300 py-4 sm:border-l sm:border-t-0 sm:pl-5">Payment reviewed before delivery</p>
           </div>
         </div>
       </div>
