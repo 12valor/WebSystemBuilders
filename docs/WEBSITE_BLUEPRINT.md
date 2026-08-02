@@ -615,10 +615,10 @@ These are starting values and should be refined during design-system implementat
 
 ### Approved brand identity
 
-The approved logo uses the supplied interlocking `WS` mark in blue and white. The production PNG is maintained in `assets/brand` and served from `public/brand`.
+The approved logo uses the supplied interlocking `WS` mark in blue and dark navy. The production PNG is maintained in `assets/brand` and served from `public/brand`.
 
-- Use the transparent mark directly on dark interfaces.
-- Place the unchanged mark on a restrained dark backing when it appears on a light surface so the white stroke remains legible.
+- Use the transparent mark directly without a backing tile.
+- Keep the dark navy stroke legible on light interfaces and the blue stroke legible on dark interfaces.
 - Preserve the artwork's original colors and proportions.
 - Keep the presentation flat and restrained; do not add glow, shadows, bevels, or decorative animation to the logo.
 

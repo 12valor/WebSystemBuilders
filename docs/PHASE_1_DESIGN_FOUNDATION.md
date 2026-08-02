@@ -44,8 +44,8 @@ Create a cohesive interface foundation for the public website, catalog, checkout
 Production assets live in [`../assets/brand`](../assets/brand).
 
 - Use `websystembuilders-logo.png` across public, account, checkout, and administrator surfaces.
-- Use the transparent artwork directly on dark backgrounds.
-- Place it on a restrained dark backing on light backgrounds for contrast.
+- Use the transparent blue and dark navy artwork directly without a backing tile.
+- Maintain sufficient surrounding contrast on both light and dark surfaces.
 - Preserve its original colors and proportions, and do not add glow, bevels, shadows, or decorative animation.
 
 ## 5. Color tokens
