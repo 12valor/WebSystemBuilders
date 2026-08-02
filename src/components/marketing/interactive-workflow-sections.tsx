@@ -6,12 +6,9 @@ import {
   ArrowRight,
   BarChart3,
   Boxes,
-  Check,
   CheckCircle2,
   ChevronRight,
-  Circle,
   ClipboardCheck,
-  FileCode2,
   LayoutDashboard,
   Minus,
   PackageCheck,
@@ -23,7 +20,6 @@ import {
 } from "lucide-react";
 
 type OperationsView = "checkout" | "inventory";
-type ProjectView = "roadmap" | "deliverables" | "review";
 type CartState = Record<string, number>;
 
 type DemoProduct = {
@@ -51,13 +47,6 @@ const initialInventory: InventoryItem[] = [
   { id: "coffee", name: "Coffee beans", sku: "CB-001", stock: 12, threshold: 5 },
   { id: "paper", name: "Paper cups", sku: "PC-050", stock: 8, threshold: 10 },
   { id: "syrup", name: "Vanilla syrup", sku: "VS-750", stock: 4, threshold: 6 },
-];
-
-const projectMilestones = [
-  { title: "Requirements confirmed", detail: "Scope, users, and core workflows" },
-  { title: "Interface prototype", detail: "Key screens ready for review" },
-  { title: "Core workflow build", detail: "Validated application behavior" },
-  { title: "Testing and handoff", detail: "Checks, guidance, and deployment notes" },
 ];
 
 function formatDemoMoney(value: number) {
@@ -229,113 +218,130 @@ export function BusinessWorkflowPlayground() {
   );
 }
 
-export function ProjectWorkspacePlayground() {
-  const [view, setView] = useState<ProjectView>("roadmap");
-  const [completed, setCompleted] = useState([true, false, false, false]);
-  const [reviewResolved, setReviewResolved] = useState(false);
-  const completedCount = completed.filter(Boolean).length;
-  const progress = Math.round((completedCount / completed.length) * 100);
-
-  const toggleMilestone = (index: number) => {
-    setCompleted((current) => current.map((value, itemIndex) => itemIndex === index ? !value : value));
-  };
-
+function ProjectRoadmapIllustration() {
   return (
-    <section aria-labelledby="project-workspace-title" className="relative overflow-hidden bg-[#F7F8FC] py-20 sm:py-28">
-      <div aria-hidden="true" className="absolute -left-32 bottom-0 size-80 rounded-full bg-violet-200/40 blur-3xl" />
-      <div className="relative mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.22fr_0.78fr] lg:gap-16">
-        <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_65px_-24px_rgba(37,99,235,0.2)]">
-          <div className="flex flex-col gap-4 border-b border-slate-200 bg-slate-50/80 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-            <div className="flex items-center gap-3"><span className="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600 text-white"><FileCode2 className="size-4" /></span><div><p className="text-xs font-semibold text-slate-900">Project delivery workspace</p><p className="text-[10px] text-slate-500">Interactive planning preview</p></div></div>
-            <div className="flex items-center gap-2"><span className="text-[10px] font-semibold text-slate-500">Progress</span><span className="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-700">{progress}%</span></div>
-          </div>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 760 560"
+      className="size-full"
+      fill="none"
+    >
+      <rect width="760" height="560" rx="42" fill="#DCE6FF" />
+      <circle cx="632" cy="94" r="112" fill="#C7D2FE" />
+      <circle cx="110" cy="468" r="144" fill="#BFDBFE" />
 
-          <div className="border-b border-slate-200 p-3 sm:p-4">
-            <div role="tablist" aria-label="Project workspace previews" className="grid grid-cols-3 rounded-xl bg-slate-100 p-1">
-              <LightPreviewTab active={view === "roadmap"} onClick={() => setView("roadmap")} icon={LayoutDashboard} label="Roadmap" />
-              <LightPreviewTab active={view === "deliverables"} onClick={() => setView("deliverables")} icon={FileCode2} label="Files" />
-              <LightPreviewTab active={view === "review"} onClick={() => setView("review")} icon={ClipboardCheck} label="Review" />
-            </div>
-          </div>
+      <path
+        d="M108 402C190 402 185 306 274 306C361 306 348 202 452 202C544 202 542 118 644 118"
+        stroke="#FFFFFF"
+        strokeWidth="24"
+        strokeLinecap="round"
+        opacity="0.78"
+      />
+      <path
+        d="M108 402C190 402 185 306 274 306C361 306 348 202 452 202C544 202 542 118 644 118"
+        stroke="#4F46E5"
+        strokeWidth="7"
+        strokeLinecap="round"
+        strokeDasharray="10 12"
+      />
 
-          <div className="min-h-[430px] p-4 sm:p-6">
-            {view === "roadmap" && (
-              <div>
-                <div className="flex items-start justify-between gap-4"><div><h3 className="text-base font-bold text-slate-900">Capstone support roadmap</h3><p className="mt-1 text-xs leading-5 text-slate-500">Toggle milestones to preview how progress can be communicated.</p></div><button type="button" onClick={() => setCompleted([true, false, false, false])} className="grid size-9 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-500 hover:text-blue-600" aria-label="Reset project roadmap"><RefreshCw className="size-3.5" /></button></div>
-                <div className="mt-5 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-gradient-to-r from-blue-600 to-violet-600 transition-[width] duration-300" style={{ width: `${progress}%` }} /></div>
-                <div className="mt-5 space-y-3">
-                  {projectMilestones.map((milestone, index) => (
-                    <button key={milestone.title} type="button" onClick={() => toggleMilestone(index)} className={`flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition ${completed[index] ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white hover:border-blue-200 hover:bg-blue-50/40"}`}>
-                      <span className={`grid size-9 shrink-0 place-items-center rounded-full ${completed[index] ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-400"}`}>{completed[index] ? <Check className="size-4" /> : <Circle className="size-4" />}</span>
-                      <span className="min-w-0 flex-1"><span className="block text-xs font-semibold text-slate-900">{milestone.title}</span><span className="mt-1 block text-[11px] leading-4 text-slate-500">{milestone.detail}</span></span>
-                      <span className="text-[10px] font-semibold text-slate-400">{completed[index] ? "Done" : "Open"}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+      <g transform="translate(54 50)">
+        <rect width="218" height="116" rx="22" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" />
+        <rect x="24" y="25" width="54" height="64" rx="10" fill="#DBEAFE" />
+        <path d="M39 43H63M39 56H63M39 69H55" stroke="#2563EB" strokeWidth="5" strokeLinecap="round" />
+        <text x="96" y="47" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="17" fontWeight="700">Project plan</text>
+        <text x="96" y="74" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="13">Scope and milestones</text>
+      </g>
 
-            {view === "deliverables" && (
-              <div>
-                <h3 className="text-base font-bold text-slate-900">Example deliverables</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-500">Statuses mirror the milestones you marked in the roadmap.</p>
-                <div className="mt-5 space-y-3">
-                  {[
-                    { name: "requirements-scope.pdf", type: "Planning document", milestone: 0 },
-                    { name: "interface-prototype.fig", type: "Interface preview", milestone: 1 },
-                    { name: "application-source.zip", type: "Protected source package", milestone: 2 },
-                    { name: "handoff-guide.pdf", type: "Setup and deployment notes", milestone: 3 },
-                  ].map((file) => (
-                    <div key={file.name} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-white text-blue-600 shadow-sm"><FileCode2 className="size-4" /></span>
-                      <div className="min-w-0 flex-1"><p className="truncate text-xs font-semibold text-slate-900">{file.name}</p><p className="mt-1 text-[10px] text-slate-500">{file.type}</p></div>
-                      <span className={`rounded-full px-2.5 py-1 text-[9px] font-bold uppercase ${completed[file.milestone] ? "bg-emerald-100 text-emerald-700" : "bg-slate-200 text-slate-500"}`}>{completed[file.milestone] ? "Ready" : "Planned"}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-4 text-[10px] leading-4 text-slate-400">Names and statuses are illustrative; this preview does not expose or download real files.</p>
-              </div>
-            )}
+      <g transform="translate(78 367)">
+        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
+        <path d="M19 35L27 43L43 27" stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="72" width="176" height="70" rx="18" fill="#FFFFFF" />
+        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Requirements</text>
+        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">Confirmed</text>
+      </g>
 
-            {view === "review" && (
-              <div>
-                <h3 className="text-base font-bold text-slate-900">Review conversation</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-500">Preview a clear feedback loop without implying completed work.</p>
-                <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
-                  <div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-violet-100 text-xs font-bold text-violet-700">A</span><div><div className="flex flex-wrap items-center gap-2"><p className="text-xs font-semibold text-slate-900">Example review note</p><span className="text-[10px] text-slate-400">Prototype stage</span></div><p className="mt-2 text-xs leading-5 text-slate-600">Clarify the administrator approval step before the final interface review.</p></div></div>
-                </div>
-                <button type="button" onClick={() => setReviewResolved((value) => !value)} className={`mt-4 inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-xs font-semibold transition ${reviewResolved ? "bg-emerald-100 text-emerald-700" : "bg-slate-900 text-white hover:bg-blue-700"}`}>{reviewResolved ? <><CheckCircle2 className="size-4" /> Marked ready for review</> : <><ClipboardCheck className="size-4" /> Resolve example note</>}</button>
-                <div aria-live="polite" className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/70 p-4"><p className="text-xs font-semibold text-blue-900">Ethical technical support</p><p className="mt-1 text-[11px] leading-5 text-blue-800/70">The workflow supports planning, development, debugging, and guidance. Students remain responsible for following their institution&apos;s authorship and submission rules.</p></div>
-              </div>
-            )}
+      <g transform="translate(244 271)">
+        <circle cx="30" cy="35" r="30" fill="#7C3AED" stroke="#FFFFFF" strokeWidth="7" />
+        <path d="M20 26H40V43H20Z" stroke="#FFFFFF" strokeWidth="4" strokeLinejoin="round" />
+        <rect x="72" width="164" height="70" rx="18" fill="#FFFFFF" />
+        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Prototype</text>
+        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">Ready to review</text>
+      </g>
+
+      <g transform="translate(422 167)">
+        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
+        <path d="M17 35H43M30 22V48" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" />
+        <rect x="72" width="150" height="70" rx="18" fill="#FFFFFF" />
+        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Build</text>
+        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">In progress</text>
+      </g>
+
+      <g transform="translate(614 83)">
+        <circle cx="30" cy="35" r="30" fill="#0F172A" stroke="#FFFFFF" strokeWidth="7" />
+        <path d="M19 35L27 43L43 27" stroke="#60A5FA" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+
+      <g transform="translate(482 374)">
+        <rect width="224" height="116" rx="22" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" />
+        <path d="M44 85L26 102V84" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" strokeLinejoin="round" />
+        <circle cx="38" cy="36" r="13" fill="#EDE9FE" />
+        <path d="M62 31H180M62 50H148" stroke="#7C3AED" strokeWidth="6" strokeLinecap="round" />
+        <rect x="24" y="69" width="138" height="9" rx="4.5" fill="#E2E8F0" />
+        <circle cx="185" cy="76" r="18" fill="#10B981" />
+        <path d="M176 76L182 82L194 69" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+    </svg>
+  );
+}
+
+export function ProjectWorkspacePlayground() {
+  return (
+    <section
+      aria-labelledby="project-workspace-title"
+      className="relative overflow-hidden border-y border-indigo-200/70 bg-[#E8EEFF] py-20 sm:py-28"
+    >
+      <div aria-hidden="true" className="absolute right-0 top-0 size-64 rounded-full border-[56px] border-violet-200/40" />
+      <div className="relative mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.12fr_0.88fr] lg:gap-16">
+        <div className="overflow-hidden rounded-[32px] border border-indigo-200 bg-[#DCE6FF] p-3 shadow-[0_28px_70px_-36px_rgba(37,99,235,0.38)] sm:p-5">
+          <div className="aspect-[4/3] overflow-hidden rounded-[24px]">
+            <ProjectRoadmapIllustration />
           </div>
         </div>
 
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-violet-100 bg-violet-50 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-violet-700"><ClipboardCheck className="size-3.5" /> Interactive project preview</span>
-          <h2 id="project-workspace-title" className="mt-5 text-3xl font-bold tracking-[-0.035em] text-[#0F172A] sm:text-4xl lg:text-5xl">Make project progress visible and reviewable.</h2>
-          <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">Explore how requirements, milestones, deliverables, and review notes can stay organized throughout an ethical student-development engagement.</p>
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/70 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">
+            <ClipboardCheck className="size-3.5" />
+            Structured project support
+          </span>
+          <h2 id="project-workspace-title" className="mt-5 text-3xl font-bold tracking-[-0.035em] text-[#0F172A] sm:text-4xl lg:text-5xl">
+            Make project progress visible and reviewable.
+          </h2>
+          <p className="mt-5 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
+            See how requirements, milestones, deliverables, and review notes can stay organized throughout an ethical student-development engagement.
+          </p>
           <div className="mt-7 space-y-3">
             <FeatureLine icon={LayoutDashboard} title="Clear milestones" copy="Show what is confirmed, what is being built, and what still needs review." />
             <FeatureLine icon={ClipboardCheck} title="Structured feedback" copy="Keep revision requests attached to the correct stage and deliverable." />
           </div>
-          <Link href="/for-students" className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5">Explore student support <ArrowRight className="size-4" /></Link>
+          <Link
+            href="/for-students"
+            className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
+          >
+            Explore student support
+            <ArrowRight className="size-4" />
+          </Link>
         </div>
       </div>
     </section>
   );
 }
-
 function FeatureLine({ icon: Icon, title, copy }: { icon: typeof ShoppingCart; title: string; copy: string }) {
   return <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600"><Icon className="size-4.5" /></span><div><p className="text-sm font-semibold text-slate-900">{title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{copy}</p></div></div>;
 }
 
 function PreviewTab({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: typeof ShoppingCart; label: string }) {
   return <button type="button" role="tab" aria-selected={active} onClick={onClick} className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3 text-[11px] font-semibold transition ${active ? "bg-white text-slate-900 shadow-sm" : "text-slate-400 hover:text-white"}`}><Icon className="size-3.5" />{label}</button>;
-}
-
-function LightPreviewTab({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: typeof ShoppingCart; label: string }) {
-  return <button type="button" role="tab" aria-selected={active} onClick={onClick} className={`inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg px-2 text-[10px] font-semibold transition sm:gap-2 sm:px-3 sm:text-[11px] ${active ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-900"}`}><Icon className="size-3.5" />{label}</button>;
 }
 
 function MiniMetric({ label, value, icon: Icon }: { label: string; value: string; icon: typeof Boxes }) {
