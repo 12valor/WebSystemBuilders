@@ -99,9 +99,9 @@ type ProofTopicId = (typeof proofTopics)[number]["id"];
 function ProofIllustration({ variant }: { variant: ProofTopicId }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 760 560" className="size-full" fill="none">
-      <rect width="760" height="560" rx="42" fill="#DCE6FF" />
-      <circle cx="626" cy="102" r="112" fill="#C7D2FE" />
-      <circle cx="108" cy="470" r="144" fill="#BFDBFE" />
+      <rect width="760" height="560" rx="42" fill="#EEE9FF" />
+      <circle cx="626" cy="102" r="112" fill="#DDD6FE" />
+      <circle cx="108" cy="470" r="144" fill="#C7D2FE" />
 
       {variant === "source" && (
         <g>
@@ -194,10 +194,10 @@ export function WhyChooseUsSection() {
   const activeTopic = proofTopics.find((topic) => topic.id === activeTopicId) ?? proofTopics[0];
 
   return (
-    <section aria-labelledby="confidence-title" className="relative overflow-hidden border-y border-indigo-200/70 bg-[#E8EEFF] py-20 font-sans text-slate-950 sm:py-24 lg:py-28">
-      <div aria-hidden="true" className="absolute right-0 top-0 size-64 rounded-full border-[56px] border-violet-200/40" />
+    <section aria-labelledby="confidence-title" className="relative overflow-hidden border-y border-violet-200/70 bg-[#F5F2FF] py-20 font-sans text-slate-950 sm:py-24 lg:py-28">
+      <div aria-hidden="true" className="absolute right-0 top-0 size-64 rounded-full border-[56px] border-indigo-200/45" />
       <div className="relative mx-auto grid w-[min(calc(100%-32px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
-        <div className="overflow-hidden rounded-[32px] border border-indigo-200 bg-[#DCE6FF] p-3 shadow-[0_28px_70px_-36px_rgba(37,99,235,0.38)] sm:p-5">
+        <div className="overflow-hidden rounded-[32px] border border-violet-200 bg-[#EEE9FF] p-3 shadow-[0_28px_70px_-36px_rgba(76,29,149,0.28)] sm:p-5">
           <div key={activeTopic.id} className="aspect-[4/3] overflow-hidden rounded-[24px] animate-in fade-in-0 zoom-in-95 duration-200 motion-reduce:animate-none">
             <ProofIllustration variant={activeTopic.id} />
           </div>

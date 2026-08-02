@@ -73,12 +73,13 @@ export default async function HomePage() {
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>
 
+        <WhyChooseUsSection />
+
         <BusinessWorkflowPlayground />
         <PublishedWorkPreview data={portfolio} />
         <PurchaseTransparencySection />
         <HowItWorksSection />
         <ProjectWorkspacePlayground />
-        <WhyChooseUsSection />
         <TestimonialsSection items={testimonials} />
         <HomepageFaqPreview items={questions} />
         <FounderIdentitySection profile={companyProfile} />
