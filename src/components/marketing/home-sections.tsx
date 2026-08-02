@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ClipboardCheck, LayoutGrid, ShieldCheck } from "lucide-react";
 
@@ -12,7 +11,7 @@ const steps = [
     cardClassName: "bg-blue-50",
     accentClassName: "text-blue-500",
     iconClassName: "bg-blue-600 text-white",
-    imageClassName: "origin-left scale-[1.5] object-cover",
+    illustration: "catalog",
   },
   {
     number: "02",
@@ -23,7 +22,7 @@ const steps = [
     cardClassName: "bg-violet-50",
     accentClassName: "text-violet-500",
     iconClassName: "bg-violet-600 text-white",
-    imageClassName: "origin-center scale-[1.5] object-cover",
+    illustration: "review",
   },
   {
     number: "03",
@@ -34,9 +33,67 @@ const steps = [
     cardClassName: "bg-slate-100",
     accentClassName: "text-slate-700",
     iconClassName: "bg-slate-900 text-white",
-    imageClassName: "origin-right scale-[1.5] object-cover",
+    illustration: "proceed",
   },
 ] as const;
+
+type IllustrationVariant = (typeof steps)[number]["illustration"];
+
+function StepIllustration({ variant }: { variant: IllustrationVariant }) {
+  if (variant === "catalog") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 420 240" className="size-full" fill="none">
+        <rect x="34" y="24" width="352" height="192" rx="20" fill="#FFFFFF" stroke="#0F172A" strokeWidth="6" />
+        <path d="M34 72H386" stroke="#0F172A" strokeWidth="6" />
+        <circle cx="58" cy="48" r="6" fill="#2563EB" />
+        <circle cx="78" cy="48" r="6" fill="#93C5FD" />
+        <rect x="226" y="39" width="132" height="20" rx="10" fill="#EFF6FF" />
+        <circle cx="342" cy="49" r="6" stroke="#2563EB" strokeWidth="3" />
+        <path d="M346 54L352 60" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" />
+        <rect x="58" y="94" width="84" height="88" rx="12" fill="#DBEAFE" />
+        <rect x="168" y="94" width="84" height="88" rx="12" fill="#EDE9FE" />
+        <rect x="278" y="94" width="84" height="88" rx="12" fill="#E2E8F0" />
+        <path d="M76 118H124M76 136H112M186 118H234M186 136H220M296 118H344M296 136H330" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
+        <rect x="76" y="155" width="30" height="8" rx="4" fill="#2563EB" />
+        <rect x="186" y="155" width="30" height="8" rx="4" fill="#7C3AED" />
+        <rect x="296" y="155" width="30" height="8" rx="4" fill="#475569" />
+      </svg>
+    );
+  }
+
+  if (variant === "review") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 420 240" className="size-full" fill="none">
+        <rect x="84" y="22" width="252" height="196" rx="20" fill="#FFFFFF" stroke="#0F172A" strokeWidth="6" />
+        <rect x="108" y="46" width="92" height="12" rx="6" fill="#7C3AED" />
+        <rect x="108" y="70" width="154" height="8" rx="4" fill="#DDD6FE" />
+        <rect x="110" y="101" width="24" height="24" rx="6" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="4" />
+        <path d="M116 113L121 118L129 108" stroke="#7C3AED" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M151 108H294M151 121H244" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
+        <rect x="110" y="145" width="24" height="24" rx="6" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="4" />
+        <path d="M116 157L121 162L129 152" stroke="#7C3AED" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M151 152H280M151 165H226" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
+        <circle cx="326" cy="178" r="36" fill="#7C3AED" stroke="#FFFFFF" strokeWidth="6" />
+        <path d="M313 178L322 187L340 167" stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg aria-hidden="true" viewBox="0 0 420 240" className="size-full" fill="none">
+      <path d="M62 116H132" stroke="#2563EB" strokeWidth="8" strokeLinecap="round" />
+      <path d="M116 98L136 116L116 134" stroke="#2563EB" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="142" y="64" width="154" height="124" rx="18" fill="#FFFFFF" stroke="#0F172A" strokeWidth="6" />
+      <path d="M142 98H296" stroke="#0F172A" strokeWidth="6" />
+      <rect x="166" y="119" width="70" height="10" rx="5" fill="#CBD5E1" />
+      <rect x="166" y="143" width="104" height="10" rx="5" fill="#E2E8F0" />
+      <path d="M332 62C311 72 299 76 299 76V118C299 149 316 169 332 178C348 169 365 149 365 118V76C365 76 353 72 332 62Z" fill="#0F172A" stroke="#FFFFFF" strokeWidth="6" strokeLinejoin="round" />
+      <path d="M317 117L328 128L349 104" stroke="#60A5FA" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="92" cy="116" r="12" fill="#DBEAFE" stroke="#2563EB" strokeWidth="5" />
+      <path d="M174 82H216" stroke="#2563EB" strokeWidth="7" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export function FinalCallToAction() {
   return (
@@ -72,13 +129,7 @@ export function FinalCallToAction() {
                   </div>
 
                   <div className="relative mx-3 h-48 overflow-hidden rounded-[18px] border border-white/70 bg-white sm:h-56">
-                    <Image
-                      src="/images/dashboard-hero-light.png"
-                      alt=""
-                      fill
-                      sizes="(min-width: 1024px) 33vw, 100vw"
-                      className={step.imageClassName}
-                    />
+                    <StepIllustration variant={step.illustration} />
                     <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-slate-950/[0.05]" aria-hidden="true" />
                   </div>
 
