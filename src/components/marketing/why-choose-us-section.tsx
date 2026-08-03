@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Code2, CreditCard, Database, ShieldCheck } from "lucide-react";
+  import { ArrowRight, Code2, CreditCard, Database, ShieldCheck } from "lucide-react";
 
 const proofTopics = [
   {
