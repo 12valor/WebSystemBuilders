@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { TactileCard } from "@/components/ui/tactile-card";
 import { AppIconBadge } from "@/components/ui/app-icon-badge";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import {
@@ -9,12 +8,7 @@ import {
   Building2,
   ArrowRight,
   CheckCircle2,
-  Code,
   Sparkles,
-  BookOpen,
-  Boxes,
-  ShieldCheck,
-  Zap,
 } from "lucide-react";
 
 export function ChoosePathSection() {
@@ -87,8 +81,8 @@ export function ChoosePathSection() {
           <div className="rounded-[20px] bg-white p-8 md:p-10 flex flex-col justify-between border border-[#E5E7EB] shadow-[0_10px_30px_rgba(15,23,42,0.04)] hover:-translate-y-1 transition-all duration-300">
             <div>
               <div className="flex items-center justify-between mb-6">
-                <AppIconBadge icon={Building2} color="indigo" size="lg" />
-                <span className="text-xs font-semibold text-[#4F46E5] bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+                <AppIconBadge icon={Building2} color="blue" size="lg" />
+                <span className="text-xs font-semibold text-[#2563EB] bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
                   Production Ready Systems
                 </span>
               </div>
@@ -109,7 +103,7 @@ export function ChoosePathSection() {
                   "30 days defect support & full customization assistance",
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
-                    <CheckCircle2 className="w-5 h-5 text-[#4F46E5] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -121,7 +115,7 @@ export function ChoosePathSection() {
                 Explore business management software
               </span>
               <Link href="/for-business">
-                <MagneticButton size="md" variant="indigo">
+                <MagneticButton size="md" variant="primary">
                   <span>Browse Business Systems</span>
                   <ArrowRight className="w-4 h-4" />
                 </MagneticButton>

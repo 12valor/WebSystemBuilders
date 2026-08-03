@@ -19,9 +19,9 @@ const steps = [
     title: "Check the fit",
     description: "Compare a ready-made package or share your workflow when the work needs a custom solution.",
     icon: ClipboardCheck,
-    cardClassName: "bg-violet-50",
-    accentClassName: "text-violet-500",
-    iconClassName: "bg-violet-600 text-white",
+    cardClassName: "bg-blue-50",
+    accentClassName: "text-blue-500",
+    iconClassName: "bg-blue-600 text-white",
     illustration: "review",
   },
   {
@@ -51,11 +51,11 @@ function StepIllustration({ variant }: { variant: IllustrationVariant }) {
         <circle cx="342" cy="49" r="6" stroke="#2563EB" strokeWidth="3" />
         <path d="M346 54L352 60" stroke="#2563EB" strokeWidth="3" strokeLinecap="round" />
         <rect x="58" y="94" width="84" height="88" rx="12" fill="#DBEAFE" />
-        <rect x="168" y="94" width="84" height="88" rx="12" fill="#EDE9FE" />
+        <rect x="168" y="94" width="84" height="88" rx="12" fill="#DBEAFE" />
         <rect x="278" y="94" width="84" height="88" rx="12" fill="#E2E8F0" />
         <path d="M76 118H124M76 136H112M186 118H234M186 136H220M296 118H344M296 136H330" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
         <rect x="76" y="155" width="30" height="8" rx="4" fill="#2563EB" />
-        <rect x="186" y="155" width="30" height="8" rx="4" fill="#7C3AED" />
+        <rect x="186" y="155" width="30" height="8" rx="4" fill="#2563EB" />
         <rect x="296" y="155" width="30" height="8" rx="4" fill="#475569" />
       </svg>
     );
@@ -65,15 +65,15 @@ function StepIllustration({ variant }: { variant: IllustrationVariant }) {
     return (
       <svg aria-hidden="true" viewBox="0 0 420 240" className="size-full" fill="none">
         <rect x="84" y="22" width="252" height="196" rx="20" fill="#FFFFFF" stroke="#0F172A" strokeWidth="6" />
-        <rect x="108" y="46" width="92" height="12" rx="6" fill="#7C3AED" />
-        <rect x="108" y="70" width="154" height="8" rx="4" fill="#DDD6FE" />
-        <rect x="110" y="101" width="24" height="24" rx="6" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="4" />
-        <path d="M116 113L121 118L129 108" stroke="#7C3AED" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="108" y="46" width="92" height="12" rx="6" fill="#2563EB" />
+        <rect x="108" y="70" width="154" height="8" rx="4" fill="#BFDBFE" />
+        <rect x="110" y="101" width="24" height="24" rx="6" fill="#DBEAFE" stroke="#2563EB" strokeWidth="4" />
+        <path d="M116 113L121 118L129 108" stroke="#2563EB" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M151 108H294M151 121H244" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
-        <rect x="110" y="145" width="24" height="24" rx="6" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="4" />
-        <path d="M116 157L121 162L129 152" stroke="#7C3AED" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="110" y="145" width="24" height="24" rx="6" fill="#DBEAFE" stroke="#2563EB" strokeWidth="4" />
+        <path d="M116 157L121 162L129 152" stroke="#2563EB" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M151 152H280M151 165H226" stroke="#0F172A" strokeWidth="5" strokeLinecap="round" />
-        <circle cx="326" cy="178" r="36" fill="#7C3AED" stroke="#FFFFFF" strokeWidth="6" />
+        <circle cx="326" cy="178" r="36" fill="#2563EB" stroke="#FFFFFF" strokeWidth="6" />
         <path d="M313 178L322 187L340 167" stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
@@ -146,7 +146,7 @@ export function FinalCallToAction() {
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/systems"
-            className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] px-7 text-sm font-semibold text-white shadow-[0_10px_25px_-8px_rgba(37,99,235,0.45)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transform-none sm:w-auto"
+            className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#2563EB] hover:bg-blue-700 px-7 text-sm font-semibold text-white shadow-[0_10px_25px_-8px_rgba(37,99,235,0.45)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transform-none sm:w-auto"
           >
             Browse systems
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

@@ -142,7 +142,7 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         {/* Browse Categories Grid */}
         <div className="mt-24 border-t border-slate-200/80 pt-20">
           <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-wider border border-indigo-200 mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
               <span>Explore Verticals</span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
@@ -192,14 +192,14 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
         <div className="relative z-10 w-full max-w-[260px] rounded-xl border border-slate-700/80 bg-slate-800/90 p-4 shadow-2xl backdrop-blur-md">
           <div className="flex items-center justify-between border-b border-slate-700/60 pb-2 text-[0.65rem] font-semibold text-slate-400">
             <span className="truncate max-w-[140px] text-slate-300">{system.category?.name ?? "Software Suite"}</span>
-            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-emerald-400 font-bold border border-emerald-500/30">
+            <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-blue-300 font-bold border border-blue-400/25">
               Source Code
             </span>
           </div>
           <div className="mt-3 space-y-2">
             <div className="h-2 w-4/5 rounded-full bg-slate-600/80" />
             <div className="h-2 w-3/5 rounded-full bg-blue-500/80" />
-            <div className="h-2 w-2/5 rounded-full bg-emerald-500/80" />
+            <div className="h-2 w-2/5 rounded-full bg-slate-500/80" />
           </div>
         </div>
 
@@ -223,7 +223,7 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
 
         {/* Feature inclusions */}
         <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-4 text-[11px] text-slate-500 font-medium">
-          <div className="flex items-center gap-1 text-emerald-600 font-semibold">
+          <div className="flex items-center gap-1 text-blue-600 font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Full Source ZIP</span>
           </div>
@@ -302,21 +302,21 @@ const categoriesList = [
     slug: "capstone-systems",
     description: "Approved academic software foundations and technical support.",
     icon: GraduationCap,
-    color: "indigo",
+    color: "blue",
   },
   {
     title: "Warehouse & Inventory",
     slug: "inventory-management",
     description: "Stock management, barcode scanning, and multi-location sync.",
     icon: Boxes,
-    color: "emerald",
+    color: "blue",
   },
   {
     title: "Custom System Development",
     slug: "custom-system-development",
     description: "Requirements-reviewed software for workflows not covered by a published system.",
     icon: Stethoscope,
-    color: "rose",
+    color: "blue",
   },
 ] as const;
 

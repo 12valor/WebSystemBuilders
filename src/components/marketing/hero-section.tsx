@@ -8,11 +8,8 @@ import { ArrowRight, ShieldCheck, Zap, Star, Sparkles } from "lucide-react";
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-20 md:pb-28 bg-[#FAFAFC]">
-      {/* Layered Background System: Faint Dot Grid + Soft Radial Glows + Mesh Ambient */}
+      {/* Quiet background texture */}
       <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:28px_28px] opacity-25 pointer-events-none -z-10" />
-      <div className="absolute -top-36 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] bg-gradient-to-b from-blue-500/15 via-indigo-500/12 to-purple-500/8 blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute top-16 left-1/6 w-[500px] h-[500px] bg-[#2563EB]/10 rounded-full blur-[150px] pointer-events-none -z-10" />
-      <div className="absolute top-24 right-1/6 w-[500px] h-[500px] bg-[#7C3AED]/10 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Eyebrow Pill Badge */}
@@ -38,7 +35,7 @@ export function HeroSection() {
             className="text-4xl sm:text-6xl md:text-[76px] xl:text-[84px] font-extrabold tracking-[-0.035em] text-[#0F172A] leading-[1.04]"
           >
             Handcrafted Software Systems for{" "}
-            <span className="bg-gradient-to-r from-[#2563EB] via-[#4F46E5] via-[#7C3AED] to-[#9333EA] bg-clip-text text-transparent">
+            <span className="text-[#2563EB]">
               Students & Businesses
             </span>
           </motion.h1>
@@ -61,7 +58,7 @@ export function HeroSection() {
           >
             <Link
               href="/systems"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-[0_10px_25px_-5px_rgba(37,99,235,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(37,99,235,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold text-white rounded-full bg-[#2563EB] shadow-[0_10px_25px_-8px_rgba(37,99,235,0.32)] hover:bg-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
             >
               <span>Explore Ready Systems</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -83,7 +80,7 @@ export function HeroSection() {
             className="mt-10 inline-flex flex-wrap items-center justify-center gap-4 sm:gap-8 px-6 py-2.5 rounded-full bg-white/80 border border-[#E5E7EB] shadow-[0_4px_16px_rgba(15,23,42,0.03)] text-xs font-semibold text-[#64748B] backdrop-blur-md"
           >
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#10B981] shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-[#2563EB] shrink-0" />
               <span>Full Source Code Included</span>
             </div>
             <span className="hidden sm:inline text-slate-300">•</span>
@@ -93,7 +90,7 @@ export function HeroSection() {
             </div>
             <span className="hidden sm:inline text-slate-300">•</span>
             <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 text-[#4F46E5] fill-[#4F46E5] shrink-0" />
+              <Star className="w-4 h-4 text-[#2563EB] fill-[#2563EB] shrink-0" />
               <span>Verified Commercial License</span>
             </div>
           </motion.div>

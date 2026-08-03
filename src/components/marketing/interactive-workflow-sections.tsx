@@ -89,7 +89,6 @@ export function BusinessWorkflowPlayground() {
 
   return (
     <section aria-labelledby="operations-playground-title" className="relative overflow-hidden border-y border-slate-200 bg-white py-20 sm:py-28">
-      <div aria-hidden="true" className="absolute -right-48 top-16 size-96 rounded-full bg-blue-100/60 blur-3xl" />
       <div className="relative mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
@@ -116,9 +115,9 @@ export function BusinessWorkflowPlayground() {
           <div className="flex flex-col gap-4 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
             <div className="flex items-center gap-3">
               <div className="flex gap-1.5" aria-hidden="true">
-                <span className="size-2.5 rounded-full bg-red-400/80" />
-                <span className="size-2.5 rounded-full bg-amber-300/80" />
-                <span className="size-2.5 rounded-full bg-emerald-400/80" />
+                <span className="size-2.5 rounded-full bg-slate-500/80" />
+                <span className="size-2.5 rounded-full bg-slate-400/80" />
+                <span className="size-2.5 rounded-full bg-slate-300/80" />
               </div>
               <span className="text-xs font-semibold text-slate-300">Operations interface demo</span>
             </div>
@@ -175,7 +174,7 @@ export function BusinessWorkflowPlayground() {
                       ))}
                     </div>
                     <div className="mt-4 flex items-end justify-between"><div><p className="text-[10px] text-slate-500">Demo total</p><p className="mt-1 text-xl font-bold text-white">{formatDemoMoney(total)}</p></div><span className="text-[10px] text-slate-500">via {paymentMethod}</span></div>
-                    <button type="button" disabled={cartCount === 0} onClick={() => setSaleComplete(true)} className="mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-4 text-xs font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40">Complete demo sale <ChevronRight className="size-3.5" /></button>
+                    <button type="button" disabled={cartCount === 0} onClick={() => setSaleComplete(true)} className="mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 px-4 text-xs font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40">Complete demo sale <ChevronRight className="size-3.5" /></button>
                     <div aria-live="polite" className="min-h-9">
                       {saleComplete && <p className="mt-3 flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[10px] font-semibold text-emerald-300"><CheckCircle2 className="size-3.5" /> Demo receipt generated. No payment was created.</p>}
                     </div>
@@ -226,8 +225,8 @@ function ProjectRoadmapIllustration() {
       className="size-full"
       fill="none"
     >
-      <rect width="760" height="560" rx="42" fill="#DCE6FF" />
-      <circle cx="632" cy="94" r="112" fill="#C7D2FE" />
+      <rect width="760" height="560" rx="42" fill="#EAF0F8" />
+      <circle cx="632" cy="94" r="112" fill="#BFDBFE" />
       <circle cx="110" cy="468" r="144" fill="#BFDBFE" />
 
       <path
@@ -239,7 +238,7 @@ function ProjectRoadmapIllustration() {
       />
       <path
         d="M108 402C190 402 185 306 274 306C361 306 348 202 452 202C544 202 542 118 644 118"
-        stroke="#4F46E5"
+        stroke="#2563EB"
         strokeWidth="7"
         strokeLinecap="round"
         strokeDasharray="10 12"
@@ -262,7 +261,7 @@ function ProjectRoadmapIllustration() {
       </g>
 
       <g transform="translate(244 271)">
-        <circle cx="30" cy="35" r="30" fill="#7C3AED" stroke="#FFFFFF" strokeWidth="7" />
+        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
         <path d="M20 26H40V43H20Z" stroke="#FFFFFF" strokeWidth="4" strokeLinejoin="round" />
         <rect x="72" width="164" height="70" rx="18" fill="#FFFFFF" />
         <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Prototype</text>
@@ -285,8 +284,8 @@ function ProjectRoadmapIllustration() {
       <g transform="translate(482 374)">
         <rect width="224" height="116" rx="22" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" />
         <path d="M44 85L26 102V84" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" strokeLinejoin="round" />
-        <circle cx="38" cy="36" r="13" fill="#EDE9FE" />
-        <path d="M62 31H180M62 50H148" stroke="#7C3AED" strokeWidth="6" strokeLinecap="round" />
+        <circle cx="38" cy="36" r="13" fill="#DBEAFE" />
+        <path d="M62 31H180M62 50H148" stroke="#2563EB" strokeWidth="6" strokeLinecap="round" />
         <rect x="24" y="69" width="138" height="9" rx="4.5" fill="#E2E8F0" />
         <circle cx="185" cy="76" r="18" fill="#10B981" />
         <path d="M176 76L182 82L194 69" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -299,18 +298,17 @@ export function ProjectWorkspacePlayground() {
   return (
     <section
       aria-labelledby="project-workspace-title"
-      className="relative overflow-hidden border-y border-indigo-200/70 bg-[#E8EEFF] py-20 sm:py-28"
+      className="relative overflow-hidden border-y border-slate-200 bg-[#F3F6FB] py-20 sm:py-28"
     >
-      <div aria-hidden="true" className="absolute right-0 top-0 size-64 rounded-full border-[56px] border-violet-200/40" />
       <div className="relative mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.12fr_0.88fr] lg:gap-16">
-        <div className="overflow-hidden rounded-[32px] border border-indigo-200 bg-[#DCE6FF] p-3 shadow-[0_28px_70px_-36px_rgba(37,99,235,0.38)] sm:p-5">
+        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-[#EAF0F8] p-3 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.22)] sm:p-5">
           <div className="aspect-[4/3] overflow-hidden rounded-[24px]">
             <ProjectRoadmapIllustration />
           </div>
         </div>
 
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/70 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/80 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
             <ClipboardCheck className="size-3.5" />
             Structured project support
           </span>
@@ -326,7 +324,7 @@ export function ProjectWorkspacePlayground() {
           </div>
           <Link
             href="/for-students"
-            className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
+            className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
           >
             Explore student support
             <ArrowRight className="size-4" />

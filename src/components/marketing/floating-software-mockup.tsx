@@ -8,11 +8,6 @@ import { ShoppingCart, Boxes, Code2, GraduationCap } from "lucide-react";
 export function FloatingSoftwareMockup() {
   return (
     <div className="relative w-full max-w-[1280px] mx-auto py-4 sm:py-8 px-2 sm:px-4 select-none">
-      {/* Background Soft Mint & Violet Ambient Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-10 left-1/12 w-[450px] h-[450px] bg-emerald-400/12 rounded-full blur-[140px]" />
-        <div className="absolute -top-10 right-1/12 w-[450px] h-[450px] bg-indigo-400/12 rounded-full blur-[140px]" />
-      </div>
 
       {/* Centerpiece Hero Product Showcase (mockup.svg) - UNCONSTRAINED FULL SIZE */}
       <motion.div
@@ -48,7 +43,7 @@ export function FloatingSoftwareMockup() {
           whileHover={{ y: -6, scale: 1.03, rotate: -2 }}
           className="absolute top-[6%] left-[1%] xl:left-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center border border-emerald-100/80 shadow-xs mb-3">
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <ShoppingCart className="w-5.5 h-5.5" />
           </div>
           <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">POS & Sales System</h4>
@@ -102,7 +97,7 @@ export function FloatingSoftwareMockup() {
           whileHover={{ y: -6, scale: 1.03, rotate: 2 }}
           className="absolute top-[6%] right-[1%] xl:right-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="w-11 h-11 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center border border-purple-100/80 shadow-xs mb-3">
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Code2 className="w-5.5 h-5.5" />
           </div>
           <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Custom Development</h4>
@@ -123,7 +118,7 @@ export function FloatingSoftwareMockup() {
           whileHover={{ y: -6, scale: 1.03, rotate: -1 }}
           className="absolute bottom-[16%] right-[0%] xl:right-[-16px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
         >
-          <div className="w-11 h-11 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center border border-amber-100/80 shadow-xs mb-3">
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <GraduationCap className="w-5.5 h-5.5" />
           </div>
           <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Academic & Capstone</h4>
@@ -148,7 +143,7 @@ export function FloatingSoftwareMockup() {
       >
         {/* Card 1 */}
         <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#059669] flex items-center justify-center shrink-0 border border-emerald-100">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
             <ShoppingCart className="w-5 h-5" />
           </div>
           <div>
@@ -170,7 +165,7 @@ export function FloatingSoftwareMockup() {
 
         {/* Card 3 */}
         <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#7C3AED] flex items-center justify-center shrink-0 border border-purple-100">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
             <Code2 className="w-5 h-5" />
           </div>
           <div>
@@ -181,7 +176,7 @@ export function FloatingSoftwareMockup() {
 
         {/* Card 4 */}
         <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0 border border-amber-100">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
             <GraduationCap className="w-5 h-5" />
           </div>
           <div>

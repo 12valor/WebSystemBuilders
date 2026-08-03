@@ -57,7 +57,7 @@ export function TestimonialsSection({ items }: { items: PublicTestimonial[] }) {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-semibold uppercase tracking-wider mb-4 border border-slate-800 shadow-xs">
-              <Sparkles className="size-3.5 text-amber-400" />
+              <Sparkles className="size-3.5 text-blue-400" />
               <span>Verified Client Feedback</span>
             </div>
             <h2
