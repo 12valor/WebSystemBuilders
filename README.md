@@ -1,225 +1,179 @@
 # WebSystemBuilders
 
-> A modular marketplace and custom web system development platform tailored for students, entrepreneurs, and business owners.
+WebSystemBuilders helps students and business owners access ready-made software systems and request custom development through one professional platform.
 
-WebSystemBuilders connects students and business owners with ready-made software systems, modular codebases, and custom web development services. Built as a single Next.js application, it combines a high-performance public catalog, hosted payment processing, secure expiring file fulfillment, customer order management, and a rich administrator control workspace.
+The repository contains a single Next.js application for the public website, systems catalog, administrator workspace, checkout, customer accounts, and protected digital delivery. Student services are limited to ethical technical support; the platform does not promote ghostwriting, plagiarism, deceptive authorship, or guaranteed academic outcomes.
 
----
+## Project status
 
-## Table of Contents
+The application is under active development and is **not ready for production commerce**.
 
-- [Overview & Product Boundaries](#overview--product-boundaries)
-- [Tech Stack & Architecture](#tech-stack--architecture)
-- [Key Platform Capabilities](#key-platform-capabilities)
-- [Getting Started](#getting-started)
-- [Environment Configuration](#environment-configuration)
-- [Quality & Testing](#quality--testing)
-- [Directory Structure](#directory-structure)
-- [Implementation Phases & Status](#implementation-phases--status)
-- [Documentation Index](#documentation-index)
-- [Ethical Standards & Governance](#ethical-standards--governance)
+- The public website, audience pages, catalog, inquiry forms, authentication screens, and administrator interfaces are implemented locally.
+- The current checkout presents administrator-managed GCash or QRPh instructions, accepts a transaction reference and payment proof, and requires administrator verification before delivery becomes eligible.
+- Customer order, support, and protected-download interfaces exist locally.
+- Supabase migrations and provider adapters are present, but live authentication, Row Level Security, Storage policies, database mutations, email delivery, and end-to-end payment verification have not been confirmed against a configured production project.
+- Production remains blocked by provider setup, real catalog content and deliverables, business and legal readiness, deployment checks, and an authorized end-to-end smoke purchase.
 
----
+The detailed source of truth is [docs/WEBSITE_BLUEPRINT.md](docs/WEBSITE_BLUEPRINT.md). Phase documents record local implementation and remaining verification gates; an unchecked production gate must not be treated as complete.
 
-## Overview & Product Boundaries
+## Product scope
 
-WebSystemBuilders operates across two distinct target audiences and product delivery models:
+### Audiences
 
-- **Students**: Ethical academic assistance, capstone project baseline architecture, portfolio starter kits, and learning resources. *(Strictly zero academic dishonesty or ghostwriting services)*.
-- **Business Owners**: Ready-to-deploy web systems, e-commerce templates, inventory & management systems, custom software development, and future SaaS subscriptions.
+- **Students:** capstone and thesis-related technical support, templates, UI/UX work, debugging, deployment help, documentation guidance, and mentoring within ethical academic boundaries.
+- **Business owners:** point-of-sale, inventory, warehouse, payroll, booking, customer-management, school-management, and other custom systems.
 
-### Product Models
-1. **Ready-Made Systems**: Database-driven catalog featuring source code deliverables, documentation, versions, screenshots, and automated digital fulfillment.
-2. **Custom Development**: Direct inquiry, scope builder, quotation request, and bespoke technical execution.
-3. **Subscriptions / SaaS**: Modular design pattern prepared for recurring cloud services and platform tier upgrades.
+### Product models
 
----
+| Model | Purpose | Release direction |
+| --- | --- | --- |
+| Ready-made systems | Administrator-managed systems with source code and documented package details | Initial release |
+| Custom development | Requirements review and quotation before development | Initial release |
+| Hosted SaaS | Recurring access to selected hosted products | Later |
 
-## Tech Stack & Architecture
+## Local capabilities
 
-Built as a Next.js App Router **modular monolith** emphasizing server-side security, strict data contracts, and isolated provider adapters:
+- Responsive public marketing pages with separate student and business journeys
+- Database-backed systems catalog, filters, product details, media, pricing, and publication states
+- Quote and contact inquiry workflows with server validation and abuse controls
+- Administrator workspaces for systems, categories, media, content, inquiries, orders, support, settings, and audit history
+- Supabase email authentication and server-side role checks
+- Manual GCash or QRPh proof submission with administrator payment review
+- Order snapshots using integer minor-unit pricing and authoritative PHP catalog amounts
+- Private product files with expiring, revocable download access
+- Customer order, download, and support views
+- Resend-backed transactional delivery module with explicit unconfigured states
+- Security headers, private-route indexing controls, health checks, and launch-readiness validation
 
-- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Server Components, Server Actions)
-- **UI & Styling**: [React 19](https://react.dev/), [TypeScript 6](https://www.typescriptlang.org/), [Tailwind CSS v4](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/), [GSAP](https://gsap.com/), [Lenis Smooth Scroll](https://lenis.darkroom.engineering/), [Lucide React](https://lucide.dev/)
-- **Backend & Database**: [Supabase PostgreSQL](https://supabase.com/) with Row Level Security (RLS), Supabase Auth, and Private Storage buckets
-- **E-Commerce & Payments**: [PayMongo Checkout v2](https://www.paymongo.com/) (server-authoritative pricing, hosted checkout, signed idempotent webhooks)
-- **Email & Delivery**: [Resend](https://resend.com/) transactional email adapter for order receipts and download notifications
-- **Security & Bot Protection**: [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) CAPTCHA, hashed rate-limit fingerprints, HTTP security headers (`CSP`, `HSTS`, `X-Frame-Options`)
-- **Forms & Validation**: [Zod](https://zod.dev/), [React Hook Form](https://react-hook-form.com/), `@hookform/resolvers`
-- **Testing & Tooling**: [Vitest](https://vitest.dev/), ESLint 9
+These capabilities describe checked-in local software, not verified live-provider operation.
 
----
+## Architecture and stack
 
-## Key Platform Capabilities
+WebSystemBuilders is a modular monolith: one deployable application with domain modules for catalog, content, inquiries, orders, delivery, customer access, and administration.
 
-### 🛒 Public Systems Catalog & Storefront
-- Server-rendered catalog views with category filters, dynamic sorting, search, feature matrices, demo links, and screenshot galleries.
-- Time-limited signed URLs for private product media assets.
-- Integrated quotation forms for custom systems and starting-price tiers.
+| Area | Technology |
+| --- | --- |
+| Application | Next.js 16 App Router, React 19, TypeScript 6 |
+| Styling and UI | Tailwind CSS 4, custom accessible primitives, Lucide React |
+| Interaction | Framer Motion, GSAP, Lenis |
+| Data, authentication, storage | Supabase PostgreSQL, Auth, Row Level Security, private Storage |
+| Forms and validation | React Hook Form, Zod |
+| Email | Resend behind a server-only adapter |
+| Abuse protection | Cloudflare Turnstile and hashed request fingerprints |
+| Testing | Vitest, ESLint, TypeScript compiler |
+| Hosting target | Vercel |
 
-### 💳 Secure E-Commerce & Payment Engine
-- Server-calculated, authoritative minor-unit pricing (integer precision) to prevent client-side tampered transactions.
-- Idempotent pending order creation prior to hosted PayMongo payment session initialization.
-- Webhook reconciliation verifying cryptographic signature header and transaction totals before fulfillment.
+Provider access is isolated from catalog, order, and delivery rules so integrations can change without rewriting the surrounding domains.
 
-### 🔐 Expiring Digital Deliverable Fulfillment
-- Paid order deliverables stored in private Supabase Storage buckets.
-- File downloads served strictly via revocable, short-lived (60-second) signed URLs.
-- One-time fulfillment processing and transaction logging preventing double-delivery.
-
-### 💼 Operational Administrator Workspace
-- Real-time performance metrics, system catalog CRUD, dynamic category taxonomy, cross-catalog media manager.
-- Inquiry queue with rate-limit hashing, response tracking, durable status state machine, and full audit trail.
-- Multi-tier administrative role enforcement: Standard Admin vs. Super Administrator (access & settings management).
-
-### 🧑‍💻 Customer Portal & Support
-- Passwordless email sign-in (`/auth/sign-in`) with token-based order claiming.
-- Verified ownership dashboard (`/account`, `/downloads`) for accessing order history, versions, and protected downloads.
-- Integrated order-linked customer support ticket submission.
-
----
-
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
-- **Node.js**: `v20.0.0` or higher
-- **npm**: `v10.0.0` or higher
+- Node.js 20 or later
+- npm 10 or later
 
-### Local Setup
+### Install and run
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/12valor/WebSystemBuilders.git
-   cd websystembuilders
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**:
-   Copy the example environment configuration:
-   ```bash
-   copy .env.example .env.local
-   ```
-   *Note: Client modules handle unconfigured state gracefully for Phase 1–5 previews. Complete credentials when running against a live Supabase instance.*
-
-4. **Start the Development Server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## Environment Configuration
-
-Key environment variables specified in `.env.example`:
-
-| Variable | Scope | Description |
-| :--- | :--- | :--- |
-| `NEXT_PUBLIC_SUPABASE_URL` | Public / Client | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public / Client | Safe publishable/anon API key with RLS |
-| `SITE_URL` | Server | Application base canonical URL (`http://localhost:3000` in dev) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-Only | Privileged admin Supabase key (*Never expose to client*) |
-| `INQUIRY_FINGERPRINT_SALT` | Server-Only | Random 32+ character salt for rate-limit identifier hashing |
-| `RESEND_API_KEY` | Server-Only | Resend transactional email API key |
-| `RESEND_FROM_EMAIL` | Server-Only | Verified email sender address for transactional delivery |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public / Client | Cloudflare Turnstile CAPTCHA site key |
-| `TURNSTILE_SECRET` | Server-Only | Cloudflare Turnstile secret key for verification |
-
----
-
-## Quality & Testing
-
-Run verification commands prior to committing changes:
-
-```bash
-# Type check TypeScript files
-npm run typecheck
-
-# Lint source code
-npm run lint
-
-# Run Unit & Integration tests with Vitest
-npm test
-
-# Verify production build
-npm run build
-
-# Validate launch readiness & environment configuration
-npm run launch:check
+```powershell
+git clone https://github.com/12valor/WebSystemBuilders.git
+cd WebSystemBuilders
+npm install
+Copy-Item .env.example .env.local
+npm run dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000).
 
-## Directory Structure
+The public preview can render explicit unconfigured or unavailable states without live providers. Database-backed authentication, mutations, uploads, checkout submission, delivery, and email require valid provider configuration and applied migrations.
+
+## Environment configuration
+
+Use [.env.example](.env.example) as the local template. Never commit `.env.local` or expose server-only values to browser code.
+
+| Variable | Exposure | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Public | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public | Publishable or anonymous key protected by RLS |
+| `SITE_URL` | Server | Canonical application origin; defaults to local development in the example |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Privileged database operations; never expose to clients |
+| `INQUIRY_FINGERPRINT_SALT` | Server only | Salt of at least 32 characters for abuse-control hashes |
+| `RESEND_API_KEY` | Server only | Resend transactional email API key |
+| `RESEND_FROM_EMAIL` | Server only | Verified sender address |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public | Cloudflare Turnstile widget key |
+| `TURNSTILE_SECRET` | Server only | Cloudflare Turnstile verification secret |
+
+For production, `SITE_URL` must use the canonical HTTPS domain. Passing the environment check does not replace manual provider, legal, content, backup, deployment, or smoke-test gates.
+
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the local Next.js development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint across the repository |
+| `npm run typecheck` | Run TypeScript without emitting files |
+| `npm test` | Run the Vitest suite once |
+| `npm run launch:check` | Validate required production environment names without printing secret values |
+
+A typical local verification pass is:
+
+```powershell
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+Run `npm run launch:check` only as a readiness check for a production-like environment. It is expected to fail when required provider variables are intentionally absent.
+
+## Repository structure
 
 ```text
 websystembuilders/
-├── assets/                  # Brand guidelines and design assets
-├── docs/                    # Product blueprint & phase specifications
-├── scripts/                 # Operational & launch check scripts
-├── src/
-│   ├── app/                 # Next.js App Router pages, layouts, and API routes
-│   │   ├── (public)         # Public marketing & catalog routes
-│   │   ├── account/         # Customer account portal
-│   │   ├── admin/           # Administrator control dashboard
-│   │   ├── api/             # Webhook handlers, API endpoints, downloads
-│   │   ├── auth/            # Passwordless authentication routes
-│   │   └── checkout/        # Checkout flow & order return handlers
-│   ├── components/          # React components (ui/, catalog/, admin/, email/)
-│   ├── features/            # Domain modules (catalog, orders, payments, delivery)
-│   ├── lib/                 # Provider clients, security, DB repositories, validation
-│   └── proxy.ts             # Server-side proxy and API adapters
-├── supabase/
-│   └── migrations/          # Versioned PostgreSQL migration scripts
-└── tests/                   # Unit, integration, and contract tests
+|-- assets/                 # Brand assets and usage guidance
+|-- docs/                   # Blueprint, phase specifications, and launch runbook
+|-- public/                 # Static public assets
+|-- scripts/                # Operational and launch-readiness scripts
+|-- src/
+|   |-- app/                # App Router pages, layouts, and route handlers
+|   |-- components/         # Shared and surface-specific UI
+|   |-- features/           # Domain modules and server actions
+|   `-- lib/                # Provider, environment, auth, and security foundations
+|-- supabase/
+|   `-- migrations/         # Versioned PostgreSQL schema changes
+|-- tests/                  # Unit, integration, and migration-contract tests
+|-- .env.example
+`-- package.json
 ```
 
----
+## Documentation
 
-## Implementation Phases & Status
+- [Website blueprint](docs/WEBSITE_BLUEPRINT.md) - product, architecture, design, and delivery source of truth
+- [Phase 0: Product definition](docs/PHASE_0_PRODUCT_DEFINITION.md)
+- [Phase 1: Design foundation](docs/PHASE_1_DESIGN_FOUNDATION.md)
+- [Phase 2: Technical foundation](docs/PHASE_2_TECHNICAL_FOUNDATION.md)
+- [Phase 3: Public website](docs/PHASE_3_PUBLIC_WEBSITE.md)
+- [Phase 4: Systems catalog](docs/PHASE_4_SYSTEMS_CATALOG.md)
+- [Phase 5: Admin dashboard](docs/PHASE_5_ADMIN_DASHBOARD.md)
+- [Phase 6: Payment and ordering](docs/PHASE_6_PAYMENT_AND_ORDERING.md)
+- [Phase 7: Automated delivery](docs/PHASE_7_AUTOMATED_DELIVERY.md)
+- [Phase 8: Customer portal](docs/PHASE_8_CUSTOMER_PORTAL.md)
+- [Phase 9: Quality hardening](docs/PHASE_9_QUALITY_HARDENING.md)
+- [Phase 10: Production launch](docs/PHASE_10_PRODUCTION_LAUNCH.md)
+- [Brand guidelines](assets/brand/BRAND_GUIDELINES.md)
 
-The platform architecture was designed across 10 progressive phases:
+## Non-negotiable engineering rules
 
-- [x] **Phase 1: Design Foundation**: UI primitives, responsive design system, dark minimal theme.
-- [x] **Phase 2: Technical Foundation**: Supabase schema, TypeScript definitions, RLS rules, repository pattern.
-- [x] **Phase 3: Public Website**: Audience landing pages (Students, Business), services, portfolio, contact forms.
-- [x] **Phase 4: Systems Catalog**: Complete catalog backend, product media management, feature tagging, versioning.
-- [x] **Phase 5: Admin Dashboard**: Multi-tier admin operations, inquiry state machine, audit logs, category management.
-- [x] **Phase 6: Payment & Ordering**: Server pricing validation, pending order creation, PayMongo integration.
-- [x] **Phase 7: Automated Delivery**: Expiring download URLs, Resend transactional emails, idempotent fulfillment.
-- [x] **Phase 8: Customer Portal**: Email verification, claimed order history, support ticket interface.
-- [x] **Phase 9: Quality Hardening**: Security headers, rate limiting, anti-abuse throttles, accessibility polish.
-- [x] **Phase 10: Production Launch Prep**: Launch validator, production health checks, backup & runbook documentation.
+- Calculate authoritative prices on the server and store money as integer minor units.
+- Never treat a browser return, screenshot, or transaction reference as proof of payment by itself.
+- Fulfill only after verified payment review and make fulfillment idempotent.
+- Keep deliverables private and issue expiring, revocable access after server-side authorization.
+- Check authorization on the server and enforce RLS for exposed tables.
+- Validate untrusted input on the server and keep secrets out of client bundles.
+- Preserve order, payment, delivery, download, email, support, and administrator audit history.
+- Publish only authentic systems, media, testimonials, policies, and company claims.
 
-**Current Project Status**: `Phase 10 software preparation complete - production launch externally blocked` *(Awaiting live provider setup: Supabase production instance, PayMongo live keys, Resend domain validation).*
+## License
 
----
-
-## Documentation Index
-
-Detailed specifications and architectural decisions are maintained in the [`docs/`](docs/) directory:
-
-- 📘 [`docs/WEBSITE_BLUEPRINT.md`](docs/WEBSITE_BLUEPRINT.md) - Product and technical source of truth
-- 📋 [`docs/PHASE_0_PRODUCT_DEFINITION.md`](docs/PHASE_0_PRODUCT_DEFINITION.md) - Approved product decisions & production gates
-- 🎨 [`docs/PHASE_1_DESIGN_FOUNDATION.md`](docs/PHASE_1_DESIGN_FOUNDATION.md) - UI design system, tokens, and wireframes
-- 🗄️ [`docs/PHASE_2_TECHNICAL_FOUNDATION.md`](docs/PHASE_2_TECHNICAL_FOUNDATION.md) - Database schema, authentication & RLS foundation
-- 🌐 [`docs/PHASE_3_PUBLIC_WEBSITE.md`](docs/PHASE_3_PUBLIC_WEBSITE.md) - Public marketing routes & inquiry handling
-- 🛍️ [`docs/PHASE_4_SYSTEMS_CATALOG.md`](docs/PHASE_4_SYSTEMS_CATALOG.md) - Catalog structure, product detail views & media
-- 🛠️ [`docs/PHASE_5_ADMIN_DASHBOARD.md`](docs/PHASE_5_ADMIN_DASHBOARD.md) - Administrator workspace & governance checklist
-- 💳 [`docs/PHASE_6_PAYMENT_AND_ORDERING.md`](docs/PHASE_6_PAYMENT_AND_ORDERING.md) - Server payment engine & PayMongo integration contract
-- 📦 [`docs/PHASE_7_AUTOMATED_DELIVERY.md`](docs/PHASE_7_AUTOMATED_DELIVERY.md) - Private digital delivery & Resend email system
-- 👤 [`docs/PHASE_8_CUSTOMER_PORTAL.md`](docs/PHASE_8_CUSTOMER_PORTAL.md) - Customer access, order claiming & support ticket system
-- 🛡️ [`docs/PHASE_9_QUALITY_HARDENING.md`](docs/PHASE_9_QUALITY_HARDENING.md) - Security headers, abuse prevention & accessibility standard
-- 🚀 [`docs/PHASE_10_PRODUCTION_LAUNCH.md`](docs/PHASE_10_PRODUCTION_LAUNCH.md) - Deployment checklist, launch runner & operational runbook
-- 🎨 [`assets/brand/BRAND_GUIDELINES.md`](assets/brand/BRAND_GUIDELINES.md) - Official logo, typography, and brand usage guidelines
-
----
-
-## Ethical Standards & Governance
-
-WebSystemBuilders strictly prohibits features, copy, or services that facilitate academic dishonesty, plagiarism, or exam cheating. Student offerings are strictly limited to legitimate starter code, architectural guides, capstone baseline tools, and educational material.
+No repository-level open-source license is currently declared. Product licenses for systems sold through the platform are separate commercial terms and must not be inferred from access to this source repository.
