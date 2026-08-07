@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import { AdminPortfolioSection } from "@/components/admin/admin-portfolio-section";
+import { useActionState, useMemo, useState } from "react";
 import { AdminTestimonialSection } from "@/components/admin/admin-testimonial-section";
 import { AdminSiteContentSection } from "@/components/admin/admin-site-content-section";
 import { AdminCompanyProfileSection } from "@/components/admin/admin-company-profile-section";
@@ -11,12 +11,11 @@ import {
   type FaqEditorState,
 } from "@/features/content/faq-actions";
 import type { AdminFaqData, FaqItem } from "@/features/content/faq-types";
-import type { AdminPortfolioData } from "@/features/content/portfolio-types";
 import type { AdminTestimonialData } from "@/features/content/testimonial-types";
 import type { AdminSiteContentData } from "@/features/content/site-content-types";
 import type { AdminCompanyProfileData } from "@/features/content/company-profile-types";
 
-type ContentResult = "created" | "updated" | "published" | "archived" | "portfolio-created" | "portfolio-updated" | "portfolio-published" | "portfolio-archived" | "testimonial-created" | "testimonial-updated" | "testimonial-published" | "testimonial-archived" | "content-created" | "content-updated" | "content-published" | "content-archived" | "company-updated" | "company-published" | "company-archived";
+type ContentResult = "created" | "updated" | "published" | "archived" | "testimonial-created" | "testimonial-updated" | "testimonial-published" | "testimonial-archived" | "content-created" | "content-updated" | "content-published" | "content-archived" | "company-updated" | "company-published" | "company-archived";
 
 const initialState: FaqEditorState = { status: "idle" };
 const inputClass = "min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none transition-all";
@@ -25,14 +24,12 @@ const buttonClass = "inline-flex min-h-11 items-center justify-center rounded-xl
 
 export function AdminContentWorkspace({
   data,
-  portfolioData,
   testimonialData,
   siteContentData,
   companyProfileData,
   result,
 }: {
   data: AdminFaqData;
-  portfolioData: AdminPortfolioData;
   testimonialData: AdminTestimonialData;
   siteContentData: AdminSiteContentData;
   companyProfileData: AdminCompanyProfileData;
@@ -62,7 +59,7 @@ export function AdminContentWorkspace({
         <div className="border-b border-slate-200/80 pb-7">
           <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Public content</p>
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Content</h1>
-          <p className="mt-2 max-w-2xl text-slate-600 font-medium">Manage verified public information without editing application code. Manage FAQs, portfolio entries, testimonials, announcements, homepage features, and the approved company and public contact profile.</p>
+          <p className="mt-2 max-w-2xl text-slate-600 font-medium">Manage verified public information without editing application code. Manage FAQs, testimonials, announcements, homepage features, and the approved company and public contact profile.</p>
         </div>
 
         <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-200/60 sm:grid-cols-3 lg:max-w-2xl shadow-xs">
@@ -103,7 +100,6 @@ export function AdminContentWorkspace({
           </div>
         </section>
 
-        <AdminPortfolioSection data={portfolioData} />
         <AdminTestimonialSection data={testimonialData} />
         <AdminSiteContentSection data={siteContentData} />
         <AdminCompanyProfileSection data={companyProfileData} />

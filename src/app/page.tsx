@@ -4,10 +4,15 @@ import { CategorySection, TrustStrip } from "@/components/marketing/category-sec
 import { ChoosePathSection } from "@/components/marketing/choose-path-section";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { FinalCallToAction } from "@/components/marketing/home-sections";
+import type { Metadata } from "next";
+import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
+import { CategorySection, TrustStrip } from "@/components/marketing/category-section";
+import { ChoosePathSection } from "@/components/marketing/choose-path-section";
+import { HeroSection } from "@/components/marketing/hero-section";
+import { FinalCallToAction } from "@/components/marketing/home-sections";
 import {
   FounderIdentitySection,
   HomepageFaqPreview,
-  PublishedWorkPreview,
   PurchaseTransparencySection,
 } from "@/components/marketing/homepage-trust-sections";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
@@ -24,7 +29,6 @@ import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
 import { getPublicCatalogData } from "@/features/catalog/repository";
 import { getPublicCompanyProfile } from "@/features/content/company-profile-repository";
 import { getPublicFaqItems } from "@/features/content/faq-repository";
-import { getPublicPortfolioData } from "@/features/content/portfolio-repository";
 import { getPublicTestimonials } from "@/features/content/testimonial-repository";
 
 export const revalidate = 3600;
@@ -34,10 +38,9 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [catalog, testimonials, portfolio, questions, companyProfile] = await Promise.all([
+  const [catalog, testimonials, questions, companyProfile] = await Promise.all([
     getPublicCatalogData(),
     getPublicTestimonials(),
-    getPublicPortfolioData(),
     getPublicFaqItems(),
     getPublicCompanyProfile(),
   ]);
@@ -76,7 +79,6 @@ export default async function HomePage() {
         <WhyChooseUsSection />
 
         <BusinessWorkflowPlayground />
-        <PublishedWorkPreview data={portfolio} />
         <PurchaseTransparencySection />
         <HowItWorksSection />
         <ProjectWorkspacePlayground />

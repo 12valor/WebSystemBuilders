@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import type { PublicCompanyProfile } from "@/features/content/company-profile-types";
 import type { PublicFaqItem } from "@/features/content/faq-public-types";
-import type { PublicPortfolioData } from "@/features/content/portfolio-types";
 
 const purchaseSteps = [
   {
@@ -47,68 +46,6 @@ const policyLinks = [
   ["Privacy policy", "/legal/privacy"],
   ["Terms", "/legal/terms"],
 ] as const;
-
-export function PublishedWorkPreview({ data }: { data: PublicPortfolioData }) {
-  if (data.items.length === 0) return null;
-
-  const items = data.items.slice(0, 3);
-
-  return (
-    <section aria-labelledby="published-work-title" className="border-y border-slate-200 bg-white py-20 sm:py-28">
-      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="grid gap-6 border-b border-slate-200 pb-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Published project evidence</p>
-            <h2 id="published-work-title" className="mt-4 text-3xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-5xl">
-              Review the work, not a marketing placeholder.
-            </h2>
-          </div>
-          <div className="lg:justify-self-end">
-            <p className="max-w-xl leading-7 text-slate-600">
-              Every entry below comes from an administrator-published project record. Outcomes appear only when they have been approved for public use.
-            </p>
-            <Link href="/portfolio" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">
-              View all published work <ArrowRight className="size-4" />
-            </Link>
-          </div>
-        </div>
-
-        <div className="divide-y divide-slate-200">
-          {items.map((item, index) => (
-            <article key={item.id} className="grid gap-6 py-9 lg:grid-cols-[72px_minmax(0,1fr)_300px] lg:gap-10">
-              <p className="font-mono text-xs text-slate-400">{String(index + 1).padStart(2, "0")}</p>
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-600">
-                    {audienceLabel(item.audience)}
-                  </span>
-                  {item.isFeatured && <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-blue-700">Featured</span>}
-                </div>
-                <h3 className="mt-4 text-2xl font-extrabold tracking-tight text-slate-950">{item.title}</h3>
-                <p className="mt-3 max-w-3xl leading-7 text-slate-600">{item.summary}</p>
-                {item.outcome && (
-                  <div className="mt-5 border-l-2 border-emerald-500 pl-4">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-emerald-700">Approved outcome</p>
-                    <p className="mt-2 leading-7 text-slate-800">{item.outcome}</p>
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Technology disclosed</p>
-                {item.technologyStack.length > 0 ? (
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {item.technologyStack.map((technology) => <li key={technology} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">{technology}</li>)}
-                  </ul>
-                ) : <p className="mt-3 text-sm text-slate-500">No public technology list.</p>}
-                {item.projectUrl && <a href={item.projectUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">Open approved project <span aria-hidden="true">↗</span></a>}
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function PurchaseTransparencySection() {
   return (
@@ -292,10 +229,4 @@ function selectTrustQuestions(items: PublicFaqItem[]) {
   if (selected.length >= 5) return selected.slice(0, 5);
   const selectedIds = new Set(selected.map((item) => item.id));
   return [...selected, ...items.filter((item) => !selectedIds.has(item.id))].slice(0, 5);
-}
-
-function audienceLabel(audience: PublicPortfolioData["items"][number]["audience"]) {
-  if (audience === "students") return "Students";
-  if (audience === "business") return "Business";
-  return "Students and business";
 }
