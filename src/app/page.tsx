@@ -4,12 +4,6 @@ import { CategorySection, TrustStrip } from "@/components/marketing/category-sec
 import { ChoosePathSection } from "@/components/marketing/choose-path-section";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { FinalCallToAction } from "@/components/marketing/home-sections";
-import type { Metadata } from "next";
-import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
-import { CategorySection, TrustStrip } from "@/components/marketing/category-section";
-import { ChoosePathSection } from "@/components/marketing/choose-path-section";
-import { HeroSection } from "@/components/marketing/hero-section";
-import { FinalCallToAction } from "@/components/marketing/home-sections";
 import {
   FounderIdentitySection,
   HomepageFaqPreview,

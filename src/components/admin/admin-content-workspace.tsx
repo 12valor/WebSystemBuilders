@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import { useActionState, useMemo, useState } from "react";
 import { AdminTestimonialSection } from "@/components/admin/admin-testimonial-section";
 import { AdminSiteContentSection } from "@/components/admin/admin-site-content-section";
 import { AdminCompanyProfileSection } from "@/components/admin/admin-company-profile-section";
@@ -177,7 +176,7 @@ function Metric({ label, value }: { label: string; value: number }) {
 }
 
 function ResultNotice({ result }: { result: ContentResult }) {
-  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "portfolio-created": "The portfolio draft was created.", "portfolio-updated": "The portfolio changes were saved.", "portfolio-published": "The portfolio entry is published.", "portfolio-archived": "The portfolio entry was archived and removed from the public page.", "testimonial-created": "The testimonial draft was created privately.", "testimonial-updated": "The testimonial and verification record were saved.", "testimonial-published": "The verified testimonial is published on the homepage.", "testimonial-archived": "The testimonial was archived and removed from the homepage.", "content-created": "The site-content draft was created.", "content-updated": "The site-content changes were saved.", "content-published": "The site content is published.", "content-archived": "The site content was archived and removed publicly.", "company-updated": "The approved company profile changes were saved.", "company-published": "The company and public contact profile is published.", "company-archived": "The stored profile was archived and public contact channels were removed." };
+  const messages: Record<ContentResult, string> = { created: "The FAQ draft was created.", updated: "The FAQ changes were saved.", published: "The FAQ is published on the public page.", archived: "The FAQ was archived and removed from the public page.", "testimonial-created": "The testimonial draft was created privately.", "testimonial-updated": "The testimonial and verification record were saved.", "testimonial-published": "The verified testimonial is published on the homepage.", "testimonial-archived": "The testimonial was archived and removed from the homepage.", "content-created": "The site-content draft was created.", "content-updated": "The site-content changes were saved.", "content-published": "The site content is published.", "content-archived": "The site content was archived and removed publicly.", "company-updated": "The approved company profile changes were saved.", "company-published": "The company and public contact profile is published.", "company-archived": "The stored profile was archived and public contact channels were removed." };
   return <p className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-900 shadow-2xs" role="status">{messages[result]}</p>;
 }
 
