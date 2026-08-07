@@ -7,11 +7,16 @@ import { ArrowRight, ShieldCheck, Zap, Star, Sparkles } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-20 md:pb-28 bg-[#FAFAFC]">
-      {/* Quiet background texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:28px_28px] opacity-25 pointer-events-none -z-10" />
+    <section className="relative isolate overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-20 md:pb-28">
+      {/* Radial Gradient Background */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        style={{
+          background: "radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #6633ee 100%)",
+        }}
+      />
 
-      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+      <div className="relative z-10 mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Eyebrow Pill Badge */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}

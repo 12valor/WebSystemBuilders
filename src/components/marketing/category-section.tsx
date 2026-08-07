@@ -104,14 +104,8 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
 
   return (
-    <section id="systems" className="relative isolate overflow-hidden py-20 sm:py-28">
-      <div
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-        style={{
-          background: "radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #6633ee 100%)",
-        }}
-      />
-      <div className="relative z-10 mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
+    <section id="systems" className="bg-[#FAFAFC] py-20 sm:py-28">
+      <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
         {/* Featured Systems Heading */}
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
