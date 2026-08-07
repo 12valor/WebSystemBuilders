@@ -47,18 +47,18 @@ export function PolicyPage({
       <section className="py-20 sm:py-24 lg:py-28">
         <div className="mx-auto grid w-[min(calc(100%-40px),1040px)] gap-10 md:w-[min(calc(100%-64px),1040px)] lg:grid-cols-[240px_1fr] lg:gap-16">
           {effectiveSideNote && (
-            <aside className="h-fit rounded-xl border border-amber-300/20 bg-amber-300/[0.05] p-5 text-sm leading-6 text-amber-100 lg:sticky lg:top-28">
-              <strong className="block text-foreground">{effectiveSideNote.title}</strong>
-              <p className="mt-2">{effectiveSideNote.text}</p>
+            <aside className="h-fit rounded-xl border border-amber-500/30 bg-amber-50 p-5 text-sm leading-6 lg:sticky lg:top-28">
+              <strong className="block text-base font-semibold text-amber-950">{effectiveSideNote.title}</strong>
+              <p className="mt-2 leading-relaxed text-amber-900">{effectiveSideNote.text}</p>
             </aside>
           )}
-          <div className={`border-t border-white/15 ${!effectiveSideNote ? "lg:col-span-2" : ""}`}>
+          <div className={`border-t border-border ${!effectiveSideNote ? "lg:col-span-2" : ""}`}>
             {sections.map((section, index) => (
-              <section key={section.title} className="border-b border-white/10 py-8">
+              <section key={section.title} className="border-b border-border py-8">
                 <div className="grid grid-cols-[38px_1fr] gap-4 sm:grid-cols-[54px_1fr]">
                   <span className="text-xs font-mono text-muted">{String(index + 1).padStart(2, "0")}</span>
                   <div>
-                    <h2 className="text-2xl font-semibold tracking-[-0.035em]">{section.title}</h2>
+                    <h2 className="text-2xl font-semibold tracking-[-0.035em] text-foreground">{section.title}</h2>
                     {section.paragraphs?.map((paragraph, pIdx) => (
                       <p key={pIdx} className="mt-4 leading-7 text-secondary">
                         {paragraph}
@@ -67,14 +67,14 @@ export function PolicyPage({
                     {section.items && (
                       <ul className="mt-5 grid gap-3 text-secondary">
                         {section.items.map((item, iIdx) => (
-                          <li key={iIdx} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand-hover">
+                          <li key={iIdx} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand">
                             {item}
                           </li>
                         ))}
                       </ul>
                     )}
                     {section.subsections?.map((sub, sIdx) => (
-                      <div key={sIdx} className="mt-6 pt-4 border-t border-white/5">
+                      <div key={sIdx} className="mt-6 pt-4 border-t border-border/60">
                         {sub.title && <h3 className="text-lg font-medium text-foreground tracking-tight">{sub.title}</h3>}
                         {sub.paragraphs?.map((sp, spIdx) => (
                           <p key={spIdx} className="mt-2 leading-7 text-secondary">
@@ -84,7 +84,7 @@ export function PolicyPage({
                         {sub.items && (
                           <ul className="mt-3 grid gap-2 text-secondary">
                             {sub.items.map((si, siIdx) => (
-                              <li key={siIdx} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand-hover">
+                              <li key={siIdx} className="relative pl-5 before:absolute before:left-0 before:top-[0.72em] before:h-px before:w-1.5 before:bg-brand">
                                 {si}
                               </li>
                             ))}
