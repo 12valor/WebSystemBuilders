@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FloatingSoftwareMockup } from "@/components/marketing/floating-software-mockup";
-import { ArrowRight, ShieldCheck, Zap, Star, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -17,20 +17,6 @@ export function HeroSection() {
       />
 
       <div className="relative z-10 mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        {/* Eyebrow Pill Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex justify-center mb-6"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 text-slate-800 border border-slate-200/90 shadow-[0_2px_12px_rgba(15,23,42,0.05),0_1px_1px_rgba(255,255,255,0.8)_inset] text-xs font-semibold backdrop-blur-md">
-            <span className="flex h-2 w-2 rounded-full bg-[#2563EB] animate-pulse" />
-            <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
-            <span>Ready-made systems and custom development</span>
-          </div>
-        </motion.div>
-
         {/* Hero Headline & Supporting Description */}
         <div className="text-center max-w-4xl mx-auto mb-10 md:mb-14">
           <motion.h1
@@ -75,29 +61,6 @@ export function HeroSection() {
             >
               <span>Request Custom Development</span>
             </Link>
-          </motion.div>
-
-          {/* Trust Badges Pill */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.32 }}
-            className="mt-10 inline-flex flex-wrap items-center justify-center gap-4 sm:gap-8 px-6 py-2.5 rounded-full bg-white/80 border border-[#E5E7EB] shadow-[0_4px_16px_rgba(15,23,42,0.03)] text-xs font-semibold text-[#64748B] backdrop-blur-md"
-          >
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#2563EB] shrink-0" />
-              <span>Full Source Code Included</span>
-            </div>
-            <span className="hidden sm:inline text-slate-300">•</span>
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#2563EB] shrink-0" />
-              <span>30 Days Defect Support</span>
-            </div>
-            <span className="hidden sm:inline text-slate-300">•</span>
-            <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 text-[#2563EB] fill-[#2563EB] shrink-0" />
-              <span>Verified Commercial License</span>
-            </div>
           </motion.div>
         </div>
 
