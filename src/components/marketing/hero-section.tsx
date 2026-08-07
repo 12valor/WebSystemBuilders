@@ -12,7 +12,7 @@ export function HeroSection() {
       <div
         className="pointer-events-none absolute inset-0 z-0 h-full w-full"
         style={{
-          background: "radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #6633ee 100%)",
+          background: "radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #2563eb 100%)",
         }}
       />
 
