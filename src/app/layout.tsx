@@ -25,8 +25,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={plusJakartaSans.variable}>
-      <body className="font-sans antialiased text-slate-900 bg-white selection:bg-blue-600 selection:text-white">
+    <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
+      <body
+        className="font-sans antialiased text-slate-900 bg-white selection:bg-blue-600 selection:text-white"
+        suppressHydrationWarning
+      >
         <a
           href="#main-content"
           className="fixed left-4 top-3 z-[200] -translate-y-24 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0 shadow-lg"
