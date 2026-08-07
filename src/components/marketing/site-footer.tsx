@@ -11,7 +11,6 @@ const exploreLinks = [
 
 const companyLinks = [
   ["About", "/about"],
-  ["Portfolio", "/portfolio"],
   ["FAQ", "/faq"],
   ["Contact", "/contact"],
   ["Privacy Policy", "/legal/privacy"],

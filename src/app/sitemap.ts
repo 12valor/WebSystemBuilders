@@ -13,7 +13,6 @@ const publicRoutes = [
   "/services/custom-development",
   "/process",
   "/about",
-  "/portfolio",
   "/contact",
   "/request-a-quote",
   "/faq",

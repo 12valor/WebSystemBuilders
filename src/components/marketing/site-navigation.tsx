@@ -12,7 +12,6 @@ const navigation = [
   { label: "Systems Catalog", href: "/systems" },
   { label: "Students", href: "/for-students" },
   { label: "Businesses", href: "/for-business" },
-  { label: "Portfolio", href: "/portfolio" },
   { label: "Process", href: "/process" },
 ];
 
