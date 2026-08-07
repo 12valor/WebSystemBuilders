@@ -14,6 +14,8 @@ const companyLinks = [
   ["Portfolio", "/portfolio"],
   ["FAQ", "/faq"],
   ["Contact", "/contact"],
+  ["Privacy Policy", "/legal/privacy"],
+  ["Terms of Service", "/legal/terms"],
 ];
 
 export function SiteFooter() {
@@ -114,6 +116,20 @@ export function SiteFooter() {
           <p>© 2026 WebSystemBuilders. All rights reserved.</p>
 
           <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/legal/privacy"
+              className="rounded transition-colors duration-150 hover:text-[#3B82F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+            >
+              Privacy Policy
+            </Link>
+            <span className="select-none text-white/20">|</span>
+            <Link
+              href="/legal/terms"
+              className="rounded transition-colors duration-150 hover:text-[#3B82F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+            >
+              Terms of Service
+            </Link>
+            <span className="select-none text-white/20">|</span>
             <span className="inline-flex items-center gap-1.5 text-[#94A3B8]">
               <ShieldCheck className="h-4 w-4 text-[#94A3B8]" />
               Verified Systems & Development
