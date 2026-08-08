@@ -11,7 +11,6 @@ import {
 } from "@/components/marketing/homepage-trust-sections";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
 import {
-  BusinessWorkflowPlayground,
   ProjectWorkspacePlayground,
 } from "@/components/marketing/interactive-workflow-sections";
 import { SiteFooter } from "@/components/marketing/site-footer";
@@ -72,7 +71,6 @@ export default async function HomePage() {
 
         <WhyChooseUsSection />
 
-        <BusinessWorkflowPlayground />
         <PurchaseTransparencySection />
         <HowItWorksSection />
         <ProjectWorkspacePlayground />
