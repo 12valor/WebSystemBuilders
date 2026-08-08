@@ -172,7 +172,7 @@ export function SiteNavigation() {
                     className="size-full rounded-full object-cover"
                   />
                 ) : (
-                  <div className="flex size-full items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-xs group-hover:scale-105 transition-transform">
+                  <div className="flex size-full items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs group-hover:scale-105 transition-transform">
                     {user.email ? user.email.charAt(0).toUpperCase() : <User className="w-4 h-4 text-white" />}
                   </div>
                 )}
@@ -190,7 +190,7 @@ export function SiteNavigation() {
 
               <Link
                 href="/request-a-quote"
-                className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-[0_8px_22px_-4px_rgba(37,99,235,0.38)] hover:shadow-[0_12px_28px_-4px_rgba(37,99,235,0.48)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
+                className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-[#2563EB] shadow-[0_4px_14px_rgba(37,99,235,0.28)] hover:bg-blue-700 hover:shadow-[0_6px_20px_rgba(37,99,235,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
               >
                 <span>Request a Quote</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -266,7 +266,7 @@ export function SiteNavigation() {
                           className="size-8 rounded-full object-cover border border-slate-200"
                         />
                       ) : (
-                        <div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-xs">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white shadow-xs">
                           {user.email ? user.email.charAt(0).toUpperCase() : <User className="w-4 h-4 text-white" />}
                         </div>
                       )}
@@ -286,10 +286,10 @@ export function SiteNavigation() {
                     <Link
                       href="/request-a-quote"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] shadow-md"
+                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-[#2563EB] hover:bg-blue-700 shadow-md transition-colors"
                     >
                       <span>Request a Quote</span>
-                      <Sparkles className="w-4.5 h-4.5" />
+                      <ArrowUpRight className="w-4.5 h-4.5" />
                     </Link>
                   </>
                 )}

@@ -113,7 +113,7 @@ export function SupportForm({
         className={
           dashboard
             ? "inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[#3B82F6] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#2563EB] disabled:cursor-not-allowed disabled:bg-[#27282C] disabled:text-[#71717A] sm:w-auto"
-            : "inline-flex min-h-12 w-full items-center justify-center rounded-full bg-gradient-to-r from-[#2563EB] via-[#4F46E5] to-[#7C3AED] px-6 text-xs font-semibold text-white shadow-[0_10px_22px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            : "inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#2563EB] hover:bg-blue-700 px-6 text-xs font-semibold text-white shadow-[0_4px_14px_rgba(37,99,235,0.25)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         }
       >
         {pending ? "Submitting request..." : orders.length === 0 ? "No eligible order" : "Submit support request"}
