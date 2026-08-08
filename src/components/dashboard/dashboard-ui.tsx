@@ -68,6 +68,7 @@ export function DashboardSidebar({
   displayName,
   userEmail,
   avatarInitial,
+  avatarUrl,
   buyerNavigation,
   sellerNavigation,
   activeTab,
@@ -80,6 +81,7 @@ export function DashboardSidebar({
   displayName: string;
   userEmail: string | null | undefined;
   avatarInitial: string;
+  avatarUrl?: string | null;
   buyerNavigation: DashboardNavigationItem[];
   sellerNavigation: DashboardNavigationItem[];
   activeTab: DashboardTab;
@@ -105,9 +107,17 @@ export function DashboardSidebar({
         </Link>
 
         <div className="mt-2 flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3">
-          <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-[#2563EB] text-sm font-semibold text-white shadow-2xs">
-            {avatarInitial}
-          </span>
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={displayName}
+              className="size-10 shrink-0 rounded-lg object-cover border border-slate-200/80 shadow-2xs"
+            />
+          ) : (
+            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-[#2563EB] text-sm font-semibold text-white shadow-2xs">
+              {avatarInitial}
+            </span>
+          )}
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold text-slate-900">{displayName}</span>
             <span className="mt-0.5 block truncate text-xs text-slate-500 font-medium">

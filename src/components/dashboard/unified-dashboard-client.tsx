@@ -44,6 +44,7 @@ interface UnifiedDashboardClientProps {
 type Profile = {
   full_name?: string;
   email?: string;
+  avatar_url?: string;
   username?: string;
   seller_status?: string;
   seller_enabled?: boolean;
@@ -65,16 +66,24 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
         const supabase = createClient();
         const { data: authData } = await supabase.auth.getUser();
         if (!authData.user) return;
+
+        const userMetaAvatar =
+          authData.user.user_metadata?.avatar_url ||
+          authData.user.user_metadata?.avatar;
+
         const { data } = await supabase
           .from("profiles")
-          .select("full_name, email, username, seller_status, seller_enabled, created_at")
+          .select("full_name, email, avatar_url, username, seller_status, seller_enabled, created_at")
           .eq("user_id", authData.user.id)
           .maybeSingle();
+
+        const avatarUrl = data?.avatar_url || userMetaAvatar;
 
         if (data) {
           setProfile({
             full_name: data.full_name || authData.user.user_metadata?.full_name,
             email: data.email || authData.user.email,
+            avatar_url: avatarUrl,
             username: data.username,
             seller_status: data.seller_status || "none",
             seller_enabled: data.seller_enabled || false,
@@ -84,6 +93,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
           setProfile({
             full_name: authData.user.user_metadata?.full_name,
             email: authData.user.email || initialEmail || undefined,
+            avatar_url: avatarUrl,
             seller_status: "none",
             seller_enabled: false,
             created_at: authData.user.created_at,
@@ -122,6 +132,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
   const userEmail = profile?.email || initialEmail;
   const displayName = profile?.full_name || (userEmail ? userEmail.split("@")[0] : "Customer");
   const avatarInitial = displayName.charAt(0).toUpperCase();
+  const avatarUrl = profile?.avatar_url;
   const accountState = userEmail ? "Signed in" : "Preview mode";
   const buyerNavigation: DashboardNavigationItem[] = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -155,6 +166,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
           displayName={displayName}
           userEmail={userEmail}
           avatarInitial={avatarInitial}
+          avatarUrl={avatarUrl}
           buyerNavigation={buyerNavigation}
           sellerNavigation={sellerNavigation}
           activeTab={activeTab}
@@ -188,7 +200,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
               {activeTab === "purchases" && <PurchasesPanel orders={portalData.orders} userEmail={userEmail} />}
               {activeTab === "support" && <SupportPanel portalData={portalData} />}
               {activeTab === "wishlist" && <SavedSystemsPanel />}
-              {activeTab === "profile" && <ProfilePanel displayName={displayName} userEmail={userEmail} username={profile?.username} />}
+              {activeTab === "profile" && <ProfilePanel displayName={displayName} userEmail={userEmail} avatarUrl={avatarUrl} username={profile?.username} />}
               {activeTab === "settings" && <SettingsPanel />}
               {activeTab === "products" && isSellerApproved && <SellerProductsPanel />}
               {activeTab === "sales" && isSellerApproved && <SellerSalesPanel />}
@@ -337,12 +349,31 @@ function SavedSystemsPanel() {
   return <DashboardPanel><DashboardEmptyState icon={Heart} title="Saved systems are not connected yet" description="This workspace does not claim to sync saved catalog items until the account feature is available. You can continue browsing the published catalog." action={<PrimaryLink href="/systems">Explore the catalog</PrimaryLink>} /></DashboardPanel>;
 }
 
-function ProfilePanel({ displayName, userEmail, username }: { displayName: string; userEmail: string | null | undefined; username?: string }) {
+function ProfilePanel({ displayName, userEmail, avatarUrl, username }: { displayName: string; userEmail: string | null | undefined; avatarUrl?: string | null; username?: string }) {
   return (
     <DashboardPanel className="max-w-3xl p-5 sm:p-6">
       <SectionHeading eyebrow="Account record" title="Personal details" />
       <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">These verified profile values are read-only in this workspace.</p>
-      <div className="mt-6 grid gap-5 sm:grid-cols-2"><ReadOnlyField label="Full name" value={displayName} /><ReadOnlyField label="Email address" value={userEmail ?? "Not available"} /><ReadOnlyField label="Username" value={username || "Not set"} /></div>
+      
+      <div className="mt-6 flex items-center gap-4 border-b border-slate-100 pb-6">
+        {avatarUrl ? (
+          <img src={avatarUrl} alt={displayName} className="size-16 rounded-2xl object-cover border border-slate-200/80 shadow-2xs" />
+        ) : (
+          <span className="grid size-16 place-items-center rounded-2xl bg-[#2563EB] text-xl font-bold text-white shadow-2xs">
+            {displayName.charAt(0).toUpperCase()}
+          </span>
+        )}
+        <div>
+          <p className="text-base font-bold text-slate-900">{displayName}</p>
+          <p className="text-xs font-medium text-slate-500">{userEmail ?? "No email set"}</p>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <ReadOnlyField label="Full name" value={displayName} />
+        <ReadOnlyField label="Email address" value={userEmail ?? "Not available"} />
+        <ReadOnlyField label="Username" value={username || "Not set"} />
+      </div>
     </DashboardPanel>
   );
 }
