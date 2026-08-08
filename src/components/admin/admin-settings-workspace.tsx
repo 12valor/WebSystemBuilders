@@ -104,7 +104,7 @@ function GrantAccessForm() {
           <option value="super_admin">Super administrator</option>
         </select>
       </label>
-      <button name="action" value="grant" disabled={pending} className="mt-5 w-full inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">
+      <button name="action" value="grant" disabled={pending} className="mt-5 w-full inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">
         {pending ? "Saving..." : "Grant or update access"}
       </button>
       <ActionNotice state={state} />

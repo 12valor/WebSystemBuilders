@@ -103,7 +103,7 @@ export function AdminSystemEditor({
             ) : (
               <button type="button" disabled className="min-h-10 cursor-not-allowed rounded-xl border border-slate-200 bg-slate-50 px-4 text-xs font-semibold text-slate-400">Preview</button>
             )}
-            <button form="system-editor-form" type="submit" name="intent" value="publish" disabled={!canSave || !isEditing} className="min-h-10 rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">
+            <button form="system-editor-form" type="submit" name="intent" value="publish" disabled={!canSave || !isEditing} className="min-h-10 rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">
               {pending ? "Checking..." : system?.status === "published" ? "Republish" : system?.status === "archived" ? "Restore and publish" : "Publish"}
             </button>
           </div>

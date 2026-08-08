@@ -143,9 +143,9 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
   }
 
   return (
-    <div className="min-h-screen bg-[#08090A] font-sans text-[#F5F5F7] antialiased selection:bg-[#3B82F6] selection:text-white">
+    <div className="min-h-screen bg-[#FAFAFC] font-sans text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
       <DashboardMobileHeader menuOpen={mobileMenuOpen} onToggle={() => setMobileMenuOpen((current) => !current)} menuButtonRef={menuButtonRef} controlsId={navigationId} />
-      {mobileMenuOpen && <button type="button" aria-label="Close workspace navigation" onClick={() => setMobileMenuOpen(false)} className="fixed inset-0 z-40 bg-black/75 md:hidden" />}
+      {mobileMenuOpen && <button type="button" aria-label="Close workspace navigation" onClick={() => setMobileMenuOpen(false)} className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs md:hidden" />}
 
       <div className="flex min-h-screen">
         <DashboardSidebar
@@ -168,14 +168,14 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
 
             <div className="mt-6 grid gap-3" aria-live="polite">
               {portalData.status === "error" && (
-                <div role="alert" className="flex items-start gap-3 rounded-lg border border-amber-400/25 bg-amber-400/10 p-4 text-sm text-amber-200">
-                  <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                <div role="alert" className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm font-medium text-amber-900">
+                  <AlertCircle className="mt-0.5 size-4 shrink-0 text-amber-600" />
                   <span>Some account records could not be loaded. Refresh the page or contact support if the issue continues.</span>
                 </div>
               )}
               {resultParam === "download-unavailable" && (
-                <div role="alert" className="flex items-start gap-3 rounded-lg border border-red-400/25 bg-red-400/10 p-4 text-sm text-red-200">
-                  <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                <div role="alert" className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-900">
+                  <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-600" />
                   <span>Deliverable access could not be generated. Confirm that an administrator has verified the GCash or QRPh payment.</span>
                 </div>
               )}
@@ -231,24 +231,24 @@ function OverviewPanel({ portalData, verifiedOrders, availableDownloads, openSup
         <DashboardPanel className="p-5 sm:p-6">
           <SectionHeading eyebrow="Account records" title="Recent activity" />
           {portalData.orders.length === 0 && portalData.supportRequests.length === 0 ? (
-            <div className="mt-5 rounded-lg border border-dashed border-white/10 bg-[#0D0E10] px-5 py-10 text-center">
-              <p className="text-sm font-semibold text-[#D4D4D8]">No account activity yet</p>
-              <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-[#85858F]">Verified orders and support updates will appear here when records are available.</p>
+            <div className="mt-5 rounded-xl border border-dashed border-slate-200/80 bg-slate-50/50 px-5 py-10 text-center">
+              <p className="text-sm font-semibold text-slate-900">No account activity yet</p>
+              <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-slate-500 font-medium">Verified orders and support updates will appear here when records are available.</p>
             </div>
           ) : (
-            <div className="mt-5 divide-y divide-white/10 border-y border-white/10">
+            <div className="mt-5 divide-y divide-slate-100 border-y border-slate-100">
               {portalData.orders.slice(0, 2).map((order) => (
-                <button key={order.order_id} type="button" onClick={() => onSelect("purchases")} className="flex w-full items-center gap-3 py-4 text-left hover:text-white">
-                  <ShoppingBag className="size-4 shrink-0 text-[#60A5FA]" />
-                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-[#D4D4D8]">{order.product_name}</span><span className="mt-1 block text-xs text-[#85858F]">{order.order_number}</span></span>
+                <button key={order.order_id} type="button" onClick={() => onSelect("purchases")} className="flex w-full items-center gap-3 py-4 text-left hover:bg-slate-50/50 px-2 rounded-xl transition-colors">
+                  <ShoppingBag className="size-4 shrink-0 text-blue-600" />
+                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-slate-900">{order.product_name}</span><span className="mt-1 block text-xs text-slate-500 font-medium">{order.order_number}</span></span>
                   <DashboardStatusBadge status={order.order_status} />
                 </button>
               ))}
               {portalData.supportRequests.slice(0, 2).map((request) => (
-                <button key={request.id} type="button" onClick={() => onSelect("support")} className="flex w-full items-center gap-3 py-4 text-left hover:text-white">
-                  <MessageSquare className="size-4 shrink-0 text-[#60A5FA]" />
-                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-[#D4D4D8]">{request.subject}</span><span className="mt-1 block text-xs text-[#85858F]">Updated {formatDate(request.updated_at)}</span></span>
-                  <ArrowUpRight className="size-4 text-[#71717A]" />
+                <button key={request.id} type="button" onClick={() => onSelect("support")} className="flex w-full items-center gap-3 py-4 text-left hover:bg-slate-50/50 px-2 rounded-xl transition-colors">
+                  <MessageSquare className="size-4 shrink-0 text-blue-600" />
+                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-slate-900">{request.subject}</span><span className="mt-1 block text-xs text-slate-500 font-medium">Updated {formatDate(request.updated_at)}</span></span>
+                  <ArrowUpRight className="size-4 text-slate-400" />
                 </button>
               ))}
             </div>
@@ -258,10 +258,10 @@ function OverviewPanel({ portalData, verifiedOrders, availableDownloads, openSup
 
       <DashboardPanel className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-start gap-4">
-          <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-white/10 bg-[#17181B] text-[#60A5FA]"><Lock className="size-4" /></span>
-          <div><h2 className="text-sm font-semibold text-[#F5F5F7]">Protected delivery by default</h2><p className="mt-1 max-w-3xl text-xs leading-5 text-[#85858F]">Eligible files use expiring access links. Return to Purchases whenever you need to generate a fresh link.</p></div>
+          <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-blue-600"><Lock className="size-4" /></span>
+          <div><h2 className="text-sm font-bold text-slate-900">Protected delivery by default</h2><p className="mt-1 max-w-3xl text-xs leading-5 text-slate-600 font-medium">Eligible files use expiring access links. Return to Purchases whenever you need to generate a fresh link.</p></div>
         </div>
-        <button type="button" onClick={() => onSelect("purchases")} className="min-h-10 shrink-0 rounded-lg border border-white/10 px-4 text-sm font-semibold text-[#D4D4D8] hover:border-white/20 hover:bg-[#17181B]">View purchases</button>
+        <button type="button" onClick={() => onSelect("purchases")} className="min-h-10 shrink-0 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs">View purchases</button>
       </DashboardPanel>
     </div>
   );
@@ -275,26 +275,26 @@ function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["ord
   return (
     <div className="grid gap-5">
       <DashboardPanel className="flex items-start gap-4 p-5">
-        <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-[#17181B] text-[#60A5FA]"><Lock className="size-4" /></span>
-        <div><h2 className="text-sm font-semibold text-[#F5F5F7]">Protected delivery policy</h2><p className="mt-1 text-xs leading-5 text-[#85858F]">Direct deliverable links expire after one hour. Return here at any time to generate a fresh secure link.</p></div>
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-blue-600"><Lock className="size-4" /></span>
+        <div><h2 className="text-sm font-bold text-slate-900">Protected delivery policy</h2><p className="mt-1 text-xs leading-5 text-slate-600 font-medium">Direct deliverable links expire after one hour. Return here at any time to generate a fresh secure link.</p></div>
       </DashboardPanel>
 
       {orders.map((order) => (
         <DashboardPanel key={order.order_id} className="p-5 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div><p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-[#85858F]">{order.order_number}</p><h2 className="mt-2 text-xl font-semibold text-[#F5F5F7]">{order.product_name}</h2><p className="mt-1 text-xs text-[#85858F]">Purchased version {order.purchased_version}</p></div>
+            <div><p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{order.order_number}</p><h2 className="mt-2 text-xl font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500 font-medium">Purchased version {order.purchased_version}</p></div>
             <DashboardStatusBadge status={order.order_status} />
           </div>
-          <dl className="mt-6 grid gap-4 border-y border-white/10 py-5 text-sm sm:grid-cols-3">
+          <dl className="mt-6 grid gap-4 border-y border-slate-100 py-5 text-sm sm:grid-cols-3">
             <OrderDetail label="Total amount" value={formatMoney(order.total_minor, order.currency)} />
             <OrderDetail label="Payment method" value="GCash / QRPh Scan to Pay" />
             <OrderDetail label="File delivery" value={order.delivery_available ? "Unlocked" : order.order_status === "pending_verification" ? "Awaiting verification" : "Locked"} />
           </dl>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link href={`/systems/${order.product_slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 text-sm font-semibold text-[#D4D4D8] hover:border-white/20 hover:bg-[#17181B]">View system details <ExternalLink className="size-3.5" /></Link>
+            <Link href={`/systems/${order.product_slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs">View system details <ExternalLink className="size-3.5" /></Link>
             {order.delivery_available && (
               <form action={openPortalDownload.bind(null, order.order_id)}>
-                <button type="submit" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 text-sm font-semibold text-white hover:bg-[#2563EB]"><Download className="size-4" /> Generate one-hour download link</button>
+                <button type="submit" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-4 text-sm font-semibold text-white hover:bg-blue-700 shadow-xs"><Download className="size-4" /> Generate one-hour download link</button>
               </form>
             )}
           </div>
@@ -308,16 +308,16 @@ function SupportPanel({ portalData }: { portalData: CustomerPortalData }) {
   return (
     <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr] xl:items-start">
       <div className="grid gap-5">
-        <div><SectionHeading eyebrow="Request history" title="Support activity" /><p className="mt-2 text-sm leading-6 text-[#85858F]">Track requests linked to verified purchases on this account.</p></div>
+        <div><SectionHeading eyebrow="Request history" title="Support activity" /><p className="mt-2 text-sm leading-6 text-slate-600 font-medium">Track requests linked to verified purchases on this account.</p></div>
         <DashboardPanel className="overflow-hidden">
           {portalData.supportRequests.length === 0 ? (
             <DashboardEmptyState icon={MessageSquare} title="No support requests yet" description="Requests you submit for verified purchases will be listed here." />
           ) : (
-            <div className="divide-y divide-white/10">
+            <div className="divide-y divide-slate-100">
               {portalData.supportRequests.map((request) => (
                 <div key={request.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-                  <div><p className="text-sm font-semibold text-[#F5F5F7]">{request.subject}</p><p className="mt-1 flex items-center gap-1.5 text-xs text-[#85858F]"><Clock className="size-3.5" /> Updated {formatDate(request.updated_at)}</p></div>
-                  <span className="w-fit rounded-full border border-white/10 bg-[#17181B] px-2.5 py-1 text-xs font-semibold capitalize text-[#D4D4D8]">{request.status.replace("_", " ")}</span>
+                  <div><p className="text-sm font-semibold text-slate-900">{request.subject}</p><p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500 font-medium"><Clock className="size-3.5" /> Updated {formatDate(request.updated_at)}</p></div>
+                  <span className="w-fit rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold capitalize text-slate-700">{request.status.replace("_", " ")}</span>
                 </div>
               ))}
             </div>
@@ -326,7 +326,7 @@ function SupportPanel({ portalData }: { portalData: CustomerPortalData }) {
       </div>
       <div>
         <SectionHeading eyebrow="New request" title="Contact support" />
-        <p className="mt-2 text-sm leading-6 text-[#85858F]">Choose an order and describe the issue without sharing credentials or secret keys.</p>
+        <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">Choose an order and describe the issue without sharing credentials or secret keys.</p>
         <SupportForm appearance="dashboard" orders={portalData.orders.map((order) => ({ id: order.order_id, label: `${order.order_number} - ${order.product_name}` }))} />
       </div>
     </div>
@@ -341,7 +341,7 @@ function ProfilePanel({ displayName, userEmail, username }: { displayName: strin
   return (
     <DashboardPanel className="max-w-3xl p-5 sm:p-6">
       <SectionHeading eyebrow="Account record" title="Personal details" />
-      <p className="mt-2 text-sm leading-6 text-[#85858F]">These verified profile values are read-only in this workspace.</p>
+      <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">These verified profile values are read-only in this workspace.</p>
       <div className="mt-6 grid gap-5 sm:grid-cols-2"><ReadOnlyField label="Full name" value={displayName} /><ReadOnlyField label="Email address" value={userEmail ?? "Not available"} /><ReadOnlyField label="Username" value={username || "Not set"} /></div>
     </DashboardPanel>
   );
@@ -351,8 +351,8 @@ function SettingsPanel() {
   return (
     <DashboardPanel className="max-w-3xl p-5 sm:p-6">
       <SectionHeading eyebrow="Account security" title="Security settings" />
-      <p className="mt-2 max-w-2xl text-sm leading-6 text-[#85858F]">Use the secure password recovery flow to change your sign-in credentials.</p>
-      <div className="mt-6 border-t border-white/10 pt-5"><Link href="/auth/forgot-password" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#3B82F6] px-4 text-sm font-semibold text-white hover:bg-[#2563EB]">Change password</Link></div>
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 font-medium">Use the secure password recovery flow to change your sign-in credentials.</p>
+      <div className="mt-6 border-t border-slate-100 pt-5"><Link href="/auth/forgot-password" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm">Change password</Link></div>
     </DashboardPanel>
   );
 }
@@ -366,25 +366,25 @@ function SellerSalesPanel() {
 }
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
-  return <div><p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#60A5FA]">{eyebrow}</p><h2 className="mt-2 text-lg font-semibold tracking-[-0.02em] text-[#F5F5F7]">{title}</h2></div>;
+  return <div><p className="text-[11px] font-bold uppercase tracking-[0.12em] text-blue-600">{eyebrow}</p><h2 className="mt-2 text-lg font-bold tracking-[-0.02em] text-slate-900">{title}</h2></div>;
 }
 
 function ActionRow({ href, icon: Icon, title, description, onClick }: { href?: string; icon: typeof Package; title: string; description: string; onClick?: () => void }) {
-  const content = <><span className="grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-[#17181B] text-[#60A5FA]"><Icon className="size-4" /></span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#D4D4D8]">{title}</span><span className="mt-1 block text-xs leading-5 text-[#85858F]">{description}</span></span><ArrowUpRight className="size-4 shrink-0 text-[#71717A]" /></>;
-  const classes = "flex w-full items-center gap-3 rounded-lg border border-white/10 bg-[#0D0E10] p-3.5 text-left transition-colors hover:border-white/20 hover:bg-[#17181B]";
+  const content = <><span className="grid size-9 shrink-0 place-items-center rounded-xl border border-blue-100 bg-blue-50 text-blue-600"><Icon className="size-4" /></span><span className="min-w-0 flex-1"><span className="block text-sm font-bold text-slate-900">{title}</span><span className="mt-1 block text-xs leading-5 text-slate-500 font-medium">{description}</span></span><ArrowUpRight className="size-4 shrink-0 text-slate-400" /></>;
+  const classes = "flex w-full items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3.5 text-left transition-colors hover:border-slate-300 hover:bg-slate-100/80";
   return href ? <Link href={href} className={classes}>{content}</Link> : <button type="button" onClick={onClick} className={classes}>{content}</button>;
 }
 
 function OrderDetail({ label, value }: { label: string; value: string }) {
-  return <div><dt className="text-xs font-medium text-[#85858F]">{label}</dt><dd className="mt-1.5 font-medium text-[#D4D4D8]">{value}</dd></div>;
+  return <div><dt className="text-xs font-semibold text-slate-500">{label}</dt><dd className="mt-1.5 font-bold text-slate-900">{value}</dd></div>;
 }
 
 function ReadOnlyField({ label, value }: { label: string; value: string }) {
-  return <label className="grid gap-2 text-xs font-semibold text-[#A1A1AA]"><span>{label}</span><input disabled value={value} className="min-h-11 rounded-lg border border-white/10 bg-[#0D0E10] px-3.5 text-sm font-medium text-[#D4D4D8] disabled:cursor-not-allowed disabled:opacity-100" /></label>;
+  return <label className="grid gap-2 text-xs font-bold text-slate-700"><span>{label}</span><input disabled value={value} className="min-h-11 rounded-xl border border-slate-200 bg-slate-50 px-3.5 text-sm font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-100" /></label>;
 }
 
 function PrimaryLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link href={href} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#3B82F6] px-4 text-sm font-semibold text-white hover:bg-[#2563EB]">{children}<ArrowUpRight className="size-4" /></Link>;
+  return <Link href={href} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm">{children}<ArrowUpRight className="size-4" /></Link>;
 }
 
 function getHeaderCopy(tab: DashboardTab, displayName: string) {

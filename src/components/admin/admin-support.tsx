@@ -47,7 +47,7 @@ export function AdminSupport({ data, result }: { data: AdminSupportData; result?
                       <option value="closed">Closed</option>
                     </select>
                   </label>
-                  <button className="min-h-10 rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-xs hover:bg-slate-800 transition-colors">Save status</button>
+                  <button className="min-h-10 rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-colors">Save status</button>
                 </form>
               </article>
             ))}

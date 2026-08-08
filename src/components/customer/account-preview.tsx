@@ -48,7 +48,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             ) : (
               <Link
                 href="/auth/sign-in?next=/account"
-                className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white hover:bg-slate-800 transition-colors shadow-sm"
+                className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm"
               >
                 <span>Sign In</span>
                 <ArrowRight className="size-3.5" />
@@ -63,7 +63,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
         <div className="max-w-3xl mx-auto space-y-10">
           {/* Welcome Card */}
           <div className="bg-white border border-slate-200/90 shadow-sm rounded-3xl p-8 sm:p-12 text-center space-y-6">
-            <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-slate-900 text-white shadow-md">
+            <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
               <ShieldCheck className="size-8" />
             </div>
 
@@ -71,10 +71,10 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
               <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold text-slate-700">
                 <span>Customer Portal</span>
               </span>
-              <h1 className="mt-4 text-2xl sm:text-4xl font-semibold tracking-[-0.03em] text-slate-900">
+              <h1 className="mt-4 text-2xl sm:text-4xl font-extrabold tracking-[-0.03em] text-slate-900">
                 Access your system downloads, orders & receipts
               </h1>
-              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 max-w-xl mx-auto">
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium max-w-xl mx-auto">
                 Welcome! The Customer Portal provides private access to your software source code ZIP files, GCash / QRPh payment verification, and dedicated developer support.
               </p>
             </div>
@@ -82,25 +82,25 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             {/* Feature Highlights Grid */}
             <div className="grid gap-4 sm:grid-cols-3 text-left pt-4 border-t border-slate-100">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                <Zap className="size-5 text-slate-900 mb-2" />
-                <h3 className="text-xs font-semibold text-slate-900">Instant Deliverables</h3>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
+                <Zap className="size-5 text-blue-600 mb-2" />
+                <h3 className="text-xs font-bold text-slate-900">Instant Deliverables</h3>
+                <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
                   Download ready-to-run source code ZIPs & docs anytime.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                <Lock className="size-5 text-slate-900 mb-2" />
-                <h3 className="text-xs font-semibold text-slate-900">Verified Ownership</h3>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
+                <Lock className="size-5 text-blue-600 mb-2" />
+                <h3 className="text-xs font-bold text-slate-900">Verified Ownership</h3>
+                <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
                   Orders matching your checkout email claim automatically.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                <MessageSquare className="size-5 text-slate-900 mb-2" />
-                <h3 className="text-xs font-semibold text-slate-900">Direct Dev Support</h3>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
+                <MessageSquare className="size-5 text-blue-600 mb-2" />
+                <h3 className="text-xs font-bold text-slate-900">Direct Dev Support</h3>
+                <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
                   Submit technical questions directly to our system builders.
                 </p>
               </div>
@@ -110,7 +110,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
               <Link
                 href="/auth/sign-in?next=/account"
-                className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-[10px] bg-slate-900 px-6 text-sm font-semibold text-white hover:bg-slate-800 transition-colors shadow-md"
+                className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm"
               >
                 <span>Sign In to Access Your Orders</span>
                 <ArrowRight className="size-4" />

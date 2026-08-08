@@ -60,7 +60,7 @@ export function AdminMediaWorkspace({ data }: { data: AdminMediaData }) {
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Media</h1>
             <p className="mt-2 max-w-2xl text-slate-600 font-medium">Review uploaded images, demo links, and product videos across every system. Uploads and ordering remain attached to the owning system.</p>
           </div>
-          <Link href="/admin/systems" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors">Choose a system</Link>
+          <Link href="/admin/systems" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors">Choose a system</Link>
         </div>
 
         {notice && (

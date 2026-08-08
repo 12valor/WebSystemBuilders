@@ -18,7 +18,7 @@ export function AdminOverview({ data }: { data: AdminDashboardData }) {
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Overview</h1>
             <p className="mt-2 max-w-2xl text-slate-600 font-medium">Live catalog, inquiry, and administrator activity from the configured project.</p>
           </div>
-          <Link href="/admin/systems/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors">Create system</Link>
+          <Link href="/admin/systems/new" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors">Create system</Link>
         </div>
 
         {unavailable && <DataState status={data.status} />}

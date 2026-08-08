@@ -238,7 +238,7 @@ function Filter({ label, value, onChange, options }: { label: string; value: str
 
 function SubmitButton() {
   const { pending } = useFormStatus();
-  return <button type="submit" disabled={pending} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">{pending ? "Saving..." : "Save operations"}</button>;
+  return <button type="submit" disabled={pending} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">{pending ? "Saving..." : "Save operations"}</button>;
 }
 
 function FieldError({ errors }: { errors?: string[] }) {

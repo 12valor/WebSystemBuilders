@@ -126,7 +126,7 @@ function FormMessage({ state }: { state: CategoryEditorState }) {
 
 function SubmitButton({ label, disabled = false }: { label: string; disabled?: boolean }) {
   const { pending } = useFormStatus();
-  return <button type="submit" disabled={disabled || pending} className="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-all">{pending ? "Saving..." : label}</button>;
+  return <button type="submit" disabled={disabled || pending} className="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#2563EB] px-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 transition-all">{pending ? "Saving..." : label}</button>;
 }
 
 function CategoryDataState({ status }: { status: AdminCategoriesData["status"] }) {

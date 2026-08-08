@@ -104,7 +104,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                         <button
                           type="button"
                           onClick={() => setSelectedOrder(order)}
-                          className="min-h-9 rounded-xl bg-slate-900 px-3.5 text-xs font-semibold text-white hover:bg-slate-800 shadow-2xs transition-colors"
+                          className="min-h-9 rounded-xl bg-[#2563EB] px-3.5 text-xs font-semibold text-white hover:bg-blue-700 shadow-2xs transition-colors"
                         >
                           Review & Verify
                         </button>
@@ -131,9 +131,9 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
           </div>
         )}
 
-        {/* Verification Modal */}
+        {/* Modal Backdrop & Dialog */}
         {selectedOrder && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
             <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
                 <div>

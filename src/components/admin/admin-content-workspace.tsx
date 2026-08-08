@@ -122,7 +122,7 @@ function CreateFaqForm() {
           <Field label="Order" error={state.fieldErrors?.sortOrder}><input name="sortOrder" type="number" min="0" max="10000" defaultValue="0" className={inputClass} /></Field>
         </div>
       </div>
-      <button type="submit" disabled={pending} className="mt-5 w-full inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">{pending ? "Creating..." : "Create private draft"}</button>
+      <button type="submit" disabled={pending} className="mt-5 w-full inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 transition-colors">{pending ? "Creating..." : "Create private draft"}</button>
       <StatusNotice state={state} />
     </form>
   );
@@ -149,7 +149,7 @@ function FaqEditor({ item }: { item: FaqItem }) {
         </div>
         <div className="mt-5 flex flex-wrap gap-3">
           <button name="intent" value="save" disabled={pending} className={buttonClass}>{pending ? "Saving..." : "Save changes"}</button>
-          <button name="intent" value="publish" disabled={pending} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-4 text-xs font-semibold text-white shadow-sm hover:bg-slate-800 transition-colors">{item.status === "archived" ? "Restore and publish" : item.status === "published" ? "Keep published" : "Publish FAQ"}</button>
+          <button name="intent" value="publish" disabled={pending} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors">{item.status === "archived" ? "Restore and publish" : item.status === "published" ? "Keep published" : "Publish FAQ"}</button>
           {item.status !== "archived" && <button name="intent" value="archive" disabled={pending} className="min-h-11 rounded-xl border border-red-200 bg-red-50 px-4 text-xs font-semibold text-red-700 hover:bg-red-100 transition-colors">Archive</button>}
         </div>
         <StatusNotice state={state} />
