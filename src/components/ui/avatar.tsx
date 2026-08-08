@@ -32,7 +32,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
           aria-label={alt}
           role="img"
           className={cn(
-            "flex h-full w-full items-center justify-center rounded-full bg-slate-100 font-semibold uppercase text-slate-600 text-xs dark:bg-slate-800 dark:text-slate-300",
+            "flex h-full w-full items-center justify-center rounded-full bg-slate-100 font-semibold uppercase text-slate-600 text-xs",
             className
           )}
         >
@@ -66,7 +66,7 @@ const AvatarFallback = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-slate-100 font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400 text-xs",
+      "flex h-full w-full items-center justify-center rounded-full bg-slate-100 font-medium text-slate-500 text-xs",
       className
     )}
     {...props}

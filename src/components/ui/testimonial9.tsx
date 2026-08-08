@@ -207,7 +207,7 @@ const Testimonial9 = (props: Props) => {
             <img
               alt="Testimonial source"
               src={testimonial.icon}
-              className="size-4 dark:invert"
+              className="size-4 opacity-70 hover:opacity-100 transition-opacity"
             />
           </a>
         ) : null}
