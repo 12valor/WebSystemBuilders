@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
+import { PushableButton } from "@/components/ui/pushable-button";
 import { createClient } from "@/lib/supabase/client";
 import { ArrowUpRight, User, Menu, X, Sparkles, LayoutDashboard } from "lucide-react";
 
@@ -188,13 +189,10 @@ export function SiteNavigation() {
                 <span>Sign In</span>
               </Link>
 
-              <Link
-                href="/request-a-quote"
-                className="inline-flex items-center justify-center gap-2 px-6 h-11 text-sm font-semibold text-white rounded-full bg-[#2563EB] shadow-[0_4px_14px_rgba(37,99,235,0.28)] hover:bg-blue-700 hover:shadow-[0_6px_20px_rgba(37,99,235,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
-              >
+              <PushableButton href="/request-a-quote">
                 <span>Request a Quote</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+                <ArrowUpRight className="w-4 h-4" />
+              </PushableButton>
             </>
           )}
         </div>
