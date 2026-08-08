@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FloatingSoftwareMockup } from "@/components/marketing/floating-software-mockup";
+import { FoldText } from "@/components/ui/fold-text";
 import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
@@ -23,12 +24,22 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
-            className="text-4xl sm:text-6xl md:text-[76px] xl:text-[84px] font-extrabold tracking-[-0.035em] text-[#0F172A] leading-[1.04]"
+            className="font-extrabold tracking-[-0.035em] text-[#0F172A] leading-[1.04]"
           >
-            Handcrafted Software Systems for{" "}
-            <span className="text-[#2563EB]">
-              Students & Businesses
-            </span>
+            <FoldText
+              text="Handcrafted Software Systems for Students & Businesses"
+              splitBy="word"
+              hinge="top"
+              trigger="scroll"
+              duration={0.65}
+              stagger={0.045}
+              ease="power3.out"
+              perspective={700}
+              creaseShading={0.55}
+              fontSize="clamp(2.25rem, 5.5vw, 4.75rem)"
+              fontWeight={800}
+              color="#0F172A"
+            />
           </motion.h1>
 
           <motion.p
