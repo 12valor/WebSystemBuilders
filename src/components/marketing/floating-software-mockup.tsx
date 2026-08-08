@@ -7,7 +7,7 @@ import { ShoppingCart, Boxes, Code2, GraduationCap } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   return (
-    <div className="relative w-full max-w-[1280px] mx-auto py-4 sm:py-8 px-2 sm:px-4 select-none">
+    <div className="relative w-full max-w-[1280px] mx-auto pt-4 sm:pt-6 pb-0 sm:pb-2 px-2 sm:px-4 select-none">
 
       {/* Centerpiece Hero Product Showcase (mockup.svg) - UNCONSTRAINED FULL SIZE */}
       <motion.div

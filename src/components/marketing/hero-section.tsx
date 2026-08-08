@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative isolate overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-20 md:pb-28">
+    <section className="relative isolate overflow-hidden pt-12 sm:pt-16 md:pt-20 pb-2 sm:pb-4 md:pb-6">
       {/* Radial Gradient Background */}
       <div
         className="pointer-events-none absolute inset-0 z-0 h-full w-full"
