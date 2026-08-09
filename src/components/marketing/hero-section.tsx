@@ -24,7 +24,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
-            className="font-extrabold tracking-[-0.035em] text-[#0F172A] leading-[1.04]"
+            className="font-heading font-bold tracking-[-0.04em] text-[#0F172A] leading-[0.96]"
           >
             <FoldText
               text="Handcrafted Software Systems for Students & Businesses"
@@ -37,8 +37,9 @@ export function HeroSection() {
               perspective={700}
               creaseShading={0.55}
               fontSize="clamp(2.25rem, 5.5vw, 4.75rem)"
-              fontWeight={800}
+              fontWeight={750}
               color="#0F172A"
+              className="font-heading"
             />
           </motion.h1>
 
@@ -46,7 +47,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
-            className="mt-6 text-lg sm:text-xl text-[#64748B] leading-relaxed font-normal max-w-[720px] mx-auto"
+            className="mt-6 text-lg sm:text-xl text-[#64748B] leading-[1.6] font-normal font-sans max-w-[720px] mx-auto"
           >
             Compare administrator-published systems for POS, inventory, warehouse, and approved academic use, or request clearly scoped custom development.
           </motion.p>

@@ -56,7 +56,7 @@ export function PurchaseTransparencySection() {
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-blue-200">
               <ShieldCheck className="size-4" /> Before you purchase
             </div>
-            <h2 id="purchase-transparency-title" className="mt-5 text-3xl font-extrabold tracking-[-0.04em] sm:text-5xl">
+            <h2 id="purchase-transparency-title" className="mt-5 font-heading text-3xl font-bold tracking-[-0.04em] sm:text-5xl">
               Know the price, package, and delivery path first.
             </h2>
             <p className="mt-5 max-w-xl leading-7 text-slate-300">
@@ -76,7 +76,7 @@ export function PurchaseTransparencySection() {
                     <span className="font-mono text-xs text-slate-500">{step.id}</span>
                     <Icon className="size-5 text-blue-300" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-8 text-lg font-bold">{step.title}</h3>
+                  <h3 className="mt-8 font-heading text-lg font-bold">{step.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-slate-400">{step.description}</p>
                 </li>
               );
@@ -97,7 +97,7 @@ export function HomepageFaqPreview({ items }: { items: PublicFaqItem[] }) {
       <div className="mx-auto grid w-[min(calc(100%-32px),1180px)] gap-10 md:w-[min(calc(100%-64px),1180px)] lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-20">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Purchase questions</p>
-          <h2 id="homepage-faq-title" className="mt-4 text-3xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-4xl">Clear answers before commitment.</h2>
+          <h2 id="homepage-faq-title" className="mt-4 font-heading text-3xl font-bold tracking-[-0.035em] text-slate-950 sm:text-4xl">Clear answers before commitment.</h2>
           <p className="mt-4 leading-7 text-slate-600">Review the most common product, pricing, delivery, and policy questions before opening checkout or requesting a quotation.</p>
           <Link href="/faq" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900">Read every FAQ <ArrowRight className="size-4" /></Link>
         </div>

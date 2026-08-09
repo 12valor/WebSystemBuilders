@@ -12,7 +12,7 @@ export function ChoosePathSection() {
           <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#2563EB]">
             FOR STUDENTS &amp; BUSINESSES
           </p>
-          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-[-0.025em] leading-tight">
+          <h2 className="mt-2 font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#0F172A] tracking-[-0.025em] leading-tight">
             Choose the system that fits your goal.
           </h2>
           <p className="mt-3 text-sm sm:text-base text-[#64748B] font-normal leading-relaxed">
@@ -27,7 +27,7 @@ export function ChoosePathSection() {
             <div>
               {/* Header row: Audience Label & Icon */}
               <div className="flex items-center justify-between mb-5">
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#2563EB]">
+                <span className="text-[11px] font-semibold uppercase tracking-widest text-[#2563EB]">
                   STUDENTS
                 </span>
                 <div className="flex size-10 items-center justify-center rounded-xl bg-blue-100/80 text-[#2563EB] group-hover:bg-blue-200/80 transition-colors duration-200">
@@ -36,7 +36,7 @@ export function ChoosePathSection() {
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
+              <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0F172A] tracking-tight">
                 Systems for school projects
               </h3>
               <p className="mt-2.5 text-sm leading-relaxed text-[#64748B] font-normal">
@@ -92,7 +92,7 @@ export function ChoosePathSection() {
               </div>
 
               {/* Title & Description */}
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
+              <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#0F172A] tracking-tight">
                 Software for everyday operations
               </h3>
               <p className="mt-2.5 text-sm leading-relaxed text-[#64748B] font-normal">

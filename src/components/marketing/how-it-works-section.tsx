@@ -57,7 +57,7 @@ export function HowItWorksSection() {
           </div>
           <h2
             id="purchase-process-title"
-            className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
+            className="font-heading text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
           >
             How the Purchase Process Works
           </h2>
@@ -101,7 +101,7 @@ export function HowItWorksSection() {
                   </span>
                 </div>
 
-                <h3 className="mt-7 text-xl font-extrabold leading-snug tracking-tight text-slate-900">
+                <h3 className="mt-7 font-heading text-xl font-bold leading-snug tracking-tight text-slate-900">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-600">

@@ -65,7 +65,7 @@ export function TrustStrip() {
             </p>
             <h2
               id="institutions-title"
-              className="mt-4 max-w-md text-4xl font-semibold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-6xl"
+              className="mt-4 max-w-md font-heading text-4xl font-bold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-6xl"
             >
               Institutions represented.
             </h2>
@@ -113,7 +113,7 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
               <Sparkles className="w-3.5 h-3.5" />
               <span>Catalog Collection</span>
             </div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
               Featured Software Systems
             </h2>
             <p className="mt-3 max-w-xl text-base text-slate-600 font-medium">

@@ -222,7 +222,7 @@ const Testimonial9 = (props: Props) => {
     <section className={cn("py-32", className)}>
       <div className="container mx-auto">
         <div className="flex flex-col items-center gap-6">
-          <h2 className="text-center text-3xl font-semibold lg:text-5xl">
+          <h2 className="font-heading text-center text-3xl font-bold lg:text-5xl text-slate-900 tracking-tight">
             {heading}
           </h2>
           <p className="text-muted-foreground lg:text-lg">{description}</p>

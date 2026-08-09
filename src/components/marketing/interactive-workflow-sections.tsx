@@ -263,7 +263,7 @@ export function ProjectWorkspacePlayground() {
             {/* Headline with restrained SVG underline */}
             <h2
               id="project-workspace-title"
-              className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]"
+              className="mt-3 font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]"
             >
               Know{" "}
               <span className="relative inline-block whitespace-nowrap">

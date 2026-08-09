@@ -35,7 +35,7 @@ export function WhyChooseUsSection() {
 
           <h2
             id="knowledge-receive-heading"
-            className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-[40px] leading-tight"
+            className="mt-3 font-heading text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-[40px] leading-tight"
           >
             Know exactly what you receive.
           </h2>
@@ -62,7 +62,7 @@ export function WhyChooseUsSection() {
                     <Icon className="size-7 stroke-[1.75]" />
                   </div>
 
-                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-950 sm:text-xl">
+                  <h3 className="mt-5 font-heading text-lg font-bold tracking-tight text-slate-950 sm:text-xl">
                     {benefit.title}
                   </h3>
 
