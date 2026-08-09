@@ -1,191 +1,377 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
-  BarChart3,
-  Boxes,
   CheckCircle2,
-  ChevronRight,
-  ClipboardCheck,
-  LayoutDashboard,
-  Minus,
-  PackageCheck,
-  Plus,
-  ReceiptText,
-  RefreshCw,
-  ShoppingCart,
-  Sparkles,
+  AlertCircle,
+  Loader2,
+  Clock,
+  FileText,
+  ShieldCheck,
+  Layers,
+  MessageSquare,
+  BarChart2,
 } from "lucide-react";
-
-type OperationsView = "checkout" | "inventory";
-type CartState = Record<string, number>;
-
-type DemoProduct = {
-  id: string;
-  name: string;
-  detail: string;
-  price: number;
-};
-
-type InventoryItem = {
-  id: string;
-  name: string;
-  sku: string;
-  stock: number;
-  threshold: number;
-};
-
-const demoProducts: DemoProduct[] = [
-  { id: "beans", name: "Coffee beans", detail: "1 kg house blend", price: 320 },
-  { id: "cups", name: "Paper cups", detail: "Pack of 50", price: 110 },
-  { id: "labels", name: "Barcode labels", detail: "Thermal roll", price: 85 },
-];
-
-const initialInventory: InventoryItem[] = [
-  { id: "coffee", name: "Coffee beans", sku: "CB-001", stock: 12, threshold: 5 },
-  { id: "paper", name: "Paper cups", sku: "PC-050", stock: 8, threshold: 10 },
-  { id: "syrup", name: "Vanilla syrup", sku: "VS-750", stock: 4, threshold: 6 },
-];
-
-function formatDemoMoney(value: number) {
-  return new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
+import { BrandLogo } from "@/components/brand/brand-logo";
+import { PreSaleChatModal } from "@/components/marketing/pre-sale-chat-modal";
 
 export function BusinessWorkflowPlayground() {
   return null;
 }
 
-function ProjectRoadmapIllustration() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 760 560"
-      className="size-full"
-      fill="none"
-    >
-      <rect width="760" height="560" rx="42" fill="#EAF0F8" />
-      <circle cx="632" cy="94" r="112" fill="#BFDBFE" />
-      <circle cx="110" cy="468" r="144" fill="#BFDBFE" />
-
-      <path
-        d="M108 402C190 402 185 306 274 306C361 306 348 202 452 202C544 202 542 118 644 118"
-        stroke="#FFFFFF"
-        strokeWidth="24"
-        strokeLinecap="round"
-        opacity="0.78"
-      />
-      <path
-        d="M108 402C190 402 185 306 274 306C361 306 348 202 452 202C544 202 542 118 644 118"
-        stroke="#2563EB"
-        strokeWidth="7"
-        strokeLinecap="round"
-        strokeDasharray="10 12"
-      />
-
-      <g transform="translate(54 50)">
-        <rect width="218" height="116" rx="22" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" />
-        <rect x="24" y="25" width="54" height="64" rx="10" fill="#DBEAFE" />
-        <path d="M39 43H63M39 56H63M39 69H55" stroke="#2563EB" strokeWidth="5" strokeLinecap="round" />
-        <text x="96" y="47" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="17" fontWeight="700">Project plan</text>
-        <text x="96" y="74" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="13">Scope and milestones</text>
-      </g>
-
-      <g transform="translate(78 367)">
-        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
-        <path d="M19 35L27 43L43 27" stroke="#FFFFFF" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="72" width="176" height="70" rx="18" fill="#FFFFFF" />
-        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Requirements</text>
-        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">Confirmed</text>
-      </g>
-
-      <g transform="translate(244 271)">
-        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
-        <path d="M20 26H40V43H20Z" stroke="#FFFFFF" strokeWidth="4" strokeLinejoin="round" />
-        <rect x="72" width="164" height="70" rx="18" fill="#FFFFFF" />
-        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Prototype</text>
-        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">Ready to review</text>
-      </g>
-
-      <g transform="translate(422 167)">
-        <circle cx="30" cy="35" r="30" fill="#2563EB" stroke="#FFFFFF" strokeWidth="7" />
-        <path d="M17 35H43M30 22V48" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" />
-        <rect x="72" width="150" height="70" rx="18" fill="#FFFFFF" />
-        <text x="94" y="30" fill="#0F172A" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="16" fontWeight="700">Build</text>
-        <text x="94" y="52" fill="#64748B" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="12">In progress</text>
-      </g>
-
-      <g transform="translate(614 83)">
-        <circle cx="30" cy="35" r="30" fill="#0F172A" stroke="#FFFFFF" strokeWidth="7" />
-        <path d="M19 35L27 43L43 27" stroke="#60A5FA" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-
-      <g transform="translate(482 374)">
-        <rect width="224" height="116" rx="22" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" />
-        <path d="M44 85L26 102V84" fill="#FFFFFF" stroke="#0F172A" strokeWidth="5" strokeLinejoin="round" />
-        <circle cx="38" cy="36" r="13" fill="#DBEAFE" />
-        <path d="M62 31H180M62 50H148" stroke="#2563EB" strokeWidth="6" strokeLinecap="round" />
-        <rect x="24" y="69" width="138" height="9" rx="4.5" fill="#E2E8F0" />
-        <circle cx="185" cy="76" r="18" fill="#10B981" />
-        <path d="M176 76L182 82L194 69" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-    </svg>
-  );
-}
-
 export function ProjectWorkspacePlayground() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: "easeOut" },
+    },
+  };
+
+  const lineVariants: Variants = {
+    hidden: { scaleY: 0 },
+    visible: {
+      scaleY: 1,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
+
   return (
     <section
       aria-labelledby="project-workspace-title"
-      className="relative overflow-hidden border-y border-slate-200 bg-[#F3F6FB] py-20 sm:py-28"
+      className="relative border-y border-slate-200/80 bg-[#FAFBFC] py-20 lg:py-24 font-sans text-slate-900 overflow-hidden"
     >
-      <div className="relative mx-auto grid w-[min(calc(100%-40px),1280px)] items-center gap-12 md:w-[min(calc(100%-64px),1280px)] lg:grid-cols-[1.12fr_0.88fr] lg:gap-16">
-        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-[#EAF0F8] p-3 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.22)] sm:p-5">
-          <div className="aspect-[4/3] overflow-hidden rounded-[24px]">
-            <ProjectRoadmapIllustration />
-          </div>
-        </div>
+      <PreSaleChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/80 px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
-            <ClipboardCheck className="size-3.5" />
-            Structured project support
-          </span>
-          <h2 id="project-workspace-title" className="mt-5 text-3xl font-bold tracking-[-0.035em] text-[#0F172A] sm:text-4xl lg:text-5xl">
-            Make project progress visible and reviewable.
-          </h2>
-          <p className="mt-5 max-w-xl text-base leading-7 text-slate-700 sm:text-lg">
-            See how requirements, milestones, deliverables, and review notes can stay organized throughout an ethical student-development engagement.
-          </p>
-          <div className="mt-7 space-y-3">
-            <FeatureLine icon={LayoutDashboard} title="Clear milestones" copy="Show what is confirmed, what is being built, and what still needs review." />
-            <FeatureLine icon={ClipboardCheck} title="Structured feedback" copy="Keep revision requests attached to the correct stage and deliverable." />
-          </div>
-          <Link
-            href="/for-students"
-            className="mt-8 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5"
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.27fr_1fr] gap-12 lg:gap-16 items-center">
+          
+          {/* ================= LEFT-SIDE PROJECT WORKSPACE ================= */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="order-2 lg:order-1 rounded-2xl bg-white border border-slate-200/90 p-5 sm:p-6 shadow-xs"
           >
-            Explore student support
-            <ArrowRight className="size-4" />
-          </Link>
+            {/* WORKSPACE HEADER */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <BrandLogo className="size-6" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+                      Inventory Management System
+                    </h3>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                      In development
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    3 of 5 stages completed
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 bg-slate-100/80 px-2 py-1 rounded">
+                EXAMPLE PROJECT
+              </span>
+            </div>
+
+            {/* WORKSPACE BODY (2 INTERNAL COLUMNS) */}
+            <div className="grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
+              
+              {/* LEFT INTERNAL COLUMN: MILESTONE TIMELINE */}
+              <div className="relative pl-1">
+                {/* Vertical Connector Line */}
+                <motion.div
+                  variants={lineVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="absolute left-[13px] top-[14px] bottom-[14px] w-0.5 bg-slate-200 origin-top"
+                />
+
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="space-y-4 relative z-10"
+                >
+                  {/* Milestone 1 */}
+                  <motion.div variants={itemVariants} className="flex items-start gap-3">
+                    <div className="size-7 rounded-full bg-white border border-emerald-500/30 text-emerald-600 flex items-center justify-center shrink-0 shadow-2xs">
+                      <CheckCircle2 className="size-4 text-emerald-600 stroke-[2.25]" />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs sm:text-sm font-bold text-slate-900">1. Requirements</p>
+                      </div>
+                      <span className="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
+                        Completed
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Milestone 2 */}
+                  <motion.div variants={itemVariants} className="flex items-start gap-3">
+                    <div className="size-7 rounded-full bg-white border border-emerald-500/30 text-emerald-600 flex items-center justify-center shrink-0 shadow-2xs">
+                      <CheckCircle2 className="size-4 text-emerald-600 stroke-[2.25]" />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs sm:text-sm font-bold text-slate-900">2. Project plan</p>
+                      </div>
+                      <span className="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
+                        Completed
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Milestone 3 */}
+                  <motion.div variants={itemVariants} className="flex items-start gap-3">
+                    <div className="size-7 rounded-full bg-white border border-amber-500/30 text-amber-600 flex items-center justify-center shrink-0 shadow-2xs">
+                      <AlertCircle className="size-4 text-amber-600 stroke-[2.25]" />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs sm:text-sm font-bold text-slate-900">3. Prototype</p>
+                      </div>
+                      <span className="inline-block text-[11px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded border border-amber-100/70 mt-0.5">
+                        Ready for review
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Milestone 4 */}
+                  <motion.div variants={itemVariants} className="flex items-start gap-3">
+                    <div className="size-7 rounded-full bg-white border border-blue-500/40 text-blue-600 flex items-center justify-center shrink-0 shadow-2xs">
+                      <Loader2 className="size-4 text-blue-600 animate-spin" />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs sm:text-sm font-bold text-slate-900">4. Development</p>
+                      </div>
+                      <span className="inline-block text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-100/70 mt-0.5">
+                        In progress
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Milestone 5 */}
+                  <motion.div variants={itemVariants} className="flex items-start gap-3">
+                    <div className="size-7 rounded-full bg-slate-50 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0">
+                      <Clock className="size-3.5 text-slate-400 stroke-[2]" />
+                    </div>
+                    <div className="min-w-0 pt-0.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs sm:text-sm font-medium text-slate-600">5. Final handoff</p>
+                      </div>
+                      <span className="inline-block text-[11px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/60 mt-0.5">
+                        Upcoming
+                      </span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* RIGHT INTERNAL COLUMN: BLUEPRINT WIREFRAME PREVIEW */}
+              <div className="hidden sm:block rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5 relative overflow-hidden">
+                {/* Blueprint grid background */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-40"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(#94a3b8 0.75px, transparent 0.75px)",
+                    backgroundSize: "12px 12px",
+                  }}
+                />
+                <div className="relative z-10 space-y-3">
+                  <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
+                    <div className="h-2.5 w-20 bg-slate-300 rounded" />
+                    <div className="h-2.5 w-10 bg-slate-200 rounded" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="rounded-lg bg-white border border-slate-200/80 p-2 space-y-1.5">
+                      <div className="h-2 w-12 bg-slate-200 rounded" />
+                      <div className="h-4 w-16 bg-blue-500/20 rounded" />
+                    </div>
+                    <div className="rounded-lg bg-white border border-slate-200/80 p-2 space-y-1.5">
+                      <div className="h-2 w-10 bg-slate-200 rounded" />
+                      <div className="h-4 w-14 bg-emerald-500/20 rounded" />
+                    </div>
+                  </div>
+                  <div className="rounded-lg bg-white border border-slate-200/80 p-2.5 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="h-2 w-16 bg-slate-300 rounded" />
+                      <BarChart2 className="size-3 text-slate-300" />
+                    </div>
+                    <div className="flex items-end gap-1.5 h-10 pt-2 border-b border-slate-100">
+                      <div className="w-1/4 h-[40%] bg-blue-200 rounded-t" />
+                      <div className="w-1/4 h-[70%] bg-blue-500 rounded-t" />
+                      <div className="w-1/4 h-[50%] bg-blue-300 rounded-t" />
+                      <div className="w-1/4 h-[90%] bg-blue-600 rounded-t" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* WORKSPACE FOOTER */}
+            <div className="mt-5 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-2 min-w-0">
+                <FileText className="size-3.5 text-slate-400 shrink-0" />
+                <span className="font-bold text-slate-900 shrink-0">Latest update:</span>
+                <span className="text-slate-600 truncate">
+                  The inventory module is ready for review.
+                </span>
+              </div>
+              <a
+                href="#process"
+                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-0.5 shrink-0"
+              >
+                View deliverable →
+              </a>
+            </div>
+          </motion.div>
+
+          {/* ================= RIGHT-SIDE CONTENT ================= */}
+          <div className="order-1 lg:order-2">
+            {/* Plain Eyebrow */}
+            <span className="text-xs font-bold uppercase tracking-widest text-slate-500 font-mono">
+              PROJECT SUPPORT
+            </span>
+
+            {/* Headline with restrained SVG underline */}
+            <h2
+              id="project-workspace-title"
+              className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]"
+            >
+              Know{" "}
+              <span className="relative inline-block whitespace-nowrap">
+                exactly where
+                <svg
+                  className="absolute left-0 -bottom-1.5 w-full h-2.5 text-blue-600 overflow-visible"
+                  viewBox="0 0 100 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 9C25 4 65 3 98 8"
+                    stroke="currentColor"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>{" "}
+              your project stands.
+            </h2>
+
+            {/* Controlled Paragraph */}
+            <p className="mt-5 text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl">
+              Follow every requirement, milestone, and revision in one organized view—from planning to final handoff.
+            </p>
+
+            {/* PROCESS BENEFITS (3 EDITORIAL ROWS) */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="mt-8 space-y-4"
+            >
+              {/* Row 01 */}
+              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">01</span>
+                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                  <ShieldCheck className="size-4 stroke-[2]" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900">Agreed scope</h4>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
+                    Everyone stays aligned on what’s included and what’s not.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Row 02 */}
+              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">02</span>
+                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                  <Layers className="size-4 stroke-[2]" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900">Visible milestones</h4>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
+                    Track progress at each stage and know what comes next.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Row 03 */}
+              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">03</span>
+                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+                  <MessageSquare className="size-4 stroke-[2]" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900">Organized feedback</h4>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
+                    Keep revision notes connected to the correct deliverable.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* CTA & DIRECT DEVELOPER LINK */}
+            <div className="mt-8 pt-2 space-y-4">
+              <div className="flex sm:inline-flex">
+                <Link
+                  href="/for-students"
+                  className="pushable w-full sm:w-auto"
+                >
+                  <span className="shadow" />
+                  <span className="edge" />
+                  <span className="front">
+                    <span>See how project support works</span>
+                    <ArrowRight className="size-4" />
+                  </span>
+                </Link>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500">
+                Questions before starting?{" "}
+                <button
+                  type="button"
+                  onClick={() => setIsChatOpen(true)}
+                  className="text-slate-900 font-semibold underline underline-offset-4 hover:text-blue-600 transition-colors"
+                >
+                  Talk directly with the developer.
+                </button>
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   );
-}
-function FeatureLine({ icon: Icon, title, copy }: { icon: typeof ShoppingCart; title: string; copy: string }) {
-  return <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600"><Icon className="size-4.5" /></span><div><p className="text-sm font-semibold text-slate-900">{title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{copy}</p></div></div>;
-}
-
-function PreviewTab({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: typeof ShoppingCart; label: string }) {
-  return <button type="button" role="tab" aria-selected={active} onClick={onClick} className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3 text-[11px] font-semibold transition ${active ? "bg-white text-slate-900 shadow-sm" : "text-slate-400 hover:text-white"}`}><Icon className="size-3.5" />{label}</button>;
-}
-
-function MiniMetric({ label, value, icon: Icon }: { label: string; value: string; icon: typeof Boxes }) {
-  return <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3"><div className="flex items-center justify-between"><span className="text-[10px] text-slate-500">{label}</span><Icon className="size-3.5 text-slate-500" /></div><p className="mt-2 text-lg font-bold text-white">{value}</p></div>;
 }
