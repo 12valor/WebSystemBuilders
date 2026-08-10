@@ -65,7 +65,7 @@ export function ProjectWorkspacePlayground() {
           
           {/* ================= LEFT-SIDE PROJECT WORKSPACE ================= */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -102,7 +102,7 @@ export function ProjectWorkspacePlayground() {
                 {/* Vertical Connector Line */}
                 <motion.div
                   variants={lineVariants}
-                  initial="hidden"
+                  initial={false}
                   whileInView="visible"
                   viewport={{ once: true }}
                   className="absolute left-[13px] top-[14px] bottom-[14px] w-0.5 bg-slate-200 origin-top"
@@ -110,7 +110,7 @@ export function ProjectWorkspacePlayground() {
 
                 <motion.div
                   variants={containerVariants}
-                  initial="hidden"
+                  initial={false}
                   whileInView="visible"
                   viewport={{ once: true }}
                   className="space-y-4 relative z-10"
@@ -294,7 +294,7 @@ export function ProjectWorkspacePlayground() {
             {/* PROCESS BENEFITS (3 EDITORIAL ROWS) */}
             <motion.div
               variants={containerVariants}
-              initial="hidden"
+              initial={false}
               whileInView="visible"
               viewport={{ once: true }}
               className="mt-8 space-y-4"

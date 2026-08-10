@@ -1,48 +1,29 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ShoppingCart, Boxes, Code2, GraduationCap } from "lucide-react";
 
 export function FloatingSoftwareMockup() {
   return (
-    <div className="relative w-full max-w-[1280px] mx-auto pt-4 sm:pt-6 pb-0 sm:pb-2 px-2 sm:px-4 select-none">
+    <div className="relative mx-auto w-full max-w-[1180px] select-none px-2 pb-0 pt-3 sm:px-4 sm:pt-4">
 
       {/* Centerpiece Hero Product Showcase (mockup.svg) - UNCONSTRAINED FULL SIZE */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full flex items-center justify-center mx-auto"
-      >
-        <div className="w-full max-w-[1100px] xl:max-w-[1180px] mx-auto filter drop-shadow-[0_25px_50px_rgba(15,23,42,0.12)]">
+      <div className="relative z-10 mx-auto flex w-full items-center justify-center">
+        <div className="mx-auto w-full max-w-[960px] drop-shadow-[0_22px_42px_rgba(15,23,42,0.1)] xl:max-w-[1040px]">
           <Image
             src="/mockup.svg"
             alt="WebSystemBuilders Software Platform Showcase"
             width={1350}
             height={1080}
             priority
-            sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 1180px"
+            sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 1040px"
             className="w-full h-auto object-contain block mx-auto"
           />
         </div>
-      </motion.div>
+      </div>
 
       {/* ABSOLUTE OVERLAY FLOATING CARDS WITH CURLY CONNECTOR LINES (Desktop lg+ Only) */}
       <div className="hidden lg:block absolute inset-0 z-30 pointer-events-none">
         {/* ================= CARD 1: TOP LEFT (POS & Sales) ================= */}
-        <motion.div
-          initial={{ opacity: 0, x: -30, rotate: -4 }}
-          animate={{ opacity: 1, x: 0, rotate: -4, y: [0, -6, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.15 },
-            x: { duration: 0.6, delay: 0.15 },
-            y: { repeat: Infinity, duration: 5.2, ease: "easeInOut" },
-          }}
-          whileHover={{ y: -6, scale: 1.03, rotate: -2 }}
-          className="absolute top-[6%] left-[1%] xl:left-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
+        <div className="pointer-events-auto absolute left-[1%] top-[6%] w-[210px] -rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:left-[-8px] xl:w-[224px]">
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <ShoppingCart className="w-5.5 h-5.5" />
           </div>
@@ -50,7 +31,7 @@ export function FloatingSoftwareMockup() {
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Streamline sales, invoices, and transactions.
           </p>
-        </motion.div>
+        </div>
 
         {/* Curly Connector Line 1 (Top Left) */}
         <svg className="absolute top-[18%] left-[17%] xl:left-[16%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
@@ -59,17 +40,7 @@ export function FloatingSoftwareMockup() {
         </svg>
 
         {/* ================= CARD 2: BOTTOM LEFT (Inventory & Warehouse) ================= */}
-        <motion.div
-          initial={{ opacity: 0, x: -30, rotate: 3 }}
-          animate={{ opacity: 1, x: 0, rotate: 3, y: [0, -7, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.25 },
-            x: { duration: 0.6, delay: 0.25 },
-            y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.3 },
-          }}
-          whileHover={{ y: -6, scale: 1.03, rotate: 1 }}
-          className="absolute bottom-[16%] left-[0%] xl:left-[-16px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
+        <div className="pointer-events-auto absolute bottom-[16%] left-0 w-[210px] rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:left-[-8px] xl:w-[224px]">
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Boxes className="w-5.5 h-5.5" />
           </div>
@@ -77,7 +48,7 @@ export function FloatingSoftwareMockup() {
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Track stock, manage suppliers, and warehouses.
           </p>
-        </motion.div>
+        </div>
 
         {/* Curly Connector Line 2 (Bottom Left) */}
         <svg className="absolute bottom-[24%] left-[16%] xl:left-[15%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
@@ -86,17 +57,7 @@ export function FloatingSoftwareMockup() {
         </svg>
 
         {/* ================= CARD 3: TOP RIGHT (Custom Development) ================= */}
-        <motion.div
-          initial={{ opacity: 0, x: 30, rotate: 4 }}
-          animate={{ opacity: 1, x: 0, rotate: 4, y: [0, -6, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.2 },
-            x: { duration: 0.6, delay: 0.2 },
-            y: { repeat: Infinity, duration: 5.4, ease: "easeInOut", delay: 0.2 },
-          }}
-          whileHover={{ y: -6, scale: 1.03, rotate: 2 }}
-          className="absolute top-[6%] right-[1%] xl:right-[-12px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
+        <div className="pointer-events-auto absolute right-[1%] top-[6%] w-[210px] rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:right-[-8px] xl:w-[224px]">
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Code2 className="w-5.5 h-5.5" />
           </div>
@@ -104,20 +65,10 @@ export function FloatingSoftwareMockup() {
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Requirements-reviewed software for a defined workflow.
           </p>
-        </motion.div>
+        </div>
 
         {/* ================= CARD 4: BOTTOM RIGHT (Academic & Capstone) ================= */}
-        <motion.div
-          initial={{ opacity: 0, x: 30, rotate: -3 }}
-          animate={{ opacity: 1, x: 0, rotate: -3, y: [0, -7, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 0.3 },
-            x: { duration: 0.6, delay: 0.3 },
-            y: { repeat: Infinity, duration: 6.2, ease: "easeInOut", delay: 0.5 },
-          }}
-          whileHover={{ y: -6, scale: 1.03, rotate: -1 }}
-          className="absolute bottom-[16%] right-[0%] xl:right-[-16px] w-[220px] xl:w-[240px] rounded-[22px] bg-white/95 p-4 border border-slate-200/80 shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 pointer-events-auto"
-        >
+        <div className="pointer-events-auto absolute bottom-[16%] right-0 w-[210px] -rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:right-[-8px] xl:w-[224px]">
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <GraduationCap className="w-5.5 h-5.5" />
           </div>
@@ -125,7 +76,7 @@ export function FloatingSoftwareMockup() {
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Ethical technical foundations with disclosed scope.
           </p>
-        </motion.div>
+        </div>
 
         {/* Curly Connector Line 4 (Bottom Right) */}
         <svg className="absolute bottom-[24%] right-[16%] xl:right-[15%] w-24 h-16 pointer-events-none" viewBox="0 0 100 60" fill="none">
@@ -135,12 +86,7 @@ export function FloatingSoftwareMockup() {
       </div>
 
       {/* Mobile & Tablet Responsive Feature Cards Grid (< lg screens) */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.35 }}
-        className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-3.5"
-      >
+      <div className="mt-6 grid grid-cols-1 gap-3.5 sm:mt-8 sm:grid-cols-2 lg:hidden">
         {/* Card 1 */}
         <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
@@ -184,7 +130,7 @@ export function FloatingSoftwareMockup() {
             <p className="text-[11px] text-slate-500 mt-0.5">Ethical technical foundations with disclosed scope.</p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

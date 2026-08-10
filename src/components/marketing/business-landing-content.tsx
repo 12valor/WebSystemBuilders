@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function BusinessLandingContent() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="bg-white font-sans min-h-screen text-slate-900 selection:bg-blue-500 selection:text-white">
       {/* HERO SECTION */}
@@ -11,9 +13,8 @@ export function BusinessLandingContent() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
             className="space-y-6"
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-200/80 px-3.5 py-1 text-xs font-mono font-bold uppercase tracking-widest text-blue-700">
@@ -51,9 +52,8 @@ export function BusinessLandingContent() {
 
           {/* Right Floating Layered Composite UI Stack */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={false}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
             className="relative flex items-center justify-center"
           >
             <div className="relative w-full max-w-md aspect-square rounded-3xl bg-gradient-to-tr from-blue-600/10 via-slate-600/10 to-indigo-600/10 p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50 flex flex-col justify-between overflow-hidden">
@@ -62,8 +62,6 @@ export function BusinessLandingContent() {
 
               {/* POS Checkout Card Snippet */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="self-start rounded-2xl bg-white p-4 shadow-lg border border-slate-200/80 flex items-center gap-3 w-4/5"
               >
                 <div className="size-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
@@ -79,8 +77,6 @@ export function BusinessLandingContent() {
 
               {/* Real-time Inventory Stock Badge */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="mx-auto w-full rounded-2xl bg-slate-900 p-4 text-white shadow-2xl border border-slate-800 space-y-2.5"
               >
                 <div className="flex items-center justify-between border-b border-slate-800 pb-2">
@@ -107,8 +103,6 @@ export function BusinessLandingContent() {
 
               {/* Sales Metrics Card */}
               <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="self-end rounded-2xl bg-white p-4 shadow-lg border border-slate-200/80 flex items-center gap-3 w-4/5"
               >
                 <div className="size-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
@@ -147,7 +141,7 @@ export function BusinessLandingContent() {
             <div className="grid gap-6 sm:grid-cols-2">
               {/* Card 01: Point of Sale */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all duration-300 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10 flex flex-col justify-between space-y-5"
               >
                 {/* Header Icon + Label */}
@@ -183,7 +177,7 @@ export function BusinessLandingContent() {
 
               {/* Card 02: Inventory Management */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all duration-300 hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between space-y-5"
               >
                 <div className="flex items-center justify-between">
@@ -217,7 +211,7 @@ export function BusinessLandingContent() {
 
               {/* Card 03: Warehouse Management */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all duration-300 hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between space-y-5"
               >
                 <div className="flex items-center justify-between">
@@ -251,7 +245,7 @@ export function BusinessLandingContent() {
 
               {/* Card 04: Other Management Systems */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all duration-300 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 flex flex-col justify-between space-y-5"
               >
                 <div className="flex items-center justify-between">
@@ -291,7 +285,7 @@ export function BusinessLandingContent() {
       <section className="py-20 lg:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 xl:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="rounded-3xl bg-slate-50/90 border border-slate-200/90 p-8 sm:p-10 lg:p-12 shadow-sm space-y-8"
@@ -395,7 +389,7 @@ export function BusinessLandingContent() {
       <section className="pb-24 lg:pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={false}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 sm:p-12 lg:p-16 shadow-2xl border border-slate-800"

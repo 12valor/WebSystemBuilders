@@ -25,28 +25,28 @@ const institutions = [
     src: "/images/institutions/tup.png",
     width: 1280,
     height: 1280,
-    rotation: "lg:-rotate-3",
+    rotation: "xl:-rotate-3",
   },
   {
     name: "Central Philippines State University",
     src: "/images/institutions/cpsu.png",
     width: 727,
     height: 664,
-    rotation: "lg:rotate-2",
+    rotation: "xl:rotate-2",
   },
   {
     name: "Dr. Vicente F. Gustilo Memorial National High School",
     src: "/images/institutions/dr-vicente-f-gustilo-mnhs.png",
     width: 447,
     height: 447,
-    rotation: "lg:-rotate-1",
+    rotation: "xl:-rotate-1",
   },
   {
     name: "Negros Occidental High School",
     src: "/images/institutions/negros-occidental-high-school.png",
     width: 736,
     height: 731,
-    rotation: "lg:rotate-3",
+    rotation: "xl:rotate-3",
   },
 ] as const;
 
@@ -57,8 +57,8 @@ export function TrustStrip() {
       aria-labelledby="institutions-title"
       className="border-y border-slate-200 bg-white font-sans text-slate-950"
     >
-      <div className="mx-auto w-[min(calc(100%-40px),1280px)] py-16 md:w-[min(calc(100%-64px),1280px)] md:py-20 xl:w-[min(calc(100%-96px),1280px)] xl:py-24">
-        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-16">
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] py-14 md:w-[min(calc(100%-64px),1280px)] md:py-16 xl:py-20">
+        <div className="grid gap-12 xl:grid-cols-[0.72fr_1.28fr] xl:items-center xl:gap-16">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
               Academic community
@@ -73,13 +73,13 @@ export function TrustStrip() {
 
           <ul
             aria-label="Educational institutions represented in the WebSystemBuilders community"
-            className="grid grid-cols-2 gap-4 sm:gap-5 lg:isolate lg:flex lg:items-center lg:justify-end lg:gap-0"
+            className="grid grid-cols-2 gap-4 sm:gap-5 xl:isolate xl:flex xl:items-center xl:justify-end xl:gap-0"
           >
             {institutions.map((institution, index) => (
               <li
                 key={institution.name}
-                className={`flex aspect-square items-center justify-center rounded-3xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 lg:size-40 lg:shrink-0 lg:p-5 lg:shadow-[0_12px_30px_rgba(15,23,42,0.08)] ${
-                  index === 0 ? "lg:ml-0" : "lg:-ml-5"
+                className={`flex aspect-square items-center justify-center rounded-3xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 xl:size-40 xl:shrink-0 xl:p-5 xl:shadow-[0_12px_30px_rgba(15,23,42,0.08)] ${
+                  index === 0 ? "xl:ml-0" : "xl:-ml-5"
                 } ${institution.rotation}`}
               >
                 <Image
@@ -104,16 +104,16 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
 
   return (
-    <section id="systems" className="bg-[#FAFAFC] py-20 sm:py-28">
-      <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
+    <section id="systems" className="bg-[#FAFAFC] py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Featured Systems Heading */}
-        <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <div className="mb-9 flex flex-col justify-between gap-5 sm:flex-row sm:items-end lg:mb-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Catalog Collection</span>
             </div>
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.08] tracking-[-0.04em] text-slate-900">
               Featured Software Systems
             </h2>
             <p className="mt-3 max-w-xl text-base text-slate-600 font-medium">
@@ -140,8 +140,8 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         )}
 
         {/* Browse Categories Grid */}
-        <div className="mt-24 border-t border-slate-200/80 pt-20">
-          <div className="mb-12 text-center">
+        <div className="mt-16 border-t border-slate-200/80 pt-14 sm:mt-20 sm:pt-16">
+          <div className="mb-9 text-center sm:mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
               <span>Explore Verticals</span>
             </div>
@@ -153,10 +153,10 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {categoriesList.map((cat) => (
               <Link key={cat.title} href={`/systems?category=${cat.slug}`}>
-                <TactileCard bg="white" className="h-full flex flex-col justify-between p-6 hover:border-blue-500/40">
+                <TactileCard bg="white" className="flex h-full flex-col justify-between p-5 hover:border-blue-500/40 sm:p-6">
                   <div>
                     <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-4" />
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -182,7 +182,7 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 
 function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-[24px] border border-slate-900/[0.08] bg-white shadow-[0_4px_20px_-4px_rgba(15,23,42,0.06)] hover:shadow-[0_20px_40px_-12px_rgba(37,99,235,0.14)] transition-all duration-300 group hover:-translate-y-1.5">
+    <article className="group flex flex-col overflow-hidden rounded-[20px] border border-slate-900/[0.08] bg-white shadow-[0_8px_24px_-20px_rgba(15,23,42,0.28)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_18px_34px_-24px_rgba(37,99,235,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
       {/* Top Preview Card Area */}
       <div className="relative flex h-52 items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 overflow-hidden">
         {/* Soft Background Grid Glow */}

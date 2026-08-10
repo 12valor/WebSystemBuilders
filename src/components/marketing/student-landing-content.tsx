@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function StudentLandingContent() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="bg-white font-sans min-h-screen text-slate-900 selection:bg-purple-500 selection:text-white">
       {/* HERO SECTION */}
@@ -11,9 +13,8 @@ export function StudentLandingContent() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
             className="space-y-6"
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-purple-50 border border-purple-200/80 px-3.5 py-1 text-xs font-mono font-bold uppercase tracking-widest text-purple-700">
@@ -51,9 +52,8 @@ export function StudentLandingContent() {
 
           {/* Right Abstract Vector Graphic Cluster */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={false}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
             className="relative flex items-center justify-center"
           >
             <div className="relative w-full max-w-md aspect-square rounded-3xl bg-gradient-to-tr from-purple-600/10 via-indigo-600/10 to-blue-600/10 p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50 flex flex-col justify-between overflow-hidden">
@@ -62,8 +62,6 @@ export function StudentLandingContent() {
 
               {/* Floating Graduation Cap Icon Card */}
               <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="self-start rounded-2xl bg-white p-4 shadow-lg border border-slate-200/80 flex items-center gap-3"
               >
                 <div className="size-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
@@ -80,8 +78,6 @@ export function StudentLandingContent() {
 
               {/* Center Floating Code Window */}
               <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="mx-auto w-full rounded-2xl bg-slate-900 p-4 text-white shadow-2xl border border-slate-800 space-y-2 font-mono text-xs"
               >
                 <div className="flex items-center gap-1.5 border-b border-slate-800 pb-2">
@@ -99,8 +95,6 @@ export function StudentLandingContent() {
 
               {/* Database Cylinder Badge */}
               <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="self-end rounded-2xl bg-white p-4 shadow-lg border border-slate-200/80 flex items-center gap-3"
               >
                 <div className="size-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
@@ -139,7 +133,7 @@ export function StudentLandingContent() {
             <div className="grid gap-6 sm:grid-cols-2">
               {/* Card 01 */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-7 shadow-sm transition-all duration-300 hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between"
               >
                 <span className="absolute right-4 top-4 text-6xl font-black text-slate-200/60 select-none pointer-events-none font-mono">
@@ -165,7 +159,7 @@ export function StudentLandingContent() {
 
               {/* Card 02 */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-7 shadow-sm transition-all duration-300 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10 flex flex-col justify-between"
               >
                 <span className="absolute right-4 top-4 text-6xl font-black text-slate-200/60 select-none pointer-events-none font-mono">
@@ -191,7 +185,7 @@ export function StudentLandingContent() {
 
               {/* Card 03 */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-7 shadow-sm transition-all duration-300 hover:border-amber-500/40 hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between"
               >
                 <span className="absolute right-4 top-4 text-6xl font-black text-slate-200/60 select-none pointer-events-none font-mono">
@@ -217,7 +211,7 @@ export function StudentLandingContent() {
 
               {/* Card 04 */}
               <motion.div
-                whileHover={{ y: -4 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-7 shadow-sm transition-all duration-300 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 flex flex-col justify-between"
               >
                 <span className="absolute right-4 top-4 text-6xl font-black text-slate-200/60 select-none pointer-events-none font-mono">
@@ -249,7 +243,7 @@ export function StudentLandingContent() {
       <section className="py-20 lg:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 xl:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="rounded-3xl bg-indigo-50/70 border border-indigo-100/90 p-8 sm:p-10 lg:p-12 shadow-sm space-y-8"
@@ -291,7 +285,7 @@ export function StudentLandingContent() {
       <section className="pb-24 lg:pb-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
+            initial={false}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 sm:p-12 lg:p-16 shadow-2xl border border-slate-800"

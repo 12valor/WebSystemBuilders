@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { PushableButton } from "@/components/ui/pushable-button";
 import { createClient } from "@/lib/supabase/client";
-import { ArrowUpRight, User, Menu, X, Sparkles, LayoutDashboard } from "lucide-react";
+import { ArrowUpRight, User, Menu, X, LayoutDashboard } from "lucide-react";
 
 const navigation = [
   { label: "Systems Catalog", href: "/systems" },
@@ -19,7 +18,6 @@ const navigation = [
 export function SiteNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
   const [user, setUser] = useState<{
     id: string;
     email?: string;
@@ -27,12 +25,7 @@ export function SiteNavigation() {
     fullName?: string;
   } | null>(null);
   const pathname = usePathname();
-
-  // Reset hover state and mobile menu whenever pathname changes
-  useEffect(() => {
-    setHoveredHref(null);
-    setIsOpen(false);
-  }, [pathname]);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,75 +79,60 @@ export function SiteNavigation() {
 
   return (
     <header
-      className={`sticky z-50 mx-auto w-[min(calc(100%-24px),1240px)] transition-all duration-300 ${
-        scrolled ? "top-2 md:top-3" : "top-4 md:top-6"
-      }`}
+      className="sticky top-3 z-50 mx-auto w-[min(calc(100%-24px),1240px)] md:top-4"
     >
       <div
-        className={`flex items-center justify-between gap-4 rounded-full bg-white/85 px-6 md:px-8 backdrop-blur-xl border border-slate-200/80 transition-all duration-300 ${
+        className={`relative flex h-16 items-center justify-between gap-4 rounded-full border border-slate-200/80 px-5 backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-200 md:px-7 ${
           scrolled
-            ? "h-[60px] shadow-[0_16px_45px_-10px_rgba(15,23,42,0.1),0_1px_2px_rgba(255,255,255,0.9)_inset] bg-white/92 backdrop-blur-2xl"
-            : "h-[68px] shadow-[0_12px_40px_-10px_rgba(15,23,42,0.08),0_1px_2px_rgba(255,255,255,0.9)_inset]"
+            ? "bg-white/95 shadow-[0_14px_36px_-14px_rgba(15,23,42,0.16)]"
+            : "bg-white/88 shadow-[0_10px_30px_-16px_rgba(15,23,42,0.14)]"
         }`}
       >
         {/* Left: Brand Logo */}
         <Link
           href="/"
           aria-label="WebSystemBuilders home"
+          onClick={() => setIsOpen(false)}
           className="shrink-0 group flex items-center gap-2 focus-visible:outline-none"
         >
           <BrandLogo
             priority
-            className="size-11 transition-transform duration-300 group-hover:scale-[1.02]"
+            className="size-10 transition-opacity duration-200 group-hover:opacity-85 motion-reduce:transition-none"
           />
         </Link>
 
-        {/* Center: Navigation Links with Animated Solid Blue Pill Indicator */}
+        {/* Center: Navigation links use fixed metrics so active state never shifts neighbors. */}
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-1 xl:flex relative"
-          onMouseLeave={() => setHoveredHref(null)}
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 xl:flex"
         >
           {navigation.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
-            const isHovered = hoveredHref === item.href;
-            const isHighlighted = isHovered || (isActive && !hoveredHref);
 
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                onMouseEnter={() => setHoveredHref(item.href)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full select-none ${
-                  isHighlighted
-                    ? "text-white font-semibold"
-                    : isActive
-                    ? "text-[#2563EB] font-semibold"
-                    : "text-[#0F172A]"
+                aria-current={isActive ? "page" : undefined}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 select-none motion-reduce:transition-none ${
+                  isActive
+                    ? "bg-[#2563EB] text-white"
+                    : "text-[#0F172A] hover:bg-blue-50 hover:text-[#1D4ED8]"
                 }`}
               >
-                {/* Solid Blue Animated Pill Background */}
-                {isHighlighted && (
-                  <motion.span
-                    layoutId="nav-blue-pill"
-                    className="absolute inset-0 rounded-full bg-[#2563EB] -z-10 shadow-[0_4px_14px_0_rgba(37,99,235,0.35)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                  />
-                )}
-
-                <span className="relative z-10">{item.label}</span>
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
         {/* Right: Action Controls */}
-        <div className="hidden items-center gap-3 xl:flex">
+        <div className="hidden shrink-0 items-center gap-3 xl:flex">
           {user ? (
             <>
               <Link
                 href="/dashboard"
-                className="inline-flex items-center justify-center gap-2 px-5 h-10 text-sm font-semibold text-white rounded-full bg-slate-900 shadow-sm hover:bg-slate-800 transition-all duration-200"
+                className="inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-slate-900 px-5 text-sm font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-slate-800 motion-reduce:transition-none"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>Dashboard</span>
@@ -183,16 +161,19 @@ export function SiteNavigation() {
             <>
               <Link
                 href="/auth/sign-in"
-                className="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#0F172A] hover:text-[#2563EB] transition-colors"
+                className="flex shrink-0 items-center gap-2 whitespace-nowrap px-3.5 py-2 text-sm font-semibold text-[#0F172A] transition-colors hover:text-[#2563EB] motion-reduce:transition-none"
               >
                 <User className="w-4 h-4 text-slate-500" />
                 <span>Sign In</span>
               </Link>
 
-              <PushableButton href="/request-a-quote">
+              <Link
+                href="/request-a-quote"
+                className="inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-blue-700 motion-reduce:transition-none"
+              >
                 <span>Request a Quote</span>
                 <ArrowUpRight className="w-4 h-4" />
-              </PushableButton>
+              </Link>
             </>
           )}
         </div>
@@ -216,10 +197,10 @@ export function SiteNavigation() {
           <motion.nav
             id="mobile-menu"
             aria-label="Mobile navigation"
-            initial={{ opacity: 0, y: -12, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.97 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
             className="mt-3 rounded-3xl border border-slate-200/90 bg-white/95 p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] xl:hidden"
           >
             <div className="grid gap-1.5">
