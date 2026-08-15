@@ -292,11 +292,12 @@ function CatalogState({ status }: { status: CatalogData["status"] }) {
           </div>
         </div>
 
-        <Link href="/request-a-quote" className="shrink-0">
-          <MagneticButton size="md" variant="primary">
-            <span>Request a Custom System</span>
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </MagneticButton>
+        <Link
+          href="/request-a-quote"
+          className="blue-button blue-button-static min-h-11 shrink-0 gap-2 px-6 text-sm"
+        >
+          <span>Request a Custom System</span>
+          <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
     </div>

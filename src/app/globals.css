@@ -126,6 +126,17 @@ body {
   transform: none;
 }
 
+.blue-button-static,
+.blue-button-static:hover,
+.blue-button-static:active {
+  filter: none;
+  box-shadow:
+    0 4px 0 #1d4ed8,
+    0 8px 14px -6px rgba(15, 23, 42, 0.48);
+  transform: none;
+  transition: none;
+}
+
 /* 3D Pushable Button (Blue Theme) */
 .pushable {
   position: relative;
