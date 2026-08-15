@@ -98,11 +98,12 @@ flowchart LR
     App --> Database["Supabase PostgreSQL"]
     App --> Auth["Supabase Auth"]
     App --> Storage["Private Supabase Storage"]
-    App --> Payment["Lemon Squeezy Merchant of Record"]
+    App --> Payment["PayMongo Hosted Checkout"]
     App --> Email["Resend transactional email"]
 
     Payment --> Webhook["Verified payment webhook"]
-    Webhook --> Fulfillment["Idempotent fulfillment service"]
+    Webhook --> Database
+    Dashboard --> Fulfillment["Explicit idempotent fulfillment action"]
     Fulfillment --> Database
     Fulfillment --> Storage
     Fulfillment --> Email
@@ -131,7 +132,7 @@ Use a modular monolith:
 | Database | Supabase PostgreSQL | Primary relational data store |
 | Authentication | Supabase Auth | Customer and administrator identity |
 | Storage | Supabase Storage | Private systems, media, and documents |
-| Payments | Scan to Pay (GCash / QRPh) | Manual QR payment & transaction reference submission with administrator verification |
+| Payments | PayMongo Hosted Checkout v2 | Authenticated test-mode checkout with signed webhook verification; legacy manual proofs remain read-compatible |
 | Email | Resend | Transactional purchase and inquiry email |
 | Validation | Zod | Shared input and environment validation |
 | Forms | React Hook Form | Complex user and administrator forms |
@@ -686,7 +687,7 @@ The admin dashboard should share the brand tokens but favor density, clarity, ke
 
 Use separate test and production payment credentials. Production webhook URLs, email domains, storage policies, and environment variables require a launch checklist and verification.
 
-PayMongo is the selected initial payment provider, but the merchant account has not yet been created or verified. Keep the payment integration behind an adapter, support non-live development states, and do not enable production purchasing until merchant onboarding, live credentials, webhook registration, and required payment-method activation are verified.
+PayMongo is the selected initial provider. The local adapter, authenticated checkout route, test-signature webhook, and reconciliation migration are implemented with a strict `sk_test_` guard. Provider-backed verification is still pending because credentials, an enabled merchant method set, an applied remote migration, and a public HTTPS test webhook are not configured. Live credentials remain prohibited until merchant onboarding and the production launch decision.
 
 ## 19. Testing strategy
 
@@ -763,7 +764,7 @@ A phase is complete only when:
 - Admin authentication
 - Admin system, media, file, pricing, and publishing management
 - Quote and contact inquiries
-- PayMongo test and production checkout
+- PayMongo test checkout and a separately approved future production checkout
 - Verified payment webhook
 - Order records
 - Customer accounts and portal for orders, downloads, receipts, updates, and support

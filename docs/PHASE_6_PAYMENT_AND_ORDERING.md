@@ -1,116 +1,73 @@
 # Phase 6 - Payment and ordering
 
-## 1. Outcome
+## Outcome and status
 
-Phase 6 adds the durable commerce boundary for ready-made fixed-price systems. It creates an internal pending order before sending a customer to Lemon Squeezy, records immutable product and policy snapshots, verifies signed payment webhooks, reconciles expected values idempotently, and exposes a private return-status page plus an administrator order ledger.
+Phase 6 provides authenticated PayMongo Hosted Checkout v2 in enforced test mode. It creates or reuses an internal order before provider checkout, snapshots authoritative catalog data, verifies signed provider events, and records payment separately from fulfillment.
 
-The local implementation is complete. Test-mode and production provider verification remain blocked until the owner configures Lemon Squeezy account credentials.
+The implementation and mocked contracts are local. Provider-backed checkout and webhook verification remain blocked until the migration is applied to an intended Supabase test project, test credentials are configured, merchant methods are enabled, and a public HTTPS test webhook is registered. Production commerce is not ready.
 
-## Completed phase architecture
+## Checkout flow
 
-- Internal checkout action creating `pending_orders` records before provider session creation
-- `/api/webhooks/lemonsqueezy` route handler for raw signed payment reconciliation
-- Verification of Lemon Squeezy signatures and events
-- Idempotent `record_paid_checkout_event` procedure handling duplicated webhooks
-- Private `/checkout/status/[orderNumber]` outcome page backed by return-token validation
-- Admin order ledger at `/admin/orders` displaying payment details, fulfillment state, and retry options
+1. A signed-in buyer opens `/checkout/[slug]` and accepts the displayed policies.
+2. The browser sends only `{ systemId }` to `POST /api/payments/paymongo/checkout`.
+3. The server revalidates the verified Supabase identity and resolves the profile name and email.
+4. A service-role RPC locks the user/system checkout pair, reads the published fixed PHP price and current private deliverable, and creates or reuses one recent pending order.
+5. The order item snapshots product, version, price, currency, license, support, delivery, and inclusions.
+6. The server creates a PayMongo v2 Checkout Session with `Idempotency-Key: checkout-{paymentAttemptId}` and only the configured merchant method subset.
+7. The trusted hosted URL is stored and returned. Failed session creation marks that attempt failed; a retry creates another payment attempt under the same order.
 
-## Key technical flows
+The adapter accepts only `sk_test_...`, uses Basic authentication, has a bounded timeout, sends no pass-on fee, requests an email receipt, and exposes safe errors. It logs only `[PayMongo] Running in TEST MODE`.
 
-### 1. Checkout initiation
+## Webhook authority
 
-1. Buyer submits checkout form at `/checkout/[systemSlug]`.
-2. Server action validates input, terms, and environment presence.
-3. The server creates a Lemon Squeezy checkout session using API `POST /v1/checkouts`.
-4. The database attaches the returned checkout-session identifier and checkout URL.
-5. The customer is redirected to Lemon Squeezy.
+`POST /api/webhooks/paymongo` is the only authority that marks a PayMongo payment paid.
 
-### 2. Webhook verification and fulfillment
+- Bodies over 256 KiB are rejected before JSON processing.
+- The route verifies `Paymongo-Signature` by calculating HMAC-SHA256 over `timestamp.rawBody`, comparing the test slot in constant time, and enforcing a five-minute tolerance.
+- Live signatures and live-mode payloads are rejected.
+- Current Hosted Checkout and documented legacy event envelopes are parsed.
+- Only `checkout_session.payment.paid` is reconciled; valid unsupported test events are acknowledged and ignored.
+- Reconciliation verifies provider event uniqueness, checkout-session ID, metadata order ID, order number, paid payment status, amount, PHP currency, and test mode.
+- Payment and payment-intent identifiers are retained; raw webhook bodies are not stored.
+- Duplicate and durably rejected events return success-class acknowledgements. Transient persistence errors return `5xx`.
 
-1. `/api/webhooks/lemonsqueezy` receives a `POST` request.
-2. Parse the `X-Signature` header and verify HMAC-SHA256 digest against `LEMON_SQUEEZY_WEBHOOK_SECRET`.
-3. Ensure the event type is `order_created` or `subscription_payment_success`.
-4. Update the order status to paid and flag as ready for fulfillment.
+The browser success/cancel query never changes payment state. A returned pending page refreshes briefly while waiting for the webhook; a cancel return leaves the order pending and offers retry.
 
-## 3. Purchase eligibility
+## Legacy compatibility
 
-Immediate checkout is allowed only when all of the following remain true inside the order-creation database transaction:
+Existing Scan-to-Pay orders, references, proof URLs, storage configuration, and history remain intact. The migration backfills one `manual` payment record where legacy proof/reference data exists. Manual verification updates that payment record but no longer calls automatic delivery. New checkout does not create proof uploads.
 
-1. The system is published.
-2. The pricing mode is `fixed`.
-3. The product is ready-made or a customizable template, not a custom service.
-4. The authoritative currency is PHP.
-5. A current system version exists.
-6. The current version has at least one private deliverable file.
-7. The server-calculated price is a positive integer minor-unit amount.
+Email-based order claiming remains for legacy records. New PayMongo orders are bound immediately to the authenticated `profile_user_id`.
 
-Starting-price and quotation products continue through the quotation workflow. Localized catalog currencies remain estimates; checkout and payment verification use the authoritative PHP snapshot.
+## Fulfillment boundary
 
-## 4. Order boundary
+Payment and delivery are separate states. A verified webhook produces `Payment confirmed` and `Awaiting delivery`; it does not create fulfillment. An administrator explicitly selects `Prepare & send delivery`, which reuses private Storage, expiring/revocable grants, and the Resend adapter. Existing resend and revoke controls remain.
 
-The `create_pending_order` service-role-only database function calculates the price from the saved product record and atomically creates:
+## Security and data rules
 
-- An order with normalized buyer identity and an opaque return-token hash
-- A single immutable order-item snapshot of product name, slug, version, price, currency, license, support, delivery, and inclusions
-- A pending PayMongo payment record with the expected amount and currency
-- Timestamped acceptance records for terms, license, refund, and delivery policies
+- Authoritative pricing is calculated inside the database from the published system.
+- Commerce mutations and reconciliation RPCs are service-role-only.
+- Customer portal reads remain authenticated and owned by `profile_user_id`.
+- Existing RLS policies remain active.
+- Payment-event and fulfillment operations are idempotent.
+- Secrets, raw webhook bodies, and sensitive provider details are not logged or returned to clients.
 
-No client-submitted amount, currency, version, license, or delivery copy is authoritative.
+## Required configuration
 
-## 5. Hosted payment flow
+- `PAYMONGO_SECRET_KEY`: required `sk_test_...` server key
+- `PAYMONGO_WEBHOOK_SECRET`: required test endpoint signing secret
+- `PAYMONGO_PAYMENT_METHODS`: required comma-separated subset of `qrph,gcash,card`
+- `SITE_URL`: existing canonical server origin
 
-1. The server validates the buyer form and all required acknowledgements.
-2. The database creates the pending order and payment.
-3. The server creates a PayMongo Checkout v2 session using a unique idempotency key.
-4. The database attaches the returned checkout-session identifier and trusted `https://checkout.paymongo.com` URL.
-5. The customer is redirected to PayMongo.
-6. The browser return page reads only the order referenced by its high-entropy token and never marks an order paid.
+See [PAYMONGO_TEST_SETUP.md](PAYMONGO_TEST_SETUP.md) for the dashboard and deployment sequence.
 
-Provider errors produce a safe customer message and never expose provider response details or secrets.
+## Remaining gates
 
-## 6. Webhook and reconciliation rules
+- Link the intended Supabase test project, apply migrations, and validate RPC/RLS behavior with real roles.
+- Configure PayMongo test credentials and enabled methods.
+- Deploy to public HTTPS and register a separate test webhook subscribed to `checkout_session.payment.paid`.
+- Run authorized test-mode success, cancellation, retry, duplicate, mismatch, outage, and delayed-webhook journeys.
+- Verify Resend delivery with safe test recipients and private test files.
+- Complete all Phase 10 business, legal, content, security, monitoring, and production gates.
 
-1. Read the request as raw text before JSON parsing.
-2. Parse the `Paymongo-Signature` timestamp, test signature, and live signature slots.
-3. Compute HMAC-SHA256 over `timestamp.rawBody` with the endpoint signing secret.
-4. Use timing-safe comparison and reject requests outside the five-minute tolerance.
-5. Confirm that the signature mode matches the event `livemode` value.
-6. Accept only `checkout_session.payment.paid` for the implemented flow.
-7. Match the stored checkout-session identifier.
-8. Compare amount, currency, and mode against both the payment and order records.
-9. Store only the payload hash and reconciliation fields, not the raw payment payload.
-10. Use a unique provider event identifier so duplicate deliveries cannot repeat the paid transition.
-
-Fulfillment is intentionally not performed inside the payment webhook. Phase 7 owns delivery and may process each paid order at most once.
-
-## 7. Data protection and authorization
-
-- Order, item, payment, and event tables use Row Level Security.
-- Authenticated administrators receive read-only policies for reconciliation.
-- Public visitors cannot query commerce tables directly.
-- Order creation, checkout attachment, event processing, and token-protected status reads are service-role-only RPCs.
-- Customer status links use a random token whose SHA-256 hash is stored; an order number alone reveals nothing.
-- Provider secrets remain server-only and checkout pages never handle card or wallet credentials.
-
-## 8. Verification
-
-Automated coverage includes buyer validation, mandatory acknowledgements, signature modes and replay tolerance, paid-event parsing, price and license snapshots, private-deliverable eligibility, RLS, expected-value matching, and idempotency migration contracts. Completion also requires lint, TypeScript, the full unit suite, a production build, and route-level HTTP smoke checks.
-
-## 9. External gates
-
-The following cannot be completed locally and remain launch blockers:
-
-- Create and migrate the Supabase project; verify RLS and every RPC with real roles
-- Create and complete PayMongo merchant/KYC onboarding
-- Add separate test and live API keys
-- Register separate HTTPS test and live webhook endpoints for `checkout_session.payment.paid`
-- Store each endpoint signing secret in the correct environment
-- Confirm enabled payment methods and execute test-mode success, failure, retry, duplicate-webhook, and mismatch scenarios
-- Complete business registration, tax, invoicing, provider, dependency-license, and legal review gates
-- Add monitoring and reconciliation for provider outages and missed events
-
-No real payment should be accepted until every production gate is complete.
-
-## 10. Exit and next action
-
-Phase 6 is locally complete when its automated and route checks pass. Live provider verification remains pending. Phase 7 may now implement private, expiring, revocable delivery and transactional email triggered from verified paid orders.
+**READY FOR LIVE? NO.**

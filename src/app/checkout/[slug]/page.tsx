@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ScanToPayCheckout } from "@/components/checkout/scan-to-pay-checkout";
+import { notFound, redirect } from "next/navigation";
+import { PaymongoCheckout } from "@/components/checkout/paymongo-checkout";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getCatalogPricePresentation } from "@/features/catalog/pricing";
 import { getPublicSystemBySlug } from "@/features/catalog/repository";
+import { getCurrentIdentity } from "@/lib/auth/current-user";
+import { isPaymongoCheckoutConfigured } from "@/lib/env/paymongo";
+import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 
-export const metadata: Metadata = { title: "Scan to Pay Checkout", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Secure Checkout", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const result = await getPublicSystemBySlug(slug);
+  const identityPromise = isSupabasePubliclyConfigured() ? getCurrentIdentity() : Promise.resolve(null);
+  const [result, identity] = await Promise.all([getPublicSystemBySlug(slug), identityPromise]);
   const system = result.system;
 
   if (!system) {
@@ -24,6 +28,11 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
     return <CheckoutUnavailable message="This system requires a confirmed quotation instead of direct checkout." href={`/systems/${system.slug}`} />;
   }
 
+  if (!identity) redirect(`/auth/sign-in?next=${encodeURIComponent(`/checkout/${system.slug}`)}`);
+  if (!isPaymongoCheckoutConfigured()) {
+    return <CheckoutUnavailable message="PayMongo test checkout is not configured on this environment." href={`/systems/${system.slug}`} />;
+  }
+
   const price = getCatalogPricePresentation(system);
 
   return (
@@ -32,10 +41,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
       <main id="main-content" className="py-12 sm:py-16 lg:py-24">
         <div className="mx-auto grid w-[min(calc(100%-40px),1080px)] gap-8 md:w-[min(calc(100%-64px),1080px)] lg:grid-cols-[minmax(0,.9fr)_minmax(420px,1.1fr)] lg:gap-14">
           <section>
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Scan to Pay Checkout</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Secure Hosted Checkout</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Order Summary</h1>
             <p className="mt-5 max-w-xl leading-7 text-secondary">
-              Review your purchase details below. Scan the payment QR code using GCash or any QRPH-supported app, then submit your transaction reference and proof.
+              Review your purchase details below, then continue to PayMongo&apos;s hosted checkout. Payment is confirmed only after a signed provider webhook is verified.
             </p>
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-surface p-6">
@@ -56,12 +65,11 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
           </section>
 
           <section>
-            <ScanToPayCheckout
+            <PaymongoCheckout
+              systemId={system.id}
               systemSlug={system.slug}
               systemTitle={system.title}
               priceFormatted={price.current}
-              paymentQrUrl={system.paymentQrUrl}
-              paymentInstructions={system.paymentInstructions}
             />
           </section>
         </div>

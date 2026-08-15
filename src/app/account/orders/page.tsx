@@ -8,7 +8,7 @@ import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 
 export const metadata: Metadata = {
   title: "My Purchases",
-  description: "Track Scan to Pay verification status and access unlocked deliverables.",
+  description: "Track payment and fulfillment status and access delivered systems.",
   robots: { index: false, follow: false },
 };
 
@@ -27,9 +27,9 @@ export default async function OrdersPage() {
   return (
     <CustomerPortalShell userEmail={identity.email}>
       <div>
-        <h2 className="text-xl font-semibold tracking-[-0.03em]">Purchase History & Verification</h2>
+        <h2 className="text-xl font-semibold tracking-[-0.03em]">Purchase History</h2>
         <p className="mt-1 text-sm text-secondary">
-          Track the status of your submitted Scan to Pay orders. Downloads are unlocked once verified by our team.
+          Payment verification and fulfillment are tracked separately. Verified payments await administrator-prepared private delivery.
         </p>
         <div className="mt-6">
           <CustomerOrdersList orders={data.orders} />

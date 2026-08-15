@@ -32,7 +32,7 @@ export const defaultFaqItems = [
   {
     id: "fa000000-0000-4000-8000-000000000006",
     question: "When are purchased files delivered?",
-    answer: "A pending order is created before payment instructions are shown. For GCash or QRPh payments, the submitted transaction reference and proof are reviewed before fulfillment. A browser return, screenshot, or reference number alone never confirms payment. Delivery uses private storage and expiring, revocable access through email and the customer portal.",
+    answer: "A pending order is created before PayMongo Hosted Checkout opens. A signed PayMongo webhook verifies new payments; the browser return alone never confirms payment. An administrator then prepares private delivery through expiring, revocable email and customer-portal access. Historical manual GCash or QRPh proofs remain reviewable for legacy orders.",
     category: "Delivery",
   },
   {

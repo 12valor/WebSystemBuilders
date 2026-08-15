@@ -37,7 +37,7 @@ export default async function DownloadsPage() {
           <div className="mt-6 rounded-2xl border border-dashed border-white/15 p-8 text-center sm:p-12">
             <h3 className="font-semibold text-lg">No active downloads available</h3>
             <p className="mt-2 text-sm text-secondary max-w-md mx-auto">
-              Deliverable links become available here as soon as your Scan to Pay reference is verified by an administrator.
+              Deliverable links appear after payment is confirmed and an administrator prepares the private delivery.
             </p>
           </div>
         ) : (

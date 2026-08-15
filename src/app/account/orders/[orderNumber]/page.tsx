@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AccountPreview } from "@/components/customer/account-preview";
 import { CustomerPortalShell } from "@/components/customer/customer-portal-shell";
+import { PaymentReturnNotice } from "@/components/customer/payment-return-notice";
 import { openPortalDownload } from "@/features/customer/actions";
 import { getCustomerPortalData } from "@/features/customer/repository";
 import { getCurrentIdentity } from "@/lib/auth/current-user";
@@ -15,8 +16,9 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function OrderDetailPage({ params }: { params: Promise<{ orderNumber: string }> }) {
+export default async function OrderDetailPage({ params, searchParams }: { params: Promise<{ orderNumber: string }>; searchParams: Promise<{ checkout?: string }> }) {
   const { orderNumber } = await params;
+  const { checkout } = await searchParams;
   const configured = isSupabasePubliclyConfigured();
   const identity = configured ? await getCurrentIdentity() : null;
 
@@ -31,7 +33,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ or
     notFound();
   }
 
-  const canDownload = ["verified", "completed", "paid"].includes(order.order_status) && order.delivery_available;
+  const canDownload = order.payment_status === "paid" && order.delivery_available;
 
   return (
     <CustomerPortalShell userEmail={identity.email}>
@@ -45,13 +47,21 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ or
             <span className="font-mono text-xs text-muted font-semibold">{order.order_number}</span>
             <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em]">{order.product_name}</h2>
           </div>
-          <StatusBadge status={order.order_status} />
+          <StatusBadge status={order.payment_status ?? order.order_status} />
         </div>
 
+        <PaymentReturnNotice checkout={checkout} paymentStatus={order.payment_status} productSlug={order.product_slug} />
+
         {/* Verification Status Alert */}
-        {order.order_status === "pending_verification" && (
+        {order.payment_provider === "manual" && order.payment_status === "pending" && (
           <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-sm text-amber-100">
-            <span className="font-semibold">Verification Pending:</span> Your GCash/QRPh reference number and proof of payment are currently being reviewed by an administrator. Once verified (usually within 24 hours), your download link will unlock below.
+            <span className="font-semibold">Legacy verification pending:</span> Your GCash/QRPh reference and proof remain available for administrator review.
+          </div>
+        )}
+
+        {order.payment_status === "paid" && !order.delivery_available && (
+          <div className="rounded-2xl border border-sky-400/30 bg-sky-400/10 p-5 text-sm text-sky-100">
+            <span className="font-semibold">Payment confirmed.</span> Your private delivery is awaiting administrator preparation.
           </div>
         )}
 
@@ -85,11 +95,19 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ or
               <dd className="font-semibold text-white mt-1">{formatMoney(order.total_minor, order.currency)}</dd>
             </div>
             <div>
-              <dt className="text-muted">Payment Method</dt>
-              <dd className="font-semibold text-white mt-1">Scan to Pay (GCash / QRPh)</dd>
+              <dt className="text-muted">Payment Provider</dt>
+              <dd className="font-semibold text-white mt-1">{order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"}</dd>
             </div>
             <div>
-              <dt className="text-muted">Submission Date</dt>
+              <dt className="text-muted">Payment Status</dt>
+              <dd className="font-semibold text-white mt-1 capitalize">{order.payment_status ?? "unknown"}</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Fulfillment Status</dt>
+              <dd className="font-semibold text-white mt-1 capitalize">{order.fulfillment_status ?? "Awaiting delivery"}</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Order Date</dt>
               <dd className="font-semibold text-white mt-1">{formatDate(order.created_at)}</dd>
             </div>
           </dl>

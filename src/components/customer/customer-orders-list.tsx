@@ -10,7 +10,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
       <div className="rounded-2xl border border-dashed border-slate-200/80 bg-white p-8 text-center sm:p-12 shadow-2xs">
         <h2 className="text-xl font-bold tracking-[-0.03em] text-slate-900">No purchases found</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600 max-w-md mx-auto font-medium">
-          If you submitted a Scan to Pay purchase before signing in, your orders link automatically when signed in with the same email.
+          Legacy Scan to Pay purchases link automatically when you sign in with the same email. New purchases appear here after secure checkout begins.
         </p>
         <Link
           href="/systems"
@@ -25,7 +25,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
   return (
     <div className="space-y-4">
       {orders.map((order) => {
-        const canDownload = ["verified", "completed", "paid"].includes(order.order_status) && order.delivery_available;
+        const canDownload = order.payment_status === "paid" && order.delivery_available;
 
         return (
           <div
@@ -35,11 +35,11 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-xs font-semibold text-slate-500">{order.order_number}</span>
-                <StatusBadge status={order.order_status} />
+                <StatusBadge status={order.payment_status ?? order.order_status} />
               </div>
               <h3 className="mt-2 text-xl font-bold tracking-[-0.03em] text-slate-900">{order.product_name}</h3>
               <p className="mt-1 text-xs text-slate-500 font-medium">
-                Version {order.purchased_version} • Submitted on {formatDate(order.created_at)}
+                Version {order.purchased_version} • {providerLabel(order.payment_provider)} • {formatDate(order.created_at)}
               </p>
             </div>
 
@@ -53,9 +53,13 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
                     ⬇ Download Deliverable
                   </button>
                 </form>
-              ) : order.order_status === "pending_verification" ? (
+              ) : order.payment_status === "paid" ? (
+                <span className="rounded-xl border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-800">
+                  Payment confirmed • Awaiting delivery
+                </span>
+              ) : ["pending_verification", "pending"].includes(order.order_status) || order.payment_status === "pending" ? (
                 <span className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800">
-                  ⏳ Awaiting Verification
+                  Awaiting payment verification
                 </span>
               ) : null}
 
@@ -71,6 +75,10 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
       })}
     </div>
   );
+}
+
+function providerLabel(provider: string | null) {
+  return provider === "paymongo" ? "PayMongo hosted checkout" : "Legacy manual payment";
 }
 
 function StatusBadge({ status }: { status: string }) {

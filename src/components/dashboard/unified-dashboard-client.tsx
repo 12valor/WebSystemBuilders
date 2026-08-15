@@ -125,7 +125,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
     };
   }, [mobileMenuOpen]);
 
-  const verifiedOrders = portalData.orders.filter((order) => ["verified", "completed", "paid"].includes(order.order_status));
+  const verifiedOrders = portalData.orders.filter((order) => order.payment_status === "paid");
   const availableDownloads = portalData.orders.filter((order) => order.delivery_available).length;
   const openSupportCount = portalData.supportRequests.filter((request) => ["open", "in_progress"].includes(request.status)).length;
   const isSellerApproved = profile?.seller_status === "approved" && profile?.seller_enabled === true;
@@ -253,7 +253,7 @@ function OverviewPanel({ portalData, verifiedOrders, availableDownloads, openSup
                 <button key={order.order_id} type="button" onClick={() => onSelect("purchases")} className="flex w-full items-center gap-3 py-4 text-left hover:bg-slate-50/50 px-2 rounded-xl transition-colors">
                   <ShoppingBag className="size-4 shrink-0 text-blue-600" />
                   <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-slate-900">{order.product_name}</span><span className="mt-1 block text-xs text-slate-500 font-medium">{order.order_number}</span></span>
-                  <DashboardStatusBadge status={order.order_status} />
+                  <DashboardStatusBadge status={order.payment_status ?? order.order_status} />
                 </button>
               ))}
               {portalData.supportRequests.slice(0, 2).map((request) => (
@@ -295,12 +295,13 @@ function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["ord
         <DashboardPanel key={order.order_id} className="p-5 sm:p-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div><p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{order.order_number}</p><h2 className="mt-2 text-xl font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500 font-medium">Purchased version {order.purchased_version}</p></div>
-            <DashboardStatusBadge status={order.order_status} />
+            <DashboardStatusBadge status={order.payment_status ?? order.order_status} />
           </div>
-          <dl className="mt-6 grid gap-4 border-y border-slate-100 py-5 text-sm sm:grid-cols-3">
+          <dl className="mt-6 grid gap-4 border-y border-slate-100 py-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
             <OrderDetail label="Total amount" value={formatMoney(order.total_minor, order.currency)} />
-            <OrderDetail label="Payment method" value="GCash / QRPh Scan to Pay" />
-            <OrderDetail label="File delivery" value={order.delivery_available ? "Unlocked" : order.order_status === "pending_verification" ? "Awaiting verification" : "Locked"} />
+            <OrderDetail label="Payment provider" value={order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"} />
+            <OrderDetail label="Payment status" value={order.payment_status === "paid" ? "Payment confirmed" : order.payment_status ?? "Unknown"} />
+            <OrderDetail label="Fulfillment" value={order.delivery_available ? "Delivered" : order.payment_status === "paid" ? "Awaiting delivery" : order.fulfillment_status ?? "Not started"} />
           </dl>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link href={`/systems/${order.product_slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs">View system details <ExternalLink className="size-3.5" /></Link>

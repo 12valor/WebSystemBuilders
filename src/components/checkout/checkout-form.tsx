@@ -1,3 +1,3 @@
 "use client";
 
-export { ScanToPayCheckout as CheckoutForm } from "@/components/checkout/scan-to-pay-checkout";
+export { PaymongoCheckout as CheckoutForm } from "@/components/checkout/paymongo-checkout";

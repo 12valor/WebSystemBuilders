@@ -75,7 +75,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
                 Access your system downloads, orders & receipts
               </h1>
               <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium max-w-xl mx-auto">
-                Welcome! The Customer Portal provides private access to your software source code ZIP files, GCash / QRPh payment verification, and dedicated developer support.
+                The Customer Portal keeps PayMongo payment status, administrator-prepared private downloads, legacy manual orders, and developer support in one place.
               </p>
             </div>
 

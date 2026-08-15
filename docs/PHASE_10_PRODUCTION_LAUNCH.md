@@ -54,11 +54,12 @@ Passing the environment check validates shape only. It does not prove connectivi
 2. Add only required local, preview, and production callbacks.
 3. Verify email-link expiry, sign-in, callback, claiming, refresh, sign-out, wrong-email isolation, and admin authorization.
 
-### Lemon Squeezy
+### PayMongo
 
-1. Set up Lemon Squeezy Merchant account and store.
-2. Obtain `LEMON_SQUEEZY_API_KEY`, `LEMON_SQUEEZY_STORE_ID`, and `LEMON_SQUEEZY_WEBHOOK_SECRET`.
-3. Register HTTPS webhooks at `/api/webhooks/lemonsqueezy` for `order_created` / `order_paid`.
+1. Complete PayMongo merchant and KYC setup and confirm the enabled payment-method subset.
+2. In Preview, configure only `sk_test_...`, the separate test webhook secret, and `PAYMONGO_PAYMENT_METHODS`.
+3. Register the test webhook at `/api/webhooks/paymongo` for `checkout_session.payment.paid` and complete mismatch, duplicate, retry, cancel, and failure verification.
+4. Live keys and a separate live-mode webhook require a later reviewed production change; the current application rejects them.
 
 ### Resend
 

@@ -7,6 +7,13 @@ import { createClient } from "@/lib/supabase/server";
 
 const grantSchema = z.object({ expires_at: z.string(), max_downloads: z.number().int(), download_count: z.number().int(), revoked_at: z.string().nullable(), created_at: z.string() });
 const fulfillmentSchema = z.object({ status: z.enum(["processing", "delivered", "failed", "revoked"]), attempt_count: z.number().int(), email_sent_at: z.string().nullable(), revoked_at: z.string().nullable(), download_grants: z.array(grantSchema) });
+const paymentSchema = z.object({
+  provider: z.enum(["paymongo", "manual"]),
+  status: z.enum(["pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
+  provider_payment_id: z.string().nullable(),
+  provider_payment_intent_id: z.string().nullable(),
+  created_at: z.string(),
+});
 const orderRowSchema = z.object({
   id: z.uuid(),
   order_number: z.string(),
@@ -22,6 +29,7 @@ const orderRowSchema = z.object({
   paid_at: z.string().nullable(),
   created_at: z.string(),
   order_items: z.array(z.object({ product_name: z.string(), version_label: z.string() })).min(1),
+  payments: z.array(paymentSchema),
   fulfillments: z.array(fulfillmentSchema),
 });
 
@@ -40,6 +48,10 @@ export type AdminOrder = {
   productName: string;
   versionLabel: string;
   paidAt: string | null;
+  paymentProvider: z.infer<typeof paymentSchema>["provider"] | null;
+  paymentStatus: z.infer<typeof paymentSchema>["status"] | null;
+  providerPaymentId: string | null;
+  providerPaymentIntentId: string | null;
   createdAt: string;
   delivery: null | {
     status: z.infer<typeof fulfillmentSchema>["status"];
@@ -59,12 +71,13 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
   catch (error) { if (error instanceof AuthorizationError) throw error; throw error; }
 
   const supabase = await createClient();
-  const result = await supabase.from("orders").select("id,order_number,customer_name,customer_email,contact_number,reference_number,proof_of_payment_url,admin_notes,status,total_minor,currency,paid_at,created_at,order_items(product_name,version_label),fulfillments(status,attempt_count,email_sent_at,revoked_at,download_grants(expires_at,max_downloads,download_count,revoked_at,created_at))").order("created_at", { ascending: false }).limit(100);
+  const result = await supabase.from("orders").select("id,order_number,customer_name,customer_email,contact_number,reference_number,proof_of_payment_url,admin_notes,status,total_minor,currency,paid_at,created_at,order_items(product_name,version_label),payments(provider,status,provider_payment_id,provider_payment_intent_id,created_at),fulfillments(status,attempt_count,email_sent_at,revoked_at,download_grants(expires_at,max_downloads,download_count,revoked_at,created_at))").order("created_at", { ascending: false }).limit(100);
   const rows = z.array(orderRowSchema).safeParse(result.data);
   if (result.error || !rows.success) return { status: "error", orders: [] };
 
   return { status: "ready", orders: rows.data.map((row) => {
     const fulfillment = row.fulfillments[0] ?? null;
+    const payment = row.payments.sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null;
     const activeGrant = fulfillment?.download_grants
       .filter((grant) => !grant.revoked_at)
       .sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null;
@@ -83,6 +96,10 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
       productName: row.order_items[0].product_name,
       versionLabel: row.order_items[0].version_label,
       paidAt: row.paid_at,
+      paymentProvider: payment?.provider ?? null,
+      paymentStatus: payment?.status ?? null,
+      providerPaymentId: payment?.provider_payment_id ?? null,
+      providerPaymentIntentId: payment?.provider_payment_intent_id ?? null,
       createdAt: row.created_at,
       delivery: fulfillment ? {
         status: fulfillment.status, attemptCount: fulfillment.attempt_count, emailSentAt: fulfillment.email_sent_at,

@@ -140,9 +140,9 @@ export function CustomerAccount({
         <section id="orders" className="border-b border-slate-200/80 pb-10 space-y-6">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Purchase History</span>
-            <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-slate-900">Orders & Verification</h2>
+            <h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em] text-slate-900">Orders, Payments & Delivery</h2>
             <p className="mt-1 text-xs sm:text-sm text-slate-500">
-              Track GCash/QRPh Scan to Pay verification status and download unlocked deliverables.
+              Track provider-confirmed payments separately from administrator-prepared delivery.
             </p>
           </div>
 
@@ -175,7 +175,7 @@ export function CustomerAccount({
                       <h3 className="mt-1.5 text-xl font-semibold text-slate-900">{order.product_name}</h3>
                       <p className="mt-1 text-xs text-slate-500">Purchased version {order.purchased_version}</p>
                     </div>
-                    <StatusBadge status={order.order_status} />
+                    <StatusBadge status={order.payment_status ?? order.order_status} />
                   </div>
 
                   <div className="grid gap-4 border-t border-slate-100 pt-5 text-xs sm:grid-cols-3">
@@ -186,16 +186,16 @@ export function CustomerAccount({
                       </span>
                     </div>
                     <div>
-                      <span className="block font-medium text-slate-400">Payment Method</span>
-                      <span className="mt-1 block font-semibold text-slate-900">GCash / QRPh Scan to Pay</span>
+                      <span className="block font-medium text-slate-400">Payment Provider</span>
+                      <span className="mt-1 block font-semibold text-slate-900">{order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"}</span>
                     </div>
                     <div>
                       <span className="block font-medium text-slate-400">File Delivery</span>
                       <span className="mt-1 block font-semibold text-slate-900">
                         {order.delivery_available
                           ? "Unlocked ✓"
-                          : order.order_status === "pending_verification"
-                          ? "Awaiting Verification"
+                          : order.payment_status === "paid"
+                          ? "Awaiting Delivery"
                           : "Locked"}
                       </span>
                     </div>

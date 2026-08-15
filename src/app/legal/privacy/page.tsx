@@ -45,13 +45,13 @@ export default function PrivacyPolicyPage() {
               title: "Order and payment-verification data",
               items: [
                 "Products or services ordered, prices, dates, and order status",
-                "GCash or QRPH payment screenshots submitted for manual verification",
-                "Transaction reference numbers, payer name, amount, and payment time shown in the proof",
+                "PayMongo checkout identifiers, payment status, amount, currency, and reconciliation records received from the payment provider",
+                "For legacy manual orders, GCash or QRPH screenshots and transaction references previously submitted for verification",
                 "Verification notes, delivery records, invoices, and refund records",
                 "License or access information connected with a purchased system",
               ],
               paragraphs: [
-                "Please crop or redact unrelated balances, transactions, contact lists, and other information that is not needed to verify your payment.",
+                "New PayMongo checkout does not ask you to upload proof. Historical manual proof data is retained only for legitimate transaction, support, accounting, and dispute purposes.",
               ],
             },
             {
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
         {
           title: "How we collect personal data",
           paragraphs: [
-            "We collect personal data directly from you when you register, place an order, upload payment proof, contact us, or provide project requirements. We also collect limited technical information automatically from your browser or device and receive information from service providers acting on our behalf.",
+            "We collect personal data directly from you when you register, place an order, contact us, or provide project requirements. We also collect limited technical information automatically and receive payment-status information from providers acting on our behalf. Legacy manual orders may include proof uploaded under the earlier process.",
           ],
         },
         {
@@ -89,11 +89,11 @@ export default function PrivacyPolicyPage() {
           items: [
             "Create, authenticate, secure, and administer accounts",
             "Distinguish student and business-owner account experiences",
-            "Process orders and manually verify GCash or QRPH payments",
+            "Process orders, verify PayMongo webhook events, and review legacy manual GCash or QRPH payments",
             "Deliver software files, access credentials, licenses, updates, and support",
             "Evaluate, quote, manage, and complete custom-development projects",
             "Communicate about orders, service notices, support, complaints, and refunds",
-            "Detect fraud, fake payment proofs, abuse, security incidents, and technical errors",
+            "Detect payment fraud, invalid webhook events, legacy fake proofs, abuse, security incidents, and technical errors",
             "Maintain transaction, accounting, tax, legal, and dispute records",
             "Improve website reliability and understand service usage",
             "Comply with lawful requests and applicable Philippine laws",

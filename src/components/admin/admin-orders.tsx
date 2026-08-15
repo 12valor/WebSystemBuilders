@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { resendDelivery, revokeDelivery } from "@/features/delivery/admin-actions";
+import { prepareDelivery, resendDelivery, revokeDelivery } from "@/features/delivery/admin-actions";
 import { updateOrderStatusAction } from "@/features/orders/admin-actions";
 import type { AdminOrder, AdminOrdersData } from "@/features/orders/admin-repository";
 
@@ -14,9 +14,9 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
         <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-7 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Commerce & Verification</p>
-            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">Purchases & Proof Verification</h1>
+            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">Purchases & Payment Status</h1>
             <p className="mt-2 max-w-2xl leading-6 text-slate-600 font-medium">
-              Review customer GCash/QRPh reference numbers and proof of payment screenshots. Verifying an order unlocks private product file delivery.
+              PayMongo payments are verified by signed webhook. Legacy manual proofs remain reviewable, and every paid order requires an explicit delivery action.
             </p>
           </div>
           <span className="text-xs text-slate-500 font-medium">Latest 100 records</span>
@@ -47,10 +47,10 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                   <th className="p-4">Product</th>
                   <th className="p-4">Customer</th>
                   <th className="p-4">Amount</th>
-                  <th className="p-4">Reference No.</th>
-                  <th className="p-4">Proof of Payment</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4">Submitted</th>
+                  <th className="p-4">Provider</th>
+                  <th className="p-4">Payment</th>
+                  <th className="p-4">Fulfillment</th>
+                  <th className="p-4">Payment date</th>
                   <th className="p-4">Actions</th>
                 </tr>
               </thead>
@@ -68,46 +68,41 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       {order.contactNumber && <span className="block text-xs text-slate-500 font-medium">{order.contactNumber}</span>}
                     </td>
                     <td className="p-4 font-bold text-slate-900">{formatMoney(order.totalMinor, order.currency)}</td>
-                    <td className="p-4">
-                      {order.referenceNumber ? (
-                        <span className="font-mono text-xs font-bold text-slate-900 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">
-                          {order.referenceNumber}
-                        </span>
-                      ) : (
-                        <span className="text-slate-400 text-xs font-medium">N/A</span>
+                    <td className="p-4 text-xs font-semibold text-slate-700">
+                      {order.paymentProvider === "paymongo" ? "PayMongo" : order.paymentProvider === "manual" ? "Legacy manual" : "Unrecorded"}
+                      {order.paymentProvider === "manual" && order.referenceNumber && (
+                        <span className="mt-2 block font-mono text-[0.7rem] text-slate-500">Ref: {order.referenceNumber}</span>
                       )}
                     </td>
                     <td className="p-4">
-                      {order.proofOfPaymentUrl ? (
-                        <button
-                          type="button"
-                          onClick={() => setSelectedOrder(order)}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline"
-                        >
-                          View Proof
-                        </button>
-                      ) : (
-                        <span className="text-xs text-slate-400 font-medium">None</span>
+                      <Status value={order.paymentStatus ?? order.status} />
+                      {order.paymentProvider === "paymongo" && order.paymentStatus === "paid" && (
+                        <span className="mt-2 block text-[0.65rem] font-extrabold tracking-[0.08em] text-emerald-700">PAYMENT VERIFIED</span>
                       )}
                     </td>
                     <td className="p-4">
-                      <Status value={order.status} />
-                      {order.delivery && (
-                        <span className="mt-2 block text-xs leading-5 text-slate-500 font-medium">
-                          Delivery: {order.delivery.status} ({order.delivery.downloadCount}/{order.delivery.maxDownloads} downloads)
-                        </span>
-                      )}
+                      <Status value={order.delivery?.status ?? "awaiting delivery"} />
+                      {order.delivery && <span className="mt-2 block text-xs text-slate-500">{order.delivery.downloadCount}/{order.delivery.maxDownloads} downloads</span>}
                     </td>
-                    <td className="p-4 text-xs text-slate-600 font-medium">{formatDate(order.createdAt)}</td>
+                    <td className="p-4 text-xs text-slate-600 font-medium">{order.paidAt ? formatDate(order.paidAt) : "Not paid"}</td>
                     <td className="p-4">
                       <div className="flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedOrder(order)}
-                          className="min-h-9 rounded-xl bg-[#2563EB] px-3.5 text-xs font-semibold text-white hover:bg-blue-700 shadow-2xs transition-colors"
-                        >
-                          Review & Verify
-                        </button>
+                        {order.paymentProvider === "manual" && (
+                          <button
+                            type="button"
+                            onClick={() => setSelectedOrder(order)}
+                            className="min-h-9 rounded-xl bg-[#2563EB] px-3.5 text-xs font-semibold text-white hover:bg-blue-700 shadow-2xs transition-colors"
+                          >
+                            Review proof
+                          </button>
+                        )}
+                        {order.paymentStatus === "paid" && !order.delivery && (
+                          <form action={prepareDelivery.bind(null, order.id)}>
+                            <button className="min-h-9 rounded-xl bg-emerald-600 px-3.5 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+                              Prepare &amp; send delivery
+                            </button>
+                          </form>
+                        )}
                         {order.delivery && order.delivery.status !== "revoked" && (
                           <form action={resendDelivery.bind(null, order.id)}>
                             <button className="min-h-9 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-900 hover:bg-slate-50 shadow-2xs transition-colors">
@@ -132,7 +127,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
         )}
 
         {/* Modal Backdrop & Dialog */}
-        {selectedOrder && (
+        {selectedOrder?.paymentProvider === "manual" && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
             <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
@@ -230,7 +225,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                       onClick={() => setSelectedOrder(null)}
                       className="min-h-10 flex-1 rounded-xl bg-emerald-600 px-4 text-xs font-semibold text-white hover:bg-emerald-700 shadow-sm transition-colors"
                     >
-                      Verify & Unlock Delivery
+                      Verify payment
                     </button>
                     <button
                       type="submit"
@@ -264,7 +259,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
 function Status({ value }: { value: string }) {
   const tone = ["verified", "completed", "paid", "delivered"].includes(value)
     ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-    : ["pending_verification", "pending", "processing"].includes(value)
+    : ["pending_verification", "pending", "processing", "awaiting delivery"].includes(value)
       ? "border-amber-200 bg-amber-50 text-amber-800"
       : "border-red-200 bg-red-50 text-red-800";
 
@@ -288,10 +283,13 @@ function formatDate(value: string) {
 }
 
 function resultMessage(result: string) {
-  if (result === "verified") return "Payment verified successfully! Delivery file access has been initialized.";
+  if (result === "verified") return "Legacy payment verified. Delivery still requires explicit preparation.";
   if (result === "completed") return "Order status updated to Completed.";
   if (result === "rejected") return "Payment status updated to Rejected.";
   if (result === "sent") return "A new private delivery link was emailed.";
+  if (result === "email_unavailable") return "Delivery was prepared, but email is not configured. Configure Resend, then resend the link.";
+  if (result === "unchanged") return "No delivery change was made. The order may already have a fulfillment record.";
+  if (result === "error") return "The delivery operation could not be completed.";
   if (result === "revoked") return "Delivery access was revoked.";
   return "The order operation was updated.";
 }

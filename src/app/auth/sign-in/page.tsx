@@ -9,10 +9,12 @@ import { PasswordInput } from "@/components/auth/password-input";
 import { SocialAuthButtons } from "@/components/auth/social-auth-buttons";
 import { TurnstileCaptcha, type TurnstileCaptchaRef } from "@/components/auth/turnstile-captcha";
 import { createClient } from "@/lib/supabase/client";
+import { getSafeNextPath } from "@/lib/auth/redirects";
 
 function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const nextPath = getSafeNextPath(searchParams.get("next"), "/?welcome=true");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
@@ -63,7 +65,7 @@ function SignInForm() {
       }
 
       if (data.user) {
-        router.push("/?welcome=true");
+        router.push(nextPath);
       }
     } catch {
       setFormError("An unexpected error occurred during sign in.");
@@ -90,7 +92,7 @@ function SignInForm() {
       </div>
 
       <div className="bg-white py-8 px-6 sm:px-9 border border-slate-200/90 rounded-2xl shadow-sm">
-        <SocialAuthButtons onError={(err) => setFormError(err)} />
+        <SocialAuthButtons redirectToNext={nextPath} onError={(err) => setFormError(err)} />
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <AnimatePresence mode="wait">

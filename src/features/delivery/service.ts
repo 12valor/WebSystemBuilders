@@ -13,17 +13,23 @@ export async function fulfillPaidCheckout(checkoutSessionId: string) {
   return createAndSend("create", checkoutSessionId);
 }
 
+export async function prepareOrderDelivery(orderId: string) {
+  return createAndSend("order", orderId);
+}
+
 export async function resendOrderDelivery(orderId: string) {
   return createAndSend("rotate", orderId);
 }
 
-async function createAndSend(mode: "create" | "rotate", identifier: string) {
+async function createAndSend(mode: "create" | "order" | "rotate", identifier: string) {
   const token = createDeliveryToken();
   const expiresAt = new Date(Date.now() + DELIVERY_LIFETIME_MS).toISOString();
   const supabase = createAdminClient();
   const result = mode === "create"
     ? await supabase.rpc("create_delivery_for_paid_order", { p_checkout_session_id: identifier, p_token_hash: token.hash, p_expires_at: expiresAt })
-    : await supabase.rpc("rotate_delivery_grant", { p_order_id: identifier, p_token_hash: token.hash, p_expires_at: expiresAt });
+    : mode === "order"
+      ? await supabase.rpc("create_delivery_for_order", { p_order_id: identifier, p_token_hash: token.hash, p_expires_at: expiresAt })
+      : await supabase.rpc("rotate_delivery_grant", { p_order_id: identifier, p_token_hash: token.hash, p_expires_at: expiresAt });
   const rows = z.array(deliveryRowSchema).safeParse(result.data);
   if (result.error || !rows.success) return { status: "error" as const };
   if (rows.data.length === 0) return { status: "unchanged" as const };

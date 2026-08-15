@@ -12,6 +12,8 @@ export const portalOrderRowSchema = z.object({
   current_version: z.string().nullable(),
   created_at: z.string(),
   paid_at: z.string().nullable(),
+  payment_provider: z.enum(["paymongo", "manual"]).nullable(),
+  payment_status: z.enum(["pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]).nullable(),
   fulfillment_status: z.enum(["processing", "delivered", "failed", "revoked"]).nullable(),
   delivery_available: z.boolean().nullable(),
 });
