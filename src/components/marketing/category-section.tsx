@@ -17,6 +17,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   ExternalLink,
+  CircleAlert,
+  PackageSearch,
 } from "lucide-react";
 
 const institutions = [
@@ -258,30 +260,42 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
 
 function CatalogState({ status }: { status: CatalogData["status"] }) {
   const error = status === "error";
+  const unconfigured = status === "unconfigured";
+  const StateIcon = error ? CircleAlert : PackageSearch;
+
   return (
-    <div className="rounded-[24px] border border-dashed border-slate-300 bg-slate-50/80 px-6 py-12 text-center sm:px-10 sm:py-16">
-      <span className="mx-auto grid size-12 place-items-center rounded-2xl border border-slate-200 bg-white text-base font-bold text-blue-600 shadow-xs">
-        {error ? "!" : status === "unconfigured" ? "SETUP" : "0"}
-      </span>
-      <h3 className="mt-6 text-2xl font-extrabold tracking-tight text-slate-900">
-        {error ? "Published systems could not be loaded." : status === "unconfigured" ? "Catalog database connected." : "No published systems yet."}
-      </h3>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600 font-medium">
-        {error
-          ? "No partial listing data is being shown."
-          : status === "unconfigured"
-          ? "Administrator-managed systems will appear here once published from the Admin Dashboard."
-          : "A system appears here only after its content and delivery assets pass publication review."}
-      </p>
-      <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-        <Link href="/systems">
+    <div className="rounded-[24px] border border-slate-200 bg-white px-6 py-9 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.35)] sm:px-10 sm:py-11">
+      <div className="mx-auto flex max-w-5xl flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex max-w-2xl flex-col gap-5 sm:flex-row sm:items-start">
+          <span className="grid size-12 shrink-0 place-items-center rounded-2xl border border-blue-200 bg-blue-50 text-blue-700">
+            <StateIcon className="size-5" aria-hidden="true" />
+          </span>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-blue-700">
+              {error ? "Catalog notice" : unconfigured ? "Catalog in progress" : "New systems coming soon"}
+            </p>
+            <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
+              {error
+                ? "Systems are temporarily unavailable."
+                : unconfigured
+                  ? "Our system catalog is being prepared."
+                  : "We’re preparing our first catalog releases."}
+            </h3>
+            <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600 sm:text-base">
+              {error
+                ? "We couldn’t load the published catalog right now. You can still tell us what you need, and we’ll help you plan the right solution."
+                : unconfigured
+                  ? "Ready-made systems will appear here after publication review. In the meantime, tell us about the workflow you need."
+                  : "Each system is reviewed for complete product details and delivery assets before it appears here. Need a solution sooner? We can scope a custom build."}
+            </p>
+          </div>
+        </div>
+
+        <Link href="/request-a-quote" className="shrink-0">
           <MagneticButton size="md" variant="primary">
-            Open Full Catalog
-          </MagneticButton>
-        </Link>
-        <Link href="/admin">
-          <MagneticButton size="md" variant="outline">
-            Admin Dashboard
+            <span>Request a Custom System</span>
+            <ArrowRight className="size-4" aria-hidden="true" />
           </MagneticButton>
         </Link>
       </div>
