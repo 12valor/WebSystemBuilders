@@ -108,8 +108,8 @@ export function SupportForm({
         disabled={pending || orders.length === 0}
         className={
           dashboard
-            ? "inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 sm:w-auto shadow-sm"
-            : "inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#2563EB] hover:bg-blue-700 px-6 text-xs font-semibold text-white shadow-[0_4px_14px_rgba(37,99,235,0.25)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            ? "blue-button min-h-11 w-full bg-[#2563EB] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 sm:w-auto"
+            : "blue-button min-h-12 w-full bg-[#2563EB] px-6 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         }
       >
         {pending ? "Submitting request..." : orders.length === 0 ? "No eligible order" : "Submit support request"}

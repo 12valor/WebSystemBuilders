@@ -33,7 +33,7 @@ export function StudentLandingContent() {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Link
                 href="/systems?audience=students"
-                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-blue-600 px-6 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
+                className="blue-button inline-flex min-h-12 items-center justify-center bg-blue-600 px-6 text-sm font-semibold text-white"
               >
                 Browse Student Systems
               </Link>

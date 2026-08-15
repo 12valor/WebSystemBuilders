@@ -274,7 +274,7 @@ export function DashboardHeader({
           </button>
           <Link
             href="/systems"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 shadow-sm"
+            className="blue-button inline-flex min-h-11 items-center justify-center gap-2 bg-[#2563EB] px-5 text-sm font-semibold text-white"
           >
             Browse systems
             <ExternalLink className="size-4" />

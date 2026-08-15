@@ -68,7 +68,7 @@ export function ChoosePathSection() {
             <div className="mt-7 pt-1">
               <Link
                 href="/for-students"
-                className="group/btn inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#2563EB] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_-14px_rgba(37,99,235,0.5)] transition-colors duration-200 hover:bg-blue-700 motion-reduce:transition-none"
+                className="blue-button group/btn inline-flex h-12 w-full items-center justify-center gap-2 bg-[#2563EB] px-6 text-sm font-semibold text-white motion-reduce:transition-none"
               >
                 <span>Browse Student Systems</span>
                 <ArrowRight className="size-4 transition-transform duration-200 group-hover/btn:translate-x-1" aria-hidden="true" />

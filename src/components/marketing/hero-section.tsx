@@ -32,7 +32,7 @@ export function HeroSection() {
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row">
             <Link
               href="/systems"
-              className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#2563EB] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(37,99,235,0.45)] transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-blue-700 motion-reduce:transform-none motion-reduce:transition-none sm:w-auto"
+              className="blue-button group inline-flex h-12 w-full items-center justify-center gap-2 bg-[#2563EB] px-7 text-sm font-semibold text-white motion-reduce:transition-none sm:w-auto"
             >
               <span>Explore Ready Systems</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />

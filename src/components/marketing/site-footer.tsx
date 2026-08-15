@@ -100,7 +100,7 @@ export function SiteFooter() {
 
               <Link
                 href="/contact"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[8px] bg-[#3B82F6] px-5 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-[#2563EB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+                className="blue-button inline-flex min-h-[44px] items-center justify-center bg-[#3B82F6] px-5 py-2.5 text-sm font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
               >
                 Get in Touch
               </Link>
@@ -141,5 +141,4 @@ export function SiteFooter() {
     </footer>
   );
 }
-
 

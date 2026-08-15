@@ -48,7 +48,7 @@ export function MagneticButton({
 
   const variantStyles = {
     primary:
-      "bg-blue-600 text-white shadow-[0_4px_14px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_20px_rgba(37,99,235,0.45)] border border-blue-500/30",
+      "blue-button bg-blue-600 text-white",
     indigo:
       "bg-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:bg-indigo-700 hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] border border-indigo-500/30",
     secondary:

@@ -56,7 +56,7 @@ export function SellerOnboardingModal({ isOpen, onClose }: { isOpen: boolean; on
             <button
               type="button"
               onClick={onClose}
-              className="mt-4 rounded-xl bg-blue-600 px-6 py-2.5 text-xs font-semibold text-white shadow hover:bg-blue-700"
+              className="blue-button mt-4 bg-blue-600 px-6 py-2.5 text-xs font-semibold text-white"
             >
               Return to Dashboard
             </button>
@@ -171,7 +171,7 @@ export function SellerOnboardingModal({ isOpen, onClose }: { isOpen: boolean; on
             <button
               type="submit"
               disabled={loading}
-              className="w-full min-h-12 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition disabled:opacity-50"
+              className="blue-button min-h-12 w-full bg-blue-600 text-sm font-semibold text-white disabled:opacity-50"
             >
               {loading ? "Submitting Application..." : "Submit Seller Application"}
             </button>

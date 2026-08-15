@@ -121,7 +121,7 @@ export function ScanToPayCheckout({
         <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href={`/checkout/status/${state.orderNumber}?token=${encodeURIComponent(state.returnToken || "")}`}
-            className="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 text-sm font-semibold text-white transition hover:bg-brand-hover"
+            className="blue-button inline-flex min-h-11 items-center bg-brand px-5 text-sm font-semibold text-white"
           >
             Check Order Status
           </Link>
@@ -197,7 +197,7 @@ export function ScanToPayCheckout({
           <button
             type="button"
             onClick={() => setStep("form")}
-            className="flex min-h-12 w-full items-center justify-center rounded-xl bg-brand px-6 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition hover:bg-brand-hover"
+            className="blue-button flex min-h-12 w-full items-center justify-center bg-brand px-6 text-sm font-semibold text-white"
           >
             I&apos;ve Paid → Enter Payment Details
           </button>
@@ -335,7 +335,7 @@ export function ScanToPayCheckout({
           <button
             type="submit"
             disabled={isPending || uploading || !proofUrl}
-            className="flex min-h-12 w-full items-center justify-center rounded-xl bg-brand px-6 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition hover:bg-brand-hover disabled:opacity-50"
+            className="blue-button flex min-h-12 w-full items-center justify-center bg-brand px-6 text-sm font-semibold text-white disabled:opacity-50"
           >
             {isPending ? "Submitting Payment Proof..." : "Submit Payment for Verification"}
           </button>

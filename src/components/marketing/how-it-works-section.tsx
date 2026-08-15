@@ -147,7 +147,7 @@ export function HowItWorksSection() {
           <button
             type="button"
             onClick={() => setIsChatModalOpen(true)}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-bold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none"
+            className="blue-button inline-flex min-h-11 shrink-0 items-center justify-center gap-2 bg-blue-600 px-5 text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none"
           >
             Ask before purchasing
             <span aria-hidden="true">&rarr;</span>

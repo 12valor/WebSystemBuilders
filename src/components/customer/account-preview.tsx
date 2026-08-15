@@ -48,7 +48,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             ) : (
               <Link
                 href="/auth/sign-in?next=/account"
-                className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm"
+                className="blue-button inline-flex min-h-10 items-center justify-center gap-1.5 bg-[#2563EB] px-4 text-xs font-semibold text-white"
               >
                 <span>Sign In</span>
                 <ArrowRight className="size-3.5" />
@@ -110,7 +110,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
               <Link
                 href="/auth/sign-in?next=/account"
-                className="w-full sm:w-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm"
+                className="blue-button inline-flex min-h-12 w-full items-center justify-center gap-2 bg-[#2563EB] px-6 text-sm font-semibold text-white sm:w-auto"
               >
                 <span>Sign In to Access Your Orders</span>
                 <ArrowRight className="size-4" />

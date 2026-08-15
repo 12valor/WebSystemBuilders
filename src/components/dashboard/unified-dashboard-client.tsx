@@ -306,7 +306,7 @@ function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["ord
             <Link href={`/systems/${order.product_slug}`} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs">View system details <ExternalLink className="size-3.5" /></Link>
             {order.delivery_available && (
               <form action={openPortalDownload.bind(null, order.order_id)}>
-                <button type="submit" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-4 text-sm font-semibold text-white hover:bg-blue-700 shadow-xs"><Download className="size-4" /> Generate one-hour download link</button>
+                <button type="submit" className="blue-button inline-flex min-h-10 items-center justify-center gap-2 bg-[#2563EB] px-4 text-sm font-semibold text-white"><Download className="size-4" /> Generate one-hour download link</button>
               </form>
             )}
           </div>
@@ -383,7 +383,7 @@ function SettingsPanel() {
     <DashboardPanel className="max-w-3xl p-5 sm:p-6">
       <SectionHeading eyebrow="Account security" title="Security settings" />
       <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 font-medium">Use the secure password recovery flow to change your sign-in credentials.</p>
-      <div className="mt-6 border-t border-slate-100 pt-5"><Link href="/auth/forgot-password" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm">Change password</Link></div>
+      <div className="mt-6 border-t border-slate-100 pt-5"><Link href="/auth/forgot-password" className="blue-button inline-flex min-h-11 items-center justify-center bg-[#2563EB] px-5 text-sm font-semibold text-white">Change password</Link></div>
     </DashboardPanel>
   );
 }
@@ -415,7 +415,7 @@ function ReadOnlyField({ label, value }: { label: string; value: string }) {
 }
 
 function PrimaryLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link href={href} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white hover:bg-blue-700 shadow-sm">{children}<ArrowUpRight className="size-4" /></Link>;
+  return <Link href={href} className="blue-button inline-flex min-h-11 items-center justify-center gap-2 bg-[#2563EB] px-5 text-sm font-semibold text-white">{children}<ArrowUpRight className="size-4" /></Link>;
 }
 
 function getHeaderCopy(tab: DashboardTab, displayName: string) {

@@ -320,14 +320,14 @@ function CatalogEmptyState({
           <button
             type="button"
             onClick={onClear}
-            className="rounded-xl bg-blue-600 px-5 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
+            className="blue-button bg-blue-600 px-5 py-3 text-xs font-bold text-white"
           >
             Clear Active Filters
           </button>
         ) : (
           <Link
             href="/request-a-quote"
-            className="rounded-xl bg-blue-600 px-5 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
+            className="blue-button bg-blue-600 px-5 py-3 text-xs font-bold text-white"
           >
             Request a Custom System
           </Link>

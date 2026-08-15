@@ -23,7 +23,7 @@ export default function GetStartedPage() {
             </Link>
             <Link
               href="/auth/sign-up"
-              className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition"
+              className="blue-button bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white"
             >
               Create Account
             </Link>
@@ -60,7 +60,7 @@ export default function GetStartedPage() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/auth/sign-up"
-            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-blue-600 px-8 text-sm font-bold text-white shadow-lg shadow-blue-500/25 hover:bg-blue-700 transition"
+            className="blue-button inline-flex min-h-12 items-center justify-center bg-blue-600 px-8 text-sm font-bold text-white"
           >
             Create Your Account &rarr;
           </Link>

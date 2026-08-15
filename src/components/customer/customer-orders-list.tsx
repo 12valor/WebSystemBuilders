@@ -14,7 +14,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
         </p>
         <Link
           href="/systems"
-          className="mt-6 inline-flex min-h-11 items-center rounded-xl bg-[#2563EB] px-5 text-sm font-semibold text-white transition hover:bg-blue-700 shadow-sm"
+          className="blue-button mt-6 inline-flex min-h-11 items-center bg-[#2563EB] px-5 text-sm font-semibold text-white"
         >
           Browse Systems Catalog
         </Link>
@@ -48,7 +48,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
                 <form action={openPortalDownload.bind(null, order.order_id)}>
                   <button
                     type="submit"
-                    className="inline-flex min-h-10 items-center gap-1.5 rounded-xl bg-[#2563EB] px-4 text-xs font-semibold text-white transition hover:bg-blue-700 shadow-xs"
+                    className="blue-button inline-flex min-h-10 items-center gap-1.5 bg-[#2563EB] px-4 text-xs font-semibold text-white"
                   >
                     ⬇ Download Deliverable
                   </button>

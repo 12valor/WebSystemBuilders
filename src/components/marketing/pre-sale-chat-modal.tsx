@@ -144,7 +144,7 @@ export function PreSaleChatModal({
                   <Link
                     href="/auth/sign-in?next=/"
                     onClick={onClose}
-                    className="rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow hover:bg-blue-700 transition"
+                    className="blue-button bg-blue-600 px-5 py-2.5 text-xs font-bold text-white"
                   >
                     Sign In
                   </Link>
@@ -200,7 +200,7 @@ export function PreSaleChatModal({
                   <button
                     type="submit"
                     disabled={submitting || !message.trim()}
-                    className="rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:bg-blue-700 transition disabled:opacity-50"
+                    className="blue-button bg-blue-600 px-5 py-2.5 text-xs font-bold text-white disabled:opacity-50"
                   >
                     {submitting ? "Sending..." : "Send Pre-Sale Question"}
                   </button>

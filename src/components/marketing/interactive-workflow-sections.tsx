@@ -347,14 +347,10 @@ export function ProjectWorkspacePlayground() {
               <div className="flex sm:inline-flex">
                 <Link
                   href="/for-students"
-                  className="pushable w-full sm:w-auto"
+                  className="blue-button min-h-12 w-full gap-2 px-6 text-sm sm:w-auto"
                 >
-                  <span className="shadow" />
-                  <span className="edge" />
-                  <span className="front">
-                    <span>See how project support works</span>
-                    <ArrowRight className="size-4" />
-                  </span>
+                  <span>See how project support works</span>
+                  <ArrowRight className="size-4" />
                 </Link>
               </div>
               <p className="text-xs sm:text-sm text-slate-500">

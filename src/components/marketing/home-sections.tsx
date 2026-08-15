@@ -21,7 +21,7 @@ export function FinalCallToAction() {
           <div className="grid w-full shrink-0 gap-3 sm:flex lg:w-auto lg:flex-col">
             <Link
               href="/systems"
-              className="group inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#2563EB] px-7 text-sm font-semibold text-white shadow-[0_10px_24px_-14px_rgba(37,99,235,0.5)] transition-colors duration-200 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:w-auto"
+              className="blue-button group inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap bg-[#2563EB] px-7 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:w-auto"
             >
               Browse systems
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />

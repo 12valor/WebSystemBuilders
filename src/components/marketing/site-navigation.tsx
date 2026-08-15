@@ -169,7 +169,7 @@ export function SiteNavigation() {
 
               <Link
                 href="/request-a-quote"
-                className="inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#2563EB] px-5 text-sm font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-blue-700 motion-reduce:transition-none"
+                className="blue-button inline-flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap bg-[#2563EB] px-5 text-sm font-semibold text-white motion-reduce:transition-none"
               >
                 <span>Request a Quote</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -265,7 +265,7 @@ export function SiteNavigation() {
                     <Link
                       href="/request-a-quote"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-[#2563EB] hover:bg-blue-700 shadow-md transition-colors"
+                      className="blue-button flex h-12 w-full items-center justify-center gap-2 bg-[#2563EB] px-6 text-base font-semibold text-white"
                     >
                       <span>Request a Quote</span>
                       <ArrowUpRight className="w-4.5 h-4.5" />
