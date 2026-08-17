@@ -64,8 +64,6 @@ export type CatalogSystemDetail = CatalogSystemRecord & {
   technologyStack: string[];
   deliverySummary: string | null;
   demoInstructions: string | null;
-  paymentQrUrl: string | null;
-  paymentInstructions: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
   features: CatalogSystemFeature[];

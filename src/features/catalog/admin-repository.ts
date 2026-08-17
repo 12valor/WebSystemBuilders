@@ -42,8 +42,6 @@ const editableSystemSchema = systemListSchema.extend({
   technology_stack: z.array(z.string()),
   delivery_summary: z.string().nullable(),
   demo_instructions: z.string().nullable(),
-  payment_qr_url: z.string().nullable(),
-  payment_instructions: z.string().nullable(),
   license_summary: z.string().nullable(),
   support_summary: z.string().nullable(),
   seo_title: z.string().nullable(),
@@ -85,7 +83,7 @@ const versionSchema = z.object({
 
 const categoryColumns = "id,name,audience";
 const editableSystemColumns =
-  "id,category_id,title,slug,summary,description,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,status,inclusions,exclusions,requirements,technology_stack,delivery_summary,demo_instructions,payment_qr_url,payment_instructions,license_summary,support_summary,seo_title,seo_description,published_at,updated_at,category:system_categories(name)";
+  "id,category_id,title,slug,summary,description,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,status,inclusions,exclusions,requirements,technology_stack,delivery_summary,demo_instructions,license_summary,support_summary,seo_title,seo_description,published_at,updated_at,category:system_categories(name)";
 
 const emptyResources: AdminSystemResources = {
   features: [],
@@ -238,8 +236,6 @@ function mapEditableSystem(row: z.infer<typeof editableSystemSchema>): AdminEdit
     technologyStack: row.technology_stack,
     deliverySummary: row.delivery_summary,
     demoInstructions: row.demo_instructions,
-    paymentQrUrl: row.payment_qr_url,
-    paymentInstructions: row.payment_instructions,
     licenseSummary: row.license_summary,
     supportSummary: row.support_summary,
     seoTitle: row.seo_title,

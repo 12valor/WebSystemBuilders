@@ -1,7 +1,7 @@
 import "server-only";
 
 import { z } from "zod";
-import { orderStatusRowSchema } from "@/features/orders/checkout-schema";
+import { orderStatusRowSchema } from "@/features/orders/status-schema";
 import { hashOrderReturnToken } from "@/features/orders/token";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createAdminClient } from "@/lib/supabase/admin";

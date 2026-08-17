@@ -33,8 +33,6 @@ export type AdminEditableSystem = AdminSystemRecord & {
   technologyStack: string[];
   deliverySummary: string | null;
   demoInstructions: string | null;
-  paymentQrUrl: string | null;
-  paymentInstructions: string | null;
   licenseSummary: string | null;
   supportSummary: string | null;
   seoTitle: string | null;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { CheckoutPaymentMethods } from "@/components/checkout/checkout-payment-methods";
+import { PayPalCheckout } from "@/components/checkout/paypal-checkout";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getCatalogPricePresentation } from "@/features/catalog/pricing";
@@ -34,11 +34,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
     return <CheckoutUnavailable message="Verify your account email before starting checkout." href={`/systems/${system.slug}`} />;
   }
   const paypalConfigured = isPayPalConfigured();
-  const manualConfigured = Boolean(system.paymentQrUrl?.trim() && system.paymentInstructions?.trim());
-  if (!paypalConfigured && !manualConfigured) {
-    return <CheckoutUnavailable message="No payment method is configured for this system." href={`/systems/${system.slug}`} />;
+  if (!paypalConfigured) {
+    return <CheckoutUnavailable message="PayPal Checkout is not configured." href={`/systems/${system.slug}`} />;
   }
-  const paypalSdkUrl = paypalConfigured ? getPayPalWebSdkUrl(getPayPalEnv().PAYPAL_ENVIRONMENT) : null;
+  const paypalSdkUrl = getPayPalWebSdkUrl(getPayPalEnv().PAYPAL_ENVIRONMENT);
 
   const price = getCatalogPricePresentation(system);
 
@@ -51,7 +50,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
             <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Secure Checkout</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Order Summary</h1>
             <p className="mt-5 max-w-xl leading-7 text-secondary">
-              Review your purchase details, then use PayPal or submit a GCash / QRPH payment proof. Payment confirmation and private delivery remain separate steps.
+              Review your purchase details, then pay securely with PayPal. Payment confirmation and private delivery remain separate steps.
             </p>
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-surface p-6">
@@ -72,15 +71,11 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
           </section>
 
           <section>
-            <CheckoutPaymentMethods
+            <PayPalCheckout
               systemId={system.id}
               systemTitle={system.title}
               priceFormatted={price.current}
-              userId={identity.id}
-              verifiedEmail={user.email.toLowerCase()}
-              paypalSdkUrl={paypalSdkUrl}
-              paymentQrUrl={system.paymentQrUrl}
-              paymentInstructions={system.paymentInstructions}
+              sdkUrl={paypalSdkUrl}
             />
           </section>
         </div>

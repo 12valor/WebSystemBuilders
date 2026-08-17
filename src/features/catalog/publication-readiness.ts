@@ -21,8 +21,6 @@ type PublicationCandidate = Pick<
   | "deliverySummary"
   | "licenseSummary"
   | "supportSummary"
-  | "paymentQrUrl"
-  | "paymentInstructions"
 >;
 
 export function getPublicationIssues(
@@ -43,9 +41,8 @@ export function getPublicationIssues(
   if (assets.mediaCount < 1) issues.push("Add at least one product media item.");
 
   const requiresCheckout = system.pricingType === "fixed" && system.productType !== "custom_service";
-  const manualPaymentConfigured = Boolean(system.paymentQrUrl?.trim() && system.paymentInstructions?.trim());
-  if (requiresCheckout && !context.paypalConfigured && !manualPaymentConfigured) {
-    issues.push("Configure PayPal Checkout or add both a GCash / QRPH QR image and payment instructions.");
+  if (requiresCheckout && !context.paypalConfigured) {
+    issues.push("Configure PayPal Checkout before publishing a fixed-price system.");
   }
 
   if (
