@@ -3,6 +3,7 @@ import "server-only";
 import { z } from "zod";
 import type { IntegrationHealthItem } from "@/features/admin/settings-types";
 import { isInquirySubmissionConfigured } from "@/lib/env/inquiries";
+import { getPayPalConfigurationStatus } from "@/lib/env/paypal";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 
 const emailSchema = z.email();
@@ -11,9 +12,18 @@ export function getIntegrationHealth(): IntegrationHealthItem[] {
   const supabase = isSupabasePubliclyConfigured() && hasMinimum(process.env.SUPABASE_SERVICE_ROLE_KEY, 20);
   const resend = hasMinimum(process.env.RESEND_API_KEY, 10) && emailSchema.safeParse(process.env.RESEND_FROM_EMAIL).success;
   const siteUrl = validSiteUrl(process.env.SITE_URL);
+  const paypal = getPayPalConfigurationStatus();
 
   return [
     item("supabase", "Supabase database and authentication", supabase, "Configuration presence only; live RLS and connectivity still require provider verification."),
+    item(
+      "paypal",
+      "PayPal Checkout",
+      paypal.configured,
+      paypal.configured
+        ? `${paypal.environment === "sandbox" ? "Sandbox" : "Live"} server credentials and webhook ID are present. Provider transactions remain a separate verification step.`
+        : "Requires server credentials, an explicit sandbox or live environment, a webhook ID, and SITE_URL.",
+    ),
     item("inquiries", "Inquiry security", isInquirySubmissionConfigured(), "Requires Supabase service access and a private fingerprint salt."),
     item("resend", "Resend transactional email", resend, "Requires a server API key and verified sender address."),
     item("site_url", "Canonical site origin", siteUrl, "Requires a valid HTTPS production origin or localhost during development."),

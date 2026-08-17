@@ -3,6 +3,7 @@ import { getPublicationIssues } from "../../src/features/catalog/publication-rea
 
 const completeSystem = {
   productType: "ready_made" as const,
+  pricingType: "fixed" as const,
   description: "A complete overview.",
   inclusions: "Source code and setup guide.",
   exclusions: "Hosting and third-party subscriptions.",
@@ -10,6 +11,8 @@ const completeSystem = {
   deliverySummary: "Private download access after verified payment.",
   licenseSummary: "Single-business commercial source license.",
   supportSummary: "Support boundaries are shown before purchase.",
+  paymentQrUrl: null,
+  paymentInstructions: null,
 };
 
 describe("catalog publication readiness", () => {
@@ -19,7 +22,7 @@ describe("catalog publication readiness", () => {
         featureCount: 3,
         mediaCount: 2,
         hasCurrentDeliverable: true,
-      }),
+      }, { paypalConfigured: true }),
     ).toEqual([]);
   });
 
@@ -27,6 +30,7 @@ describe("catalog publication readiness", () => {
     const issues = getPublicationIssues(
       { ...completeSystem, description: null, technologyStack: [], deliverySummary: null, licenseSummary: null },
       { featureCount: 0, mediaCount: 0, hasCurrentDeliverable: false },
+      { paypalConfigured: false },
     );
 
     expect(issues).toContain("Add a full product description.");
@@ -43,7 +47,52 @@ describe("catalog publication readiness", () => {
       getPublicationIssues(
         { ...completeSystem, productType: "custom_service" },
         { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: false },
+        { paypalConfigured: false },
       ),
     ).toEqual([]);
+  });
+
+  it("does not require checkout configuration for quotation products", () => {
+    expect(
+      getPublicationIssues(
+        { ...completeSystem, pricingType: "quotation" },
+        { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
+        { paypalConfigured: false },
+      ),
+    ).toEqual([]);
+  });
+
+  it("accepts PayPal as the only method for a fixed-price product", () => {
+    expect(
+      getPublicationIssues(
+        completeSystem,
+        { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
+        { paypalConfigured: true },
+      ),
+    ).toEqual([]);
+  });
+
+  it("accepts a complete manual fallback when PayPal is unavailable", () => {
+    expect(
+      getPublicationIssues(
+        {
+          ...completeSystem,
+          paymentQrUrl: "https://example.com/payment-qr.png",
+          paymentInstructions: "Pay using GCash and submit the transaction reference.",
+        },
+        { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
+        { paypalConfigured: false },
+      ),
+    ).toEqual([]);
+  });
+
+  it("blocks direct publication when neither checkout method is configured", () => {
+    expect(
+      getPublicationIssues(
+        completeSystem,
+        { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
+        { paypalConfigured: false },
+      ),
+    ).toContain("Configure PayPal Checkout or add both a GCash / QRPH QR image and payment instructions.");
   });
 });

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { AdminSystemEditor } from "@/components/admin/admin-system-editor";
 import { getAdminSystemEditorData } from "@/features/catalog/admin-repository";
+import { getPayPalConfigurationStatus } from "@/lib/env/paypal";
 
 export const metadata: Metadata = {
   title: "Edit system",
@@ -61,6 +62,7 @@ export default async function EditAdminSystemPage({
         system={data.system}
         resources={data.resources}
         success={success}
+        paypal={getPayPalConfigurationStatus()}
       />
     </AdminShell>
   );

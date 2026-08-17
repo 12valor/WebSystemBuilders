@@ -15,6 +15,7 @@ import {
   updateSystem,
   type SystemEditorState,
 } from "@/features/catalog/actions";
+import type { PayPalConfigurationStatus } from "@/lib/env/paypal";
 import { createClient } from "@/lib/supabase/client";
 
 const inputClass = "min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 transition-all";
@@ -29,12 +30,14 @@ export function AdminSystemEditor({
   system = null,
   resources = null,
   success = null,
+  paypal,
 }: {
   categories: AdminCategoryRecord[];
   dataStatus: AdminCatalogData["status"];
   system?: AdminEditableSystem | null;
   resources?: AdminSystemResourcesData | null;
   success?: EditorSuccess;
+  paypal: PayPalConfigurationStatus;
 }) {
   const isEditing = system !== null;
   const action = isEditing
@@ -112,7 +115,7 @@ export function AdminSystemEditor({
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
         <nav aria-label="System editor sections" className="hidden h-fit rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xs lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment QR & Instructions", "scan-to-pay"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">{label}</a>)}
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment methods", "payment-methods"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
@@ -154,7 +157,7 @@ export function AdminSystemEditor({
             <TextAreaField name="description" label="Full description" defaultValue={system?.description} hint="Explain intended users, outcomes, limitations, and workflow." />
           </EditorSection>
 
-          <EditorSection id="pricing" number="02" title="Pricing and manual sale" description="PHP amounts are converted to integer centavos on the server.">
+          <EditorSection id="pricing" number="02" title="Pricing and checkout" description="PHP amounts are converted to integer centavos on the server and remain authoritative for PayPal and manual checkout.">
             <div className="grid gap-5 sm:grid-cols-2">
               <SelectField name="pricingType" label="Pricing mode" defaultValue={system?.pricingType} error={firstError(state, "pricingType")} options={[
                 { value: "", label: "Select pricing mode" },
@@ -176,10 +179,35 @@ export function AdminSystemEditor({
             <TextAreaField name="supportSummary" label="Support summary" defaultValue={system?.supportSummary} />
           </EditorSection>
 
-          <EditorSection id="scan-to-pay" number="04" title="Payment QR Code & Instructions" description="Upload custom GCash/QRPh payment QR image and edit specific payment instructions for this system.">
+          <EditorSection id="payment-methods" number="04" title="Payment methods" description="PayPal is the primary automatic method. GCash / QRPH is an optional per-system fallback that requires administrator review.">
             <div className="grid gap-5">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <PaymentMethodStatus
+                  title="PayPal — Automatically Verified"
+                  status={paypal.configured ? (paypal.environment === "sandbox" ? "Sandbox configured" : "Live configured") : "Not configured"}
+                  configured={paypal.configured}
+                  description={paypal.configured
+                    ? "Uses the published PHP price and current version. Successful captures move orders directly to Awaiting delivery."
+                    : "Add the server-only PayPal credentials and webhook ID, or configure the manual fallback before publishing a fixed-price system."}
+                />
+                <PaymentMethodStatus
+                  title="GCash / QRPH — Manual Verification"
+                  status={system?.paymentQrUrl?.trim() && system.paymentInstructions?.trim() ? "Configured" : "Optional fallback"}
+                  configured={Boolean(system?.paymentQrUrl?.trim() && system.paymentInstructions?.trim())}
+                  description="Appears at checkout only after both a real QR image and payment instructions are saved. Administrators still verify submitted proof."
+                />
+              </div>
+
+              <p className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs font-medium leading-5 text-blue-900">
+                A fixed-price system can publish with PayPal alone. Manual checkout is optional and is never enabled by placeholder QR data.
+              </p>
+
+              <div className="border-t border-slate-100 pt-5">
+                <h3 className="text-sm font-bold text-slate-900">Optional manual fallback</h3>
+                <p className="mt-1 text-xs leading-5 text-slate-500 font-medium">Upload an administrator-managed QR image and provide exact customer instructions only if you want to offer GCash / QRPH.</p>
+              </div>
               <div>
-                <label className="block text-xs font-bold text-slate-700">Upload Payment QR Image</label>
+                <label className="block text-xs font-bold text-slate-700">GCash / QRPH QR image</label>
                 <input
                   type="file"
                   accept="image/*"
@@ -195,7 +223,7 @@ export function AdminSystemEditor({
                   {/* eslint-disable-next-html-element-suppression */}
                   <img src={qrUrl} alt="Current Payment QR" className="size-20 rounded-xl object-contain bg-white p-1.5 shadow-2xs" />
                   <div>
-                    <span className="text-xs font-bold text-emerald-700">✓ QR Image Set</span>
+                    <span className="text-xs font-bold text-emerald-700">QR image saved</span>
                     <p className="mt-1 text-xs text-slate-500 font-medium truncate max-w-md">{qrUrl}</p>
                     <button type="button" onClick={() => setQrUrl("")} className="mt-2 text-xs font-semibold text-red-600 underline">Remove QR</button>
                   </div>
@@ -204,9 +232,9 @@ export function AdminSystemEditor({
 
               <TextAreaField
                 name="paymentInstructions"
-                label="Custom Payment Instructions"
+                label="GCash / QRPH payment instructions"
                 defaultValue={system?.paymentInstructions}
-                hint="Default: Please scan the QR code using GCash or any QRPH-supported banking app. After payment, upload your proof of payment together with the transaction reference number. Your order will be verified within 24 hours."
+                hint="Required only for the manual fallback. Explain how to pay and which transaction reference the customer must submit; do not promise a verification time unless it is approved policy."
               />
             </div>
           </EditorSection>
@@ -221,7 +249,7 @@ export function AdminSystemEditor({
 
           <EditorSection id="next" number="06" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
             <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-200/60 sm:grid-cols-2 shadow-xs">
-              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Run the server publication check"].map((item, index) => <div key={item} className="bg-white p-4 text-sm text-slate-600 font-medium"><span className="mr-3 text-xs text-slate-400 font-bold">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
+              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Confirm PayPal or a complete manual fallback", "Run the server publication check"].map((item, index) => <div key={item} className="bg-white p-4 text-sm text-slate-600 font-medium"><span className="mr-3 text-xs text-slate-400 font-bold">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
             </div>
           </EditorSection>
         </form>
@@ -231,7 +259,7 @@ export function AdminSystemEditor({
           <h2 className="mt-3 text-lg font-bold tracking-tight text-slate-900">Private until complete</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">Saving verifies administrator access, category compatibility, slug uniqueness, and authoritative price values.</p>
           <ul className="mt-5 grid gap-3 text-sm text-slate-600 font-medium">
-            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-600 font-bold" aria-hidden="true">+</span><span>{item}</span></li>)}
+            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products", "PayPal or a complete manual fallback for fixed-price systems"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-600 font-bold" aria-hidden="true">+</span><span>{item}</span></li>)}
           </ul>
           <p className="mt-6 border-t border-slate-100 pt-4 text-xs leading-5 text-slate-500 font-medium">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
           {system && <AdminSystemLifecycle systemId={system.id} status={system.status} />}
@@ -268,6 +296,18 @@ function formatMinorUnits(value: number | null | undefined) {
 
 function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function PaymentMethodStatus({ title, status, configured, description }: { title: string; status: string; configured: boolean; description: string }) {
+  return (
+    <article className={`rounded-2xl border p-4 ${configured ? "border-emerald-200 bg-emerald-50/60" : "border-slate-200 bg-slate-50/60"}`}>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-sm font-bold leading-5 text-slate-900">{title}</h3>
+        <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-bold ${configured ? "border-emerald-200 bg-white text-emerald-800" : "border-slate-200 bg-white text-slate-600"}`}>{status}</span>
+      </div>
+      <p className="mt-3 text-xs font-medium leading-5 text-slate-600">{description}</p>
+    </article>
+  );
 }
 
 function EditorSection({ id, number, title, description, children }: { id: string; number: string; title: string; description: string; children: React.ReactNode }) {

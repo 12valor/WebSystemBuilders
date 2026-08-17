@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
-import { getPayPalApiOrigin, getPayPalEnv, getPayPalWebSdkUrl } from "@/lib/env/paypal";
+import { getPayPalApiOrigin, getPayPalConfigurationStatus, getPayPalEnv, getPayPalWebSdkUrl } from "@/lib/env/paypal";
 
 const original = { ...process.env };
 afterEach(() => { process.env = { ...original }; });
@@ -15,6 +15,7 @@ describe("PayPal environment", () => {
       SITE_URL: "http://localhost:3000",
     });
     expect(getPayPalEnv().PAYPAL_ENVIRONMENT).toBe("sandbox");
+    expect(getPayPalConfigurationStatus()).toEqual({ configured: true, environment: "sandbox" });
     expect(getPayPalApiOrigin("sandbox")).toBe("https://api-m.sandbox.paypal.com");
     expect(getPayPalWebSdkUrl("sandbox")).toContain("sandbox.paypal.com/web-sdk/v6/core");
     expect(process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID).toBeUndefined();
@@ -29,5 +30,6 @@ describe("PayPal environment", () => {
       SITE_URL: "http://localhost:3000",
     });
     expect(() => getPayPalEnv()).toThrow("not configured");
+    expect(getPayPalConfigurationStatus()).toEqual({ configured: false, environment: null });
   });
 });

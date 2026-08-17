@@ -17,6 +17,10 @@ export type PayPalEnv = {
   SITE_URL: string;
 };
 
+export type PayPalConfigurationStatus =
+  | { configured: true; environment: PayPalEnvironment }
+  | { configured: false; environment: null };
+
 export function getPayPalEnv(): PayPalEnv {
   const clientId = credentialSchema.safeParse(process.env.PAYPAL_CLIENT_ID);
   const clientSecret = credentialSchema.safeParse(process.env.PAYPAL_CLIENT_SECRET);
@@ -37,11 +41,15 @@ export function getPayPalEnv(): PayPalEnv {
 }
 
 export function isPayPalConfigured() {
+  return getPayPalConfigurationStatus().configured;
+}
+
+export function getPayPalConfigurationStatus(): PayPalConfigurationStatus {
   try {
-    getPayPalEnv();
-    return true;
+    const env = getPayPalEnv();
+    return { configured: true, environment: env.PAYPAL_ENVIRONMENT };
   } catch {
-    return false;
+    return { configured: false, environment: null };
   }
 }
 

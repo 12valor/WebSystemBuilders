@@ -6,9 +6,14 @@ export type PublicationAssets = {
   hasCurrentDeliverable: boolean;
 };
 
+export type PublicationContext = {
+  paypalConfigured: boolean;
+};
+
 type PublicationCandidate = Pick<
   SystemDraftInput,
   | "productType"
+  | "pricingType"
   | "description"
   | "inclusions"
   | "exclusions"
@@ -16,11 +21,14 @@ type PublicationCandidate = Pick<
   | "deliverySummary"
   | "licenseSummary"
   | "supportSummary"
+  | "paymentQrUrl"
+  | "paymentInstructions"
 >;
 
 export function getPublicationIssues(
   system: PublicationCandidate,
   assets: PublicationAssets,
+  context: PublicationContext,
 ): string[] {
   const issues: string[] = [];
 
@@ -33,6 +41,12 @@ export function getPublicationIssues(
   if (!system.supportSummary) issues.push("Add the support summary.");
   if (assets.featureCount < 1) issues.push("Add at least one customer-facing feature.");
   if (assets.mediaCount < 1) issues.push("Add at least one product media item.");
+
+  const requiresCheckout = system.pricingType === "fixed" && system.productType !== "custom_service";
+  const manualPaymentConfigured = Boolean(system.paymentQrUrl?.trim() && system.paymentInstructions?.trim());
+  if (requiresCheckout && !context.paypalConfigured && !manualPaymentConfigured) {
+    issues.push("Configure PayPal Checkout or add both a GCash / QRPH QR image and payment instructions.");
+  }
 
   if (
     system.productType !== "custom_service" &&

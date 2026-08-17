@@ -9,6 +9,7 @@ import {
   type SystemDraftInput,
 } from "@/features/catalog/system-draft-schema";
 import { AuthorizationError, requireAdmin } from "@/lib/auth/authorization";
+import { isPayPalConfigured } from "@/lib/env/paypal";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createClient } from "@/lib/supabase/server";
 
@@ -133,6 +134,7 @@ export async function updateSystem(
     const issues = getPublicationIssues(
       {
         productType: result.data.productType,
+        pricingType: result.data.pricingType,
         description: result.data.description,
         inclusions: result.data.inclusions,
         exclusions: result.data.exclusions,
@@ -140,8 +142,11 @@ export async function updateSystem(
         deliverySummary: result.data.deliverySummary,
         licenseSummary: result.data.licenseSummary,
         supportSummary: result.data.supportSummary,
+        paymentQrUrl: result.data.paymentQrUrl,
+        paymentInstructions: result.data.paymentInstructions,
       },
       readiness.assets,
+      { paypalConfigured: isPayPalConfigured() },
     );
 
     if (issues.length > 0) {
