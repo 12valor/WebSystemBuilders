@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import { AdminSystemLifecycle } from "@/components/admin/admin-system-lifecycle";
 import { AdminSystemResources } from "@/components/admin/admin-system-resources";
 import type {
@@ -16,7 +16,6 @@ import {
   type SystemEditorState,
 } from "@/features/catalog/actions";
 import type { PayPalConfigurationStatus } from "@/lib/env/paypal";
-import { createClient } from "@/lib/supabase/client";
 
 const inputClass = "min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 transition-all";
 const textareaClass = `${inputClass} min-h-28 resize-y py-3 leading-6`;
@@ -44,38 +43,8 @@ export function AdminSystemEditor({
     ? updateSystem.bind(null, system.id)
     : createSystemDraft;
   const [state, formAction, pending] = useActionState(action, initialState);
-  const [qrUrl, setQrUrl] = useState(system?.paymentQrUrl ?? "");
-  const [qrUploading, setQrUploading] = useState(false);
   const canSave = dataStatus === "ready" && categories.length > 0 && !pending;
   const statusLabel = system ? capitalize(system.status) : "Draft";
-
-  const handleQrUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setQrUploading(true);
-
-    try {
-      const supabase = createClient();
-      const ext = file.name.split(".").pop() || "png";
-      const filePath = `qr-codes/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-
-      const { data, error } = await supabase.storage.from("payment-qrs").upload(filePath, file);
-
-      if (error) {
-        alert(`QR Upload failed: ${error.message}`);
-        setQrUploading(false);
-        return;
-      }
-
-      const { data: publicUrlData } = supabase.storage.from("payment-qrs").getPublicUrl(filePath);
-      setQrUrl(publicUrlData.publicUrl);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      alert(`QR Upload error: ${msg}`);
-    } finally {
-      setQrUploading(false);
-    }
-  };
 
   return (
     <main id="admin-content">
@@ -115,7 +84,7 @@ export function AdminSystemEditor({
 
       <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[220px_minmax(0,760px)_minmax(240px,1fr)] lg:px-10 lg:py-10">
         <nav aria-label="System editor sections" className="hidden h-fit rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xs lg:sticky lg:top-36 lg:grid">
-          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["Payment methods", "payment-methods"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">{label}</a>)}
+          {[["Basic information", "basic"], ["Pricing", "pricing"], ["Package boundaries", "package"], ["PayPal Checkout", "payment-method"], ["Technical and SEO", "technical"], ["Publication", "next"], ...(isEditing ? [["Resources", "resources"]] : [])].map(([label, id]) => <a key={id} href={`#${id}`} className="min-h-10 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">{label}</a>)}
         </nav>
 
         <form id="system-editor-form" action={formAction} className="grid gap-6" aria-label={isEditing ? "Edit system" : "Create system draft"} noValidate>
@@ -157,7 +126,7 @@ export function AdminSystemEditor({
             <TextAreaField name="description" label="Full description" defaultValue={system?.description} hint="Explain intended users, outcomes, limitations, and workflow." />
           </EditorSection>
 
-          <EditorSection id="pricing" number="02" title="Pricing and checkout" description="PHP amounts are converted to integer centavos on the server and remain authoritative for PayPal and manual checkout.">
+          <EditorSection id="pricing" number="02" title="Pricing and checkout" description="PHP amounts are converted to integer centavos on the server and remain authoritative for PayPal Checkout.">
             <div className="grid gap-5 sm:grid-cols-2">
               <SelectField name="pricingType" label="Pricing mode" defaultValue={system?.pricingType} error={firstError(state, "pricingType")} options={[
                 { value: "", label: "Select pricing mode" },
@@ -179,64 +148,15 @@ export function AdminSystemEditor({
             <TextAreaField name="supportSummary" label="Support summary" defaultValue={system?.supportSummary} />
           </EditorSection>
 
-          <EditorSection id="payment-methods" number="04" title="Payment methods" description="PayPal is the primary automatic method. GCash / QRPH is an optional per-system fallback that requires administrator review.">
-            <div className="grid gap-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <PaymentMethodStatus
-                  title="PayPal — Automatically Verified"
-                  status={paypal.configured ? (paypal.environment === "sandbox" ? "Sandbox configured" : "Live configured") : "Not configured"}
-                  configured={paypal.configured}
-                  description={paypal.configured
-                    ? "Uses the published PHP price and current version. Successful captures move orders directly to Awaiting delivery."
-                    : "Add the server-only PayPal credentials and webhook ID, or configure the manual fallback before publishing a fixed-price system."}
-                />
-                <PaymentMethodStatus
-                  title="GCash / QRPH — Manual Verification"
-                  status={system?.paymentQrUrl?.trim() && system.paymentInstructions?.trim() ? "Configured" : "Optional fallback"}
-                  configured={Boolean(system?.paymentQrUrl?.trim() && system.paymentInstructions?.trim())}
-                  description="Appears at checkout only after both a real QR image and payment instructions are saved. Administrators still verify submitted proof."
-                />
-              </div>
-
-              <p className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-xs font-medium leading-5 text-blue-900">
-                A fixed-price system can publish with PayPal alone. Manual checkout is optional and is never enabled by placeholder QR data.
-              </p>
-
-              <div className="border-t border-slate-100 pt-5">
-                <h3 className="text-sm font-bold text-slate-900">Optional manual fallback</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-500 font-medium">Upload an administrator-managed QR image and provide exact customer instructions only if you want to offer GCash / QRPH.</p>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-700">GCash / QRPH QR image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleQrUpload}
-                  className="mt-2 block w-full text-xs text-slate-500 font-medium file:mr-4 file:rounded-xl file:border-0 file:bg-slate-100 file:px-4 file:py-2.5 file:text-xs file:font-semibold file:text-slate-700 hover:file:bg-slate-200 transition-all"
-                />
-                {qrUploading && <p className="mt-2 text-xs font-semibold text-amber-700">Uploading QR image...</p>}
-                <input type="hidden" name="paymentQrUrl" value={qrUrl} />
-              </div>
-
-              {qrUrl && (
-                <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50/50 p-4">
-                  {/* eslint-disable-next-html-element-suppression */}
-                  <img src={qrUrl} alt="Current Payment QR" className="size-20 rounded-xl object-contain bg-white p-1.5 shadow-2xs" />
-                  <div>
-                    <span className="text-xs font-bold text-emerald-700">QR image saved</span>
-                    <p className="mt-1 text-xs text-slate-500 font-medium truncate max-w-md">{qrUrl}</p>
-                    <button type="button" onClick={() => setQrUrl("")} className="mt-2 text-xs font-semibold text-red-600 underline">Remove QR</button>
-                  </div>
-                </div>
-              )}
-
-              <TextAreaField
-                name="paymentInstructions"
-                label="GCash / QRPH payment instructions"
-                defaultValue={system?.paymentInstructions}
-                hint="Required only for the manual fallback. Explain how to pay and which transaction reference the customer must submit; do not promise a verification time unless it is approved policy."
-              />
-            </div>
+          <EditorSection id="payment-method" number="04" title="PayPal Checkout" description="PayPal is the only active payment method for fixed-price systems.">
+            <PaymentMethodStatus
+              title="PayPal — Automatically Verified"
+              status={paypal.configured ? (paypal.environment === "sandbox" ? "Sandbox configured" : "Live configured") : "Not configured"}
+              configured={paypal.configured}
+              description={paypal.configured
+                ? "Uses the published PHP price and current version. Successful captures move orders directly to Awaiting delivery."
+                : "Add the server-only PayPal credentials and webhook ID before publishing a fixed-price system."}
+            />
           </EditorSection>
 
           <EditorSection id="technical" number="05" title="Technical, delivery, and search details" description="Keep product facts structured so the public page and search metadata stay accurate.">
@@ -249,7 +169,7 @@ export function AdminSystemEditor({
 
           <EditorSection id="next" number="06" title="Publication readiness" description="Publishing is separate from saving and fails closed when required product evidence is missing.">
             <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-200/60 sm:grid-cols-2 shadow-xs">
-              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Confirm PayPal or a complete manual fallback", "Run the server publication check"].map((item, index) => <div key={item} className="bg-white p-4 text-sm text-slate-600 font-medium"><span className="mr-3 text-xs text-slate-400 font-bold">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
+              {["Complete product and policy copy", "Add customer-facing features", "Upload and order real product media", "Create a current product version", "Attach a private delivery file when sold", "Confirm PayPal Checkout is configured", "Run the server publication check"].map((item, index) => <div key={item} className="bg-white p-4 text-sm text-slate-600 font-medium"><span className="mr-3 text-xs text-slate-400 font-bold">{String(index + 1).padStart(2, "0")}</span>{item}</div>)}
             </div>
           </EditorSection>
         </form>
@@ -259,7 +179,7 @@ export function AdminSystemEditor({
           <h2 className="mt-3 text-lg font-bold tracking-tight text-slate-900">Private until complete</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">Saving verifies administrator access, category compatibility, slug uniqueness, and authoritative price values.</p>
           <ul className="mt-5 grid gap-3 text-sm text-slate-600 font-medium">
-            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products", "PayPal or a complete manual fallback for fixed-price systems"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-600 font-bold" aria-hidden="true">+</span><span>{item}</span></li>)}
+            {["Full description and package boundaries", "Technology stack and delivery summary", "License and support summaries", "At least one feature and media item", "Current private deliverable for sold products", "PayPal Checkout for fixed-price systems"].map((item) => <li key={item} className="grid grid-cols-[18px_1fr] gap-2"><span className="text-emerald-600 font-bold" aria-hidden="true">+</span><span>{item}</span></li>)}
           </ul>
           <p className="mt-6 border-t border-slate-100 pt-4 text-xs leading-5 text-slate-500 font-medium">{isEditing ? "Publishing changes the public catalog only after every server-side check passes." : "Create the private draft first. Publication is available only from the saved system editor."}</p>
           {system && <AdminSystemLifecycle systemId={system.id} status={system.status} />}
