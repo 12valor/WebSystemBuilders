@@ -57,7 +57,7 @@ This document provides a concise overview of every page and admin panel tab with
 ## 3. Checkout & Order Fulfillment Pages
 
 - **Checkout (`/checkout/[slug]`)**  
-  Secure checkout interface for reviewing system details, licensee contact information, and initiating PayMongo payment workflows.
+  Secure checkout interface for reviewing system details and using PayPal or configured GCash / QRPH manual verification.
 
 - **Checkout Preview (`/checkout/preview`)**  
   Standalone demonstration page for inspecting the checkout interface layout without creating live orders.
@@ -159,7 +159,7 @@ This document provides a concise overview of every page and admin panel tab with
   Lead management dashboard for reviewing, filtering, and responding to client custom development quotes and contact submissions.
 
 - **Orders (`/admin/orders`)**  
-  Commercial ledger for tracking customer orders, verifying PayMongo payment statuses, manually issuing fulfillments, and managing refunds.
+  Commercial ledger for tracking customer orders, reviewing PayPal and manual payment status, explicitly issuing fulfillments, and managing refunds.
 
 - **Support (`/admin/support`)**  
   Helpdesk management panel for triaging customer support tickets, assigning priorities, and sending official resolution responses.
@@ -168,7 +168,7 @@ This document provides a concise overview of every page and admin panel tab with
   Security and compliance log tracking all administrative actions, data mutations, settings changes, and authentication events.
 
 - **Settings (`/admin/settings`)**  
-  Platform control panel for managing administrator roles, integration credentials (Supabase, PayMongo, Resend), and system configuration.
+  Platform control panel for managing administrator roles, integration credentials (Supabase, PayPal, Resend), and system configuration.
 
 - **Sellers (`/admin/sellers`)**  
   Administrator workspace for reviewing registered software vendors, seller permissions, and payout settings.

@@ -10,7 +10,7 @@ If the requested work conflicts with the blueprint, identify the conflict and as
 
 ## Current project state
 
-The repository contains the Phase 1 interfaces, Phase 2 authentication and administrator catalog foundations, Phase 3 public and inquiry routes, the locally complete Phase 4 catalog, and an active Phase 5 administrator workspace. Supabase projects, credentials, generated types, applied migrations, PayMongo, and Resend are not configured yet, so live authentication, RLS, mutations, Storage, inquiry persistence, payment, and email remain unverified. Local development shows explicit unconfigured states; production fails closed. Inspect the repository before every task and build on the actual current state.
+The repository contains the Phase 1 interfaces, Phase 2 authentication and administrator catalog foundations, Phase 3 public and inquiry routes, the locally complete Phase 4 catalog, and an active Phase 5 administrator workspace. The PayPal Checkout implementation is local, but the intended Supabase project, applied migrations, PayPal sandbox credentials/webhook, and Resend are not configured yet, so live authentication, RLS, mutations, Storage, provider-backed payment, and email remain unverified. Local development shows explicit unconfigured states; production fails closed. Inspect the repository before every task and build on the actual current state.
 
 ## Product boundaries
 
@@ -26,7 +26,7 @@ The repository contains the Phase 1 interfaces, Phase 2 authentication and admin
 - Use Next.js App Router, React, and TypeScript.
 - Use Tailwind CSS and customized accessible UI primitives.
 - Use Supabase PostgreSQL, Auth, and private Storage.
-- Use PayMongo behind a server-only payment module.
+- Use PayPal Orders v2 behind a server-only payment module and Web SDK v6 with server-issued browser tokens.
 - Use Resend behind a server-only email module.
 - Keep the initial architecture a modular monolith.
 - Keep domain logic out of page and presentation components.

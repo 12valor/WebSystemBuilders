@@ -50,7 +50,7 @@ We will never ask you to send your password, GCash MPIN, one-time password, or o
 ### Order and payment-verification data
 
 - Products or services ordered, prices, dates, and order status;
-- GCash or QRPH payment screenshots submitted for manual verification;
+- PayPal order and capture identifiers and GCash or QRPH screenshots submitted for manual verification;
 - Transaction reference numbers, payer name, amount, and payment time shown in the proof;
 - Verification notes, delivery records, invoices, and refund records; and
 - License or access information connected with a purchased system.
@@ -81,7 +81,7 @@ We process personal data only for declared and legitimate purposes, including to
 
 - Create, authenticate, secure, and administer accounts;
 - Distinguish student and business-owner account experiences;
-- Process orders and manually verify GCash or QRPH payments;
+- Process orders, verify PayPal payments, and manually review GCash or QRPH payments;
 - Deliver software files, access credentials, licenses, updates, and support;
 - Evaluate, quote, manage, and complete custom-development projects;
 - Communicate about orders, service notices, support, complaints, and refunds;
@@ -213,13 +213,13 @@ Submitting an order or payment proof is an offer to purchase. An order becomes a
 
 We may decline or cancel an unaccepted order because of an incorrect price, unavailable product, suspected fraud, technical error, unlawful request, or inability to perform the requested work. If verified funds were received for an order we cannot accept, we will return the applicable amount using a reasonable available method.
 
-## 5. Prices, manual payments, and verification
+## 5. Prices, PayPal, and manual verification
 
 Prices are displayed or quoted in Philippine pesos unless stated otherwise. Any applicable taxes, fees, or additional costs will be disclosed as required.
 
-Payments are made manually through the GCash or QRPH details displayed or directly confirmed by WebSystemBuilders. Do not send money to an account based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.
+PayPal payments are captured and verified through provider server APIs and signed webhooks. If GCash or QRPH is configured, verified customers may instead follow the administrator-published QR instructions and submit a private proof image. Do not send money based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.
 
-Payment is not treated as complete until the funds and submitted proof have been manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payment proof may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.
+A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. GCash or QRPH payment is not complete until funds and proof are manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.
 
 ## 6. Digital delivery
 

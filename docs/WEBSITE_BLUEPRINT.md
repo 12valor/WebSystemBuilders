@@ -98,7 +98,7 @@ flowchart LR
     App --> Database["Supabase PostgreSQL"]
     App --> Auth["Supabase Auth"]
     App --> Storage["Private Supabase Storage"]
-    App --> Payment["PayMongo Hosted Checkout"]
+    App --> Payment["PayPal Checkout"]
     App --> Email["Resend transactional email"]
 
     Payment --> Webhook["Verified payment webhook"]
@@ -132,7 +132,7 @@ Use a modular monolith:
 | Database | Supabase PostgreSQL | Primary relational data store |
 | Authentication | Supabase Auth | Customer and administrator identity |
 | Storage | Supabase Storage | Private systems, media, and documents |
-| Payments | PayMongo Hosted Checkout v2 | Authenticated test-mode checkout with signed webhook verification; legacy manual proofs remain read-compatible |
+| Payments | PayPal Web SDK v6 and Orders v2 | Authenticated browser token, server capture, signed webhook recovery, and optional authenticated GCash / QRPH proof submission |
 | Email | Resend | Transactional purchase and inquiry email |
 | Validation | Zod | Shared input and environment validation |
 | Forms | React Hook Form | Complex user and administrator forms |
@@ -226,7 +226,7 @@ src/
 │   ├── admin/
 │   └── api/
 │       ├── checkout/
-│       ├── webhooks/paymongo/
+│       ├── webhooks/paypal/
 │       ├── downloads/
 │       └── email/
 ├── components/
@@ -246,7 +246,7 @@ src/
 │   └── content/
 ├── lib/
 │   ├── supabase/
-│   ├── paymongo/
+│   ├── payments/paypal/
 │   ├── email/
 │   ├── security/
 │   └── validation/
@@ -318,7 +318,7 @@ Categories are administrator-managed database records. This approved starting st
 - Do not include automatic sale start or end scheduling in the initial release.
 - When a sale is active, show the sale price prominently with the regular price as a comparison and snapshot the server-validated sale price into new orders.
 
-PayMongo supports the approved default PHP settlement model. USD card acceptance may be offered only after PayMongo enables it for the merchant account and only for eligible card payments. Other localized currencies are display estimates rather than charge currencies. If actual charging in additional currencies becomes required later, add a suitable international provider behind the existing payment abstraction.
+PayPal supports the approved PHP settlement model. PHP remains the authoritative checkout currency; localized currencies are display estimates rather than charge currencies. Any future multi-currency charging requires a separate owner decision behind the existing payment abstraction.
 
 The initial display-rate adapter uses Frankfurter v2 from the server only. It requests PHP-based reference rates, caches successful responses for six hours, retains the rate date, and fails back to authoritative PHP prices without blocking the catalog. The initial currency suggestion uses the hosting layer's coarse ISO country header. A visible manual override is stored in the first-party wsb_currency preference cookie; no precise visitor location is stored or sent to the rate provider. Frankfurter remains isolated behind the catalog currency module so it can be replaced without rewriting product or checkout pricing.
 
@@ -447,7 +447,7 @@ Only published systems are discoverable in the public catalog. Unlisted systems 
 sequenceDiagram
     participant C as Customer
     participant W as Website
-    participant P as PayMongo
+    participant P as PayPal
     participant D as Database
     participant S as Private storage
     participant E as Email service
@@ -687,7 +687,7 @@ The admin dashboard should share the brand tokens but favor density, clarity, ke
 
 Use separate test and production payment credentials. Production webhook URLs, email domains, storage policies, and environment variables require a launch checklist and verification.
 
-PayMongo is the selected initial provider. The local adapter, authenticated checkout route, test-signature webhook, and reconciliation migration are implemented with a strict `sk_test_` guard. Provider-backed verification is still pending because credentials, an enabled merchant method set, an applied remote migration, and a public HTTPS test webhook are not configured. Live credentials remain prohibited until merchant onboarding and the production launch decision.
+PayPal is the selected initial automatic provider. The local adapter, Web SDK v6 browser-token route, Orders v2 create/capture routes, verified webhook recovery, and reconciliation migrations are implemented. Provider-backed verification is still pending because the intended Supabase project is not linked, migrations are not applied remotely, sandbox credentials are absent, and no public HTTPS sandbox webhook is registered. Live mode remains prohibited until PayPal business onboarding and the production launch decision.
 
 ## 19. Testing strategy
 
@@ -729,7 +729,7 @@ Critical smoke journeys:
 | 3 | Public website | Homepage, audience pages, services, portfolio, trust, and inquiries | 5–8 days |
 | 4 | Systems catalog | Search, filters, system details, demos, features, and pricing | 4–6 days |
 | 5 | Admin dashboard | Systems, categories, media, files, orders, content, and audit trail | 7–10 days |
-| 6 | Payment and ordering | Checkout, pending orders, PayMongo, webhooks, and payment records | 5–8 days |
+| 6 | Payment and ordering | Checkout, pending orders, PayPal, manual proof review, webhooks, and payment records | 5–8 days |
 | 7 | Automated delivery | Private files, signed downloads, email, limits, resend, and revoke | 4–6 days |
 | 8 | Customer portal | Accounts, orders, downloads, updates, receipts, and support | 5–8 days |
 | 9 | Quality hardening | Testing, accessibility, security, SEO, and performance | 5–7 days |
@@ -764,7 +764,7 @@ A phase is complete only when:
 - Admin authentication
 - Admin system, media, file, pricing, and publishing management
 - Quote and contact inquiries
-- PayMongo test checkout and a separately approved future production checkout
+- PayPal sandbox checkout and a separately approved future live checkout
 - Verified payment webhook
 - Order records
 - Customer accounts and portal for orders, downloads, receipts, updates, and support
@@ -790,10 +790,10 @@ A phase is complete only when:
 - Final legal wording for the approved broad commercial source license
 - Third-party dependency and asset license audit
 - Final legal wording and review for the approved no-change-of-mind refund policy
-- Complete PayMongo merchant onboarding and activate required payment methods before production checkout
+- Complete PayPal business onboarding and verify live capture and webhooks before production checkout
 - Business registration is not yet complete; registration, seller identity, invoice, tax, and legal presentation requirements must be confirmed before production commerce
 - Final account-activation email wording and session-expiration policy
 
 ## 24. Project summary
 
-WebSystemBuilders will be a single, dark, modern, professional platform for students and business owners to discover systems, request custom work, purchase ready-made software, and receive it securely. Administrators will control the public catalog, pricing, media, files, orders, content, and delivery from the same application. The initial architecture will use Next.js, TypeScript, Supabase, PayMongo, Resend, and Vercel. Payment fulfillment will depend on verified webhooks, and private ZIP files will be delivered using expiring links. Development will proceed from product decisions and design through the public website, admin tools, commerce, delivery, quality hardening, and production launch.
+WebSystemBuilders will be a single, dark, modern, professional platform for students and business owners to discover systems, request custom work, purchase ready-made software, and receive it securely. Administrators will control the public catalog, pricing, media, files, orders, content, and delivery from the same application. The initial architecture will use Next.js, TypeScript, Supabase, PayPal, Resend, and Vercel. Payment confirmation will depend on validated server capture and verified webhooks, while private ZIP delivery remains an explicit administrator action using expiring links. Development will proceed from product decisions and design through the public website, admin tools, commerce, delivery, quality hardening, and production launch.

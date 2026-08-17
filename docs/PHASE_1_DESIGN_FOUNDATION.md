@@ -7,7 +7,7 @@
 **Completed:** July 24, 2026
 **Target output:** Approved visual tokens, component rules, responsive wireframes, content hierarchy, and state behavior ready for Phase 2 implementation.
 
-Phase 0 is complete for design progression. Business registration, legal review, PayMongo activation, actual system uploads, and final production content remain required production gates; they do not authorize placeholder claims or live commerce during design work.
+Phase 0 is complete for design progression. Business registration, legal review, PayPal business onboarding, actual system uploads, and final production content remain required production gates; they do not authorize placeholder claims or live commerce during design work.
 
 **Implementation note:** At the owner's request, the homepage concept is implemented directly in the required Next.js, React, TypeScript, and Tailwind stack. This starts the minimal application scaffold early without adding Phase 2 database, authentication, payment, or email integrations.
 

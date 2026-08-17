@@ -65,7 +65,7 @@ const categories: CategoryDef[] = [
       pillActive: "border-emerald-500/40 text-emerald-400 bg-emerald-950/40",
     },
     description:
-      "Real-time cashier register, barcode scanner listener, GCash & Maya PayMongo checkout, and thermal receipt printing.",
+      "Real-time cashier register, barcode scanner listener, PayPal Checkout, and thermal receipt printing.",
     metrics: [
       { label: "Scan Latency", value: "< 0.18s" },
       { label: "Offline Mode", value: "Auto-Sync" },
@@ -73,7 +73,7 @@ const categories: CategoryDef[] = [
     ],
     features: [
       "Real-time barcode scanning and search indexing",
-      "PayMongo GCash & Credit Card checkout integration",
+      "PayPal Checkout integration",
       "Cashier shift closing and Z-Reading PDF generation",
       "Full Next.js App Router + Supabase RLS codebase",
     ],
@@ -93,7 +93,7 @@ CREATE INDEX idx_pos_transactions_created ON pos_transactions(created_at DESC);`
       order_number: "POS-2026-8841",
       currency: "PHP",
       total_amount_minor: 450000,
-      payment_channel: "paymongo_gcash",
+      payment_channel: "paypal",
       status: "COMPLETED",
       timestamp: "2026-07-29T10:48:00Z",
     },
@@ -444,7 +444,7 @@ export function InteractiveProductShowcase() {
                             <div className="text-xl font-bold text-white">
                               ₱{(posItemCount * 1500).toLocaleString("en-PH", { minimumFractionDigits: 2 })}
                             </div>
-                            <div className="text-[10px] text-slate-400 font-mono mt-1">PayMongo Cashier Active</div>
+                            <div className="text-[10px] text-slate-400 font-mono mt-1">PayPal Checkout Active</div>
                           </div>
                         </div>
 

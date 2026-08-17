@@ -10,7 +10,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
       <div className="rounded-2xl border border-dashed border-slate-200/80 bg-white p-8 text-center sm:p-12 shadow-2xs">
         <h2 className="text-xl font-bold tracking-[-0.03em] text-slate-900">No purchases found</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600 max-w-md mx-auto font-medium">
-          Legacy Scan to Pay purchases link automatically when you sign in with the same email. New purchases appear here after secure checkout begins.
+          Purchases made from your verified account appear here after secure checkout begins.
         </p>
         <Link
           href="/systems"
@@ -57,7 +57,7 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
                 <span className="rounded-xl border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-800">
                   Payment confirmed • Awaiting delivery
                 </span>
-              ) : ["pending_verification", "pending"].includes(order.order_status) || order.payment_status === "pending" ? (
+              ) : ["pending_verification", "pending"].includes(order.order_status) || ["pending", "processing"].includes(order.payment_status ?? "") ? (
                 <span className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800">
                   Awaiting payment verification
                 </span>
@@ -78,13 +78,16 @@ export function CustomerOrdersList({ orders }: { orders: CustomerPortalOrder[] }
 }
 
 function providerLabel(provider: string | null) {
-  return provider === "paymongo" ? "PayMongo hosted checkout" : "Legacy manual payment";
+  if (provider === "paypal") return "PayPal — Automatically Verified";
+  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "paymongo") return "PayMongo (historical)";
+  return "Unrecorded";
 }
 
 function StatusBadge({ status }: { status: string }) {
   const tone = ["verified", "completed", "paid"].includes(status)
     ? "border-emerald-200 text-emerald-700 bg-emerald-50"
-    : ["pending_verification", "pending"].includes(status)
+    : ["pending_verification", "pending", "processing"].includes(status)
       ? "border-amber-200 text-amber-800 bg-amber-50"
       : "border-rose-200 text-rose-700 bg-rose-50";
 

@@ -55,7 +55,7 @@ export default async function OrderDetailPage({ params, searchParams }: { params
         {/* Verification Status Alert */}
         {order.payment_provider === "manual" && order.payment_status === "pending" && (
           <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-sm text-amber-100">
-            <span className="font-semibold">Legacy verification pending:</span> Your GCash/QRPh reference and proof remain available for administrator review.
+            <span className="font-semibold">Manual verification pending:</span> Your GCash / QRPH reference and private proof are available for administrator review.
           </div>
         )}
 
@@ -96,8 +96,20 @@ export default async function OrderDetailPage({ params, searchParams }: { params
             </div>
             <div>
               <dt className="text-muted">Payment Provider</dt>
-              <dd className="font-semibold text-white mt-1">{order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"}</dd>
+              <dd className="font-semibold text-white mt-1">{providerLabel(order.payment_provider)}</dd>
             </div>
+            {order.payment_provider === "paypal" && (
+              <>
+                <div>
+                  <dt className="text-muted">PayPal Order ID</dt>
+                  <dd className="mt-1 break-all font-mono font-semibold text-white">{order.provider_order_id ?? "Pending"}</dd>
+                </div>
+                <div>
+                  <dt className="text-muted">Capture / Transaction ID</dt>
+                  <dd className="mt-1 break-all font-mono font-semibold text-white">{order.provider_payment_id ?? "Pending"}</dd>
+                </div>
+              </>
+            )}
             <div>
               <dt className="text-muted">Payment Status</dt>
               <dd className="font-semibold text-white mt-1 capitalize">{order.payment_status ?? "unknown"}</dd>
@@ -120,7 +132,7 @@ export default async function OrderDetailPage({ params, searchParams }: { params
 function StatusBadge({ status }: { status: string }) {
   const tone = ["verified", "completed", "paid"].includes(status)
     ? "border-emerald-400/30 text-emerald-200 bg-emerald-400/10"
-    : ["pending_verification", "pending"].includes(status)
+    : ["pending_verification", "pending", "processing"].includes(status)
       ? "border-amber-400/30 text-amber-100 bg-amber-400/10"
       : "border-red-400/30 text-red-200 bg-red-400/10";
   const label = status === "pending_verification" ? "Pending Verification" : status;
@@ -129,3 +141,9 @@ function StatusBadge({ status }: { status: string }) {
 
 function formatMoney(value: number, currency: string) { return new Intl.NumberFormat("en-PH", { style: "currency", currency }).format(value / 100); }
 function formatDate(value: string) { return new Intl.DateTimeFormat("en-PH", { dateStyle: "medium", timeZone: "Asia/Manila" }).format(new Date(value)); }
+function providerLabel(provider: string | null) {
+  if (provider === "paypal") return "PayPal — Automatically Verified";
+  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "paymongo") return "PayMongo (historical)";
+  return "Unrecorded";
+}

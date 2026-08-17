@@ -24,7 +24,7 @@ Passing the environment check validates shape only. It does not prove connectivi
 
 - Legal business identity, registration, tax setup, invoice/receipt process, and legal approval
 - Separate Supabase test and production projects
-- PayMongo merchant account, KYC, enabled methods, test/live keys, and separate webhook secrets
+- PayPal business account, onboarding, separate sandbox/live applications, and webhook IDs
 - Resend account, restricted key, verified sending domain, and sender mailbox
 - Vercel account and authorization to connect this repository and domain
 - At least one complete, tested, licensed system with real media, version, ZIP, price, scope, requirements, support, and delivery copy
@@ -54,11 +54,11 @@ Passing the environment check validates shape only. It does not prove connectivi
 2. Add only required local, preview, and production callbacks.
 3. Verify email-link expiry, sign-in, callback, claiming, refresh, sign-out, wrong-email isolation, and admin authorization.
 
-### PayMongo
+### PayPal
 
-1. Complete PayMongo merchant and KYC setup and confirm the enabled payment-method subset.
-2. In Preview, configure only `sk_test_...`, the separate test webhook secret, and `PAYMONGO_PAYMENT_METHODS`.
-3. Register the test webhook at `/api/webhooks/paymongo` for `checkout_session.payment.paid` and complete mismatch, duplicate, retry, cancel, and failure verification.
+1. Complete PayPal business onboarding and create separate sandbox and live REST applications.
+2. In Preview, configure sandbox `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_ENVIRONMENT=sandbox`, and the sandbox `PAYPAL_WEBHOOK_ID`.
+3. Register the sandbox webhook at `/api/webhooks/paypal` for order approval, capture lifecycle, refund, and reversal events; complete mismatch, duplicate, interrupted-capture recovery, retry, cancel, and failure verification.
 4. Live keys and a separate live-mode webhook require a later reviewed production change; the current application rejects them.
 
 ### Resend
@@ -81,7 +81,7 @@ Passing the environment check validates shape only. It does not prove connectivi
 
 ## Monitoring, backup, and incidents
 
-- Monitor /api/health, public availability, PayMongo webhook failures/disablement, failed email and fulfillment, download anomalies, Auth errors, and admin access changes.
+- Monitor /api/health, public availability, PayPal capture/webhook failures, failed email and fulfillment, download anomalies, Auth errors, and admin access changes.
 - Configure error reporting with redaction; do not capture secrets, raw payment payloads, delivery tokens, or private support messages by default.
 - Enable Supabase backups and schedule restore rehearsals.
 - Document leaked-credential, compromised-link, duplicate-payment, provider-outage, missed-webhook, data-request, refund-exception, and unauthorized-admin procedures.
@@ -94,7 +94,7 @@ Passing the environment check validates shape only. It does not prove connectivi
 - [ ] CI required and passing on the exact production commit
 - [ ] Production environment validator passes without printing values
 - [ ] Supabase migrations, RLS, Auth, Storage, backup, and restore verified
-- [ ] PayMongo live account, methods, webhook, reconciliation, and failures verified
+- [ ] PayPal live account, capture, webhook, reconciliation, refunds, and failures verified
 - [ ] Resend domain, delivery, failure, resend, and revoke verified
 - [ ] Desktop, mobile, keyboard, screen reader, console, and error states verified
 - [ ] Performance and Core Web Vitals measured with real content

@@ -18,7 +18,7 @@ Phase 1 received owner approval on July 24, 2026. The existing public and admin 
 | Data changes | Versioned SQL migrations only |
 | Authorization | Server checks plus Row Level Security on every exposed table |
 | Storage | Supabase private Storage with versioned bucket and object policies ready to apply |
-| Payments | PayMongo behind a server-only adapter; no live integration until merchant onboarding |
+| Payments | PayPal Orders v2 behind a server-only adapter and Web SDK v6 browser tokens; no live integration until business onboarding |
 | Email | Resend behind a server-only adapter; no production sending until domain configuration |
 | Validation | Shared Zod schemas with authoritative validation on the server |
 | Deployment | Vercel preview and production environments after provider setup |
@@ -78,7 +78,7 @@ Orders, payments, fulfillment, emails, downloads, inquiries, and support receive
 
 ## 5. External setup gates
 
-The owner has not created the Supabase, PayMongo, or Resend production configuration yet. Local interface work can continue, but these actions require the relevant accounts and credentials:
+The owner has not linked the intended Supabase project or configured PayPal and Resend production services. Local interface work can continue, but these actions require the relevant accounts and credentials:
 
 - Create separate Supabase development and production projects.
 - Copy the Supabase URL and publishable key into local/host environment settings.
@@ -88,7 +88,7 @@ The owner has not created the Supabase, PayMongo, or Resend production configura
 - Generate database types after the migration is applied.
 - Apply the private Storage bucket and policy migration to the configured projects.
 - Apply the catalog-resource migration that enforces bucket limits and atomic current-version creation.
-- Complete PayMongo merchant onboarding before live checkout.
+- Complete PayPal business onboarding before live checkout.
 - Configure a verified Resend sending domain before production email.
 
 Never commit real credentials. Use [`.env.example`](../.env.example) only as a key-name reference.

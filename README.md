@@ -9,7 +9,7 @@ The repository contains a single Next.js application for the public website, sys
 The application is under active development and is **not ready for production commerce**.
 
 - The public website, audience pages, catalog, inquiry forms, authentication screens, and administrator interfaces are implemented locally.
-- New authenticated purchases use PayMongo Hosted Checkout v2 in enforced test mode. Signed webhooks verify payment; administrators explicitly prepare delivery. Legacy GCash/QRPh proofs remain available for historical review.
+- Authenticated purchases use PayPal Checkout through Web SDK v6 and server-side Orders v2 capture. Signed webhooks reconcile payment; administrators explicitly prepare delivery. Authenticated GCash / QRPH proof submission remains available when configured.
 - Customer order, support, and protected-download interfaces exist locally.
 - Supabase migrations and provider adapters are present, but live authentication, Row Level Security, Storage policies, database mutations, email delivery, and end-to-end payment verification have not been confirmed against a configured production project.
 - Production remains blocked by provider setup, real catalog content and deliverables, business and legal readiness, deployment checks, and an authorized end-to-end smoke purchase.
@@ -38,8 +38,8 @@ The detailed source of truth is [docs/WEBSITE_BLUEPRINT.md](docs/WEBSITE_BLUEPRI
 - Quote and contact inquiry workflows with server validation and abuse controls
 - Administrator workspaces for systems, categories, media, content, inquiries, orders, support, settings, and audit history
 - Supabase email authentication and server-side role checks
-- Authenticated PayMongo Hosted Checkout with strict test-key and enabled-method guards
-- Signed, replay-limited, idempotent PayMongo webhook reconciliation
+- Authenticated PayPal Web SDK v6 Checkout with server-issued browser tokens and Orders v2 capture
+- Signed, idempotent PayPal webhook recovery and lifecycle reconciliation
 - Legacy manual GCash/QRPh proof preservation and administrator review
 - Order snapshots using integer minor-unit pricing and authoritative PHP catalog amounts
 - Private product files with expiring, revocable download access
@@ -98,9 +98,10 @@ Use [.env.example](.env.example) as the local template. Never commit `.env.local
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Public | Publishable or anonymous key protected by RLS |
 | `SITE_URL` | Server | Canonical application origin; defaults to local development in the example |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | Privileged database operations; never expose to clients |
-| `PAYMONGO_SECRET_KEY` | Server only | Required PayMongo `sk_test_...` key; live keys are rejected |
-| `PAYMONGO_WEBHOOK_SECRET` | Server only | Test-mode webhook endpoint signing secret |
-| `PAYMONGO_PAYMENT_METHODS` | Server only | Required subset of `qrph,gcash,card`; no all-method fallback |
+| `PAYPAL_CLIENT_ID` | Server only | PayPal REST application client ID |
+| `PAYPAL_CLIENT_SECRET` | Server only | PayPal REST application client secret |
+| `PAYPAL_ENVIRONMENT` | Server only | `sandbox` locally; `live` only after production approval |
+| `PAYPAL_WEBHOOK_ID` | Server only | ID of the registered PayPal webhook used for signature verification |
 | `INQUIRY_FINGERPRINT_SALT` | Server only | Salt of at least 32 characters for abuse-control hashes |
 | `RESEND_API_KEY` | Server only | Resend transactional email API key |
 | `RESEND_FROM_EMAIL` | Server only | Verified sender address |
@@ -162,7 +163,7 @@ websystembuilders/
 - [Phase 4: Systems catalog](docs/PHASE_4_SYSTEMS_CATALOG.md)
 - [Phase 5: Admin dashboard](docs/PHASE_5_ADMIN_DASHBOARD.md)
 - [Phase 6: Payment and ordering](docs/PHASE_6_PAYMENT_AND_ORDERING.md)
-- [PayMongo test setup](docs/PAYMONGO_TEST_SETUP.md)
+- [PayPal Checkout setup](docs/PAYPAL_CHECKOUT_SETUP.md)
 - [Phase 7: Automated delivery](docs/PHASE_7_AUTOMATED_DELIVERY.md)
 - [Phase 8: Customer portal](docs/PHASE_8_CUSTOMER_PORTAL.md)
 - [Phase 9: Quality hardening](docs/PHASE_9_QUALITY_HARDENING.md)
@@ -173,7 +174,7 @@ websystembuilders/
 
 - Calculate authoritative prices on the server and store money as integer minor units.
 - Never treat a browser return, screenshot, or transaction reference as proof of payment by itself.
-- Mark PayMongo payments paid only after verified webhook reconciliation, then require explicit administrator fulfillment.
+- Mark PayPal payments paid only after validated server capture or verified webhook reconciliation, then require explicit administrator fulfillment.
 - Keep deliverables private and issue expiring, revocable access after server-side authorization.
 - Check authorization on the server and enforce RLS for exposed tables.
 - Validate untrusted input on the server and keep secrets out of client bundles.

@@ -204,11 +204,11 @@ The server is authoritative for checkout prices. Orders preserve the purchased n
 
 - Store catalog prices canonically in PHP.
 - Charge PHP for Philippine e-wallets, QR, banking, and standard local checkout flows.
-- Offer USD charging only for eligible card payments after PayMongo enables USD Card Acceptance for the merchant account.
+- Keep PHP as the authoritative checkout and settlement currency for the initial PayPal integration.
 - Show other local currencies as display estimates while the checkout clearly states the supported charge currency.
-- Add another payment provider later if the business requires actual charging in currencies that PayMongo does not support.
+- Treat any future multi-currency charging as a separate approved commerce decision behind the payment abstraction.
 
-PayMongo's current documentation describes PHP payment acceptance and separately activated USD card acceptance. It does not establish arbitrary local-currency charging for every visitor country. Therefore, automatic localization and actual settlement currency must remain separate concepts.
+PayPal supports PHP, but this implementation does not infer a buyer currency or perform checkout conversion. Automatic localization and actual settlement currency remain separate concepts.
 
 ### Current registration and tax state
 
@@ -509,7 +509,7 @@ Targets should be set after baseline production data exists.
 
 | Dependency or risk | Required treatment |
 |---|---|
-| PayMongo onboarding | Owner will complete later; required before production checkout, live credentials, and payment-method activation |
+| PayPal business onboarding | Owner will complete later; required before production checkout, live credentials, and webhook activation |
 | Business registration and tax setup | Business is not currently registered; complete registration and obtain qualified guidance before production commerce |
 | Legal policies | Obtain qualified review before publishing production terms |
 | Missing product content | Owner selects and uploads actual systems; admin publishing validation enforces minimum content before production |
@@ -529,7 +529,7 @@ Targets should be set after baseline production data exists.
 | D-003 | Catalog is administered through the website | Confirmed |
 | D-004 | Ready-made systems and custom development launch first | Confirmed |
 | D-005 | Hosted SaaS subscriptions follow proven demand | Proposed |
-| D-006 | PayMongo is the selected initial payment integration; onboarding is deferred and required before production | Confirmed provider, onboarding pending |
+| D-006 | PayPal Checkout is the selected initial automatic payment integration; onboarding is deferred and required before production | Confirmed provider, onboarding pending |
 | D-007 | Resend is the initial email provider | Proposed |
 | D-008 | Supabase provides database, authentication, and storage | Proposed |
 | D-009 | Allow guest checkout and link purchases after purchase-email verification | Confirmed |
@@ -581,9 +581,9 @@ Targets should be set after baseline production data exists.
 - [ ] Complete business registration and confirm tax and invoice requirements before production commerce
 - [x] Include payment-processing costs in the displayed product price
 - [x] Use administrator-controlled manual sale-price activation without scheduling
-- [x] Select PayMongo as the initial payment provider
-- [ ] Create and verify the PayMongo merchant account
-- [ ] Activate required PayMongo payment methods and production webhooks
+- [x] Select PayPal Checkout as the initial automatic payment provider
+- [ ] Create and verify the PayPal business account
+- [ ] Register and verify PayPal sandbox and production webhooks
 - [x] Confirm broad commercial source license
 - [x] Include source code with ready-made systems
 - [ ] Complete legal wording and third-party license audit

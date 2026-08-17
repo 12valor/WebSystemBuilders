@@ -45,13 +45,13 @@ export default function PrivacyPolicyPage() {
               title: "Order and payment-verification data",
               items: [
                 "Products or services ordered, prices, dates, and order status",
-                "PayMongo checkout identifiers, payment status, amount, currency, and reconciliation records received from the payment provider",
+                "PayPal order and capture identifiers, payment status, amount, currency, and reconciliation records received from the payment provider",
                 "For legacy manual orders, GCash or QRPH screenshots and transaction references previously submitted for verification",
                 "Verification notes, delivery records, invoices, and refund records",
                 "License or access information connected with a purchased system",
               ],
               paragraphs: [
-                "New PayMongo checkout does not ask you to upload proof. Historical manual proof data is retained only for legitimate transaction, support, accounting, and dispute purposes.",
+                "PayPal Checkout does not ask this website to collect proof. New GCash / QRPH proof images are stored privately and used only for transaction verification, support, accounting, and dispute purposes.",
               ],
             },
             {
@@ -89,7 +89,7 @@ export default function PrivacyPolicyPage() {
           items: [
             "Create, authenticate, secure, and administer accounts",
             "Distinguish student and business-owner account experiences",
-            "Process orders, verify PayMongo webhook events, and review legacy manual GCash or QRPH payments",
+            "Process orders, verify PayPal capture and webhook events, and review manual GCash / QRPH payments",
             "Deliver software files, access credentials, licenses, updates, and support",
             "Evaluate, quote, manage, and complete custom-development projects",
             "Communicate about orders, service notices, support, complaints, and refunds",

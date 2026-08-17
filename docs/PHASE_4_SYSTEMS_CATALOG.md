@@ -41,7 +41,7 @@ Deliver a database-driven catalog where visitors can discover published systems,
 - No real system records have been supplied or published yet.
 - Supabase credentials and migrations are not applied in a live project.
 - Localized estimates depend on the cached Frankfurter service; provider failures intentionally fall back to authoritative PHP prices.
-- Checkout remains intentionally unavailable until the order and PayMongo phases.
+- Checkout remains intentionally unavailable until the order and PayPal phases.
 
 ## 5. Exit criteria
 

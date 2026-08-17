@@ -16,7 +16,7 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
             <p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Commerce & Verification</p>
             <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">Purchases & Payment Status</h1>
             <p className="mt-2 max-w-2xl leading-6 text-slate-600 font-medium">
-              PayMongo payments are verified by signed webhook. Legacy manual proofs remain reviewable, and every paid order requires an explicit delivery action.
+              PayPal payments are verified automatically. GCash / QRPH proofs remain reviewable, and every paid order requires an explicit delivery action.
             </p>
           </div>
           <span className="text-xs text-slate-500 font-medium">Latest 100 records</span>
@@ -69,14 +69,19 @@ export function AdminOrders({ data, result }: { data: AdminOrdersData; result?: 
                     </td>
                     <td className="p-4 font-bold text-slate-900">{formatMoney(order.totalMinor, order.currency)}</td>
                     <td className="p-4 text-xs font-semibold text-slate-700">
-                      {order.paymentProvider === "paymongo" ? "PayMongo" : order.paymentProvider === "manual" ? "Legacy manual" : "Unrecorded"}
+                      {providerLabel(order.paymentProvider)}
+                      {order.paymentProvider === "paypal" && (
+                        <span className="mt-2 block font-mono text-[0.7rem] text-slate-500">
+                          Order: {order.providerOrderId ?? "Pending"}<br />Capture: {order.providerPaymentId ?? "Pending"}
+                        </span>
+                      )}
                       {order.paymentProvider === "manual" && order.referenceNumber && (
                         <span className="mt-2 block font-mono text-[0.7rem] text-slate-500">Ref: {order.referenceNumber}</span>
                       )}
                     </td>
                     <td className="p-4">
                       <Status value={order.paymentStatus ?? order.status} />
-                      {order.paymentProvider === "paymongo" && order.paymentStatus === "paid" && (
+                      {order.paymentProvider === "paypal" && order.paymentStatus === "paid" && (
                         <span className="mt-2 block text-[0.65rem] font-extrabold tracking-[0.08em] text-emerald-700">PAYMENT VERIFIED</span>
                       )}
                     </td>
@@ -283,7 +288,7 @@ function formatDate(value: string) {
 }
 
 function resultMessage(result: string) {
-  if (result === "verified") return "Legacy payment verified. Delivery still requires explicit preparation.";
+  if (result === "verified") return "Manual payment verified. Delivery still requires explicit preparation.";
   if (result === "completed") return "Order status updated to Completed.";
   if (result === "rejected") return "Payment status updated to Rejected.";
   if (result === "sent") return "A new private delivery link was emailed.";
@@ -292,4 +297,11 @@ function resultMessage(result: string) {
   if (result === "error") return "The delivery operation could not be completed.";
   if (result === "revoked") return "Delivery access was revoked.";
   return "The order operation was updated.";
+}
+
+function providerLabel(provider: AdminOrder["paymentProvider"]) {
+  if (provider === "paypal") return "PayPal — Automatically Verified";
+  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "paymongo") return "PayMongo (historical)";
+  return "Unrecorded";
 }

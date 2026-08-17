@@ -89,7 +89,7 @@ export function CustomerAccount({
           {result === "download-unavailable" && (
             <div role="alert" className="mt-5 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50/80 p-4 text-xs font-medium text-red-700">
               <AlertCircle className="size-4 text-red-600 shrink-0 mt-0.5" />
-              <span>Deliverable access could not be generated. Please ensure your GCash/QRPh payment has been verified.</span>
+              <span>Deliverable access could not be generated. Confirm that payment is verified and delivery has been prepared.</span>
             </div>
           )}
           {data.status === "error" && (
@@ -187,7 +187,7 @@ export function CustomerAccount({
                     </div>
                     <div>
                       <span className="block font-medium text-slate-400">Payment Provider</span>
-                      <span className="mt-1 block font-semibold text-slate-900">{order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"}</span>
+                      <span className="mt-1 block font-semibold text-slate-900">{providerLabel(order.payment_provider)}</span>
                     </div>
                     <div>
                       <span className="block font-medium text-slate-400">File Delivery</span>
@@ -287,6 +287,13 @@ export function CustomerAccount({
       </main>
     </div>
   );
+}
+
+function providerLabel(provider: string | null) {
+  if (provider === "paypal") return "PayPal — Automatically Verified";
+  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "paymongo") return "PayMongo (historical)";
+  return "Unrecorded";
 }
 
 function formatMoney(value: number, currency: string) {

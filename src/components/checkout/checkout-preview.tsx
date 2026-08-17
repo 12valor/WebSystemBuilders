@@ -74,7 +74,7 @@ export function CheckoutPreview() {
             <FormSection number="03" title="Secure payment handoff">
               <ol className="grid gap-4 text-sm text-secondary">
                 <PaymentStep number="1">A pending order is created with the authoritative product and price snapshot.</PaymentStep>
-                <PaymentStep number="2">The customer continues to PayMongo&apos;s hosted payment page.</PaymentStep>
+                <PaymentStep number="2">The customer approves PayPal Checkout or submits configured GCash / QRPH proof.</PaymentStep>
                 <PaymentStep number="3">Delivery unlocks only after a verified payment webhook is processed once.</PaymentStep>
               </ol>
               <button type="button" disabled className="mt-7 inline-flex min-h-13 w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-white/10 px-6 font-semibold text-muted">Continue to secure payment</button>

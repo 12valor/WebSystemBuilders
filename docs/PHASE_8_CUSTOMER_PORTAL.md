@@ -21,7 +21,7 @@ Knowing an order number or email address does not grant account access.
 | Capability | Behavior |
 |---|---|
 | Orders | Shows durable order number, paid state, amount, purchased version, and fulfillment status |
-| Receipts | Identifies whether the PayMongo email receipt is expected; it does not invent a tax invoice or PDF receipt |
+| Receipts | Shows recorded PayPal order/capture identifiers or manual reference status; it does not invent a tax invoice or PDF receipt |
 | Version context | Compares the purchased snapshot with the current published label without promising update entitlement |
 | Downloads | Creates a new one-hour hashed grant only for an owned, paid, delivered, non-revoked order |
 | Support | Creates a validated request linked to an owned order and shows its current status |

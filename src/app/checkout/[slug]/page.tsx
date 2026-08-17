@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { PaymongoCheckout } from "@/components/checkout/paymongo-checkout";
+import { CheckoutPaymentMethods } from "@/components/checkout/checkout-payment-methods";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getCatalogPricePresentation } from "@/features/catalog/pricing";
 import { getPublicSystemBySlug } from "@/features/catalog/repository";
-import { getCurrentIdentity } from "@/lib/auth/current-user";
-import { isPaymongoCheckoutConfigured } from "@/lib/env/paymongo";
+import { getCurrentIdentity, getCurrentUser } from "@/lib/auth/current-user";
+import { getPayPalEnv, getPayPalWebSdkUrl, isPayPalConfigured } from "@/lib/env/paypal";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 
 export const metadata: Metadata = { title: "Secure Checkout", robots: { index: false, follow: false } };
@@ -16,7 +16,8 @@ export const dynamic = "force-dynamic";
 export default async function CheckoutPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const identityPromise = isSupabasePubliclyConfigured() ? getCurrentIdentity() : Promise.resolve(null);
-  const [result, identity] = await Promise.all([getPublicSystemBySlug(slug), identityPromise]);
+  const userPromise = isSupabasePubliclyConfigured() ? getCurrentUser() : Promise.resolve(null);
+  const [result, identity, user] = await Promise.all([getPublicSystemBySlug(slug), identityPromise, userPromise]);
   const system = result.system;
 
   if (!system) {
@@ -28,10 +29,16 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
     return <CheckoutUnavailable message="This system requires a confirmed quotation instead of direct checkout." href={`/systems/${system.slug}`} />;
   }
 
-  if (!identity) redirect(`/auth/sign-in?next=${encodeURIComponent(`/checkout/${system.slug}`)}`);
-  if (!isPaymongoCheckoutConfigured()) {
-    return <CheckoutUnavailable message="PayMongo test checkout is not configured on this environment." href={`/systems/${system.slug}`} />;
+  if (!identity || !user || user.id !== identity.id) redirect(`/auth/sign-in?next=${encodeURIComponent(`/checkout/${system.slug}`)}`);
+  if (!user.email || !user.email_confirmed_at) {
+    return <CheckoutUnavailable message="Verify your account email before starting checkout." href={`/systems/${system.slug}`} />;
   }
+  const paypalConfigured = isPayPalConfigured();
+  const manualConfigured = Boolean(system.paymentQrUrl?.trim() && system.paymentInstructions?.trim());
+  if (!paypalConfigured && !manualConfigured) {
+    return <CheckoutUnavailable message="No payment method is configured for this system." href={`/systems/${system.slug}`} />;
+  }
+  const paypalSdkUrl = paypalConfigured ? getPayPalWebSdkUrl(getPayPalEnv().PAYPAL_ENVIRONMENT) : null;
 
   const price = getCatalogPricePresentation(system);
 
@@ -41,10 +48,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
       <main id="main-content" className="py-12 sm:py-16 lg:py-24">
         <div className="mx-auto grid w-[min(calc(100%-40px),1080px)] gap-8 md:w-[min(calc(100%-64px),1080px)] lg:grid-cols-[minmax(0,.9fr)_minmax(420px,1.1fr)] lg:gap-14">
           <section>
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Secure Hosted Checkout</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Secure Checkout</p>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">Order Summary</h1>
             <p className="mt-5 max-w-xl leading-7 text-secondary">
-              Review your purchase details below, then continue to PayMongo&apos;s hosted checkout. Payment is confirmed only after a signed provider webhook is verified.
+              Review your purchase details, then use PayPal or submit a GCash / QRPH payment proof. Payment confirmation and private delivery remain separate steps.
             </p>
 
             <div className="mt-8 rounded-2xl border border-white/10 bg-surface p-6">
@@ -65,11 +72,15 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
           </section>
 
           <section>
-            <PaymongoCheckout
+            <CheckoutPaymentMethods
               systemId={system.id}
-              systemSlug={system.slug}
               systemTitle={system.title}
               priceFormatted={price.current}
+              userId={identity.id}
+              verifiedEmail={user.email.toLowerCase()}
+              paypalSdkUrl={paypalSdkUrl}
+              paymentQrUrl={system.paymentQrUrl}
+              paymentInstructions={system.paymentInstructions}
             />
           </section>
         </div>

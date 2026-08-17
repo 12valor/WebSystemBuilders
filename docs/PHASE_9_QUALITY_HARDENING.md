@@ -29,7 +29,7 @@ Security does not depend on crawler rules; server authorization, RLS, token hash
 
 - Checkout creation allows at most five recent orders for the same normalized email within fifteen minutes.
 - Customer support allows at most five requests per authenticated account within fifteen minutes.
-- The PayMongo webhook rejects declared or actual raw payloads larger than 256 KiB before parsing.
+- The PayPal webhook rejects declared or actual raw payloads larger than 256 KiB before parsing.
 - Existing inquiry fingerprint throttling remains active.
 - Provider secrets, raw webhook bodies, delivery tokens, and Storage paths are excluded from user-visible errors and audit metadata.
 
@@ -70,7 +70,7 @@ Local completion requires:
 ## 8. Remaining external quality gates
 
 - Live Supabase migration, RLS, concurrent transaction, Auth, and Storage tests
-- PayMongo test-mode checkout and signed webhook exercises
+- PayPal sandbox checkout, server capture, signed webhook recovery, and duplicate delivery exercises
 - Resend sandbox delivery, bounce, and verified-domain tests
 - Automated browser accessibility testing and manual keyboard/screen-reader review
 - Multiple real mobile widths and desktop browsers

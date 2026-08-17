@@ -299,7 +299,7 @@ function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["ord
           </div>
           <dl className="mt-6 grid gap-4 border-y border-slate-100 py-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
             <OrderDetail label="Total amount" value={formatMoney(order.total_minor, order.currency)} />
-            <OrderDetail label="Payment provider" value={order.payment_provider === "paymongo" ? "PayMongo Hosted Checkout" : "Legacy manual GCash / QRPh"} />
+            <OrderDetail label="Payment provider" value={providerLabel(order.payment_provider)} />
             <OrderDetail label="Payment status" value={order.payment_status === "paid" ? "Payment confirmed" : order.payment_status ?? "Unknown"} />
             <OrderDetail label="Fulfillment" value={order.delivery_available ? "Delivered" : order.payment_status === "paid" ? "Awaiting delivery" : order.fulfillment_status ?? "Not started"} />
           </dl>
@@ -439,4 +439,11 @@ function formatMoney(value: number, currency: string) {
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en-PH", { dateStyle: "medium", timeZone: "Asia/Manila" }).format(new Date(value));
+}
+
+function providerLabel(provider: string | null) {
+  if (provider === "paypal") return "PayPal — Automatically Verified";
+  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "paymongo") return "PayMongo (historical)";
+  return "Unrecorded";
 }

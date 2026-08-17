@@ -42,7 +42,7 @@ const READY_MADE_STEPS: StepItem[] = [
     number: "03",
     title: "Authoritative Order & Pay",
     subtitle: "Server-calculated price & hosted checkout handoff",
-    description: "The backend creates a pending order record with authoritative pricing in minor units (PHP centavos) before redirecting to hosted PayMongo payment.",
+    description: "The backend creates a pending order with authoritative pricing in integer PHP minor units before opening PayPal Checkout.",
     details: ["Authoritative price calculated on server", "Pending order created in PostgreSQL", "Hosted PCI-compliant checkout handoff"],
   },
   {
@@ -277,7 +277,7 @@ export function SecurityFulfillmentSimulator() {
             Payment & Delivery Verification Flow
           </h3>
           <p className="mt-1.5 text-xs md:text-sm text-zinc-400 max-w-2xl leading-relaxed">
-            Experience how our server enforces zero-fraud fulfillment by validating cryptographically signed PayMongo webhooks before issuing private download links.
+            See how server-side PayPal capture and signed webhook reconciliation stay separate from administrator-issued private download links.
           </p>
         </div>
 
@@ -446,7 +446,7 @@ export function SecurityFulfillmentSimulator() {
                 <>
                   <div className="flex items-center gap-2 text-emerald-400 font-medium">
                     <span>[WEBHOOK]</span>
-                    <span>Received payment.paid event from PayMongo</span>
+                    <span>Received PAYMENT.CAPTURE.COMPLETED from PayPal</span>
                   </div>
                   <div className="rounded-lg bg-black/60 p-4 border border-white/5 text-[11px] leading-relaxed">
                     <div><span className="text-zinc-500">01</span>  <span className="text-sky-300">&quot;event_id&quot;</span>: <span className="text-emerald-300">&quot;evt_pk_88201&quot;</span>,</div>

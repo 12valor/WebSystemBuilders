@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { scanToPayFormSchema, scanToPayOrderRowSchema, type ScanToPayField } from "@/features/orders/checkout-schema";
 import { createOrderReturnToken } from "@/features/orders/token";
+import { getCurrentIdentity, getCurrentUser } from "@/lib/auth/current-user";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -12,23 +13,19 @@ export type ScanToPayState = {
   orderNumber?: string;
   returnToken?: string;
   values?: {
-    customerName?: string;
-    customerEmail?: string;
     contactNumber?: string;
     referenceNumber?: string;
-    proofOfPaymentUrl?: string;
+    proofStoragePath?: string;
   };
   fieldErrors?: Partial<Record<ScanToPayField, string[]>>;
 };
 
 export async function submitScanToPayOrder(_previousState: ScanToPayState, formData: FormData): Promise<ScanToPayState> {
   const values = {
-    systemSlug: String(formData.get("systemSlug") ?? ""),
-    customerName: String(formData.get("customerName") ?? ""),
-    customerEmail: String(formData.get("customerEmail") ?? ""),
+    systemId: String(formData.get("systemId") ?? ""),
     contactNumber: String(formData.get("contactNumber") ?? ""),
     referenceNumber: String(formData.get("referenceNumber") ?? ""),
-    proofOfPaymentUrl: String(formData.get("proofOfPaymentUrl") ?? ""),
+    proofStoragePath: String(formData.get("proofStoragePath") ?? ""),
     termsAccepted: String(formData.get("termsAccepted") ?? ""),
     licenseAccepted: String(formData.get("licenseAccepted") ?? ""),
     refundAccepted: String(formData.get("refundAccepted") ?? ""),
@@ -37,11 +34,9 @@ export async function submitScanToPayOrder(_previousState: ScanToPayState, formD
 
   const parsed = scanToPayFormSchema.safeParse(values);
   const retained = {
-    customerName: values.customerName,
-    customerEmail: values.customerEmail,
     contactNumber: values.contactNumber,
     referenceNumber: values.referenceNumber,
-    proofOfPaymentUrl: values.proofOfPaymentUrl,
+    proofStoragePath: values.proofStoragePath,
   };
 
   if (!parsed.success) {
@@ -62,15 +57,26 @@ export async function submitScanToPayOrder(_previousState: ScanToPayState, formD
   }
 
   const supabase = createAdminClient();
+  const identity = await getCurrentIdentity();
+  const user = await getCurrentUser();
+  if (!identity || !user || user.id !== identity.id || !user.email || !user.email_confirmed_at) {
+    return { status: "error", message: "Sign in with a verified account before submitting payment proof.", values: retained };
+  }
+  const profileResult = await supabase.from("profiles").select("full_name,display_name").eq("user_id", identity.id).maybeSingle();
+  const customerName = profileResult.data?.full_name?.trim()
+    || profileResult.data?.display_name?.trim()
+    || user.email.split("@")[0]?.replace(/[._-]+/g, " ").trim()
+    || "Customer";
   const returnToken = createOrderReturnToken();
 
-  const orderResult = await supabase.rpc("create_scan_to_pay_order", {
-    p_system_slug: parsed.data.systemSlug,
-    p_customer_name: parsed.data.customerName,
-    p_customer_email: parsed.data.customerEmail,
+  const orderResult = await supabase.rpc("create_authenticated_manual_order", {
+    p_system_id: parsed.data.systemId,
+    p_profile_user_id: identity.id,
+    p_customer_name: customerName,
+    p_customer_email: user.email.toLowerCase(),
     p_contact_number: parsed.data.contactNumber || null,
     p_reference_number: parsed.data.referenceNumber,
-    p_proof_of_payment_url: parsed.data.proofOfPaymentUrl,
+    p_proof_storage_path: parsed.data.proofStoragePath,
     p_return_token_hash: returnToken.hash,
   });
 
@@ -88,7 +94,6 @@ export async function submitScanToPayOrder(_previousState: ScanToPayState, formD
   return {
     status: "submitted",
     orderNumber: order.order_number,
-    returnToken: returnToken.token,
-    message: `Your payment for order ${order.order_number} has been submitted! Our team will verify your transaction reference within 24 hours.`,
+    message: `Your payment proof for order ${order.order_number} is awaiting administrator verification.`,
   };
 }

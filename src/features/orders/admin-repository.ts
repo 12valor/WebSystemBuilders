@@ -8,8 +8,9 @@ import { createClient } from "@/lib/supabase/server";
 const grantSchema = z.object({ expires_at: z.string(), max_downloads: z.number().int(), download_count: z.number().int(), revoked_at: z.string().nullable(), created_at: z.string() });
 const fulfillmentSchema = z.object({ status: z.enum(["processing", "delivered", "failed", "revoked"]), attempt_count: z.number().int(), email_sent_at: z.string().nullable(), revoked_at: z.string().nullable(), download_grants: z.array(grantSchema) });
 const paymentSchema = z.object({
-  provider: z.enum(["paymongo", "manual"]),
-  status: z.enum(["pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
+  provider: z.enum(["paypal", "paymongo", "manual"]),
+  status: z.enum(["pending", "processing", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
+  provider_order_id: z.string().nullable(),
   provider_payment_id: z.string().nullable(),
   provider_payment_intent_id: z.string().nullable(),
   created_at: z.string(),
@@ -22,6 +23,7 @@ const orderRowSchema = z.object({
   contact_number: z.string().nullable().optional(),
   reference_number: z.string().nullable().optional(),
   proof_of_payment_url: z.string().nullable().optional(),
+  proof_storage_path: z.string().nullable().optional(),
   admin_notes: z.string().nullable().optional(),
   status: z.enum(["pending_verification", "verified", "rejected", "completed", "pending", "paid", "failed", "expired", "cancelled", "refunded", "disputed"]),
   total_minor: z.number().int(),
@@ -51,7 +53,7 @@ export type AdminOrder = {
   paymentProvider: z.infer<typeof paymentSchema>["provider"] | null;
   paymentStatus: z.infer<typeof paymentSchema>["status"] | null;
   providerPaymentId: string | null;
-  providerPaymentIntentId: string | null;
+  providerOrderId: string | null;
   createdAt: string;
   delivery: null | {
     status: z.infer<typeof fulfillmentSchema>["status"];
@@ -71,16 +73,20 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
   catch (error) { if (error instanceof AuthorizationError) throw error; throw error; }
 
   const supabase = await createClient();
-  const result = await supabase.from("orders").select("id,order_number,customer_name,customer_email,contact_number,reference_number,proof_of_payment_url,admin_notes,status,total_minor,currency,paid_at,created_at,order_items(product_name,version_label),payments(provider,status,provider_payment_id,provider_payment_intent_id,created_at),fulfillments(status,attempt_count,email_sent_at,revoked_at,download_grants(expires_at,max_downloads,download_count,revoked_at,created_at))").order("created_at", { ascending: false }).limit(100);
+  const result = await supabase.from("orders").select("id,order_number,customer_name,customer_email,contact_number,reference_number,proof_of_payment_url,proof_storage_path,admin_notes,status,total_minor,currency,paid_at,created_at,order_items(product_name,version_label),payments(provider,status,provider_order_id,provider_payment_id,provider_payment_intent_id,created_at),fulfillments(status,attempt_count,email_sent_at,revoked_at,download_grants(expires_at,max_downloads,download_count,revoked_at,created_at))").order("created_at", { ascending: false }).limit(100);
   const rows = z.array(orderRowSchema).safeParse(result.data);
   if (result.error || !rows.success) return { status: "error", orders: [] };
 
-  return { status: "ready", orders: rows.data.map((row) => {
+  return { status: "ready", orders: await Promise.all(rows.data.map(async (row) => {
     const fulfillment = row.fulfillments[0] ?? null;
     const payment = row.payments.sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null;
     const activeGrant = fulfillment?.download_grants
       .filter((grant) => !grant.revoked_at)
       .sort((a, b) => b.created_at.localeCompare(a.created_at))[0] ?? null;
+    const privateProofPath = row.proof_storage_path ?? historicalProofPath(row.proof_of_payment_url ?? null);
+    const signedProof = privateProofPath
+      ? await supabase.storage.from("payment-proofs").createSignedUrl(privateProofPath, 300)
+      : null;
     return {
       id: row.id,
       orderNumber: row.order_number,
@@ -88,7 +94,7 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
       customerEmail: row.customer_email,
       contactNumber: row.contact_number ?? null,
       referenceNumber: row.reference_number ?? null,
-      proofOfPaymentUrl: row.proof_of_payment_url ?? null,
+      proofOfPaymentUrl: signedProof?.data?.signedUrl ?? row.proof_of_payment_url ?? null,
       adminNotes: row.admin_notes ?? null,
       status: row.status,
       totalMinor: row.total_minor,
@@ -99,7 +105,7 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
       paymentProvider: payment?.provider ?? null,
       paymentStatus: payment?.status ?? null,
       providerPaymentId: payment?.provider_payment_id ?? null,
-      providerPaymentIntentId: payment?.provider_payment_intent_id ?? null,
+      providerOrderId: payment?.provider_order_id ?? null,
       createdAt: row.created_at,
       delivery: fulfillment ? {
         status: fulfillment.status, attemptCount: fulfillment.attempt_count, emailSentAt: fulfillment.email_sent_at,
@@ -107,5 +113,17 @@ export async function getAdminOrdersData(): Promise<AdminOrdersData> {
         maxDownloads: activeGrant?.max_downloads ?? 0,
       } : null,
     };
-  }) };
+  })) };
+}
+
+function historicalProofPath(value: string | null) {
+  if (!value) return null;
+  try {
+    const marker = "/storage/v1/object/public/payment-proofs/";
+    const path = new URL(value).pathname;
+    const index = path.indexOf(marker);
+    return index >= 0 ? decodeURIComponent(path.slice(index + marker.length)) : null;
+  } catch {
+    return null;
+  }
 }

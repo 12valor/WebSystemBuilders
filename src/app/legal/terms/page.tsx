@@ -48,11 +48,11 @@ export default function TermsPolicyPage() {
           ],
         },
         {
-          title: "Prices, manual payments, and verification",
+          title: "Prices, PayPal, and manual verification",
           paragraphs: [
             "Prices are displayed or quoted in Philippine pesos unless stated otherwise. Any applicable taxes, fees, or additional costs will be disclosed as required.",
-            "Payments are made manually through the GCash or QRPH details displayed or directly confirmed by WebSystemBuilders. Do not send money to an account based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.",
-            "Payment is not treated as complete until the funds and submitted proof have been manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payment proof may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.",
+            "PayPal payments are captured and verified through the provider's server APIs and signed webhooks. If GCash / QRPH is configured, verified customers may instead follow the administrator-published QR instructions and submit a private proof image. Do not send money based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.",
+            "A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. GCash / QRPH payment is not complete until funds and proof are manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.",
           ],
         },
         {
@@ -179,4 +179,3 @@ export default function TermsPolicyPage() {
     />
   );
 }
-
