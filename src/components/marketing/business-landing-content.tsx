@@ -71,7 +71,7 @@ export function BusinessLandingContent() {
                 </div>
                 <div className="flex-1 truncate">
                   <span className="block text-xs font-bold text-slate-900 truncate">POS Checkout Terminal</span>
-                  <span className="block text-[0.68rem] text-emerald-600 font-semibold truncate">₱1,450.00 • Paid via GCash</span>
+                  <span className="block text-[0.68rem] text-emerald-600 font-semibold truncate">₱1,450.00 • Paid via PayPal</span>
                 </div>
               </motion.div>
 

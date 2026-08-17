@@ -44,8 +44,6 @@ export async function submitSellerApplicationAction(formData: FormData) {
   const portfolioUrl = String(formData.get("portfolioUrl") ?? "").trim();
   const githubUrl = String(formData.get("githubUrl") ?? "").trim();
   const linkedinUrl = String(formData.get("linkedinUrl") ?? "").trim();
-  const gcashQrUrl = String(formData.get("gcashQrUrl") ?? "").trim();
-  const qrphImageUrl = String(formData.get("qrphImageUrl") ?? "").trim();
 
   if (!displayName) {
     return { error: "Display Name is required." };
@@ -60,8 +58,6 @@ export async function submitSellerApplicationAction(formData: FormData) {
     p_github_url: githubUrl,
     p_linkedin_url: linkedinUrl,
     p_banner_image_url: "",
-    p_gcash_qr_url: gcashQrUrl,
-    p_qrph_image_url: qrphImageUrl,
     p_bank_details: {},
   });
 

@@ -291,7 +291,7 @@ export function CustomerAccount({
 
 function providerLabel(provider: string | null) {
   if (provider === "paypal") return "PayPal — Automatically Verified";
-  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "manual") return "Legacy manual payment (historical)";
   if (provider === "paymongo") return "PayMongo (historical)";
   return "Unrecorded";
 }

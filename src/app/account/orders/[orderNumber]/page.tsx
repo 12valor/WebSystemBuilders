@@ -52,13 +52,6 @@ export default async function OrderDetailPage({ params, searchParams }: { params
 
         <PaymentReturnNotice checkout={checkout} paymentStatus={order.payment_status} productSlug={order.product_slug} />
 
-        {/* Verification Status Alert */}
-        {order.payment_provider === "manual" && order.payment_status === "pending" && (
-          <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5 text-sm text-amber-100">
-            <span className="font-semibold">Manual verification pending:</span> Your GCash / QRPH reference and private proof are available for administrator review.
-          </div>
-        )}
-
         {order.payment_status === "paid" && !order.delivery_available && (
           <div className="rounded-2xl border border-sky-400/30 bg-sky-400/10 p-5 text-sm text-sky-100">
             <span className="font-semibold">Payment confirmed.</span> Your private delivery is awaiting administrator preparation.
@@ -143,7 +136,7 @@ function formatMoney(value: number, currency: string) { return new Intl.NumberFo
 function formatDate(value: string) { return new Intl.DateTimeFormat("en-PH", { dateStyle: "medium", timeZone: "Asia/Manila" }).format(new Date(value)); }
 function providerLabel(provider: string | null) {
   if (provider === "paypal") return "PayPal — Automatically Verified";
-  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "manual") return "Legacy manual payment (historical)";
   if (provider === "paymongo") return "PayMongo (historical)";
   return "Unrecorded";
 }

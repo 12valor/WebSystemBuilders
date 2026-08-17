@@ -134,28 +134,6 @@ export function SellerOnboardingModal({ isOpen, onClose }: { isOpen: boolean; on
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">GCash QR Code Image URL</label>
-                <input
-                  type="url"
-                  name="gcashQrUrl"
-                  placeholder="Image URL for payout"
-                  className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs text-slate-900 focus:border-blue-500 focus:bg-white focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700">QRPH Image URL</label>
-                <input
-                  type="url"
-                  name="qrphImageUrl"
-                  placeholder="Image URL for payout"
-                  className="mt-1 block w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-xs text-slate-900 focus:border-blue-500 focus:bg-white focus:outline-none"
-                />
-              </div>
-            </div>
-
             <div className="flex items-start pt-2">
               <input
                 id="sellerAgreement"

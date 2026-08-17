@@ -57,7 +57,7 @@ This document provides a concise overview of every page and admin panel tab with
 ## 3. Checkout & Order Fulfillment Pages
 
 - **Checkout (`/checkout/[slug]`)**  
-  Secure checkout interface for reviewing system details and using PayPal or configured GCash / QRPH manual verification.
+  Secure checkout interface for reviewing system details and paying through PayPal Checkout.
 
 - **Checkout Preview (`/checkout/preview`)**  
   Standalone demonstration page for inspecting the checkout interface layout without creating live orders.
@@ -159,7 +159,7 @@ This document provides a concise overview of every page and admin panel tab with
   Lead management dashboard for reviewing, filtering, and responding to client custom development quotes and contact submissions.
 
 - **Orders (`/admin/orders`)**  
-  Commercial ledger for tracking customer orders, reviewing PayPal and manual payment status, explicitly issuing fulfillments, and managing refunds.
+  Commercial ledger for tracking customer orders and PayPal status, explicitly issuing fulfillments, and managing refunds. Legacy provider records remain read-only historical entries.
 
 - **Support (`/admin/support`)**  
   Helpdesk management panel for triaging customer support tickets, assigning priorities, and sending official resolution responses.

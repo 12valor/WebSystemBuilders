@@ -45,12 +45,12 @@ Depending on how you use the service, we may collect:
 - Account identifiers and authentication information processed through Supabase; and
 - Account preferences and status.
 
-We will never ask you to send your password, GCash MPIN, one-time password, or other account-security code through chat or email.
+We will never ask you to send your password, one-time password, or other account-security code through chat or email.
 
 ### Order and payment-verification data
 
 - Products or services ordered, prices, dates, and order status;
-- PayPal order and capture identifiers and GCash or QRPH screenshots submitted for manual verification;
+- PayPal order and capture identifiers, plus legacy payment evidence retained from the retired manual process;
 - Transaction reference numbers, payer name, amount, and payment time shown in the proof;
 - Verification notes, delivery records, invoices, and refund records; and
 - License or access information connected with a purchased system.
@@ -73,7 +73,7 @@ Do not submit confidential, sensitive, or third-party personal data unless it is
 
 ## 3. How we collect personal data
 
-We collect personal data directly from you when you register, place an order, upload payment proof, contact us, or provide project requirements. We also collect limited technical information automatically from your browser or device and receive information from service providers acting on our behalf.
+We collect personal data directly from you when you register, place an order, contact us, or provide project requirements. We also collect limited technical information automatically from your browser or device and receive information from service providers acting on our behalf.
 
 ## 4. Why we process personal data
 
@@ -81,11 +81,11 @@ We process personal data only for declared and legitimate purposes, including to
 
 - Create, authenticate, secure, and administer accounts;
 - Distinguish student and business-owner account experiences;
-- Process orders, verify PayPal payments, and manually review GCash or QRPH payments;
+- Process orders and verify PayPal payments;
 - Deliver software files, access credentials, licenses, updates, and support;
 - Evaluate, quote, manage, and complete custom-development projects;
 - Communicate about orders, service notices, support, complaints, and refunds;
-- Detect fraud, fake payment proofs, abuse, security incidents, and technical errors;
+- Detect payment fraud, invalid provider events, abuse, security incidents, and technical errors;
 - Maintain transaction, accounting, tax, legal, and dispute records;
 - Improve website reliability and understand service usage; and
 - Comply with lawful requests and applicable Philippine laws.
@@ -194,7 +194,7 @@ You must provide accurate, current, and complete information. You are responsibl
 
 If you are under 18, you may transact only with the involvement and consent of a parent or legal guardian, who must review and accept these Terms and take responsibility for the transaction.
 
-We may reject, suspend, or close accounts reasonably associated with fraud, fake payment proof, unauthorized access, infringement, abusive conduct, or violation of these Terms. We will not suspend access arbitrarily where doing so would violate applicable consumer rights.
+We may reject, suspend, or close accounts reasonably associated with fraud, unauthorized access, infringement, abusive conduct, or violation of these Terms. We will not suspend access arbitrarily where doing so would violate applicable consumer rights.
 
 ## 3. Services and product information
 
@@ -209,17 +209,17 @@ We aim to describe each product and service accurately. Buyers must review the s
 
 ## 4. Orders and contract formation
 
-Submitting an order or payment proof is an offer to purchase. An order becomes accepted only when we verify payment and send an order confirmation, delivery notice, or written acceptance. An automated acknowledgment that information was received does not by itself confirm acceptance.
+Submitting an order is an offer to purchase. An order becomes accepted only when we verify payment and send an order confirmation, delivery notice, or written acceptance. An automated acknowledgment that information was received does not by itself confirm acceptance.
 
 We may decline or cancel an unaccepted order because of an incorrect price, unavailable product, suspected fraud, technical error, unlawful request, or inability to perform the requested work. If verified funds were received for an order we cannot accept, we will return the applicable amount using a reasonable available method.
 
-## 5. Prices, PayPal, and manual verification
+## 5. Prices and PayPal verification
 
 Prices are displayed or quoted in Philippine pesos unless stated otherwise. Any applicable taxes, fees, or additional costs will be disclosed as required.
 
-PayPal payments are captured and verified through provider server APIs and signed webhooks. If GCash or QRPH is configured, verified customers may instead follow the administrator-published QR instructions and submit a private proof image. Do not send money based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.
+PayPal payments are captured and verified through provider server APIs and signed webhooks. Do not send money based only on a message from an unverified person. We will never request your password, one-time password, or full account credentials.
 
-A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. GCash or QRPH payment is not complete until funds and proof are manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.
+A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.
 
 ## 6. Digital delivery
 

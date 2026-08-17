@@ -32,7 +32,7 @@ export const defaultFaqItems = [
   {
     id: "fa000000-0000-4000-8000-000000000006",
     question: "When are purchased files delivered?",
-    answer: "A pending order is created before PayPal Checkout opens. Capture occurs only through the server, and signed PayPal webhooks recover and reconcile payment state; browser navigation never confirms payment. An administrator then prepares private delivery through expiring, revocable email and customer-portal access. Verified customers may also submit GCash / QRPH proof for manual review when that method is configured.",
+    answer: "A pending order is created before PayPal Checkout opens. Capture occurs only through the server, and signed PayPal webhooks recover and reconcile payment state; browser navigation never confirms payment. An administrator then prepares private delivery through expiring, revocable email and customer-portal access.",
     category: "Delivery",
   },
   {

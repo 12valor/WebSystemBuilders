@@ -17,24 +17,24 @@ const steps = [
     eyebrow: "Checkout",
     title: "Confirm your order and pay",
     description:
-      "Enter your order details, confirm the total, then scan the displayed GCash or QRPh code.",
+      "Review the authoritative PHP total, then approve the payment securely through PayPal Checkout.",
     iconPath:
       "M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z",
   },
   {
     number: "03",
-    eyebrow: "Submit",
-    title: "Send your payment proof",
+    eyebrow: "Verify",
+    title: "PayPal confirms the capture",
     description:
-      "Upload your receipt and enter the transaction reference so the payment can be matched to your order.",
-    iconPath: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12",
+      "The server and signed webhooks reconcile the PayPal order, capture, amount, currency, and environment.",
+    iconPath: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
   },
   {
     number: "04",
     eyebrow: "Receive",
-    title: "Verification, then secure delivery",
+    title: "Administrator-prepared delivery",
     description:
-      "The owner reviews the payment details before protected access to the purchased system is provided.",
+      "After verified payment, an administrator prepares expiring, revocable access to the purchased system.",
     iconPath:
       "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
   },
@@ -62,7 +62,7 @@ export function HowItWorksSection() {
             How the Purchase Process Works
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            Four straightforward stages, with payment reviewed before any
+            Four straightforward stages, with payment verified before any
             system is delivered.
           </p>
         </div>
@@ -112,11 +112,6 @@ export function HowItWorksSection() {
           ))}
         </ol>
 
-        <p className="mx-auto mt-5 max-w-2xl text-center text-xs leading-relaxed text-slate-500">
-          This overview explains the current manual Scan-to-Pay process. It
-          does not submit an order or payment.
-        </p>
-
         <div className="mt-8 flex flex-col gap-5 rounded-2xl border border-blue-100 bg-blue-50/60 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
           <div className="max-w-2xl">
             <div className="flex items-center gap-2">
@@ -135,12 +130,12 @@ export function HowItWorksSection() {
                 />
               </svg>
               <h3 className="text-base font-extrabold text-slate-900">
-                Payment is checked before delivery
+                Verified capture before delivery
               </h3>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              Manual review helps match the payment proof and reference number
-              to the correct order before access is granted.
+              PayPal capture and signed webhook reconciliation must match the
+              authoritative order before access can be prepared.
             </p>
           </div>
 

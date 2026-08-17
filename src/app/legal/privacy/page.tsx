@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
                 "Account preferences and status",
               ],
               paragraphs: [
-                "We will never ask you to send your password, GCash MPIN, one-time password (OTP), or other account-security code through chat or email.",
+                "We will never ask you to send your password, one-time password (OTP), or other account-security code through chat or email.",
               ],
             },
             {
@@ -46,12 +46,12 @@ export default function PrivacyPolicyPage() {
               items: [
                 "Products or services ordered, prices, dates, and order status",
                 "PayPal order and capture identifiers, payment status, amount, currency, and reconciliation records received from the payment provider",
-                "For legacy manual orders, GCash or QRPH screenshots and transaction references previously submitted for verification",
+                "For legacy manual orders, payment evidence and transaction references previously submitted under the retired process",
                 "Verification notes, delivery records, invoices, and refund records",
                 "License or access information connected with a purchased system",
               ],
               paragraphs: [
-                "PayPal Checkout does not ask this website to collect proof. New GCash / QRPH proof images are stored privately and used only for transaction verification, support, accounting, and dispute purposes.",
+                "PayPal Checkout does not ask this website to collect proof. The retired manual-payment process no longer accepts new evidence; retained historical evidence remains restricted to accounting, support, dispute, and legal purposes.",
               ],
             },
             {
@@ -89,7 +89,7 @@ export default function PrivacyPolicyPage() {
           items: [
             "Create, authenticate, secure, and administer accounts",
             "Distinguish student and business-owner account experiences",
-            "Process orders, verify PayPal capture and webhook events, and review manual GCash / QRPH payments",
+            "Process orders and verify PayPal capture and webhook events",
             "Deliver software files, access credentials, licenses, updates, and support",
             "Evaluate, quote, manage, and complete custom-development projects",
             "Communicate about orders, service notices, support, complaints, and refunds",

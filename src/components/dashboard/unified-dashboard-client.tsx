@@ -188,7 +188,7 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
               {resultParam === "download-unavailable" && (
                 <div role="alert" className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-900">
                   <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-600" />
-                  <span>Deliverable access could not be generated. Confirm that an administrator has verified the GCash or QRPh payment.</span>
+                  <span>Deliverable access could not be generated. Confirm that PayPal payment is verified and an administrator has prepared delivery.</span>
                 </div>
               )}
             </div>
@@ -443,7 +443,7 @@ function formatDate(value: string) {
 
 function providerLabel(provider: string | null) {
   if (provider === "paypal") return "PayPal — Automatically Verified";
-  if (provider === "manual") return "GCash / QRPH — Manual Verification";
+  if (provider === "manual") return "Legacy manual payment (historical)";
   if (provider === "paymongo") return "PayMongo (historical)";
   return "Unrecorded";
 }

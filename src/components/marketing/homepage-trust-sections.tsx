@@ -1,14 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  ExternalLink,
-  FileText,
-  LockKeyhole,
-  MessageSquareText,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, FileText, LockKeyhole, ShieldCheck } from "lucide-react";
 import type { PublicCompanyProfile } from "@/features/content/company-profile-types";
 import type { PublicFaqItem } from "@/features/content/faq-public-types";
 
@@ -27,14 +19,14 @@ const purchaseSteps = [
   },
   {
     id: "03",
-    title: "Submit GCash or QRPh proof",
-    description: "Use the administrator-provided QR details, then submit the transaction reference and required payment proof for review.",
-    icon: MessageSquareText,
+    title: "Pay securely with PayPal",
+    description: "Approve PayPal Checkout while the server keeps the published PHP price and order snapshot authoritative.",
+    icon: ShieldCheck,
   },
   {
     id: "04",
     title: "Receive protected delivery",
-    description: "Delivery becomes eligible only after payment review. Customer files remain behind expiring, revocable account access.",
+    description: "Delivery becomes eligible only after verified server capture. Customer files remain behind expiring, revocable account access.",
     icon: LockKeyhole,
   },
 ];

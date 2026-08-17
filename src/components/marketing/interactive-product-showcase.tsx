@@ -82,7 +82,7 @@ CREATE TABLE pos_transactions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   order_number TEXT UNIQUE NOT NULL,
   subtotal_cents INTEGER NOT NULL,
-  payment_method TEXT NOT NULL CHECK (payment_method IN ('cash', 'gcash', 'card')),
+  payment_method TEXT NOT NULL CHECK (payment_method IN ('cash', 'paypal', 'card')),
   cashier_id UUID REFERENCES auth.users(id),
   created_at TIMESTAMPTZ DEFAULT now()
 );

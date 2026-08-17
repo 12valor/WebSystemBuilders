@@ -9,7 +9,7 @@ The repository contains a single Next.js application for the public website, sys
 The application is under active development and is **not ready for production commerce**.
 
 - The public website, audience pages, catalog, inquiry forms, authentication screens, and administrator interfaces are implemented locally.
-- Authenticated purchases use PayPal Checkout through Web SDK v6 and server-side Orders v2 capture. Signed webhooks reconcile payment; administrators explicitly prepare delivery. Authenticated GCash / QRPH proof submission remains available when configured.
+- Authenticated purchases use PayPal Checkout through Web SDK v6 and server-side Orders v2 capture. Signed webhooks reconcile payment; administrators explicitly prepare delivery. PayPal is the only active payment method.
 - Customer order, support, and protected-download interfaces exist locally.
 - Supabase migrations and provider adapters are present, but live authentication, Row Level Security, Storage policies, database mutations, email delivery, and end-to-end payment verification have not been confirmed against a configured production project.
 - Production remains blocked by provider setup, real catalog content and deliverables, business and legal readiness, deployment checks, and an authorized end-to-end smoke purchase.
@@ -40,7 +40,7 @@ The detailed source of truth is [docs/WEBSITE_BLUEPRINT.md](docs/WEBSITE_BLUEPRI
 - Supabase email authentication and server-side role checks
 - Authenticated PayPal Web SDK v6 Checkout with server-issued browser tokens and Orders v2 capture
 - Signed, idempotent PayPal webhook recovery and lifecycle reconciliation
-- Legacy manual GCash/QRPh proof preservation and administrator review
+- Read-only preservation of historical legacy payment records
 - Order snapshots using integer minor-unit pricing and authoritative PHP catalog amounts
 - Private product files with expiring, revocable download access
 - Customer order, download, and support views
@@ -173,7 +173,7 @@ websystembuilders/
 ## Non-negotiable engineering rules
 
 - Calculate authoritative prices on the server and store money as integer minor units.
-- Never treat a browser return, screenshot, or transaction reference as proof of payment by itself.
+- Never treat a browser return as proof of payment by itself.
 - Mark PayPal payments paid only after validated server capture or verified webhook reconciliation, then require explicit administrator fulfillment.
 - Keep deliverables private and issue expiring, revocable access after server-side authorization.
 - Check authorization on the server and enforce RLS for exposed tables.

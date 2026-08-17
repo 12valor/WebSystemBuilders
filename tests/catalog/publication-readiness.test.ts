@@ -11,8 +11,6 @@ const completeSystem = {
   deliverySummary: "Private download access after verified payment.",
   licenseSummary: "Single-business commercial source license.",
   supportSummary: "Support boundaries are shown before purchase.",
-  paymentQrUrl: null,
-  paymentInstructions: null,
 };
 
 describe("catalog publication readiness", () => {
@@ -72,27 +70,13 @@ describe("catalog publication readiness", () => {
     ).toEqual([]);
   });
 
-  it("accepts a complete manual fallback when PayPal is unavailable", () => {
-    expect(
-      getPublicationIssues(
-        {
-          ...completeSystem,
-          paymentQrUrl: "https://example.com/payment-qr.png",
-          paymentInstructions: "Pay using GCash and submit the transaction reference.",
-        },
-        { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
-        { paypalConfigured: false },
-      ),
-    ).toEqual([]);
-  });
-
-  it("blocks direct publication when neither checkout method is configured", () => {
+  it("blocks direct publication when PayPal is not configured", () => {
     expect(
       getPublicationIssues(
         completeSystem,
         { featureCount: 1, mediaCount: 1, hasCurrentDeliverable: true },
         { paypalConfigured: false },
       ),
-    ).toContain("Configure PayPal Checkout or add both a GCash / QRPH QR image and payment instructions.");
+    ).toContain("Configure PayPal Checkout before publishing a fixed-price system.");
   });
 });

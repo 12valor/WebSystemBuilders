@@ -30,12 +30,11 @@ No `NEXT_PUBLIC_PAYPAL_CLIENT_ID` is used. The authenticated browser requests a 
 
 1. Link the intended Supabase project and review the pending migrations.
 2. Apply `add_payment_processing_status` before `replace_paymongo_with_paypal`.
-3. Run database lint/advisors and confirm the `payment-proofs` bucket is private.
+3. Run database lint/advisors and confirm the retired payment-proof and payment-QR buckets are private with no browser-facing policies.
 4. Complete a sandbox purchase with the separate personal account.
 5. Verify the internal order is created before PayPal approval, capture is server-side, amount and currency are PHP and match the snapshot, and duplicate capture/webhook delivery does not duplicate paid state or fulfillment.
 6. Interrupt the browser after approval and confirm `CHECKOUT.ORDER.APPROVED` recovers capture.
 7. Verify paid PayPal orders show “Awaiting delivery” until an administrator explicitly prepares private delivery.
-8. If manual payment is configured for the product, verify the signed-in customer upload path begins with their user ID and the administrator receives only a short-lived signed proof URL.
 
 ## Live enablement
 

@@ -75,7 +75,7 @@ export function AccountPreview({ authState, customerEmail }: AccountPreviewProps
                 Access your system downloads, orders & receipts
               </h1>
               <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium max-w-xl mx-auto">
-                The Customer Portal keeps PayPal and manual payment status, administrator-prepared private downloads, historical orders, and developer support in one place.
+                The Customer Portal keeps PayPal payment status, administrator-prepared private downloads, historical orders, and developer support in one place.
               </p>
             </div>
 

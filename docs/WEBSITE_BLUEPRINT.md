@@ -132,7 +132,7 @@ Use a modular monolith:
 | Database | Supabase PostgreSQL | Primary relational data store |
 | Authentication | Supabase Auth | Customer and administrator identity |
 | Storage | Supabase Storage | Private systems, media, and documents |
-| Payments | PayPal Web SDK v6 and Orders v2 | Authenticated browser token, server capture, signed webhook recovery, and optional authenticated GCash / QRPH proof submission |
+| Payments | PayPal Web SDK v6 and Orders v2 | Authenticated browser token, server capture, and signed webhook recovery; PayPal is the only active payment method |
 | Email | Resend | Transactional purchase and inquiry email |
 | Validation | Zod | Shared input and environment validation |
 | Forms | React Hook Form | Complex user and administrator forms |
@@ -729,7 +729,7 @@ Critical smoke journeys:
 | 3 | Public website | Homepage, audience pages, services, portfolio, trust, and inquiries | 5–8 days |
 | 4 | Systems catalog | Search, filters, system details, demos, features, and pricing | 4–6 days |
 | 5 | Admin dashboard | Systems, categories, media, files, orders, content, and audit trail | 7–10 days |
-| 6 | Payment and ordering | Checkout, pending orders, PayPal, manual proof review, webhooks, and payment records | 5–8 days |
+| 6 | Payment and ordering | Checkout, pending orders, PayPal capture, webhooks, and payment records | 5–8 days |
 | 7 | Automated delivery | Private files, signed downloads, email, limits, resend, and revoke | 4–6 days |
 | 8 | Customer portal | Accounts, orders, downloads, updates, receipts, and support | 5–8 days |
 | 9 | Quality hardening | Testing, accessibility, security, SEO, and performance | 5–7 days |

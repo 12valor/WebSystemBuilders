@@ -187,7 +187,7 @@ export function PreSaleChatModal({
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Ask about GCash payment verification, product features, database inclusions, or custom scope requirements..."
+                    placeholder="Ask about PayPal Checkout, product features, database inclusions, or custom scope requirements..."
                     className="mt-1.5 block w-full rounded-2xl border border-slate-200 bg-slate-50/50 p-3.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
                   />
                 </div>

@@ -29,7 +29,7 @@ export default function TermsPolicyPage() {
           paragraphs: [
             "You must provide accurate, current, and complete information. You are responsible for activity under your account and for keeping login credentials confidential. Do not share your password or permit unauthorized access.",
             "If you are under 18, you may transact only with the involvement and consent of a parent or legal guardian, who must review and accept these Terms and take responsibility for the transaction.",
-            "We may reject, suspend, or close accounts reasonably associated with fraud, fake payment proof, unauthorized access, infringement, abusive conduct, or violation of these Terms. We will not suspend access arbitrarily where doing so would violate applicable consumer rights.",
+            "We may reject, suspend, or close accounts reasonably associated with payment fraud, unauthorized access, infringement, abusive conduct, or violation of these Terms. We will not suspend access arbitrarily where doing so would violate applicable consumer rights.",
           ],
         },
         {
@@ -43,16 +43,16 @@ export default function TermsPolicyPage() {
         {
           title: "Orders and contract formation",
           paragraphs: [
-            "Submitting an order or payment proof is an offer to purchase. An order becomes accepted only when we verify payment and send an order confirmation, delivery notice, or written acceptance. An automated acknowledgment that information was received does not by itself confirm acceptance.",
+            "Submitting an order is an offer to purchase. An order becomes accepted only when we verify payment and send an order confirmation, delivery notice, or written acceptance. An automated acknowledgment that information was received does not by itself confirm acceptance.",
             "We may decline or cancel an unaccepted order because of an incorrect price, unavailable product, suspected fraud, technical error, unlawful request, or inability to perform the requested work. If verified funds were received for an order we cannot accept, we will return the applicable amount using a reasonable available method.",
           ],
         },
         {
-          title: "Prices, PayPal, and manual verification",
+          title: "Prices and PayPal verification",
           paragraphs: [
             "Prices are displayed or quoted in Philippine pesos unless stated otherwise. Any applicable taxes, fees, or additional costs will be disclosed as required.",
-            "PayPal payments are captured and verified through the provider's server APIs and signed webhooks. If GCash / QRPH is configured, verified customers may instead follow the administrator-published QR instructions and submit a private proof image. Do not send money based only on a message from an unverified person. We will never request your MPIN, one-time password, or full account credentials.",
-            "A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. GCash / QRPH payment is not complete until funds and proof are manually verified. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.",
+            "PayPal payments are captured and verified through the provider's server APIs and signed webhooks. Do not send money based only on a message from an unverified person. We will never request your password, one-time password, or full account credentials.",
+            "A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.",
           ],
         },
         {

@@ -2,7 +2,7 @@
 
 ## Current implementation
 
-Phase 6 provides authenticated one-time PayPal Checkout using Web SDK v6, a server-issued browser-safe token, the official PayPal server SDK, Orders v2, server-side capture, and verified webhooks. GCash / QRPH remains an authenticated manual-verification option only when a product has a real administrator-managed QR image and instructions.
+Phase 6 provides authenticated one-time PayPal Checkout using Web SDK v6, a server-issued browser-safe token, the official PayPal server SDK, Orders v2, server-side capture, and verified webhooks. PayPal is the only active payment method.
 
 Payment confirmation remains separate from administrator-prepared private delivery.
 
@@ -25,15 +25,9 @@ Cancellation is recorded through `POST /api/payments/paypal/orders/[providerOrde
 
 Supported events cover order approval, approval reversal, completed/pending/declined capture, refund, and reversal. `CHECKOUT.ORDER.APPROVED` may call the same idempotent capture service when the browser loses connectivity after approval. Duplicate provider event IDs are acknowledged without repeated paid state, audit transitions, or fulfillment.
 
-## Manual GCash / QRPH
+## Retired legacy payment records
 
-- The customer must have a verified signed-in account.
-- Customer name and email are read from the verified account; the form cannot override them.
-- The authoritative product price and current deliverable are re-read on the server.
-- A `manual` payment row is created with the order immediately.
-- New proof images are limited to PNG, JPG, or WEBP, uploaded to private `payment-proofs` paths beginning with the authenticated user ID, and exposed to administrators only through short-lived signed URLs.
-- The manual option is hidden unless both an administrator-managed HTTPS QR image and meaningful instructions exist.
-- Historical proof URLs remain readable for audit, but new public proof URLs and data-URL fallbacks are prohibited.
+The earlier manual-payment path is disabled. No customer proof upload, QR configuration, manual-order creation, or administrator verification action remains active. Existing legacy order and payment rows are preserved as read-only historical records, and retained Storage objects have no browser-facing access policies.
 
 ## Configuration
 

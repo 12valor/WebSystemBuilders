@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 const migration = readFileSync(resolve("supabase/migrations/20260817072420_replace_paymongo_with_paypal.sql"), "utf8");
 
-describe("PayPal checkout migration", () => {
+describe("historical PayPal checkout migration", () => {
   it("preserves historical provider values while making PayPal active", () => {
     expect(migration).toContain("provider in ('paypal', 'manual', 'paymongo')");
     expect(migration).toContain("provider_order_id text");
@@ -24,7 +24,7 @@ describe("PayPal checkout migration", () => {
     expect(reconcile).toContain("provider_event_id = p_provider_event_id");
     expect(reconcile).not.toContain("create_delivery");
   });
-  it("makes new proof uploads private and user scoped", () => {
+  it("records the superseded manual-proof hardening for migration history", () => {
     expect(migration).toContain("update storage.buckets set public = false");
     expect(migration).toContain("(storage.foldername(name))[1] = (select auth.uid())::text");
     expect(migration).toContain("create_authenticated_manual_order");

@@ -23,8 +23,6 @@ export type SellerProfile = {
   githubUrl: string | null;
   linkedinUrl: string | null;
   bannerImageUrl: string | null;
-  gcashQrUrl: string | null;
-  qrphImageUrl: string | null;
   bankDetails: Record<string, unknown> | null;
   status: "pending_review" | "approved" | "rejected";
   adminNotes: string | null;
