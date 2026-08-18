@@ -32,6 +32,13 @@ const systemRowSchema = z.object({
   is_featured: z.boolean(),
   updated_at: z.string(),
   category: z.object({ name: z.string(), slug: z.string() }).nullable(),
+  media: z.array(z.object({
+    id: z.uuid(),
+    media_type: z.enum(["image", "video", "demo"]),
+    storage_path: z.string().nullable(),
+    external_url: z.url().startsWith("https://").nullable(),
+    alt_text: z.string().nullable(),
+  })).optional().default([]),
 });
 
 const systemDetailRowSchema = systemRowSchema.extend({
@@ -67,7 +74,7 @@ const versionRowSchema = z.object({
   released_at: z.string().nullable(),
 });
 
-const systemSelect = "id,title,slug,summary,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,is_featured,updated_at,category:system_categories(name,slug)";
+const systemSelect = "id,title,slug,summary,audience,product_type,pricing_type,price_minor,regular_price_minor,sale_price_minor,sale_active,currency,is_featured,updated_at,category:system_categories(name,slug),media:system_media(id,media_type,storage_path,external_url,alt_text)";
 
 export async function getPublicCatalogData(): Promise<CatalogData> {
   if (!isSupabasePubliclyConfigured()) {
@@ -100,10 +107,45 @@ export async function getPublicCatalogData(): Promise<CatalogData> {
     return { status: "error", categories: [], systems: [] };
   }
 
+  const allMediaRows = systems.data.flatMap((s) => s.media ?? []);
+  const storagePaths = allMediaRows.flatMap((m) => (m.storage_path ? [m.storage_path] : []));
+  const signedMap = new Map<string, string>();
+
+  if (storagePaths.length > 0) {
+    const { data } = await supabase.storage
+      .from("system-media")
+      .createSignedUrls(storagePaths, 60 * 60);
+
+    data?.forEach((item) => {
+      if (item.path && item.signedUrl) {
+        signedMap.set(item.path, item.signedUrl);
+      }
+    });
+  }
+
+  const mappedSystems = systems.data.map((row) => {
+    const resolvedMedia = (row.media ?? []).map((m) => {
+      const url = m.external_url || (m.storage_path ? signedMap.get(m.storage_path) ?? "" : "");
+      return {
+        id: m.id,
+        mediaType: m.media_type,
+        url,
+        altText: m.alt_text ?? "",
+        storageBacked: Boolean(m.storage_path),
+      };
+    });
+    const firstImage = resolvedMedia.find((m) => m.mediaType === "image" && m.url);
+    return {
+      ...mapSystemRow(row),
+      media: resolvedMedia,
+      coverImageUrl: firstImage?.url ?? null,
+    };
+  });
+
   return {
     status: "ready",
     categories: categories.data,
-    systems: systems.data.map(mapSystemRow),
+    systems: mappedSystems,
   };
 }
 
@@ -174,11 +216,48 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
   }
 
   const resolvedMedia = await resolvePublicMedia(supabase, media.data);
+  const firstImage = resolvedMedia.find((m) => m.mediaType === "image" && m.url);
+
+  const relatedMediaRows = related.data.flatMap((s) => s.media ?? []);
+  const relatedStoragePaths = relatedMediaRows.flatMap((m) => (m.storage_path ? [m.storage_path] : []));
+  const relatedSignedMap = new Map<string, string>();
+
+  if (relatedStoragePaths.length > 0) {
+    const { data: relatedData } = await supabase.storage
+      .from("system-media")
+      .createSignedUrls(relatedStoragePaths, 60 * 60);
+
+    relatedData?.forEach((item) => {
+      if (item.path && item.signedUrl) {
+        relatedSignedMap.set(item.path, item.signedUrl);
+      }
+    });
+  }
+
+  const mappedRelatedSystems = related.data.map((row) => {
+    const rMedia = (row.media ?? []).map((m) => {
+      const url = m.external_url || (m.storage_path ? relatedSignedMap.get(m.storage_path) ?? "" : "");
+      return {
+        id: m.id,
+        mediaType: m.media_type,
+        url,
+        altText: m.alt_text ?? "",
+        storageBacked: Boolean(m.storage_path),
+      };
+    });
+    const rFirstImage = rMedia.find((m) => m.mediaType === "image" && m.url);
+    return {
+      ...mapSystemRow(row),
+      media: rMedia,
+      coverImageUrl: rFirstImage?.url ?? null,
+    };
+  });
 
   return {
     status: "ready",
     system: {
       ...mapSystemRow(parsed.data),
+      coverImageUrl: firstImage?.url ?? null,
       description: parsed.data.description,
       requirements: parsed.data.requirements,
       inclusions: parsed.data.inclusions,
@@ -195,7 +274,7 @@ export async function getPublicSystemBySlug(slug: string): Promise<CatalogSystem
       currentVersion: version.data
         ? { versionLabel: version.data.version_label, releasedAt: version.data.released_at }
         : null,
-      relatedSystems: related.data.map(mapSystemRow),
+      relatedSystems: mappedRelatedSystems,
     },
   };
 }
@@ -224,36 +303,48 @@ async function resolvePublicMedia(
   supabase: ReturnType<typeof createPublicClient>,
   rows: z.infer<typeof mediaRowSchema>[],
 ): Promise<CatalogSystemMedia[]> {
-  return Promise.all(
-    rows.map(async (row) => {
-      if (row.external_url) {
-        return {
-          id: row.id,
-          mediaType: row.media_type,
-          url: row.external_url,
-          altText: row.alt_text ?? "",
-          storageBacked: false,
-        };
-      }
+  const storagePaths = rows.flatMap((row) => (row.storage_path ? [row.storage_path] : []));
+  const signedMap = new Map<string, string>();
 
-      if (row.storage_path) {
-        const { data } = supabase.storage.from("public-catalog-media").getPublicUrl(row.storage_path);
-        return {
-          id: row.id,
-          mediaType: row.media_type,
-          url: data.publicUrl,
-          altText: row.alt_text ?? "",
-          storageBacked: true,
-        };
-      }
+  if (storagePaths.length > 0) {
+    const { data } = await supabase.storage
+      .from("system-media")
+      .createSignedUrls(storagePaths, 60 * 60);
 
+    data?.forEach((item) => {
+      if (item.path && item.signedUrl) {
+        signedMap.set(item.path, item.signedUrl);
+      }
+    });
+  }
+
+  return rows.map((row) => {
+    if (row.external_url) {
       return {
         id: row.id,
         mediaType: row.media_type,
-        url: "",
+        url: row.external_url,
         altText: row.alt_text ?? "",
         storageBacked: false,
       };
-    }),
-  );
+    }
+
+    if (row.storage_path) {
+      return {
+        id: row.id,
+        mediaType: row.media_type,
+        url: signedMap.get(row.storage_path) ?? "",
+        altText: row.alt_text ?? "",
+        storageBacked: true,
+      };
+    }
+
+    return {
+      id: row.id,
+      mediaType: row.media_type,
+      url: "",
+      altText: row.alt_text ?? "",
+      storageBacked: false,
+    };
+  });
 }
