@@ -89,11 +89,15 @@ export function PayPalCheckout(props: Props) {
     if (!ready || !paypalInstance) return;
     setPending(true);
     setError(null);
+    let providerOrderId: string | null = null;
+    const orderPromise = createOrder().then((orderId) => {
+      providerOrderId = orderId;
+      return orderId;
+    });
     try {
-      const providerOrderId = await createOrder();
       const paymentSession = paypalInstance.createPayPalOneTimePaymentSession({
         onApprove: async (data) => {
-          const orderId = data.orderId ?? providerOrderId;
+          const orderId = data.orderId ?? providerOrderId ?? await orderPromise;
           const capture = await fetch(`/api/payments/paypal/orders/${encodeURIComponent(orderId)}/capture`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -106,11 +110,14 @@ export function PayPalCheckout(props: Props) {
           router.refresh();
         },
         onCancel: async () => {
-          await fetch(`/api/payments/paypal/orders/${encodeURIComponent(providerOrderId)}/cancel`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ reason: "popup_closed" }),
-          });
+          const orderId = providerOrderId ?? await orderPromise.catch(() => null);
+          if (orderId) {
+            await fetch(`/api/payments/paypal/orders/${encodeURIComponent(orderId)}/cancel`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ reason: "popup_closed" }),
+            });
+          }
           setPending(false);
           setError("PayPal Checkout was closed. No payment was recorded.");
         },
@@ -119,7 +126,7 @@ export function PayPalCheckout(props: Props) {
           setError("PayPal Checkout could not be opened. Please try again.");
         },
       });
-      await paymentSession.start({ presentationMode: "auto" }, Promise.resolve(providerOrderId));
+      await paymentSession.start({ presentationMode: "auto" }, orderPromise);
     } catch (paymentError) {
       setPending(false);
       if (paymentError instanceof Error && paymentError.message === "product_unavailable") {
