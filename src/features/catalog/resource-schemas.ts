@@ -28,13 +28,20 @@ export const mediaUploadRequestSchema = z.object({
 });
 
 export const deliverableUploadRequestSchema = z.object({
-  versionId: z.uuid(),
+  versionId: z.uuid("Select a target version."),
   fileName: z.string().trim().min(1).max(255).refine(
     (value) => value.toLowerCase().endsWith(".zip"),
     "Upload a ZIP archive.",
   ),
   fileSize: z.number().int().positive().max(250 * 1024 * 1024, "ZIP files must be 250 MB or smaller."),
-  contentType: z.enum(["application/zip", "application/x-zip-compressed", "application/octet-stream"], {
+  contentType: z.enum([
+    "application/zip",
+    "application/x-zip-compressed",
+    "application/octet-stream",
+    "application/x-zip",
+    "multipart/x-zip",
+    "application/zip-compressed",
+  ], {
     message: "Upload a ZIP archive.",
   }),
 });

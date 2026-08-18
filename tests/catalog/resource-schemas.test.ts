@@ -32,20 +32,40 @@ describe("catalog resource validation", () => {
     expect(invalid.success).toBe(false);
   });
 
-  it("requires ZIP deliverables owned by a version", () => {
-    const valid = deliverableUploadRequestSchema.safeParse({
-      versionId: "11111111-1111-4111-8111-111111111111",
-      fileName: "inventory-system.zip",
-      fileSize: 5_000_000,
-      contentType: "application/zip",
-    });
-    const invalid = deliverableUploadRequestSchema.safeParse({
+  it("requires ZIP deliverables owned by a version and accepts standard ZIP mime types", () => {
+    const validTypes = [
+      "application/zip",
+      "application/x-zip-compressed",
+      "application/octet-stream",
+      "application/x-zip",
+      "multipart/x-zip",
+      "application/zip-compressed",
+    ];
+
+    for (const contentType of validTypes) {
+      const valid = deliverableUploadRequestSchema.safeParse({
+        versionId: "11111111-1111-4111-8111-111111111111",
+        fileName: "inventory-system.zip",
+        fileSize: 5_000_000,
+        contentType,
+      });
+      expect(valid.success).toBe(true);
+    }
+
+    const invalidExtension = deliverableUploadRequestSchema.safeParse({
       versionId: "11111111-1111-4111-8111-111111111111",
       fileName: "inventory-system.exe",
       fileSize: 5_000_000,
       contentType: "application/octet-stream",
     });
-    expect(valid.success).toBe(true);
-    expect(invalid.success).toBe(false);
+    expect(invalidExtension.success).toBe(false);
+
+    const invalidVersion = deliverableUploadRequestSchema.safeParse({
+      versionId: "",
+      fileName: "inventory-system.zip",
+      fileSize: 5_000_000,
+      contentType: "application/zip",
+    });
+    expect(invalidVersion.success).toBe(false);
   });
 });

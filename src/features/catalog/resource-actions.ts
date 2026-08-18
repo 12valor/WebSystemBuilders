@@ -22,6 +22,9 @@ const deliverableMimeTypes = new Set([
   "application/zip",
   "application/x-zip-compressed",
   "application/octet-stream",
+  "application/x-zip",
+  "multipart/x-zip",
+  "application/zip-compressed",
 ]);
 
 export type ResourceActionState = {
@@ -327,6 +330,48 @@ export async function addVersion(
   return successState("Product version created.");
 }
 
+export async function makeVersionCurrent(
+  systemId: string,
+  versionId: string,
+): Promise<ResourceActionState> {
+  if (!catalogResourceIdSchema.safeParse(versionId).success) {
+    return errorState("The version identifier is invalid.");
+  }
+
+  const context = await getCatalogContext(systemId);
+  if (!context.ok) return context.state;
+
+  if (!(await versionBelongsToSystem(context.data.supabase, versionId, systemId))) {
+    return errorState("The selected version does not belong to this system.");
+  }
+
+  const { error: unsetError } = await context.data.supabase
+    .from("system_versions")
+    .update({ is_current: false })
+    .eq("system_id", systemId)
+    .eq("is_current", true);
+
+  if (unsetError) {
+    return errorState("Could not update previous current version.");
+  }
+
+  const { error: setError } = await context.data.supabase
+    .from("system_versions")
+    .update({
+      is_current: true,
+      released_at: new Date().toISOString(),
+    })
+    .eq("id", versionId)
+    .eq("system_id", systemId);
+
+  if (setError) {
+    return errorState("Could not set the version as current.");
+  }
+
+  revalidateResources(context.data);
+  return successState("Version set as current.");
+}
+
 export async function removeVersion(
   systemId: string,
   versionId: string,
@@ -620,11 +665,12 @@ async function verifyStoredObject(
     return { ok: false, message: "The uploaded object could not be verified." };
   }
 
-  const contentType = data.contentType ?? "";
+  const rawContentType = data.contentType ?? "";
+  const contentType = rawContentType.split(";")[0].trim().toLowerCase();
   if (data.size !== expectedSize) {
     return { ok: false, message: "The uploaded object size does not match the selected file." };
   }
-  if (!allowedMimeTypes.has(contentType)) {
+  if (!allowedMimeTypes.has(contentType) && !allowedMimeTypes.has(rawContentType)) {
     return { ok: false, message: "The uploaded object type is not allowed." };
   }
 

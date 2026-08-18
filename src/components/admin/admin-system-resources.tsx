@@ -9,6 +9,7 @@ import {
   addVersion,
   confirmDeliverableUpload,
   confirmMediaUpload,
+  makeVersionCurrent,
   prepareDeliverableUpload,
   prepareMediaUpload,
   removeDeliverable,
@@ -22,6 +23,15 @@ import { createClient } from "@/lib/supabase/client";
 const initialState: ResourceActionState = { status: "idle" };
 const inputClass = "min-h-10 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 transition-all";
 const buttonClass = "inline-flex min-h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-900 hover:bg-slate-50 shadow-2xs disabled:cursor-not-allowed disabled:text-slate-400 transition-all";
+
+const allowedZipMimes = [
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/octet-stream",
+  "application/x-zip",
+  "multipart/x-zip",
+  "application/zip-compressed",
+];
 
 export function AdminSystemResources({
   systemId,
@@ -47,6 +57,9 @@ export function AdminSystemResources({
   const [removalState, setRemovalState] = useState<ResourceActionState>(initialState);
   const [uploading, setUploading] = useState<"media" | "deliverable" | null>(null);
   const [removing, startRemoval] = useTransition();
+
+  const currentVersion = resources.versions.find((v) => v.isCurrent) ?? resources.versions[0];
+  const defaultVersionId = currentVersion?.id ?? "";
 
   function runRemoval(
     message: string,
@@ -122,14 +135,28 @@ export function AdminSystemResources({
     const form = event.currentTarget;
     const data = new FormData(form);
     const file = data.get("deliverable");
-    const versionId = String(data.get("versionId") ?? "");
+    const versionId = String(data.get("versionId") ?? "").trim();
+
+    if (!versionId) {
+      setUploadState({ status: "error", message: "Select a target version for this file." });
+      return;
+    }
 
     if (!(file instanceof File) || file.size === 0) {
       setUploadState({ status: "error", message: "Select a ZIP archive." });
       return;
     }
 
-    const contentType = file.type || "application/zip";
+    if (!file.name.toLowerCase().endsWith(".zip")) {
+      setUploadState({ status: "error", message: "Upload a valid .zip archive." });
+      return;
+    }
+
+    let contentType = file.type ? file.type.split(";")[0].trim().toLowerCase() : "";
+    if (!contentType || !allowedZipMimes.includes(contentType)) {
+      contentType = "application/zip";
+    }
+
     setUploading("deliverable");
     setUploadState({ status: "idle" });
 
@@ -257,9 +284,19 @@ export function AdminSystemResources({
 
             <form onSubmit={uploadDeliverable} className="grid gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/50 p-4">
               <FieldLabel label="Target version">
-                <select name="versionId" defaultValue="" disabled={resources.versions.length === 0} className={inputClass}>
+                <select
+                  name="versionId"
+                  defaultValue={defaultVersionId}
+                  key={`version-select-${resources.versions.length}-${defaultVersionId}`}
+                  disabled={resources.versions.length === 0}
+                  className={inputClass}
+                >
                   <option value="">{resources.versions.length ? "Select version" : "Create a version first"}</option>
-                  {resources.versions.map((version) => <option key={version.id} value={version.id}>{version.versionLabel}{version.isCurrent ? " (current)" : ""}</option>)}
+                  {resources.versions.map((version) => (
+                    <option key={version.id} value={version.id}>
+                      {version.versionLabel}{version.isCurrent ? " (current)" : ""}
+                    </option>
+                  ))}
                 </select>
               </FieldLabel>
               <FieldLabel label="Private ZIP file">
@@ -273,7 +310,36 @@ export function AdminSystemResources({
                 <article key={version.id} className="rounded-2xl border border-slate-200/80 bg-slate-50/50 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div><h3 className="text-sm font-bold text-slate-900">{version.versionLabel}</h3><p className="mt-1 text-xs text-slate-500 font-medium">{version.isCurrent ? "Current version" : "Previous version"}</p></div>
-                    <button type="button" disabled={removing} onClick={() => runRemoval(`Remove version ${version.versionLabel}?`, () => removeVersion(systemId, version.id))} className="text-xs font-semibold text-red-600 hover:text-red-700">Remove</button>
+                    <div className="flex items-center gap-3">
+                      {!version.isCurrent && (
+                        <button
+                          type="button"
+                          disabled={removing}
+                          onClick={() =>
+                            runRemoval(
+                              `Set version ${version.versionLabel} as current release?`,
+                              () => makeVersionCurrent(systemId, version.id),
+                            )
+                          }
+                          className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+                        >
+                          Set as current
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        disabled={removing}
+                        onClick={() =>
+                          runRemoval(
+                            `Remove version ${version.versionLabel}?`,
+                            () => removeVersion(systemId, version.id),
+                          )
+                        }
+                        className="text-xs font-semibold text-red-600 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                   {version.releaseNotes && <p className="mt-3 text-xs leading-5 text-slate-600 font-medium">{version.releaseNotes}</p>}
                   <div className="mt-3 grid gap-2">
