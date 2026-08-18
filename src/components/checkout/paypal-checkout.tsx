@@ -75,8 +75,13 @@ export function PayPalCheckout(props: Props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ systemId: props.systemId }),
     });
-    const payload = (await response.json()) as { providerOrderId?: unknown };
-    if (!response.ok || typeof payload.providerOrderId !== "string") throw new Error("create_failed");
+    const payload = (await response.json()) as { providerOrderId?: unknown; error?: unknown };
+    if (!response.ok) {
+      if (payload.error === "product_unavailable") throw new Error("product_unavailable");
+      if (payload.error === "paypal_unavailable") throw new Error("paypal_unavailable");
+      throw new Error("checkout_unavailable");
+    }
+    if (typeof payload.providerOrderId !== "string") throw new Error("checkout_unavailable");
     return payload.providerOrderId;
   }
 
@@ -115,9 +120,15 @@ export function PayPalCheckout(props: Props) {
         },
       });
       await paymentSession.start({ presentationMode: "auto" }, Promise.resolve(providerOrderId));
-    } catch {
+    } catch (paymentError) {
       setPending(false);
-      setError("PayPal Checkout could not start. Please try again.");
+      if (paymentError instanceof Error && paymentError.message === "product_unavailable") {
+        setError("This system is not currently available for checkout. Please contact support.");
+      } else if (paymentError instanceof Error && paymentError.message === "paypal_unavailable") {
+        setError("PayPal could not create the order. Please try again shortly.");
+      } else {
+        setError("PayPal Checkout could not open. Check that popups are allowed, then try again.");
+      }
     }
   }
 

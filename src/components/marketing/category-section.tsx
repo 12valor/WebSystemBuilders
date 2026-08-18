@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
+import { CatalogCardIllustration } from "@/components/catalog/catalog-card-illustration";
 import { TactileCard } from "@/components/ui/tactile-card";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { AppIconBadge } from "@/components/ui/app-icon-badge";
@@ -184,86 +185,94 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 
 function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
   const primaryMedia = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url || system.media?.[0]?.url;
+  const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[20px] border border-slate-900/[0.08] bg-white shadow-[0_8px_24px_-20px_rgba(15,23,42,0.28)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_18px_34px_-24px_rgba(37,99,235,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
-      {/* Top Preview Card Area */}
-      <div className="relative flex h-52 items-center justify-center bg-slate-900 p-4 overflow-hidden border-b border-slate-800">
-        {/* Soft Background Grid Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
-
+    <article className="group flex flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md">
+      {/* 1. Product Preview Area: Light neutral container with device/browser preview frame */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50/80 p-4 sm:p-5 flex items-center justify-center border-b border-slate-100">
         {primaryMedia ? (
-          <div className="relative z-10 size-full flex items-center justify-center">
-            {/* eslint-disable-next-html-element-suppression */}
-            <img
-              src={primaryMedia}
-              alt={system.title}
-              className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
-            />
+          <div className="relative size-full flex items-center justify-center">
+            <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
+              {/* Minimal browser window header */}
+              <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
+                <div className="size-1.5 rounded-full bg-slate-300" />
+                <div className="size-1.5 rounded-full bg-slate-300" />
+                <div className="size-1.5 rounded-full bg-slate-300" />
+              </div>
+              {/* Screenshot preview */}
+              <div className="relative flex-1 overflow-hidden bg-slate-50/40 flex items-center justify-center p-1">
+                {/* eslint-disable-next-html-element-suppression */}
+                <img
+                  src={primaryMedia}
+                  alt={system.title}
+                  className="size-full object-contain transition-transform duration-200 group-hover:scale-[1.015]"
+                />
+              </div>
+            </div>
           </div>
         ) : (
-          /* Mac Style Floating Card Graphic */
-          <div className="relative z-10 w-full max-w-[260px] rounded-xl border border-slate-700/80 bg-slate-800/90 p-4 shadow-2xl backdrop-blur-md">
-            <div className="flex items-center justify-between border-b border-slate-700/60 pb-2 text-[0.65rem] font-semibold text-slate-400">
-              <span className="truncate max-w-[140px] text-slate-300">{system.category?.name ?? "Software Suite"}</span>
-              <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-blue-300 font-bold border border-blue-400/25">
-                Source Code
-              </span>
+          <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
+            <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
+              <div className="size-1.5 rounded-full bg-slate-300" />
+              <div className="size-1.5 rounded-full bg-slate-300" />
+              <div className="size-1.5 rounded-full bg-slate-300" />
             </div>
-            <div className="mt-3 space-y-2">
-              <div className="h-2 w-4/5 rounded-full bg-slate-600/80" />
-              <div className="h-2 w-3/5 rounded-full bg-blue-500/80" />
-              <div className="h-2 w-2/5 rounded-full bg-slate-500/80" />
+            <div className="relative flex-1 overflow-hidden bg-slate-50/40">
+              <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
             </div>
           </div>
         )}
-
-        {/* Audience Pill Tag */}
-        <span className="absolute top-4 left-4 z-20 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-xs font-bold text-blue-700 shadow-sm border border-slate-200">
-          {audienceLabel(system.audience)}
-        </span>
       </div>
 
-      {/* Content Area */}
+      {/* 2. Content Area */}
       <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">
-          {system.category?.name ?? "Ready-Made System"}
+        {/* Category: Small, uppercase, blue, medium weight */}
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
+          {system.category?.name ?? "Custom System Development"}
         </span>
-        <h3 className="mt-1.5 text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-          {system.title}
+
+        {/* Product Title: Strong dark navy / near-black font */}
+        <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+          <Link href={`/systems/${system.slug}`} className="focus:outline-none">
+            {system.title}
+          </Link>
         </h3>
-        <p className="mt-2.5 line-clamp-3 text-xs leading-relaxed text-slate-600 font-medium">
+
+        {/* Short Description: Muted slate, 2-3 lines with line clamp */}
+        <p className="mt-2.5 line-clamp-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
           {system.summary}
         </p>
 
-        {/* Feature inclusions */}
-        <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-4 text-[11px] text-slate-500 font-medium">
-          <div className="flex items-center gap-1 text-blue-600 font-semibold">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+        {/* Feature Chips: Full Source ZIP & 30-Day Support with small blue outline icons and subtle borders */}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
             <span>Full Source ZIP</span>
           </div>
-          <div className="flex items-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" />
             <span>30-Day Support</span>
           </div>
         </div>
 
-        {/* Pricing & Detail Trigger */}
-        <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
-          <div>
-            <span className="block text-[10px] uppercase tracking-wider text-slate-400 font-bold">
-              Starting Price
+        {/* 3. Divider & Purchase Area */}
+        <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
+          <div className="min-w-0">
+            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              {isStarting ? "Starting Price" : "Price"}
             </span>
-            <div className="text-lg font-extrabold text-slate-900">
+            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} variant="featured" />
             </div>
           </div>
 
-          <Link href={`/systems/${system.slug}`}>
-            <MagneticButton size="sm" variant="primary">
-              <span>View System</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </MagneticButton>
+          <Link
+            href={`/systems/${system.slug}`}
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] shadow-xs"
+          >
+            <span>View System</span>
+            <ExternalLink className="size-3.5" />
           </Link>
         </div>
       </div>

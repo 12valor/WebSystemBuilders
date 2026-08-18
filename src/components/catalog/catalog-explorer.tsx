@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CheckCircle2, ShieldCheck, ExternalLink } from "lucide-react";
 import { CatalogCardIllustration } from "@/components/catalog/catalog-card-illustration";
 import { CatalogCurrencyControl } from "@/components/catalog/catalog-currency-provider";
 import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
@@ -221,62 +222,96 @@ export function CatalogExplorer({
 }
 
 function SystemCard({ system }: { system: CatalogSystemRecord }) {
-  const primaryMedia = system.coverImageUrl || system.media?.[0]?.url;
+  const primaryMedia = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url || system.media?.[0]?.url;
+  const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/10">
-      {/* 16:10 Aspect Ratio Thumbnail */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+    <article className="group flex flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md">
+      {/* 1. Product Preview Area: Light neutral container with device/browser preview frame */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50/80 p-4 sm:p-5 flex items-center justify-center border-b border-slate-100">
         {primaryMedia ? (
-          /* eslint-disable-next-html-element-suppression */
-          <div className="size-full flex items-center justify-center p-1.5">
-            <img
-              src={primaryMedia}
-              alt={system.title}
-              className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
-            />
+          <div className="relative size-full flex items-center justify-center">
+            <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
+              {/* Minimal browser window header */}
+              <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
+                <div className="size-1.5 rounded-full bg-slate-300" />
+                <div className="size-1.5 rounded-full bg-slate-300" />
+                <div className="size-1.5 rounded-full bg-slate-300" />
+              </div>
+              {/* Screenshot preview */}
+              <div className="relative flex-1 overflow-hidden bg-slate-50/40 flex items-center justify-center p-1">
+                {/* eslint-disable-next-html-element-suppression */}
+                <img
+                  src={primaryMedia}
+                  alt={system.title}
+                  className="size-full object-contain transition-transform duration-200 group-hover:scale-[1.015]"
+                />
+              </div>
+            </div>
           </div>
         ) : (
-          <div className="size-full transition-transform duration-300 group-hover:scale-105">
-            <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
+          <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
+            <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
+              <div className="size-1.5 rounded-full bg-slate-300" />
+              <div className="size-1.5 rounded-full bg-slate-300" />
+              <div className="size-1.5 rounded-full bg-slate-300" />
+            </div>
+            <div className="relative flex-1 overflow-hidden bg-slate-50/40">
+              <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
+            </div>
           </div>
         )}
-
-        {/* Audience Pill Overlay */}
-        <div className="absolute left-3 top-3">
-          <AudienceBadge audience={system.audience} />
-        </div>
       </div>
 
-      {/* Content Body */}
-      <div className="flex flex-1 flex-col p-6">
-        <span className="text-[0.68rem] font-bold uppercase tracking-wider text-slate-400">
-          {system.category?.name ?? "Web System"}
+      {/* 2. Content Area */}
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
+        {/* Category: Small, uppercase, blue, medium weight */}
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
+          {system.category?.name ?? "Custom System Development"}
         </span>
 
-        <h3 className="mt-1.5 text-lg font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+        {/* Product Title: Strong dark navy / near-black font */}
+        <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
           <Link href={`/systems/${system.slug}`} className="focus:outline-none">
-            <span className="absolute inset-0 z-10" aria-hidden="true" />
             {system.title}
           </Link>
         </h3>
 
-        <p className="mt-2.5 line-clamp-2 text-xs leading-relaxed text-slate-600">
+        {/* Short Description: Muted slate, 2-3 lines with line clamp */}
+        <p className="mt-2.5 line-clamp-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
           {system.summary}
         </p>
 
-        {/* Footer Metadata & Pricing */}
-        <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
-          <div>
-            <span className="block text-[0.65rem] font-semibold text-slate-400 uppercase">Price</span>
-            <div className="font-bold text-slate-900 text-sm">
+        {/* Feature Chips: Full Source ZIP & 30-Day Support with small blue outline icons and subtle borders */}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
+            <span>Full Source ZIP</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" />
+            <span>30-Day Support</span>
+          </div>
+        </div>
+
+        {/* 3. Divider & Purchase Area */}
+        <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
+          <div className="min-w-0">
+            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              {isStarting ? "Starting Price" : "Price"}
+            </span>
+            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} />
             </div>
           </div>
 
-          <span className="inline-flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
-            View Details &rarr;
-          </span>
+          <Link
+            href={`/systems/${system.slug}`}
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] shadow-xs"
+          >
+            <span>View System</span>
+            <ExternalLink className="size-3.5" />
+          </Link>
         </div>
       </div>
     </article>
