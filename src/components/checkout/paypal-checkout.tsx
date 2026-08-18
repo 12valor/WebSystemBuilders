@@ -41,20 +41,31 @@ export function PayPalCheckout(props: Props) {
   const initialize = useCallback(async () => {
     try {
       const response = await fetch("/api/payments/paypal/client-token", { method: "POST", cache: "no-store" });
-      const token = (await response.json()) as { clientToken?: unknown };
-      if (!response.ok || typeof token.clientToken !== "string" || !window.paypal) throw new Error("unavailable");
+      const token = (await response.json()) as { clientToken?: unknown; error?: unknown };
+      if (!response.ok) {
+        throw new Error(response.status === 401 ? "verified_account_required" : "token_unavailable");
+      }
+      if (typeof token.clientToken !== "string" || !window.paypal) throw new Error("sdk_unavailable");
       const instance = await window.paypal.createInstance({
         clientToken: token.clientToken,
         components: ["paypal-payments"],
         pageType: "checkout",
       });
       const methods = await instance.findEligibleMethods({ currencyCode: "PHP" });
-      if (!methods.isEligible("paypal")) throw new Error("ineligible");
+      if (!methods.isEligible("paypal")) {
+        setEligible(false);
+        setError("PayPal Checkout is not eligible for this browser or location.");
+        return;
+      }
       setPayPalInstance(instance);
       setEligible(true);
-    } catch {
+    } catch (initializationError) {
       setEligible(false);
-      setError("PayPal is unavailable on this device or environment.");
+      setError(
+        initializationError instanceof Error && initializationError.message === "verified_account_required"
+          ? "Please verify your account before using PayPal Checkout."
+          : "PayPal Checkout could not initialize. Please refresh and try again.",
+      );
     }
   }, []);
 

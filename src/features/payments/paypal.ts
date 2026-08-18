@@ -16,7 +16,6 @@ import {
   type PayPalEnv,
 } from "@/lib/env/paypal";
 
-const browserTokenSchema = z.object({ client_token: z.string().min(20), expires_in: z.number().positive() });
 const accessTokenSchema = z.object({ access_token: z.string().min(20), expires_in: z.number().positive() });
 const webhookVerificationSchema = z.object({ verification_status: z.literal("SUCCESS") });
 
@@ -52,8 +51,14 @@ export function createPayPalAdapter(env: PayPalEnv, options: PayPalAdapterOption
     environment: env.PAYPAL_ENVIRONMENT,
 
     async createBrowserSafeClientToken(origin: string) {
-      const body = new URLSearchParams({ grant_type: "client_credentials", response_type: "client_token" });
-      body.append("domains[]", new URL(origin).origin);
+      const body = new URLSearchParams({
+        grant_type: "client_credentials",
+        response_type: "client_token",
+        intent: "sdk_init",
+      });
+      if (env.PAYPAL_ENVIRONMENT === "live") {
+        body.append("domains[]", getPayPalRootDomain(origin));
+      }
       const response = await paypalFetch(
         `${getPayPalApiOrigin(env.PAYPAL_ENVIRONMENT)}/v1/oauth2/token`,
         {
@@ -68,9 +73,9 @@ export function createPayPalAdapter(env: PayPalEnv, options: PayPalAdapterOption
         fetchImplementation,
         timeoutMs,
       );
-      const parsed = browserTokenSchema.safeParse(await safeJson(response));
+      const parsed = accessTokenSchema.safeParse(await safeJson(response));
       if (!parsed.success) throw new PayPalProviderError("invalid_response", paypalDebugId(response));
-      return { clientToken: parsed.data.client_token, expiresIn: parsed.data.expires_in };
+      return { clientToken: parsed.data.access_token, expiresIn: parsed.data.expires_in };
     },
 
     async createOrder(input: {
@@ -146,6 +151,11 @@ export function createPayPalAdapter(env: PayPalEnv, options: PayPalAdapterOption
       return webhookVerificationSchema.safeParse(await safeJson(response)).success;
     },
   };
+}
+
+function getPayPalRootDomain(origin: string) {
+  const hostname = new URL(origin).hostname.toLowerCase();
+  return hostname.startsWith("www.") ? hostname.slice(4) : hostname;
 }
 
 function normalizeCreatedOrder(order: Order, environment: PayPalEnvironment) {

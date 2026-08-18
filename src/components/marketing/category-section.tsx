@@ -183,27 +183,40 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 }
 
 function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
+  const primaryMedia = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url || system.media?.[0]?.url;
+
   return (
     <article className="group flex flex-col overflow-hidden rounded-[20px] border border-slate-900/[0.08] bg-white shadow-[0_8px_24px_-20px_rgba(15,23,42,0.28)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_18px_34px_-24px_rgba(37,99,235,0.35)] motion-reduce:transform-none motion-reduce:transition-none">
       {/* Top Preview Card Area */}
-      <div className="relative flex h-52 items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 overflow-hidden">
+      <div className="relative flex h-52 items-center justify-center bg-slate-900 p-4 overflow-hidden border-b border-slate-800">
         {/* Soft Background Grid Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
 
-        {/* Mac Style Floating Card Graphic */}
-        <div className="relative z-10 w-full max-w-[260px] rounded-xl border border-slate-700/80 bg-slate-800/90 p-4 shadow-2xl backdrop-blur-md">
-          <div className="flex items-center justify-between border-b border-slate-700/60 pb-2 text-[0.65rem] font-semibold text-slate-400">
-            <span className="truncate max-w-[140px] text-slate-300">{system.category?.name ?? "Software Suite"}</span>
-            <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-blue-300 font-bold border border-blue-400/25">
-              Source Code
-            </span>
+        {primaryMedia ? (
+          <div className="relative z-10 size-full flex items-center justify-center">
+            {/* eslint-disable-next-html-element-suppression */}
+            <img
+              src={primaryMedia}
+              alt={system.title}
+              className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
-          <div className="mt-3 space-y-2">
-            <div className="h-2 w-4/5 rounded-full bg-slate-600/80" />
-            <div className="h-2 w-3/5 rounded-full bg-blue-500/80" />
-            <div className="h-2 w-2/5 rounded-full bg-slate-500/80" />
+        ) : (
+          /* Mac Style Floating Card Graphic */
+          <div className="relative z-10 w-full max-w-[260px] rounded-xl border border-slate-700/80 bg-slate-800/90 p-4 shadow-2xl backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-slate-700/60 pb-2 text-[0.65rem] font-semibold text-slate-400">
+              <span className="truncate max-w-[140px] text-slate-300">{system.category?.name ?? "Software Suite"}</span>
+              <span className="rounded-full bg-blue-500/15 px-2 py-0.5 text-blue-300 font-bold border border-blue-400/25">
+                Source Code
+              </span>
+            </div>
+            <div className="mt-3 space-y-2">
+              <div className="h-2 w-4/5 rounded-full bg-slate-600/80" />
+              <div className="h-2 w-3/5 rounded-full bg-blue-500/80" />
+              <div className="h-2 w-2/5 rounded-full bg-slate-500/80" />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Audience Pill Tag */}
         <span className="absolute top-4 left-4 z-20 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-xs font-bold text-blue-700 shadow-sm border border-slate-200">

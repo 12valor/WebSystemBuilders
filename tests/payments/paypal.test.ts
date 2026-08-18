@@ -20,11 +20,22 @@ describe("PayPal adapter", () => {
   it("requests a short-lived browser token for the site origin", async () => {
     const fetchImplementation = vi.fn(async (_url: string | URL | Request, init?: RequestInit) => {
       expect(String(init?.body)).toContain("response_type=client_token");
-      expect(String(init?.body)).toContain("domains%5B%5D=http%3A%2F%2Flocalhost%3A3000");
-      return Response.json({ client_token: "browser_safe_token_123456789", expires_in: 3600 });
+      expect(String(init?.body)).toContain("intent=sdk_init");
+      expect(String(init?.body)).not.toContain("domains%5B%5D");
+      return Response.json({ access_token: "browser_safe_token_123456789", expires_in: 900 });
     }) as unknown as typeof fetch;
     const result = await createPayPalAdapter(env, { fetchImplementation }).createBrowserSafeClientToken(env.SITE_URL);
-    expect(result).toEqual({ clientToken: "browser_safe_token_123456789", expiresIn: 3600 });
+    expect(result).toEqual({ clientToken: "browser_safe_token_123456789", expiresIn: 900 });
+  });
+
+  it("binds live browser tokens to the root domain without a protocol", async () => {
+    const fetchImplementation = vi.fn(async (_url: string | URL | Request, init?: RequestInit) => {
+      expect(String(init?.body)).toContain("domains%5B%5D=websystembuilders.com");
+      expect(String(init?.body)).not.toContain("https%3A");
+      return Response.json({ access_token: "browser_safe_token_123456789", expires_in: 900 });
+    }) as unknown as typeof fetch;
+    const liveEnv = { ...env, PAYPAL_ENVIRONMENT: "live" as const, SITE_URL: "https://www.websystembuilders.com" };
+    await createPayPalAdapter(liveEnv, { fetchImplementation }).createBrowserSafeClientToken(liveEnv.SITE_URL);
   });
 
   it("uses bounded requests and safe provider errors", async () => {
