@@ -182,16 +182,59 @@ function ProductMedia({ media, title }: { media: CatalogSystemMedia[]; title: st
   return (
     <div>
       {images.length > 0 ? (
-        <div className="grid gap-3">
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-subtle">
-            <img src={images[0].url} alt={images[0].altText || title} className="aspect-[4/3] w-full object-cover" />
+        <div className="grid gap-4">
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-subtle p-2 sm:p-3 flex items-center justify-center">
+            <img
+              src={images[0].url}
+              alt={images[0].altText || title}
+              className="w-full h-auto max-h-[720px] rounded-xl object-contain"
+            />
           </div>
-          {images.length > 1 && <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">{images.slice(1).map((image) => <div key={image.id} className="overflow-hidden rounded-xl border border-white/10 bg-surface-subtle"><img src={image.url} alt={image.altText || title} loading="lazy" className="aspect-[4/3] w-full object-cover" /></div>)}</div>}
+          {images.length > 1 && (
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {images.slice(1).map((image) => (
+                <div
+                  key={image.id}
+                  className="overflow-hidden rounded-xl border border-white/10 bg-surface-subtle p-1.5 flex items-center justify-center"
+                >
+                  <img
+                    src={image.url}
+                    alt={image.altText || title}
+                    loading="lazy"
+                    className="w-full h-auto max-h-48 rounded-lg object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : (
-        <div className="grid aspect-[4/3] place-items-center rounded-2xl border border-dashed border-white/15 bg-surface-subtle p-8 text-center"><div><span className="mx-auto grid size-12 place-items-center rounded-xl border border-white/10 text-xs font-semibold text-brand-hover">MEDIA</span><p className="mt-5 font-semibold">No public screenshot is available.</p><p className="mt-2 text-sm text-secondary">Real product media appears only after administrator publication.</p></div></div>
+        <div className="grid aspect-[4/3] place-items-center rounded-2xl border border-dashed border-white/15 bg-surface-subtle p-8 text-center">
+          <div>
+            <span className="mx-auto grid size-12 place-items-center rounded-xl border border-white/10 text-xs font-semibold text-brand-hover">
+              MEDIA
+            </span>
+            <p className="mt-5 font-semibold">No public screenshot is available.</p>
+            <p className="mt-2 text-sm text-secondary">Real product media appears only after administrator publication.</p>
+          </div>
+        </div>
       )}
-      {links.length > 0 && <div className="mt-3 grid gap-3 sm:grid-cols-2">{links.map((item) => <a key={item.id} href={item.url} target="_blank" rel="noreferrer" className="flex min-h-12 items-center justify-between rounded-[10px] border border-white/15 px-4 text-sm font-semibold hover:bg-white/[0.04]"><span>{item.mediaType === "demo" ? "Open live demo" : "Watch product video"}</span><span aria-hidden="true">↗</span></a>)}</div>}
+      {links.length > 0 && (
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {links.map((item) => (
+            <a
+              key={item.id}
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-12 items-center justify-between rounded-[10px] border border-white/15 px-4 text-sm font-semibold hover:bg-white/[0.04]"
+            >
+              <span>{item.mediaType === "demo" ? "Open live demo" : "Watch product video"}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      )}
       <p className="sr-only">Published media for {title}</p>
     </div>
   );
@@ -201,28 +244,36 @@ function RelatedSystems({ systems }: { systems: CatalogSystemRecord[] }) {
   return (
     <section className="border-t border-white/10 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-[min(calc(100%-40px),1280px)] md:w-[min(calc(100%-64px),1280px)] xl:w-[min(calc(100%-96px),1280px)]">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Continue comparing</p><h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em]">Related published systems.</h2></div><Link href="/systems" className="text-sm font-semibold text-brand-hover">View full catalog →</Link></div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">{systems.map((system) => {
-          const cover = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url;
-          return (
-            <article key={system.id} className="flex min-h-72 flex-col rounded-xl border border-white/10 bg-surface overflow-hidden">
-              {cover && (
-                <div className="aspect-[16/10] w-full overflow-hidden bg-white/5 border-b border-white/10">
-                  <img src={cover} alt={system.title} className="size-full object-cover" />
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-muted">Continue comparing</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em]">Related published systems.</h2>
+          </div>
+          <Link href="/systems" className="text-sm font-semibold text-brand-hover">View full catalog →</Link>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {systems.map((system) => {
+            const cover = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url;
+            return (
+              <article key={system.id} className="flex min-h-72 flex-col rounded-xl border border-white/10 bg-surface overflow-hidden">
+                {cover && (
+                  <div className="aspect-[16/10] w-full overflow-hidden bg-white/5 border-b border-white/10 flex items-center justify-center p-1">
+                    <img src={cover} alt={system.title} className="size-full object-contain" />
+                  </div>
+                )}
+                <div className="flex flex-1 flex-col p-5">
+                  <p className="text-xs uppercase tracking-[0.08em] text-muted">{system.category?.name ?? audienceLabel(system.audience)}</p>
+                  <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
+                  <div className="mt-auto border-t border-white/10 pt-5">
+                    <LocalizedCatalogPrice system={system} variant="related" />
+                    <Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 text-sm font-semibold">View system</Link>
+                  </div>
                 </div>
-              )}
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs uppercase tracking-[0.08em] text-muted">{system.category?.name ?? audienceLabel(system.audience)}</p>
-                <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3>
-                <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
-                <div className="mt-auto border-t border-white/10 pt-5">
-                  <LocalizedCatalogPrice system={system} variant="related" />
-                  <Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 text-sm font-semibold">View system</Link>
-                </div>
-              </div>
-            </article>
-          );
-        })}</div>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

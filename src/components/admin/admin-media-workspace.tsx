@@ -113,7 +113,7 @@ function MediaCard({ item, removing, onRemove }: { item: AdminMediaRecord; remov
     <article className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs">
       <div className="grid aspect-[16/9] place-items-center overflow-hidden border-b border-slate-200/80 bg-slate-50">
         {item.source === "upload" && item.previewUrl ? (
-          <img src={item.previewUrl} alt={item.altText ?? ""} className="h-full w-full object-cover" loading="lazy" />
+          <img src={item.previewUrl} alt={item.altText ?? ""} className="h-full w-full object-contain p-1" loading="lazy" />
         ) : (
           <div className="px-6 text-center">
             <span className="mx-auto grid size-12 place-items-center rounded-2xl border border-slate-200 bg-white text-xs font-bold uppercase text-blue-600 shadow-2xs">{item.mediaType}</span>

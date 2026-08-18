@@ -229,11 +229,13 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
         {primaryMedia ? (
           /* eslint-disable-next-html-element-suppression */
-          <img
-            src={primaryMedia}
-            alt={system.title}
-            className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+          <div className="size-full flex items-center justify-center p-1.5">
+            <img
+              src={primaryMedia}
+              alt={system.title}
+              className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
         ) : (
           <div className="size-full transition-transform duration-300 group-hover:scale-105">
             <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
