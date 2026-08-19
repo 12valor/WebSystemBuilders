@@ -9,11 +9,16 @@ import {
   Lock,
   ShieldCheck,
   Tag,
-  CheckCircle2,
   Building2,
-  Smartphone,
   Info,
+  ArrowRight,
 } from "lucide-react";
+import {
+  PayPalLogo,
+  GCashLogo,
+  MayaLogo,
+  CardBrandIcons,
+} from "@/components/checkout/payment-icons";
 
 type PayPalApproveData = { orderId?: string };
 type PayPalSdkErrorDetails = {
@@ -59,7 +64,7 @@ type Props = {
   sdkUrl: string;
 };
 
-type PaymentTab = "paypal" | "card" | "ewallet" | "invoice";
+type PaymentTab = "paypal" | "card" | "gcash" | "maya" | "invoice";
 
 export function PayPalCheckout(props: Props) {
   const router = useRouter();
@@ -286,82 +291,80 @@ export function PayPalCheckout(props: Props) {
         onError={() => setError("PayPal could not load.")}
       />
 
-      {/* 1. Payment Method Selector */}
+      {/* 1. Payment Method Selector Tabs with Official Brand Logos */}
       <div className="space-y-3">
         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
           Select Payment Method
         </label>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          {/* Option: PayPal */}
+          {/* Option 1: Official PayPal Logo */}
           <button
             type="button"
             onClick={() => setSelectedTab("paypal")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer ${
+            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
               selectedTab === "paypal"
-                ? "border-blue-600 bg-blue-50/50 text-blue-900 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
+                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <span className="font-extrabold text-blue-700 text-sm tracking-tight">
-              PayPal
-            </span>
-            <span className="text-[10px] text-slate-500 font-medium mt-0.5">
+            <PayPalLogo className="h-5 w-auto" />
+            <span className="text-[10px] text-slate-500 font-semibold mt-1">
               Instant
             </span>
           </button>
 
-          {/* Option: Card */}
+          {/* Option 2: Debit / Credit Card */}
           <button
             type="button"
             onClick={() => setSelectedTab("card")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer ${
+            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
               selectedTab === "card"
-                ? "border-blue-600 bg-blue-50/50 text-blue-900 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
+                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <CreditCard className="size-4 text-slate-700" />
-            <span className="text-[10px] text-slate-600 font-semibold mt-1">
+            <CardBrandIcons className="h-3.5 w-auto" />
+            <span className="text-[10px] text-slate-700 font-bold mt-1">
               Debit / Credit
             </span>
           </button>
 
-          {/* Option: GCash / Maya */}
+          {/* Option 3: Official GCash Logo */}
           <button
             type="button"
-            onClick={() => setSelectedTab("ewallet")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer ${
-              selectedTab === "ewallet"
-                ? "border-blue-600 bg-blue-50/50 text-blue-900 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+            onClick={() => setSelectedTab("gcash")}
+            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
+              selectedTab === "gcash"
+                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
+                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <Smartphone className="size-4 text-slate-700" />
-            <span className="text-[10px] text-slate-600 font-semibold mt-1">
-              GCash / Maya
+            <GCashLogo className="h-5 w-auto" />
+            <span className="text-[10px] text-slate-500 font-semibold mt-1">
+              e-Wallet
             </span>
           </button>
 
-          {/* Option: Bank / Invoice */}
+          {/* Option 4: Official Maya Logo */}
           <button
             type="button"
-            onClick={() => setSelectedTab("invoice")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer ${
-              selectedTab === "invoice"
-                ? "border-blue-600 bg-blue-50/50 text-blue-900 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+            onClick={() => setSelectedTab("maya")}
+            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
+              selectedTab === "maya"
+                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
+                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
             }`}
           >
-            <Building2 className="size-4 text-slate-700" />
-            <span className="text-[10px] text-slate-600 font-semibold mt-1">
-              Bank Invoice
+            <MayaLogo className="h-5 w-auto" />
+            <span className="text-[10px] text-slate-500 font-semibold mt-1">
+              e-Wallet
             </span>
           </button>
         </div>
       </div>
 
-      {/* 2. Dynamic Payment Form / Actions */}
+      {/* 2. Dynamic Payment Form / Actions based on selection */}
       {selectedTab === "paypal" && (
         <div className="space-y-6">
           <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4.5 text-xs text-blue-900 space-y-1.5">
@@ -376,7 +379,7 @@ export function PayPalCheckout(props: Props) {
             </p>
           </div>
 
-          {/* Agreements fieldset */}
+          {/* Required agreements */}
           <fieldset className="space-y-3 pt-2">
             <legend className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
               Required Agreements
@@ -466,7 +469,7 @@ export function PayPalCheckout(props: Props) {
               Credit or Debit Card Payment
             </h3>
             <p className="text-xs text-slate-500">
-              Direct card processing via PayPal Enterprise Hosted Fields.
+              Direct card processing via PayPal Enterprise Hosted Gateway.
             </p>
           </div>
 
@@ -528,10 +531,10 @@ export function PayPalCheckout(props: Props) {
           <div className="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-4 text-xs text-amber-900 space-y-1">
             <div className="flex items-center gap-1.5 font-bold text-amber-950">
               <Info className="size-3.5 text-amber-700" />
-              <span>Card Processing Notice</span>
+              <span>Card Gateway Authorization</span>
             </div>
             <p className="leading-relaxed">
-              Direct card billing uses PayPal's encrypted payment frame. You can also select the PayPal option to pay with any credit card without needing a PayPal account.
+              Debit and Credit card payments are routed securely through PayPal's PCI-DSS Level 1 compliant gateway. You can also pay directly via the PayPal option without creating an account.
             </p>
           </div>
 
@@ -541,35 +544,71 @@ export function PayPalCheckout(props: Props) {
             className="w-full min-h-12 rounded-full bg-slate-950 text-white font-bold text-xs sm:text-sm hover:bg-slate-800 transition shadow-md cursor-pointer flex items-center justify-center gap-2"
           >
             <Lock className="size-4" />
-            <span>Continue with PayPal Card Gateway ({props.priceFormatted})</span>
+            <span>Pay with Card via PayPal ({props.priceFormatted})</span>
           </button>
         </div>
       )}
 
-      {selectedTab === "ewallet" && (
+      {selectedTab === "gcash" && (
         <div className="space-y-4 text-xs">
-          <div className="space-y-1">
-            <h3 className="text-sm font-bold text-slate-900">
-              GCash / Maya e-Wallets
-            </h3>
-            <p className="text-slate-500">
-              Philippine local e-wallet direct checkout.
-            </p>
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h3 className="text-sm font-bold text-slate-900">
+                GCash Direct Checkout
+              </h3>
+              <p className="text-slate-500">
+                Fast & secure payment via GCash e-Wallet.
+              </p>
+            </div>
+            <GCashLogo className="h-6 w-auto" />
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 space-y-2.5 text-slate-700">
-            <p className="font-semibold text-slate-900">
-              Direct Local Payment Option
+          <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5 space-y-3 text-slate-700">
+            <p className="font-bold text-blue-950">
+              Local GCash Account Settlement
             </p>
             <p className="leading-relaxed">
-              If you prefer paying via GCash, Maya, or direct local bank QR code instead of PayPal, please request an instant quotation via our support desk. We will generate a verified order record for your account.
+              To pay for <strong>{props.systemTitle}</strong> ({props.priceFormatted}) using your GCash account, our team provides instant automated invoice receipts and delivery reconciliation via our helpdesk.
             </p>
-            <div className="pt-2">
+            <div className="pt-1">
               <Link
                 href="/account/support"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white border border-slate-200 px-3.5 py-2 font-bold text-slate-900 shadow-2xs hover:bg-slate-50"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 font-bold text-white shadow-xs hover:bg-blue-700 transition"
               >
-                <span>Request Local Wallet Billing →</span>
+                <span>Request GCash Payment QR →</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedTab === "maya" && (
+        <div className="space-y-4 text-xs">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h3 className="text-sm font-bold text-slate-900">
+                Maya (PayMaya) Checkout
+              </h3>
+              <p className="text-slate-500">
+                Seamless payment via Maya Wallet & QR Ph.
+              </p>
+            </div>
+            <MayaLogo className="h-6 w-auto" />
+          </div>
+
+          <div className="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 space-y-3 text-slate-700">
+            <p className="font-bold text-emerald-950">
+              Maya Wallet & QR Ph Billing
+            </p>
+            <p className="leading-relaxed">
+              Pay with your Maya wallet or any QR Ph enabled banking app for <strong>{props.systemTitle}</strong> ({props.priceFormatted}). We log the transaction directly to your customer account upon verification.
+            </p>
+            <div className="pt-1">
+              <Link
+                href="/account/support"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 font-bold text-white shadow-xs hover:bg-emerald-700 transition"
+              >
+                <span>Request Maya Payment Code →</span>
               </Link>
             </div>
           </div>
@@ -580,7 +619,7 @@ export function PayPalCheckout(props: Props) {
         <div className="space-y-4 text-xs">
           <div className="space-y-1">
             <h3 className="text-sm font-bold text-slate-900">
-              Official Corporate / Institutional Invoice
+              Corporate / Institutional Bank Invoice
             </h3>
             <p className="text-slate-500">
               Wire transfer & BIR-compliant invoice receipt.
