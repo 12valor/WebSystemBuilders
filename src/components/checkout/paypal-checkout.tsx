@@ -6,13 +6,19 @@ import { useRouter } from "next/navigation";
 import { createElement, useCallback, useState } from "react";
 
 type PayPalApproveData = { orderId?: string };
+type PayPalSdkErrorDetails = {
+  name?: string;
+  message?: string;
+  code?: string;
+  isRecoverable?: boolean;
+};
 type PayPalSession = { start: (options: { presentationMode: "auto" }, orderPromise: Promise<string>) => Promise<void> };
 type PayPalInstance = {
   findEligibleMethods: (options: { currencyCode: "PHP" }) => Promise<{ isEligible: (method: string) => boolean }>;
   createPayPalOneTimePaymentSession: (callbacks: {
     onApprove: (data: PayPalApproveData) => Promise<void>;
     onCancel: () => Promise<void>;
-    onError: () => void;
+    onError: (error?: unknown) => void;
   }) => PayPalSession;
 };
 
@@ -60,6 +66,7 @@ export function PayPalCheckout(props: Props) {
       setPayPalInstance(instance);
       setEligible(true);
     } catch (initializationError) {
+      console.error("[paypal-checkout] SDK initialization failed", getPayPalSdkErrorDetails(initializationError));
       setEligible(false);
       setError(
         initializationError instanceof Error && initializationError.message === "verified_account_required"
@@ -77,6 +84,10 @@ export function PayPalCheckout(props: Props) {
     });
     const payload = (await response.json()) as { providerOrderId?: unknown; error?: unknown };
     if (!response.ok) {
+      console.error("[paypal-checkout] Order creation failed", {
+        status: response.status,
+        error: typeof payload.error === "string" ? payload.error : "unknown_error",
+      });
       if (payload.error === "product_unavailable") throw new Error("product_unavailable");
       if (payload.error === "paypal_unavailable") throw new Error("paypal_unavailable");
       throw new Error("checkout_unavailable");
@@ -121,13 +132,18 @@ export function PayPalCheckout(props: Props) {
           setPending(false);
           setError("PayPal Checkout was closed. No payment was recorded.");
         },
-        onError: () => {
+        onError: (sdkError) => {
+          console.error("[paypal-checkout] PayPal SDK session error", getPayPalSdkErrorDetails(sdkError));
           setPending(false);
           setError("PayPal Checkout could not be opened. Please try again.");
         },
       });
       await paymentSession.start({ presentationMode: "auto" }, orderPromise);
     } catch (paymentError) {
+      console.error("[paypal-checkout] Checkout start failed", {
+        presentationMode: "auto",
+        ...getPayPalSdkErrorDetails(paymentError),
+      });
       setPending(false);
       if (paymentError instanceof Error && paymentError.message === "product_unavailable") {
         setError("This system is not currently available for checkout. Please contact support.");
@@ -162,7 +178,19 @@ export function PayPalCheckout(props: Props) {
           I understand verified payment and administrator-prepared delivery are separate steps.
         </Acknowledgement>
       </fieldset>
-      {error && <p role="alert" className="mt-5 rounded-xl border border-red-400/30 bg-red-400/10 p-3 text-sm text-red-100">{error}</p>}
+      {error && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mt-6 rounded-xl border-2 border-red-300/70 bg-red-950/80 px-4 py-4 text-red-50 shadow-[0_0_0_1px_rgba(248,113,113,0.12)] sm:px-5"
+        >
+          <p className="text-base font-bold">PayPal Checkout needs attention</p>
+          <p className="mt-1 text-sm font-medium leading-6 text-red-100">{error}</p>
+          <p className="mt-2 text-xs leading-5 text-red-200/90">
+            Your browser console now includes a safe PayPal diagnostic entry for this attempt.
+          </p>
+        </div>
+      )}
       {!eligible && !error && <p className="mt-5 text-sm text-secondary">Checking PayPal availability…</p>}
       <div className="mt-6" aria-busy={pending}>
         {createElement("paypal-button", {
@@ -178,4 +206,17 @@ export function PayPalCheckout(props: Props) {
 
 function Acknowledgement({ checked, onChange, children }: { checked: boolean; onChange: (value: boolean) => void; children: React.ReactNode }) {
   return <label className="flex items-start gap-3 text-sm leading-6 text-secondary"><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="mt-1 size-4" /><span>{children}</span></label>;
+}
+
+function getPayPalSdkErrorDetails(error: unknown): PayPalSdkErrorDetails {
+  if (!error || (typeof error !== "object" && typeof error !== "string")) return {};
+  if (typeof error === "string") return { message: error };
+
+  const candidate = error as Record<string, unknown>;
+  const details: PayPalSdkErrorDetails = {};
+  if (typeof candidate.name === "string") details.name = candidate.name;
+  if (typeof candidate.message === "string") details.message = candidate.message;
+  if (typeof candidate.code === "string") details.code = candidate.code;
+  if (typeof candidate.isRecoverable === "boolean") details.isRecoverable = candidate.isRecoverable;
+  return details;
 }
