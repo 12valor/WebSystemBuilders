@@ -80,56 +80,82 @@ export function OrderReceipt({
           {/* LEFT COLUMN: Floating Dark Card & Action Buttons */}
           <div className="space-y-6 lg:col-span-5 print:hidden">
             {/* The Dark Floating Summary Card */}
-            <div className="rounded-3xl bg-[#1c1d24] border border-white/10 p-6 sm:p-8 text-white shadow-xl space-y-6">
-              {/* Amount & Due/Paid Date */}
-              <div className="space-y-1">
-                <div className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#1d1e26] to-[#14151b] border border-white/[0.12] p-6 sm:p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
+              {/* Top Hairline Sheen */}
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+
+              {/* Amount & Timestamp */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase">
+                  Total Amount Paid
+                </span>
+                <div className="font-mono text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
                   {formattedTotal}
                 </div>
-                <div className="text-xs text-slate-400 font-medium">
-                  {isPaid ? `Paid ${formattedDate}` : isPending ? `Pending ${formattedDate}` : `Due ${formattedDate}`}
+                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium pt-0.5">
+                  <span className="size-1.5 rounded-full bg-emerald-400" />
+                  <span>{isPaid ? `Paid on ${formattedDate}` : `Due on ${formattedDate}`}</span>
                 </div>
               </div>
 
-              {/* Key-Value Details */}
-              <div className="border-t border-white/10 pt-5 space-y-3.5 text-xs">
-                <div className="grid grid-cols-3 gap-2">
-                  <span className="text-slate-400 font-medium">To</span>
-                  <span className="col-span-2 font-semibold text-white truncate" title={userEmail ?? "Customer"}>
+              {/* Structured Key-Value Ledger List */}
+              <div className="divide-y divide-white/[0.08] border-t border-white/[0.1] text-xs">
+                {/* To */}
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-slate-400 font-medium text-[11px] uppercase tracking-wider">To</span>
+                  <span className="font-semibold text-white truncate max-w-[200px] text-right" title={userEmail ?? "Customer"}>
                     {userEmail ?? "Customer"}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <span className="text-slate-400 font-medium">From</span>
-                  <span className="col-span-2 font-semibold text-white">WebSystemBuilders</span>
+                {/* From */}
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-slate-400 font-medium text-[11px] uppercase tracking-wider">From</span>
+                  <span className="font-semibold text-white">WebSystemBuilders</span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <span className="text-slate-400 font-medium">Order ID</span>
-                  <span className="col-span-2 font-mono font-medium text-slate-300 break-all">
-                    {order.order_number}
-                  </span>
+                {/* Order ID */}
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-slate-400 font-medium text-[11px] uppercase tracking-wider">Order ID</span>
+                  <div className="flex items-center gap-1.5 bg-white/[0.06] border border-white/[0.1] px-2.5 py-1 rounded-lg font-mono text-[11px] text-slate-200">
+                    <span className="truncate max-w-[130px] sm:max-w-[160px]">{order.order_number}</span>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(order.order_number, "order-id")}
+                      className="text-slate-400 hover:text-white transition cursor-pointer"
+                      title="Copy Order ID"
+                    >
+                      {copiedKey === "order-id" ? (
+                        <Check className="size-3 text-emerald-400" />
+                      ) : (
+                        <Copy className="size-3" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  <span className="text-slate-400 font-medium">Status</span>
-                  <span className="col-span-2 font-bold text-emerald-400 flex items-center gap-1.5">
-                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>{isPaid ? "Paid & Reconciled" : "Pending Verification"}</span>
+                {/* Status */}
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-slate-400 font-medium text-[11px] uppercase tracking-wider">Status</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-[11px] font-bold text-emerald-400">
+                    <span className="size-1.5 rounded-full bg-emerald-400" />
+                    <span>{isPaid ? "Paid & Reconciled" : "Pending"}</span>
                   </span>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-3 gap-2 pt-1">
-                  <span className="text-slate-400 font-medium">Notes</span>
-                  <span className="col-span-2 text-slate-300 leading-relaxed font-normal">
-                    {canDownload
-                      ? "Payment confirmed. Download your ready-made software deliverable below."
-                      : isPaid
-                        ? "Payment confirmed. Private package is awaiting administrator preparation."
-                        : "Please complete your payment to unlock the deliverable."}
-                  </span>
+              {/* Inset Fulfillment Note Callout */}
+              <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-4 text-xs space-y-1">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Fulfillment Status
                 </div>
+                <p className="text-slate-300 leading-relaxed font-normal">
+                  {canDownload
+                    ? "Payment confirmed via PayPal. Your software deliverable package is ready for download."
+                    : isPaid
+                      ? "Payment confirmed. Private package is awaiting administrator preparation."
+                      : "Please complete your payment to unlock the deliverable."}
+                </p>
               </div>
             </div>
 
