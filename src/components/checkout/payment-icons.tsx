@@ -1,76 +1,41 @@
-export function PayPalLogo({ className = "h-4.5 w-auto" }: { className?: string }) {
+import Image from "next/image";
+
+export function PayPalLogo({ className = "h-5 w-auto" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 85 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <path
-        d="M13.2 2H6.5C5.9 2 5.4 2.4 5.3 3L2 22H6.6L7.9 14.5H10.8C14.7 14.5 17.6 12.5 18.2 8.7C18.6 6.3 17.4 4.5 15.3 3.3C14.7 2.4 13.9 2 13.2 2Z"
-        fill="#003087"
-      />
-      <path
-        d="M14.7 8.3C14.3 11 12 12.7 9.1 12.7H7.3L6.1 19.8H9.6C10.1 19.8 10.5 19.4 10.6 18.9L11.5 13.5H12.2C15.3 13.5 17.6 11.9 18.1 8.8C18.4 7.2 18 5.8 17 4.9C16.3 6.3 15.3 7.6 14.7 8.3Z"
-        fill="#0079C1"
-      />
-      <path
-        d="M13.2 2H6.5C5.9 2 5.4 2.4 5.3 3L2 22H6.6L7.9 14.5H10.8C14.7 14.5 17.6 12.5 18.2 8.7C18.6 6.3 17.4 4.5 15.3 3.3C14.7 2.4 13.9 2 13.2 2Z"
-        fill="#003087"
-      />
-      <text
-        x="24"
-        y="17.5"
-        fontFamily="system-ui, -apple-system, sans-serif"
-        fontWeight="800"
-        fontSize="16"
-        fontStyle="italic"
-        fill="#003087"
-      >
-        Pay<tspan fill="#0079C1">Pal</tspan>
-      </text>
-    </svg>
+    <Image
+      src="/logos/PayPal.svg.webp"
+      alt="PayPal"
+      width={120}
+      height={32}
+      className={`object-contain ${className}`}
+      priority
+    />
   );
 }
 
-export function GCashLogo({ className = "h-4.5 w-auto" }: { className?: string }) {
+export function GCashLogo({ className = "h-5 w-auto" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 85 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="12" cy="12" r="10.5" fill="#005CE6" />
-      <path
-        d="M12.2 6.8C9.2 6.8 6.8 9.2 6.8 12.2C6.8 15.2 9.2 17.6 12.2 17.6C14.7 17.6 16.8 16 17.4 13.7H12.2V11.4H19.9C20 11.8 20.1 12.3 20.1 12.8C20.1 17.2 16.5 20.8 12.2 20.8C7.4 20.8 3.5 16.9 3.5 12.2C3.5 7.4 7.4 3.5 12.2 3.5C14.7 3.5 16.9 4.6 18.4 6.2L16.4 8.2C15.3 7.1 13.8 6.8 12.2 6.8Z"
-        fill="white"
-      />
-      <text
-        x="26"
-        y="17"
-        fontFamily="system-ui, -apple-system, sans-serif"
-        fontWeight="800"
-        fontSize="15"
-        letterSpacing="-0.4px"
-        fill="#005CE6"
-      >
-        GCash
-      </text>
-    </svg>
+    <Image
+      src="/logos/GCash_logo.svg.webp"
+      alt="GCash"
+      width={120}
+      height={32}
+      className={`object-contain ${className}`}
+      priority
+    />
   );
 }
 
-export function MayaLogo({ className = "h-4.5 w-auto" }: { className?: string }) {
+export function MayaLogo({ className = "h-5 w-auto" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 78 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <circle cx="12" cy="12" r="10.5" fill="#00D665" />
-      <path
-        d="M7.5 15.5V8.5H9.5L12 12.5L14.5 8.5H16.5V15.5H14.7V11L12.6 14.2H11.4L9.3 11V15.5H7.5Z"
-        fill="#000000"
-      />
-      <text
-        x="26"
-        y="17"
-        fontFamily="system-ui, -apple-system, sans-serif"
-        fontWeight="800"
-        fontSize="16"
-        letterSpacing="-0.6px"
-        fill="#000000"
-      >
-        maya
-      </text>
-    </svg>
+    <Image
+      src="/logos/Maya_logo.svg.webp"
+      alt="Maya"
+      width={120}
+      height={32}
+      className={`object-contain ${className}`}
+      priority
+    />
   );
 }
 
