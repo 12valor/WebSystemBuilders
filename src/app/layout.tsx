@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Lora, Geist_Mono } from "next/font/google";
+import { Instrument_Sans, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/layout/lenis-provider";
 import "./globals.css";
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
-});
-
-const lora = Lora({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${lora.variable} ${geistMono.variable}`}
+      className={`${instrumentSans.variable} ${plusJakartaSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <body

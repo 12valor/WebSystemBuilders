@@ -85,16 +85,13 @@ export function OrderReceipt({
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
               {/* Amount & Timestamp */}
-              <div className="space-y-1.5">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase">
-                  Total Amount Paid
-                </span>
-                <div className="font-mono text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              <div className="space-y-1">
+                <div className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
                   {formattedTotal}
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium pt-0.5">
                   <span className="size-1.5 rounded-full bg-emerald-400" />
-                  <span>{isPaid ? `Paid on ${formattedDate}` : `Due on ${formattedDate}`}</span>
+                  <span>{isPaid ? `Paid ${formattedDate}` : `Due ${formattedDate}`}</span>
                 </div>
               </div>
 
@@ -260,7 +257,7 @@ export function OrderReceipt({
                     Version {order.purchased_version} • Complete Source Code, Database Architecture & Documentation
                   </p>
                 </div>
-                <div className="font-mono font-bold text-slate-900 text-sm text-right shrink-0">
+                <div className="font-bold text-slate-900 text-sm text-right shrink-0">
                   {formattedTotal}
                 </div>
               </div>
@@ -270,16 +267,16 @@ export function OrderReceipt({
             <div className="border-t border-slate-200 pt-4 space-y-2 text-xs">
               <div className="flex justify-between text-slate-600">
                 <span>Subtotal</span>
-                <span className="font-mono font-semibold text-slate-800">{formattedTotal}</span>
+                <span className="font-semibold text-slate-800">{formattedTotal}</span>
               </div>
               <div className="flex justify-between text-slate-600">
                 <span>Tax</span>
-                <span className="font-mono font-semibold text-slate-500">₱0.00</span>
+                <span className="font-semibold text-slate-500">₱0.00</span>
               </div>
 
               <div className="border-t border-slate-200 pt-3 flex justify-between items-baseline">
                 <span className="font-extrabold text-slate-900 text-sm sm:text-base">Grand Total</span>
-                <span className="font-mono font-black text-xl sm:text-2xl text-slate-950">
+                <span className="font-extrabold text-xl sm:text-2xl text-slate-950 tracking-tight">
                   {formattedTotal}
                 </span>
               </div>
