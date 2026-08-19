@@ -6,15 +6,11 @@ import { openPortalDownload } from "@/features/customer/actions";
 import type { CustomerPortalOrder } from "@/features/customer/repository";
 import {
   Check,
-  CheckCircle2,
   ChevronDown,
   ChevronUp,
-  Clock,
   Copy,
   Download,
   FileCode,
-  FileText,
-  HelpCircle,
   Mail,
   Paperclip,
   Printer,
@@ -86,14 +82,14 @@ export function OrderReceipt({
           <div className="space-y-8 lg:col-span-7">
             {/* Header: Company Info + PAID Rubber Stamp */}
             <div className="flex items-start justify-between gap-4">
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {/* Brand Icon & Name */}
                 <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-blue-600 text-white font-black shadow-xs">
-                    <span className="font-mono text-base tracking-tighter">WSB</span>
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-slate-900 text-white font-serif font-bold shadow-xs">
+                    <span className="text-base tracking-normal">W</span>
                   </div>
                   <div>
-                    <h2 className="text-xl font-extrabold tracking-tight text-slate-900">
+                    <h2 className="font-serif text-2xl font-bold tracking-tight text-slate-900">
                       WebSystemBuilders
                     </h2>
                   </div>
@@ -101,23 +97,23 @@ export function OrderReceipt({
 
                 <div className="pt-2 text-xs text-slate-500 font-medium space-y-0.5 leading-relaxed">
                   <p className="font-bold text-slate-700">WebSystemBuilders Inc.</p>
-                  <p>support@websystembuilders.com</p>
-                  <p>websystembuilders.com</p>
+                  <p className="font-mono text-[11px] text-slate-500">support@websystembuilders.com</p>
+                  <p className="text-[11px] text-slate-400">websystembuilders.com</p>
                 </div>
               </div>
 
               {/* Tilted PAID Rubber Stamp Badge */}
               <div className="select-none pt-1">
                 {isPaid ? (
-                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-emerald-500 bg-emerald-50/40 px-4 py-1.5 text-2xl sm:text-3xl font-black uppercase tracking-widest text-emerald-600 rotate-[9deg] shadow-xs">
+                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-emerald-600 bg-emerald-50/50 px-4 py-1.5 font-mono text-2xl sm:text-3xl font-black uppercase tracking-[0.2em] text-emerald-600 rotate-[9deg] shadow-xs">
                     PAID
                   </div>
                 ) : isPending ? (
-                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-amber-500 bg-amber-50/40 px-3 py-1.5 text-xl sm:text-2xl font-black uppercase tracking-wider text-amber-600 rotate-[8deg] shadow-xs">
+                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-amber-600 bg-amber-50/50 px-3 py-1.5 font-mono text-xl sm:text-2xl font-black uppercase tracking-[0.15em] text-amber-600 rotate-[8deg] shadow-xs">
                     PENDING
                   </div>
                 ) : (
-                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-slate-400 bg-slate-50 px-3 py-1.5 text-xl font-black uppercase tracking-wider text-slate-500 rotate-[8deg]">
+                  <div className="inline-flex items-center justify-center rounded-xl border-[3px] border-slate-400 bg-slate-50 px-3 py-1.5 font-mono text-xl font-black uppercase tracking-[0.15em] text-slate-500 rotate-[8deg]">
                     UNPAID
                   </div>
                 )}
@@ -125,29 +121,29 @@ export function OrderReceipt({
             </div>
 
             {/* Metadata Rows: To / Issued On / Fulfillment */}
-            <div className="border-t border-slate-100 pt-6 space-y-2 text-xs">
+            <div className="border-t border-slate-100 pt-6 space-y-2.5 text-xs">
               <div className="flex justify-between text-slate-700">
-                <span className="text-slate-400 font-medium">To</span>
-                <span className="font-bold text-slate-900 text-right truncate max-w-[280px]">
+                <span className="text-slate-400 font-medium uppercase tracking-wider text-[11px]">To</span>
+                <span className="font-semibold text-slate-900 text-right truncate max-w-[280px]">
                   {userEmail ?? "Verified Customer"}
                 </span>
               </div>
               <div className="flex justify-between text-slate-700">
-                <span className="text-slate-400 font-medium">Issued On</span>
-                <span className="font-bold text-slate-900">{formattedDate}</span>
+                <span className="text-slate-400 font-medium uppercase tracking-wider text-[11px]">Issued On</span>
+                <span className="font-semibold text-slate-900">{formattedDate}</span>
               </div>
               <div className="flex justify-between text-slate-700">
-                <span className="text-slate-400 font-medium">License & Access</span>
-                <span className="font-bold text-slate-900">Perpetual Source License</span>
+                <span className="text-slate-400 font-medium uppercase tracking-wider text-[11px]">License & Access</span>
+                <span className="font-semibold text-slate-900">Perpetual Source License</span>
               </div>
             </div>
 
             {/* Invoice Heading */}
-            <div className="space-y-1 pt-2">
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            <div className="space-y-1.5 pt-2">
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
                 Invoice for {formattedTotal}
               </h1>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-semibold text-slate-500">
+              <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-medium text-slate-500">
                 <span>Invoice {order.order_number}</span>
                 <span>•</span>
                 <span>PO #{order.provider_order_id ?? "WSB-ORDER"}</span>
@@ -156,14 +152,14 @@ export function OrderReceipt({
 
             {/* Thank You Note */}
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-              Thank you for choosing our ready-made systems. Please review this invoice carefully and contact our support team at{" "}
+              Thank you for choosing our systems. Please review this invoice carefully and contact our accounts department at{" "}
               <a
                 href="mailto:support@websystembuilders.com"
                 className="font-medium text-blue-600 hover:underline"
               >
                 support@websystembuilders.com
               </a>{" "}
-              for any questions or technical guidance.
+              for any questions or clarifications.
             </p>
 
             {/* "See Details 📎 1" Toggle */}
@@ -190,33 +186,33 @@ export function OrderReceipt({
                 <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5 space-y-4 text-xs animate-in fade-in duration-200">
                   <div className="flex items-start justify-between gap-4 border-b border-slate-200/80 pb-3">
                     <div>
-                      <span className="font-mono text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                      <span className="font-mono text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
                         v{order.purchased_version}
                       </span>
-                      <h4 className="mt-1 text-sm font-bold text-slate-900">{order.product_name}</h4>
+                      <h4 className="mt-1 font-serif text-base font-bold text-slate-900">{order.product_name}</h4>
                       <p className="text-slate-500 text-[11px] mt-0.5">
-                        Production source package, complete database schema, and technical docs.
+                        Production source code, database architecture, and technical guidance documentation.
                       </p>
                     </div>
-                    <span className="font-extrabold text-sm text-slate-900">{formattedTotal}</span>
+                    <span className="font-mono font-bold text-sm text-slate-900">{formattedTotal}</span>
                   </div>
 
-                  <div className="space-y-1.5 text-slate-600 text-[11px]">
+                  <div className="space-y-2 text-slate-600 text-[11px]">
                     <div className="flex justify-between">
                       <span>Item Subtotal</span>
-                      <span className="font-semibold text-slate-800">{formattedTotal}</span>
+                      <span className="font-mono font-semibold text-slate-800">{formattedTotal}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Platform & Automated Processing</span>
-                      <span className="font-semibold text-emerald-600">₱0.00 (Included)</span>
+                      <span className="font-mono font-semibold text-emerald-600">₱0.00 (Included)</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Taxes / VAT</span>
-                      <span className="font-semibold text-slate-600">₱0.00 (Zero-rated)</span>
+                      <span className="font-mono font-semibold text-slate-600">₱0.00 (Zero-rated)</span>
                     </div>
                     <div className="pt-2 border-t border-slate-200 flex justify-between font-bold text-xs text-slate-900">
-                      <span>Total</span>
-                      <span>{formattedTotal}</span>
+                      <span className="font-serif">Total Amount</span>
+                      <span className="font-mono">{formattedTotal}</span>
                     </div>
                   </div>
                 </div>
@@ -236,7 +232,7 @@ export function OrderReceipt({
                 <div className="flex-1 rounded-2xl border-2 border-emerald-500/80 bg-white p-4 sm:p-5 shadow-2xs space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm sm:text-base font-extrabold text-slate-900">
+                      <span className="font-serif text-base font-bold text-slate-900">
                         {formattedTotal}
                       </span>
                       <span className="text-xs text-slate-400 font-medium">• {formattedDate}</span>
@@ -254,7 +250,7 @@ export function OrderReceipt({
                         PayPal
                       </span>
                       <span className="text-slate-500 text-[11px] font-mono truncate max-w-[140px] sm:max-w-[200px]">
-                        ID: {order.provider_payment_id ?? order.provider_order_id ?? "Verified"}
+                        ending {order.provider_payment_id ? order.provider_payment_id.slice(-6) : "1234"}
                       </span>
                       {order.provider_payment_id && (
                         <button
@@ -289,7 +285,7 @@ export function OrderReceipt({
                         className="inline-flex items-center gap-1 hover:text-slate-900 hover:underline"
                       >
                         <Mail className="size-3 text-slate-400" />
-                        <span>Email / Support</span>
+                        <span>Email Receipt</span>
                       </Link>
                     </div>
                   </div>
@@ -312,7 +308,7 @@ export function OrderReceipt({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <FileCode className="size-4 text-blue-600" />
-                      <span className="text-xs sm:text-sm font-bold text-slate-900">
+                      <span className="font-serif text-sm font-bold text-slate-900">
                         {canDownload ? "Digital Deliverable Ready" : "Deliverable Package (.ZIP)"}
                       </span>
                     </div>
@@ -365,9 +361,9 @@ export function OrderReceipt({
               </div>
 
               <div className="space-y-1">
-                <h3 className="text-xl font-extrabold text-slate-900">Payment Successful</h3>
+                <h3 className="font-serif text-2xl font-bold text-slate-900">Payment Successful</h3>
                 <p className="text-xs text-slate-500 font-medium">
-                  Receipt was registered to <span className="text-slate-800 font-semibold">{userEmail}</span>
+                  Receipt was emailed to <span className="font-mono text-slate-800 font-semibold">{userEmail}</span>
                 </p>
               </div>
 
@@ -387,7 +383,7 @@ export function OrderReceipt({
             <div className="w-full max-w-sm rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-2xs space-y-3.5 text-xs">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-slate-900">{formattedTotal}</span>
+                  <span className="font-serif font-bold text-slate-900">{formattedTotal}</span>
                   <span className="text-slate-400 font-medium">• {formattedDate}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700">
@@ -398,7 +394,7 @@ export function OrderReceipt({
 
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-[11px] text-slate-500">
                 <span className="font-medium">
-                  <span className="font-mono font-bold text-slate-700">PayPal</span> Verified
+                  <span className="font-mono font-bold text-slate-700">PayPal</span> ending {order.provider_payment_id ? order.provider_payment_id.slice(-4) : "1234"}
                 </span>
 
                 <div className="flex items-center gap-2 font-semibold">
@@ -443,7 +439,7 @@ export function OrderReceipt({
                 <ShieldCheck className="size-3.5 text-emerald-600" />
                 <span>Verified PayPal Transaction</span>
               </div>
-              <p className="text-[10px] text-slate-400">
+              <p className="font-mono text-[10px] text-slate-400">
                 Order SNAPSHOT: {order.order_number}
               </p>
             </div>
