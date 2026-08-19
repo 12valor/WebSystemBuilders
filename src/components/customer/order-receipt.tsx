@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { openPortalDownload } from "@/features/customer/actions";
 import type { CustomerPortalOrder } from "@/features/customer/repository";
 import {
@@ -184,9 +185,7 @@ export function OrderReceipt({
           <div className="rounded-[28px] bg-white text-slate-900 p-8 sm:p-12 shadow-2xl lg:col-span-7 space-y-8 min-h-[580px] print:p-0 print:shadow-none print:rounded-none">
             {/* Header: Geometric Logo & Brand Title */}
             <div className="flex items-center gap-3.5">
-              <div className="flex size-11 items-center justify-center rounded-xl bg-slate-950 text-white font-mono font-black text-lg shadow-xs">
-                <span>W</span>
-              </div>
+              <BrandLogo priority className="size-11" />
               <div className="leading-tight">
                 <h2 className="font-extrabold text-lg tracking-wider text-slate-950 uppercase">
                   WEBSYSTEMBUILDERS
