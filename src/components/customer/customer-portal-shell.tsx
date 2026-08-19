@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 
 export function CustomerPortalShell({
   children,
@@ -19,48 +20,87 @@ export function CustomerPortalShell({
     { href: "/account/support", label: "Support Requests" },
   ];
 
+  // Derive display initials from email
+  const initial = userEmail ? userEmail.charAt(0).toUpperCase() : "C";
+
   return (
-    <main id="main-content" className="py-10 sm:py-14 bg-[#FAFAFC] text-slate-900 min-h-screen">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-        {/* Header Banner */}
-        <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-8 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Customer Portal</span>
-            <h1 className="mt-2 text-3xl font-extrabold tracking-[-0.04em] text-slate-900 sm:text-4xl">My Account</h1>
-            <p className="mt-2 text-sm leading-6 text-slate-600 font-medium">
-              Signed in as <span className="font-semibold text-slate-900">{userEmail ?? "Customer"}</span>
-            </p>
+    <main id="main-content" className="min-h-screen bg-[#FBFBFD] text-slate-900">
+      {/* Top Architectural Workspace Header */}
+      <div className="border-b border-slate-200/80 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          {/* Main Identity Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-8">
+            <div className="flex items-center gap-4">
+              {/* User Avatar Circle */}
+              <div className="flex size-12 items-center justify-center rounded-full bg-slate-900 text-white font-mono text-sm font-bold shadow-xs">
+                {initial}
+              </div>
+
+              {/* Title & Email Info */}
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+                    My Account
+                  </h1>
+                </div>
+                <p className="text-xs text-slate-500 font-medium">
+                  {userEmail ?? "Verified Customer"}
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex items-center gap-4 self-start sm:self-center">
+              <Link
+                href="/systems"
+                className="text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                Browse Systems →
+              </Link>
+
+              <span className="h-4 w-px bg-slate-200" />
+
+              <Link
+                href="/auth/sign-out"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors"
+              >
+                <LogOut className="size-3.5" />
+                <span>Sign out</span>
+              </Link>
+            </div>
           </div>
 
-          <Link
-            href="/auth/sign-out"
-            className="inline-flex min-h-9 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50"
-          >
-            Sign Out
-          </Link>
-        </div>
+          {/* Clean Underline Tab Navigation (Linear / Vercel style) */}
+          <nav aria-label="Customer portal tabs" className="flex gap-6 overflow-x-auto scrollbar-none">
+            {navItems.map((item) => {
+              const active = item.exact
+                ? pathname === item.href
+                : pathname.startsWith(item.href);
 
-        {/* Navigation Tabs */}
-        <div className="mt-6 flex overflow-x-auto gap-2 border-b border-slate-200/80 pb-3 text-sm">
-          {navItems.map((item) => {
-            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${
-                  active
-                    ? "bg-blue-50 text-blue-600 border border-blue-100/80 shadow-2xs"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative py-3.5 text-xs tracking-tight transition-colors whitespace-nowrap ${
+                    active
+                      ? "font-bold text-slate-950"
+                      : "font-medium text-slate-500 hover:text-slate-800"
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {active && (
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-slate-950 rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
+      </div>
 
-        <div className="mt-8">{children}</div>
+      {/* Main Content Area */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        {children}
       </div>
     </main>
   );
