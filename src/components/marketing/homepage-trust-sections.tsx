@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ExternalLink, FileText, LockKeyhole, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  ExternalLink,
+  FileText,
+  LockKeyhole,
+  ShieldCheck,
+} from "lucide-react";
 import type { PublicCompanyProfile } from "@/features/content/company-profile-types";
 import type { PublicFaqItem } from "@/features/content/faq-public-types";
 
@@ -8,69 +16,103 @@ const purchaseSteps = [
   {
     id: "01",
     title: "Review the exact listing",
-    description: "Check the authoritative price, requirements, inclusions, exclusions, support coverage, license, and delivery notes before ordering.",
+    description:
+      "Check the authoritative price, requirements, inclusions, exclusions, support coverage, license, and delivery notes before ordering.",
     icon: FileText,
   },
   {
     id: "02",
     title: "Create a recorded order",
-    description: "The server records the selected product and authoritative PHP amount before payment instructions are presented.",
+    description:
+      "The server records the selected product and authoritative PHP amount before payment instructions are presented.",
     icon: CheckCircle2,
   },
   {
     id: "03",
     title: "Pay securely with PayPal",
-    description: "Approve PayPal Checkout while the server keeps the published PHP price and order snapshot authoritative.",
+    description:
+      "Approve PayPal Checkout while the server keeps the published PHP price and order snapshot authoritative.",
     icon: ShieldCheck,
   },
   {
     id: "04",
     title: "Receive protected delivery",
-    description: "Delivery becomes eligible only after verified server capture. Customer files remain behind expiring, revocable account access.",
+    description:
+      "Delivery becomes eligible only after verified server capture. Customer files remain behind expiring, revocable account access.",
     icon: LockKeyhole,
   },
-];
+] as const;
 
 const policyLinks = [
   ["Delivery policy", "/legal/delivery"],
   ["Commercial license", "/legal/license"],
   ["Refund policy", "/legal/refunds"],
   ["Privacy policy", "/legal/privacy"],
-  ["Terms", "/legal/terms"],
+  ["Terms of Service", "/legal/terms"],
 ] as const;
 
 export function PurchaseTransparencySection() {
   return (
-    <section aria-labelledby="purchase-transparency-title" className="bg-slate-950 py-20 text-white sm:py-28">
+    <section
+      aria-labelledby="purchase-transparency-title"
+      className="border-b border-slate-800/80 bg-[#0B0F19] py-20 text-white sm:py-24 lg:py-28"
+    >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 items-start">
+          {/* Left Column */}
           <div>
-            <h2 id="purchase-transparency-title" className="font-heading text-3xl font-bold tracking-[-0.04em] sm:text-5xl">
+            <h2
+              id="purchase-transparency-title"
+              className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl leading-[1.1]"
+            >
               Know the price, package, and delivery path first.
             </h2>
-            <p className="mt-5 max-w-xl leading-7 text-slate-300">
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300">
               Product-specific details remain authoritative. No browser return, screenshot, or transaction reference is treated as confirmed payment by itself.
             </p>
-            <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3">
-              {policyLinks.map(([label, href]) => <Link key={href} href={href} className="text-sm font-semibold text-slate-300 underline decoration-white/30 underline-offset-4 hover:text-white">{label}</Link>)}
+
+            <div className="mt-8 flex flex-wrap gap-2.5">
+              {policyLinks.map(([label, href]) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="group inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-slate-300 transition-all duration-150 hover:border-blue-500/40 hover:bg-blue-950/40 hover:text-white"
+                >
+                  <span>{label}</span>
+                  <ArrowUpRight className="size-3 text-slate-400 transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-300" />
+                </Link>
+              ))}
             </div>
           </div>
 
-          <ol className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
+          {/* Right Column: 4 Clean Step Cards */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {purchaseSteps.map((step) => {
               const Icon = step.icon;
               return (
-                <li key={step.id} className="bg-slate-950 p-6 sm:p-7">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-slate-500">{step.id}</span>
-                    <Icon className="size-5 text-blue-300" aria-hidden="true" />
+                <article
+                  key={step.id}
+                  className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05]"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-semibold text-slate-500">
+                        {step.id}
+                      </span>
+                      <Icon className="size-5 text-blue-400" aria-hidden="true" />
+                    </div>
+
+                    <h3 className="mt-6 font-heading text-lg font-bold text-white">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                      {step.description}
+                    </p>
                   </div>
-                  <h3 className="mt-8 font-heading text-lg font-bold">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">{step.description}</p>
-                </li>
+                </article>
               );
             })}
-          </ol>
+          </div>
         </div>
       </div>
     </section>
