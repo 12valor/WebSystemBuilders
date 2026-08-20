@@ -10,10 +10,10 @@ import {
   Loader2,
   Clock,
   FileText,
-  ShieldCheck,
-  Layers,
+  FileCheck2,
+  GitBranch,
   MessageSquare,
-  BarChart2,
+  Check,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { PreSaleChatModal } from "@/components/marketing/pre-sale-chat-modal";
@@ -192,42 +192,46 @@ export function ProjectWorkspacePlayground() {
                 </motion.div>
               </div>
 
-              {/* RIGHT INTERNAL COLUMN: BLUEPRINT WIREFRAME PREVIEW */}
-              <div className="hidden sm:block rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5 relative overflow-hidden">
-                {/* Blueprint grid background */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-40"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(#94a3b8 0.75px, transparent 0.75px)",
-                    backgroundSize: "12px 12px",
-                  }}
-                />
-                <div className="relative z-10 space-y-3">
-                  <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
-                    <div className="h-2.5 w-20 bg-slate-300 rounded" />
-                    <div className="h-2.5 w-10 bg-slate-200 rounded" />
+              {/* RIGHT INTERNAL COLUMN: CONCRETE DELIVERABLE PREVIEW */}
+              <div className="hidden sm:block rounded-xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <FileText className="size-3.5 text-blue-600 shrink-0" />
+                    <span className="font-mono text-xs font-bold text-slate-800 truncate">spec-inventory-sync.md</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="rounded-lg bg-white border border-slate-200/80 p-2 space-y-1.5">
-                      <div className="h-2 w-12 bg-slate-200 rounded" />
-                      <div className="h-4 w-16 bg-blue-500/20 rounded" />
-                    </div>
-                    <div className="rounded-lg bg-white border border-slate-200/80 p-2 space-y-1.5">
-                      <div className="h-2 w-10 bg-slate-200 rounded" />
-                      <div className="h-4 w-14 bg-emerald-500/20 rounded" />
-                    </div>
-                  </div>
+                  <span className="text-[10px] font-mono font-semibold text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded">
+                    v0.3-beta
+                  </span>
+                </div>
+
+                <div className="space-y-2">
                   <div className="rounded-lg bg-white border border-slate-200/80 p-2.5 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="h-2 w-16 bg-slate-300 rounded" />
-                      <BarChart2 className="size-3 text-slate-300" />
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-slate-700">Deliverable Scope</span>
+                      <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">
+                        Passed Review
+                      </span>
                     </div>
-                    <div className="flex items-end gap-1.5 h-10 pt-2 border-b border-slate-100">
-                      <div className="w-1/4 h-[40%] bg-blue-200 rounded-t" />
-                      <div className="w-1/4 h-[70%] bg-blue-500 rounded-t" />
-                      <div className="w-1/4 h-[50%] bg-blue-300 rounded-t" />
-                      <div className="w-1/4 h-[90%] bg-blue-600 rounded-t" />
+                    <div className="space-y-1 text-[11px] text-slate-600">
+                      <div className="flex items-center gap-1.5">
+                        <Check className="size-3 text-emerald-600 shrink-0" />
+                        <span>Barcode scanning & live lookup</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Check className="size-3 text-emerald-600 shrink-0" />
+                        <span>Multi-location stock sync</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Check className="size-3 text-emerald-600 shrink-0" />
+                        <span>Audit logs & printable reports</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-lg bg-white border border-slate-200/80 p-2.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500 font-medium">Revisions tracked</span>
+                      <span className="font-mono font-bold text-slate-800">2 approved</span>
                     </div>
                   </div>
                 </div>
@@ -260,30 +264,12 @@ export function ProjectWorkspacePlayground() {
               PROJECT SUPPORT
             </span>
 
-            {/* Headline with restrained SVG underline */}
+            {/* Confident Headline without decorative doodles */}
             <h2
               id="project-workspace-title"
               className="mt-3 font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]"
             >
-              Know{" "}
-              <span className="relative inline-block whitespace-nowrap">
-                exactly where
-                <svg
-                  className="absolute left-0 -bottom-1.5 w-full h-2.5 text-blue-600 overflow-visible"
-                  viewBox="0 0 100 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2 9C25 4 65 3 98 8"
-                    stroke="currentColor"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>{" "}
-              your project stands.
+              Know exactly where your project stands.
             </h2>
 
             {/* Controlled Paragraph */}
@@ -300,13 +286,13 @@ export function ProjectWorkspacePlayground() {
               className="mt-8 space-y-4"
             >
               {/* Row 01 */}
-              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
-                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">01</span>
-                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-                  <ShieldCheck className="size-4 stroke-[2]" />
+              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">01</span>
+                <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
+                  <FileCheck2 className="size-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">Agreed scope</h4>
+                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Agreed scope</h4>
                   <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
                     Everyone stays aligned on what’s included and what’s not.
                   </p>
@@ -314,13 +300,13 @@ export function ProjectWorkspacePlayground() {
               </motion.div>
 
               {/* Row 02 */}
-              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
-                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">02</span>
-                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
-                  <Layers className="size-4 stroke-[2]" />
+              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">02</span>
+                <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
+                  <GitBranch className="size-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">Visible milestones</h4>
+                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Visible milestones</h4>
                   <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
                     Track progress at each stage and know what comes next.
                   </p>
@@ -328,13 +314,13 @@ export function ProjectWorkspacePlayground() {
               </motion.div>
 
               {/* Row 03 */}
-              <motion.div variants={itemVariants} className="pb-4 border-b border-slate-200/70 flex items-start gap-4">
-                <span className="text-xs font-mono font-bold text-blue-600 pt-0.5">03</span>
-                <div className="size-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+                <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">03</span>
+                <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
                   <MessageSquare className="size-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">Organized feedback</h4>
+                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Organized feedback</h4>
                   <p className="text-xs sm:text-sm text-slate-600 mt-0.5 leading-snug">
                     Keep revision notes connected to the correct deliverable.
                   </p>
