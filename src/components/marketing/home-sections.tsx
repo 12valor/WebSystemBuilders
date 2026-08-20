@@ -21,26 +21,20 @@ export function FinalCallToAction() {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.55fr_1fr] items-stretch">
           
           {/* ================= LEFT CARD: MAIN SYSTEM DISCOVERY ================= */}
-          <div className="relative flex flex-col justify-center overflow-hidden rounded-[20px] border border-slate-800 bg-[#090C15] p-5 text-white shadow-md sm:rounded-[24px] sm:p-7 lg:p-8">
-            {/* Ambient background glow */}
-            <div
-              className="pointer-events-none absolute -top-24 -left-24 size-96 rounded-full bg-blue-600/15 blur-3xl"
-              aria-hidden="true"
-            />
-
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] items-center gap-5 sm:gap-6">
+          <div className="relative flex flex-col justify-center overflow-hidden rounded-[20px] border border-slate-800/90 bg-[#090C15] p-5 text-white shadow-md sm:rounded-[24px] sm:p-7 lg:p-8">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1.18fr_0.82fr] items-center gap-5 sm:gap-6">
               <div>
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-blue-400">
-                  READY TO DEPLOY
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
+                  READY SYSTEMS &amp; CUSTOM BUILDS
                 </span>
                 <h2
                   id="cta-title"
-                  className="mt-1.5 font-heading text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-3xl leading-[1.15]"
+                  className="mt-1.5 font-heading text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-3xl leading-tight"
                 >
-                  Launch your next software system today.
+                  Buy tested systems or build to your spec.
                 </h2>
                 <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-300 sm:text-sm">
-                  Browse production-ready systems with complete source code, or request a custom build scoped directly with the developer.
+                  Download full source code with database schemas, or commission custom development with agreed milestones and transparent deliverable tracking.
                 </p>
 
                 {/* Action Buttons */}
@@ -62,17 +56,19 @@ export function FinalCallToAction() {
                 </div>
               </div>
 
-              {/* Phone Mockup Preview */}
+              {/* Seamless Phone Mockup Preview */}
               <div className="relative mx-auto w-full max-w-[280px] md:max-w-none flex items-center justify-center">
-                <div className="relative w-full overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-900 shadow-xl max-h-[210px] sm:max-h-[230px] flex items-center justify-center group">
+                <div className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 shadow-xl max-h-[210px] sm:max-h-[230px] flex items-center justify-center group">
                   <Image
                     src="/images/cta-phone-mockup.jpg"
-                    alt="WebSystemBuilders Mobile Dashboard Preview"
+                    alt="WebSystemBuilders mobile system dashboard preview"
                     width={800}
                     height={600}
                     priority
                     className="w-full h-full max-h-[210px] sm:max-h-[230px] object-cover object-center transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transform-none"
                   />
+                  {/* Subtle inner ambient ring */}
+                  <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -81,14 +77,14 @@ export function FinalCallToAction() {
           {/* ================= RIGHT CARD: DIRECT DEVELOPER CONSULTATION ================= */}
           <div className="relative flex flex-col justify-between rounded-[20px] border border-slate-200/90 bg-white p-5 shadow-xs sm:rounded-[24px] sm:p-6 lg:p-7">
             <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">
-                PRE-SALE SUPPORT
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500">
+                PRE-SALE QUESTIONS
               </span>
               <h3 className="mt-1.5 font-heading text-base font-bold tracking-tight text-slate-900 sm:text-lg lg:text-xl leading-snug">
-                Talk directly with the developer.
+                Ask the developer directly.
               </h3>
               <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:text-sm">
-                Have questions about system architecture, licensing, or custom requirements? Get honest technical answers before you decide.
+                Confirm database architecture, license terms, or custom capstone requirements before placing an order.
               </p>
 
               {/* Inclusions / Highlights */}
@@ -97,21 +93,21 @@ export function FinalCallToAction() {
                   <div className="flex size-6 items-center justify-center rounded-md border border-slate-200/80 bg-slate-50 text-slate-700 shrink-0">
                     <MessageSquare className="size-3.5" aria-hidden="true" />
                   </div>
-                  <span>Direct technical answers (no sales reps)</span>
+                  <span>Direct technical answers from the engineer</span>
                 </div>
 
                 <div className="flex items-center gap-2.5">
                   <div className="flex size-6 items-center justify-center rounded-md border border-slate-200/80 bg-slate-50 text-slate-700 shrink-0">
                     <ShieldCheck className="size-3.5" aria-hidden="true" />
                   </div>
-                  <span>Requirements &amp; scope validation</span>
+                  <span>Architecture, schema, and license clarification</span>
                 </div>
 
                 <div className="flex items-center gap-2.5">
                   <div className="flex size-6 items-center justify-center rounded-md border border-slate-200/80 bg-slate-50 text-slate-700 shrink-0">
                     <Clock className="size-3.5" aria-hidden="true" />
                   </div>
-                  <span>Responsive, same-day consultation</span>
+                  <span>Direct reply to your email within 24 hours</span>
                 </div>
               </div>
             </div>
