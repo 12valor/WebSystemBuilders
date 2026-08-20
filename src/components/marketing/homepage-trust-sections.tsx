@@ -45,10 +45,7 @@ export function PurchaseTransparencySection() {
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-blue-200">
-              <ShieldCheck className="size-4" /> Before you purchase
-            </div>
-            <h2 id="purchase-transparency-title" className="mt-5 font-heading text-3xl font-bold tracking-[-0.04em] sm:text-5xl">
+            <h2 id="purchase-transparency-title" className="font-heading text-3xl font-bold tracking-[-0.04em] sm:text-5xl">
               Know the price, package, and delivery path first.
             </h2>
             <p className="mt-5 max-w-xl leading-7 text-slate-300">

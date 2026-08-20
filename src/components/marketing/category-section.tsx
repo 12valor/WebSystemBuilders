@@ -142,9 +142,6 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         {/* Browse Categories Grid */}
         <div className="mt-16 border-t border-slate-200/80 pt-14 sm:mt-20 sm:pt-16">
           <div className="mb-9 text-center sm:mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
-              <span>Explore Verticals</span>
-            </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
               Browse Systems by Need
             </h2>
