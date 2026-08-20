@@ -10,7 +10,6 @@ import { AppIconBadge } from "@/components/ui/app-icon-badge";
 import type { CatalogData, CatalogSystemRecord } from "@/features/catalog/types";
 import {
   ArrowRight,
-  Sparkles,
   ShoppingBag,
   GraduationCap,
   Stethoscope,
@@ -58,44 +57,46 @@ export function TrustStrip() {
     <section
       id="institutions"
       aria-labelledby="institutions-title"
-      className="border-y border-slate-200 bg-white font-sans text-slate-950"
+      className="border-b border-slate-200/80 bg-white py-12 sm:py-14"
     >
-      <div className="mx-auto w-[min(calc(100%-32px),1280px)] py-14 md:w-[min(calc(100%-64px),1280px)] md:py-16 xl:py-20">
-        <div className="grid gap-12 xl:grid-cols-[0.72fr_1.28fr] xl:items-center xl:gap-16">
-          <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
-              Academic community
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-md">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">
+              Tested Against Real Technical Scrutiny
             </p>
             <h2
               id="institutions-title"
-              className="mt-4 max-w-md font-heading text-4xl font-bold leading-[1.02] tracking-[-0.055em] text-slate-950 sm:text-5xl lg:text-6xl"
+              className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
             >
-              Institutions represented.
+              Proven Across Universities and Academic Institutions
             </h2>
+            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
+              Our systems are architected to pass technical defenses, rigorous code reviews, and live production deployments.
+            </p>
           </div>
 
-          <ul
-            aria-label="Educational institutions represented in the WebSystemBuilders community"
-            className="grid grid-cols-2 gap-4 sm:gap-5 xl:isolate xl:flex xl:items-center xl:justify-end xl:gap-0"
-          >
-            {institutions.map((institution, index) => (
-              <li
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-6">
+            {institutions.map((institution) => (
+              <div
                 key={institution.name}
-                className={`flex aspect-square items-center justify-center rounded-3xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4 xl:size-40 xl:shrink-0 xl:p-5 xl:shadow-[0_12px_30px_rgba(15,23,42,0.08)] ${
-                  index === 0 ? "xl:ml-0" : "xl:-ml-5"
-                } ${institution.rotation}`}
+                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-4 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md ${institution.rotation}`}
               >
-                <Image
-                  src={institution.src}
-                  alt={`${institution.name} logo`}
-                  width={institution.width}
-                  height={institution.height}
-                  sizes="(max-width: 1023px) 42vw, 160px"
-                  className="h-full w-full object-contain"
-                />
-              </li>
+                <div className="relative mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white p-2 shadow-xs border border-slate-100 transition-transform duration-300 group-hover:scale-105">
+                  <Image
+                    src={institution.src}
+                    alt={institution.name}
+                    width={institution.width}
+                    height={institution.height}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <span className="text-[11px] font-bold leading-snug text-slate-700 transition-colors group-hover:text-blue-700">
+                  {institution.name}
+                </span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -112,10 +113,6 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         {/* Featured Systems Heading */}
         <div className="mb-9 flex flex-col justify-between gap-5 sm:flex-row sm:items-end lg:mb-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider border border-blue-200 mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Catalog Collection</span>
-            </div>
             <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.08] tracking-[-0.04em] text-slate-900">
               Featured Software Systems
             </h2>
