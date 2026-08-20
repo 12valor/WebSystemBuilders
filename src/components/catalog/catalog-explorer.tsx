@@ -84,8 +84,8 @@ export function CatalogExplorer({
     <section aria-labelledby="catalog-results-title" className="pb-24 lg:pb-32 font-sans text-slate-900">
       {/* Sticky Horizontal Filter Bar */}
       <div className="sticky top-16 z-30 border-y border-slate-200/80 bg-white/95 backdrop-blur-md py-4 shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 space-y-3">
-          {/* Row 1: Search + Dropdowns */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 space-y-3.5">
+          {/* Tier 1: Search + Dropdown Controls */}
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="relative flex-1">
               <input
@@ -94,102 +94,128 @@ export function CatalogExplorer({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search systems, categories, or tech stack..."
-                className="w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/50 pl-10 pr-4 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none"
+                className="w-full min-h-11 rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-9 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none transition shadow-2xs"
               />
-              <svg className="absolute left-3.5 top-3.5 size-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg
+                className="absolute left-3.5 top-3.5 size-4 text-slate-400 pointer-events-none"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
               </svg>
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Clear search query"
+                  className="absolute right-3 top-3 size-5 rounded-full bg-slate-200/80 hover:bg-slate-300 text-slate-600 flex items-center justify-center text-xs transition cursor-pointer"
+                >
+                  ✕
+                </button>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
               <select
+                aria-label="Pricing filter"
                 value={pricing}
                 onChange={(e) => setPricing(e.target.value as (typeof catalogPricingModes)[number])}
-                className="min-h-11 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 focus:border-blue-500 focus:outline-none"
+                className="min-h-11 rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-semibold text-slate-700 shadow-2xs hover:border-slate-300 focus:border-slate-900 focus:outline-none transition cursor-pointer"
               >
                 {catalogPricingModes.map((item) => (
-                  <option key={item} value={item}>{item}</option>
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
                 ))}
               </select>
 
               <select
+                aria-label="Sort order"
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortMode)}
-                className="min-h-11 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 focus:border-blue-500 focus:outline-none"
+                className="min-h-11 rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-semibold text-slate-700 shadow-2xs hover:border-slate-300 focus:border-slate-900 focus:outline-none transition cursor-pointer"
               >
-                <option>Newest</option>
-                <option>Name: A to Z</option>
-                <option>Price: low to high</option>
-                <option>Price: high to low</option>
+                <option value="Newest">Newest</option>
+                <option value="Name: A to Z">Name: A to Z</option>
+                <option value="Price: low to high">Price: low to high</option>
+                <option value="Price: high to low">Price: high to low</option>
               </select>
 
               {hasPricedSystems && <CatalogCurrencyControl />}
             </div>
           </div>
 
-          {/* Row 2: Scrollable Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <span className="text-[0.68rem] font-bold uppercase tracking-wider text-slate-400 pr-1 shrink-0">Filter:</span>
+          {/* Tier 2: Segmented Audience Switch + Scrollable Category Ribbon */}
+          <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
+            {/* Segmented Audience Dock */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200/80 gap-1 shrink-0">
+              {catalogAudiences.map((item) => {
+                const active = audience === item;
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setAudience(item)}
+                    className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
+                      active
+                        ? "bg-slate-900 text-white shadow-xs"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                );
+              })}
+            </div>
 
-            {/* Audience Chips */}
-            {catalogAudiences.map((item) => {
-              const active = audience === item;
-              return (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => setAudience(item)}
-                  className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition border ${
-                    active
-                      ? "border-blue-600 bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                      : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  {item}
-                </button>
-              );
-            })}
+            <span className="h-5 w-px bg-slate-200 shrink-0" />
 
-            <span className="h-4 w-px bg-slate-200 mx-1 shrink-0" />
+            {/* Category Ribbon */}
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none min-w-0 flex-1 py-0.5">
+              <button
+                type="button"
+                onClick={() => setCategory("all")}
+                className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-bold transition border cursor-pointer ${
+                  category === "all"
+                    ? "border-slate-900 bg-slate-900 text-white shadow-xs"
+                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                }`}
+              >
+                All Categories
+              </button>
 
-            {/* Category Chips */}
-            <button
-              type="button"
-              onClick={() => setCategory("all")}
-              className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition border ${
-                category === "all"
-                  ? "border-blue-600 bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                  : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
-              }`}
-            >
-              All Categories
-            </button>
-
-            {visibleCategories.map((item) => {
-              const active = category === item.slug;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setCategory(item.slug)}
-                  className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition border ${
-                    active
-                      ? "border-blue-600 bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                      : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  {item.name}
-                </button>
-              );
-            })}
+              {visibleCategories.map((item) => {
+                const active = category === item.slug;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setCategory(item.slug)}
+                    className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-bold transition border cursor-pointer ${
+                      active
+                        ? "border-slate-900 bg-slate-900 text-white shadow-xs"
+                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
 
             {hasFilters && (
               <button
                 type="button"
                 onClick={clearFilters}
-                className="shrink-0 rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-100 transition ml-auto flex items-center gap-1"
+                className="shrink-0 rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-100 transition ml-auto flex items-center gap-1 cursor-pointer"
               >
-                Clear All
+                Clear all
               </button>
             )}
           </div>

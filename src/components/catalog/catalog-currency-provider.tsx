@@ -71,23 +71,25 @@ export function CatalogCurrencyControl({ compact = false }: { compact?: boolean 
   const options = catalogCurrencies.filter((option) => currency.rates[option.code]);
 
   return (
-    <label htmlFor={inputId} className="grid gap-2 text-xs font-semibold text-secondary">
-      <span>Display currency</span>
+    <div className="relative inline-flex items-center">
       <select
         id={inputId}
+        aria-label="Display currency"
         value={currency.selectedCurrency}
         onChange={(event) => currency.setSelectedCurrency(event.target.value as CatalogCurrencyCode)}
-        className={`${compact ? "min-h-10" : "min-h-12"} rounded-[10px] border border-white/15 bg-background px-3 text-sm text-foreground focus:border-brand focus:outline-none`}
+        className={`${
+          compact ? "min-h-10 text-xs" : "min-h-11 text-xs"
+        } rounded-xl border border-slate-200 bg-white px-3.5 font-semibold text-slate-700 shadow-2xs hover:border-slate-300 focus:border-slate-900 focus:outline-none transition cursor-pointer`}
       >
         {options.map((option) => (
           <option key={option.code} value={option.code}>
-            {option.code} - {option.label}
+            {option.code} ({option.label})
           </option>
         ))}
       </select>
       {currency.status === "unavailable" && (
-        <span className="font-normal leading-5 text-muted">Currency estimates are temporarily unavailable. PHP prices remain visible.</span>
+        <span className="sr-only">Currency estimates are temporarily unavailable. PHP prices remain visible.</span>
       )}
-    </label>
+    </div>
   );
 }
