@@ -7,6 +7,7 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   CheckCircle2,
+  ChevronDown,
   Clock,
   CreditCard,
   Download,
@@ -28,6 +29,7 @@ import {
   ShoppingBag,
   SlidersHorizontal,
   User as UserIcon,
+  X,
 } from "lucide-react";
 import {
   DashboardEmptyState,
@@ -495,73 +497,249 @@ function SequenceOverviewPanel({
 }
 
 function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["orders"]; userEmail: string | null | undefined }) {
+  const [filter, setFilter] = useState<"all" | "paid" | "cancelled">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
+
   if (orders.length === 0) {
     return (
       <DashboardPanel>
         <DashboardEmptyState
           icon={ShoppingBag}
-          title="No system purchases yet"
-          description={`Purchases made using ${userEmail ?? "this account"} will appear here after payment verification.`}
+          title="No purchases on this account"
+          description={`Verified orders placed with ${userEmail ?? "this account"} will appear here.`}
           action={<PrimaryLink href="/systems">Browse ready-made systems</PrimaryLink>}
         />
       </DashboardPanel>
     );
   }
 
+  const paidOrders = orders.filter((o) => o.payment_status === "paid");
+  const otherOrders = orders.filter((o) => o.payment_status !== "paid");
+  const totalSpentMinor = paidOrders.reduce((sum, o) => sum + (o.total_minor || 0), 0);
+  const activeDownloadsCount = orders.filter((o) => o.delivery_available).length;
+
+  const filteredOrders = orders.filter((order) => {
+    if (filter === "paid" && order.payment_status !== "paid") return false;
+    if (filter === "cancelled" && order.payment_status === "paid") return false;
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      const matchName = order.product_name.toLowerCase().includes(q);
+      const matchNumber = order.order_number.toLowerCase().includes(q);
+      return matchName || matchNumber;
+    }
+    return true;
+  });
+
   return (
-    <div className="grid gap-5">
-      <DashboardPanel className="flex items-start gap-4 p-5 bg-white border border-slate-200/80">
-        <span className="grid size-10 shrink-0 place-items-center rounded-2xl border border-slate-200/80 bg-slate-100 text-slate-700 shadow-2xs">
-          <Lock className="size-4.5" />
+    <div className="space-y-6">
+      {/* 1. Quick Stats Row */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        <DashboardMetric
+          label="Total Orders"
+          value={orders.length}
+          detail="Orders placed on this account"
+          icon={ShoppingBag}
+        />
+        <DashboardMetric
+          label="Active Deliveries"
+          value={activeDownloadsCount}
+          detail="Eligible protected source packages"
+          icon={Download}
+        />
+        <DashboardMetric
+          label="Total Invested"
+          value={totalSpentMinor > 0 ? formatMoney(totalSpentMinor, "PHP") : "₱0.00"}
+          detail="Lifetime verified spend"
+          icon={CreditCard}
+        />
+      </div>
+
+      {/* 2. Protected Delivery Policy Callout */}
+      <div className="rounded-xl border border-slate-200/80 bg-white p-4.5 shadow-2xs flex items-center gap-3.5">
+        <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-slate-200/80 bg-slate-100 text-slate-700 shadow-2xs">
+          <Lock className="size-4" />
         </span>
-        <div>
-          <h2 className="text-sm font-bold text-slate-900">Protected delivery policy</h2>
-          <p className="mt-1 text-xs leading-relaxed text-slate-600 font-medium">
-            Direct deliverable links expire after one hour. Return here at any time to generate a fresh secure link.
+        <div className="flex-1 min-w-0">
+          <h4 className="text-xs font-bold text-slate-900">Protected delivery policy</h4>
+          <p className="mt-0.5 text-xs text-slate-600 font-medium">
+            Direct download links expire after 1 hour for security. Return here anytime to generate a fresh link.
           </p>
         </div>
-      </DashboardPanel>
+      </div>
 
-      {orders.map((order) => (
-        <DashboardPanel key={order.order_id} className="p-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
-                {order.order_number}
-              </p>
-              <h2 className="mt-1.5 text-xl font-extrabold text-slate-900 tracking-tight">{order.product_name}</h2>
-              <p className="mt-1 text-xs text-slate-500 font-medium">Purchased version {order.purchased_version}</p>
-            </div>
-            <DashboardStatusBadge status={order.payment_status ?? order.order_status} />
-          </div>
-          <dl className="mt-6 grid gap-4 border-y border-slate-100 py-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
-            <OrderDetail label="Total amount" value={formatMoney(order.total_minor, order.currency)} />
-            <OrderDetail label="Payment provider" value={providerLabel(order.payment_provider)} />
-            <OrderDetail label="Payment status" value={order.payment_status === "paid" ? "Payment confirmed" : order.payment_status ?? "Unknown"} />
-            <OrderDetail label="Fulfillment" value={order.delivery_available ? "Delivered" : order.payment_status === "paid" ? "Awaiting delivery" : order.fulfillment_status ?? "Not started"} />
-          </dl>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <Link
-              href={`/systems/${order.product_slug}`}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200/90 bg-white px-5 text-xs font-bold text-slate-700 hover:border-slate-300 hover:bg-slate-50 shadow-2xs active:scale-[0.98] transition-all cursor-pointer"
+      {/* 3. Interactive Orders Table Ledger */}
+      <DashboardPanel className="p-6">
+        {/* Controls Toolbar */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pb-5 border-b border-slate-100">
+          {/* Filter Tabs */}
+          <div className="flex items-center gap-1.5 p-1 rounded-lg bg-slate-100 border border-slate-200/80">
+            <button
+              type="button"
+              onClick={() => setFilter("all")}
+              className={`rounded-md px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                filter === "all" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              }`}
             >
-              <span>View system details</span>
-              <ExternalLink className="size-3.5 text-slate-400" />
-            </Link>
-            {order.delivery_available && (
-              <form action={openPortalDownload.bind(null, order.order_id)}>
-                <button
-                  type="submit"
-                  className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-blue-600 px-5 text-xs font-bold text-white shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_22px_rgba(37,99,235,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
-                >
-                  <Download className="size-4" />
-                  <span>Generate one-hour download link</span>
-                </button>
-              </form>
+              All ({orders.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilter("paid")}
+              className={`rounded-md px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                filter === "paid" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              Completed ({paidOrders.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilter("cancelled")}
+              className={`rounded-md px-3 py-1.5 text-xs font-bold transition cursor-pointer ${
+                filter === "cancelled" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              Cancelled / Other ({otherOrders.length})
+            </button>
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-2.5 size-3.5 text-slate-400 pointer-events-none" />
+            <input
+              type="search"
+              placeholder="Search order # or system..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full min-h-9 rounded-lg border border-slate-200 bg-slate-50/50 pl-8.5 pr-8 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none transition shadow-2xs"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-700"
+              >
+                <X className="size-3.5" />
+              </button>
             )}
           </div>
-        </DashboardPanel>
-      ))}
+        </div>
+
+        {/* Table / Empty State */}
+        {filteredOrders.length === 0 ? (
+          <div className="py-12 text-center">
+            <p className="text-sm font-bold text-slate-900">No matching orders found</p>
+            <p className="mt-1 text-xs text-slate-500 font-medium">Try clearing your search query or selecting a different filter tab.</p>
+          </div>
+        ) : (
+          <div className="mt-4 divide-y divide-slate-100">
+            {/* Desktop Table Header */}
+            <div className="hidden sm:grid sm:grid-cols-[1.5fr_1.8fr_1fr_1fr_1.2fr] gap-4 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <span>Order & Date</span>
+              <span>System</span>
+              <span>Amount</span>
+              <span>Status</span>
+              <span className="text-right">Actions</span>
+            </div>
+
+            {filteredOrders.map((order) => {
+              const isExpanded = expandedOrderId === order.order_id;
+              return (
+                <div key={order.order_id} className="transition-colors hover:bg-slate-50/70 rounded-lg">
+                  {/* Main Row */}
+                  <div
+                    onClick={() => setExpandedOrderId(isExpanded ? null : order.order_id)}
+                    className="grid grid-cols-1 sm:grid-cols-[1.5fr_1.8fr_1fr_1fr_1.2fr] items-center gap-3 p-3.5 cursor-pointer"
+                  >
+                    <div>
+                      <p className="font-mono text-xs font-bold text-slate-900">{order.order_number}</p>
+                      <p className="text-[11px] text-slate-400 font-medium mt-0.5">{formatDate(order.created_at)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">{order.product_name}</p>
+                      <span className="inline-block mt-0.5 text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200/80 px-1.5 py-0.5 rounded">
+                        v{order.purchased_version}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">{formatMoney(order.total_minor, order.currency)}</p>
+                    </div>
+                    <div>
+                      <DashboardStatusBadge status={order.payment_status ?? order.order_status} />
+                    </div>
+                    <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                      {order.delivery_available && (
+                        <form action={openPortalDownload.bind(null, order.order_id)}>
+                          <button
+                            type="submit"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition cursor-pointer"
+                          >
+                            <Download className="size-3.5" />
+                            <span>Download</span>
+                          </button>
+                        </form>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setExpandedOrderId(isExpanded ? null : order.order_id)}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                        aria-label={isExpanded ? "Collapse order details" : "Expand order details"}
+                      >
+                        <ChevronDown className={`size-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Expandable Details Drawer */}
+                  {isExpanded && (
+                    <div className="px-4 pb-4 pt-2 border-t border-slate-100 bg-slate-50/50 rounded-b-lg">
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 py-3 text-xs">
+                        <div>
+                          <span className="font-semibold text-slate-400">License Scope</span>
+                          <p className="font-bold text-slate-900 mt-1">Single Site License • Full Source</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-slate-400">Payment Provider</span>
+                          <p className="font-bold text-slate-900 mt-1">{providerLabel(order.payment_provider)}</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-slate-400">Payment Status</span>
+                          <p className="font-bold text-slate-900 mt-1 capitalize">{order.payment_status === "paid" ? "Payment Confirmed" : order.payment_status ?? "Pending"}</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold text-slate-400">Fulfillment</span>
+                          <p className="font-bold text-slate-900 mt-1 capitalize">{order.delivery_available ? "Delivered & Ready" : order.fulfillment_status ?? "Not started"}</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2.5 pt-3 border-t border-slate-200/60">
+                        <Link
+                          href={`/systems/${order.product_slug}`}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-2xs"
+                        >
+                          <span>View system catalog page</span>
+                          <ExternalLink className="size-3 text-slate-400" />
+                        </Link>
+                        {order.delivery_available && (
+                          <form action={openPortalDownload.bind(null, order.order_id)}>
+                            <button
+                              type="submit"
+                              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition cursor-pointer"
+                            >
+                              <Download className="size-3.5" />
+                              <span>Generate 1-hour signed ZIP link</span>
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </DashboardPanel>
     </div>
   );
 }
