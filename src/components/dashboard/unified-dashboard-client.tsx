@@ -293,14 +293,14 @@ function SequenceOverviewPanel({
   return (
     <div className="space-y-6">
       {/* 1. HERO BANNER - Solid Dark Sapphire / Slate */}
-      <div className="relative overflow-hidden rounded-3xl bg-slate-900 p-6 sm:p-7 text-white shadow-sm border border-slate-800">
+      <div className="relative overflow-hidden rounded-xl bg-slate-900 p-6 sm:p-7 text-white shadow-sm border border-slate-800">
         <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">
                 Workspace Value & Systems
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
+              <span className="inline-flex items-center gap-1 rounded-md bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
                 <TrendingUp className="size-3" />
                 100% Verified
               </span>
@@ -322,14 +322,14 @@ function SequenceOverviewPanel({
           <div className="flex flex-wrap items-center gap-2.5">
             <Link
               href="/systems"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-blue-500 active:scale-[0.98] transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-500 active:scale-[0.98] transition cursor-pointer"
             >
               <Plus className="size-4" />
               <span>Browse Systems</span>
             </Link>
             <Link
               href="/request-a-quote"
-              className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 px-4 py-2.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md active:scale-[0.98] transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-lg bg-white/10 hover:bg-white/15 px-4 py-2.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md active:scale-[0.98] transition cursor-pointer"
             >
               <ArrowUpRight className="size-4" />
               <span>Request Quote</span>
@@ -337,7 +337,7 @@ function SequenceOverviewPanel({
             <button
               type="button"
               onClick={() => onSelect("support")}
-              className="inline-flex items-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 px-3.5 py-2.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md active:scale-[0.98] transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-lg bg-white/10 hover:bg-white/15 px-3.5 py-2.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md active:scale-[0.98] transition cursor-pointer"
             >
               <RefreshCw className="size-3.5" />
               <span>Support</span>
@@ -380,7 +380,7 @@ function SequenceOverviewPanel({
               <button
                 type="button"
                 onClick={() => onSelect("purchases")}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
               >
                 <Filter className="size-3 text-slate-400" />
                 <span>Filter</span>
@@ -388,7 +388,7 @@ function SequenceOverviewPanel({
               <button
                 type="button"
                 onClick={() => onSelect("purchases")}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer"
               >
                 <SlidersHorizontal className="size-3 text-slate-400" />
                 <span>Sort</span>
@@ -397,7 +397,7 @@ function SequenceOverviewPanel({
           </div>
 
           {portalData.orders.length === 0 && portalData.supportRequests.length === 0 ? (
-            <div className="mt-5 rounded-2xl border border-dashed border-slate-200/80 bg-slate-50/50 px-5 py-10 text-center">
+            <div className="mt-5 rounded-xl border border-dashed border-slate-200/80 bg-slate-50/50 px-5 py-10 text-center">
               <p className="text-sm font-bold text-slate-900">No account activity yet</p>
               <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-slate-500 font-medium">
                 Verified orders and deliverable updates will appear in this ledger.
@@ -408,10 +408,10 @@ function SequenceOverviewPanel({
               {portalData.orders.map((order) => (
                 <div
                   key={order.order_id}
-                  className="flex items-center justify-between py-3.5 hover:bg-slate-50/80 px-2 rounded-2xl transition"
+                  className="flex items-center justify-between py-3.5 hover:bg-slate-50/80 px-2 rounded-lg transition"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-slate-100 text-slate-700 border border-slate-200/80">
                       <ShoppingBag className="size-4" />
                     </span>
                     <div className="min-w-0">
@@ -449,7 +449,7 @@ function SequenceOverviewPanel({
             </div>
 
             {/* Stylized Sequence License Card */}
-            <div className="my-4 relative overflow-hidden rounded-2xl bg-slate-900 p-5 text-white shadow-xs border border-slate-800">
+            <div className="my-4 relative overflow-hidden rounded-xl bg-slate-900 p-5 text-white shadow-xs border border-slate-800">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-300">
                   WSB LICENSE
@@ -474,7 +474,7 @@ function SequenceOverviewPanel({
                 <button
                   type="button"
                   onClick={() => onSelect("purchases")}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 px-3 py-1.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md transition cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 hover:bg-white/20 px-3 py-1.5 text-xs font-bold text-white border border-white/15 backdrop-blur-md transition cursor-pointer"
                 >
                   <Download className="size-3.5" />
                   <span>Files</span>
@@ -485,7 +485,7 @@ function SequenceOverviewPanel({
             <div className="pt-2">
               <Link
                 href="/systems"
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 hover:border-slate-300 hover:bg-slate-50 transition shadow-2xs"
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 hover:border-slate-300 hover:bg-slate-50 transition shadow-2xs"
               >
                 <span>Explore More Systems</span>
                 <ExternalLink className="size-3.5 text-slate-400" />
@@ -494,8 +494,8 @@ function SequenceOverviewPanel({
           </DashboardPanel>
 
           {/* Protected Delivery Notice */}
-          <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-2xs flex items-start gap-3.5">
-            <span className="grid size-9 shrink-0 place-items-center rounded-2xl border border-slate-200/80 bg-slate-100 text-slate-700 shadow-2xs">
+          <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-2xs flex items-start gap-3.5">
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-slate-200/80 bg-slate-100 text-slate-700 shadow-2xs">
               <Lock className="size-4" />
             </span>
             <div>

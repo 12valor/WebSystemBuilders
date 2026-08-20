@@ -27,11 +27,9 @@ import {
   ShieldCheck,
   ShoppingBag,
   SlidersHorizontal,
-  Sparkles,
   TrendingUp,
   User as UserIcon,
   X,
-  Zap,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
 
@@ -130,16 +128,13 @@ export function DashboardSidebar({
     >
       <div className="flex min-h-0 flex-1 flex-col">
         {/* Brand Header */}
-        <div className="hidden h-12 items-center justify-between px-2 md:flex">
+        <div className="hidden h-12 items-center px-2 md:flex">
           <Link href="/" aria-label="WebSystemBuilders home" className="flex items-center gap-2.5">
             <BrandLogo priority className="size-8" />
             <span className="font-extrabold text-base tracking-tight text-slate-900">
               WebSystem<span className="text-blue-600">Builders</span>
             </span>
           </Link>
-          <span className="rounded-lg border border-slate-200 bg-white p-1 text-slate-500 shadow-2xs">
-            <Sparkles className="size-3.5 text-slate-600" />
-          </span>
         </div>
 
         {/* Grouped Navigation */}
@@ -261,16 +256,16 @@ export function DashboardSidebar({
         </div>
 
         {/* User Card at Bottom */}
-        <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-3 shadow-2xs">
+        <div className="mt-4 flex items-center justify-between rounded-xl border border-slate-200/80 bg-white p-3 shadow-2xs">
           <div className="flex items-center gap-3 min-w-0">
             {avatarUrl ? (
               <img
                 src={avatarUrl}
                 alt={displayName}
-                className="size-9 shrink-0 rounded-xl object-cover border border-slate-200"
+                className="size-9 shrink-0 rounded-lg object-cover border border-slate-200"
               />
             ) : (
-              <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-blue-600 text-xs font-bold text-white shadow-2xs">
+              <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-blue-600 text-xs font-bold text-white shadow-2xs">
                 {avatarInitial}
               </span>
             )}
@@ -313,7 +308,7 @@ export function SequenceTopHeader({
           placeholder="Search systems, orders, or documentation..."
           value={searchQuery ?? ""}
           onChange={(e) => onSearchChange?.(e.target.value)}
-          className="w-full min-h-10 rounded-xl border border-slate-200/90 bg-white pl-10 pr-16 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none transition shadow-2xs"
+          className="w-full min-h-10 rounded-lg border border-slate-200/90 bg-white pl-10 pr-16 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none transition shadow-2xs"
         />
         <kbd className="absolute right-2.5 top-2.5 hidden sm:inline-flex items-center gap-0.5 rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
           ⌘ K
@@ -322,14 +317,14 @@ export function SequenceTopHeader({
 
       {/* Right Controls (Date & Action Pill) */}
       <div className="flex items-center gap-2">
-        <div className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-2xs">
+        <div className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-2xs">
           <Calendar className="size-3.5 text-slate-400" />
           <span>Last 30 days</span>
         </div>
 
         <Link
           href="/systems"
-          className="group inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_14px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_20px_rgba(37,99,235,0.45)] active:scale-[0.98] transition-all duration-200 cursor-pointer"
+          className="group inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-[0.98] transition-all duration-200 cursor-pointer"
         >
           <span>Browse systems</span>
           <ExternalLink className="size-3 text-blue-100 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -393,7 +388,7 @@ export function DashboardPanel({
   className?: string;
 }) {
   return (
-    <section className={`rounded-3xl border border-slate-200/80 bg-white shadow-2xs ${className}`}>
+    <section className={`rounded-xl border border-slate-200/80 bg-white shadow-2xs ${className}`}>
       {children}
     </section>
   );
@@ -412,7 +407,7 @@ export function DashboardMetric({
   variant?: "blue" | "emerald" | "indigo" | "sky" | "amber";
 }) {
   return (
-    <article className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+    <article className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-xs transition-all duration-200">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs font-semibold text-slate-500">{label}</p>
@@ -424,7 +419,7 @@ export function DashboardMetric({
             {value}
           </p>
         </div>
-        <span className="grid size-10 shrink-0 place-items-center rounded-2xl border border-slate-200/80 bg-slate-100 text-slate-700">
+        <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-slate-200/80 bg-slate-100 text-slate-700">
           <Icon className="size-4.5" />
         </span>
       </div>
@@ -446,7 +441,7 @@ export function DashboardEmptyState({
 }) {
   return (
     <div className="flex min-h-64 flex-col items-center justify-center px-6 py-12 text-center">
-      <span className="grid size-12 place-items-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-500">
+      <span className="grid size-12 place-items-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500">
         <Icon className="size-6" />
       </span>
       <h2 className="mt-5 text-lg font-extrabold text-slate-900">{title}</h2>
