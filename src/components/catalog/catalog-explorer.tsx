@@ -333,10 +333,10 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
 
           <Link
             href={`/systems/${system.slug}`}
-            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-700 active:scale-[0.98] shadow-xs"
+            className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-blue-600 px-4.5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
           >
             <span>View System</span>
-            <ExternalLink className="size-3.5" />
+            <ExternalLink className="size-3.5 text-blue-100 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
           </Link>
         </div>
       </div>
