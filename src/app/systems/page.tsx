@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
 import { CatalogExplorer } from "@/components/catalog/catalog-explorer";
-import { SectionEyebrow } from "@/components/marketing/section-eyebrow";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { getCatalogCurrencySnapshot } from "@/features/catalog/currency-server";
@@ -33,8 +32,7 @@ export default async function SystemsPage({ searchParams }: { searchParams: Prom
         <section className="py-12 sm:py-16 lg:py-20 bg-white border-b border-slate-200/80">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-3xl">
-              <SectionEyebrow>Systems Catalog</SectionEyebrow>
-              <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
                 Find a system built for the work.
               </h1>
               <p className="mt-3 text-base leading-relaxed text-slate-600 max-w-2xl">
