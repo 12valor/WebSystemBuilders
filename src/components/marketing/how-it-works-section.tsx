@@ -51,10 +51,6 @@ export function HowItWorksSection() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-700">
-            <span className="size-2 rounded-full bg-blue-600" />
-            A clear path from selection to delivery
-          </div>
           <h2
             id="purchase-process-title"
             className="font-heading text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
