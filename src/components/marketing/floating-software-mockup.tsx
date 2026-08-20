@@ -27,7 +27,7 @@ export function FloatingSoftwareMockup() {
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <ShoppingCart className="w-5.5 h-5.5" />
           </div>
-          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">POS & Sales System</h4>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">POS &amp; Sales System</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Streamline sales, invoices, and transactions.
           </p>
@@ -44,7 +44,7 @@ export function FloatingSoftwareMockup() {
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Boxes className="w-5.5 h-5.5" />
           </div>
-          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Inventory & Warehouse</h4>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Inventory &amp; Warehouse</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Track stock, manage suppliers, and warehouses.
           </p>
@@ -58,9 +58,6 @@ export function FloatingSoftwareMockup() {
 
         {/* ================= CARD 3: TOP RIGHT (Custom Development) ================= */}
         <div className="pointer-events-auto absolute right-[1%] top-[6%] w-[210px] rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:right-[-8px] xl:w-[224px]">
-          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
-            <Code2 className="w-5.5 h-5.5" />
-          </div>
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Code2 className="w-5.5 h-5.5" />
           </div>
