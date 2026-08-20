@@ -181,95 +181,76 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 }
 
 function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
-  const primaryMedia = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url || system.media?.[0]?.url;
+  const primaryMedia =
+    system.coverImageUrl ||
+    system.media?.find((m) => m.mediaType === "image")?.url ||
+    system.media?.[0]?.url;
   const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md">
-      {/* 1. Product Preview Area: Light neutral container with device/browser preview frame */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50/80 p-4 sm:p-5 flex items-center justify-center border-b border-slate-100">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none">
+      {/* 1. Clean Media Preview */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
         {primaryMedia ? (
-          <div className="relative size-full flex items-center justify-center">
-            <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
-              {/* Minimal browser window header */}
-              <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
-                <div className="size-1.5 rounded-full bg-slate-300" />
-                <div className="size-1.5 rounded-full bg-slate-300" />
-                <div className="size-1.5 rounded-full bg-slate-300" />
-              </div>
-              {/* Screenshot preview */}
-              <div className="relative flex-1 overflow-hidden bg-slate-50/40 flex items-center justify-center p-1">
-                {/* eslint-disable-next-html-element-suppression */}
-                <img
-                  src={primaryMedia}
-                  alt={system.title}
-                  className="size-full object-contain transition-transform duration-200 group-hover:scale-[1.015]"
-                />
-              </div>
-            </div>
-          </div>
+          // eslint-disable-next-html-element-suppression
+          <img
+            src={primaryMedia}
+            alt={system.title}
+            className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transform-none"
+          />
         ) : (
-          <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
-            <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
-              <div className="size-1.5 rounded-full bg-slate-300" />
-              <div className="size-1.5 rounded-full bg-slate-300" />
-              <div className="size-1.5 rounded-full bg-slate-300" />
-            </div>
-            <div className="relative flex-1 overflow-hidden bg-slate-50/40">
-              <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
-            </div>
+          <div className="size-full flex items-center justify-center bg-slate-50">
+            <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
           </div>
         )}
       </div>
 
       {/* 2. Content Area */}
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        {/* Category: Small, uppercase, blue, medium weight */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
           {system.category?.name ?? "Custom System Development"}
         </span>
 
-        {/* Product Title: Strong dark navy / near-black font */}
-        <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+        <h3 className="mt-2 font-heading text-lg font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
           <Link href={`/systems/${system.slug}`} className="focus:outline-none">
             {system.title}
           </Link>
         </h3>
 
-        {/* Short Description: Muted slate, 2-3 lines with line clamp */}
-        <p className="mt-2.5 line-clamp-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
+        <p className="mt-2 text-sm leading-relaxed text-slate-600 line-clamp-2">
           {system.summary}
         </p>
 
-        {/* Feature Chips: Full Source ZIP & 30-Day Support with small blue outline icons and subtle borders */}
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
-            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
-            <span>Full Source ZIP</span>
-          </div>
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
-            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" />
-            <span>30-Day Support</span>
-          </div>
+        {/* Inclusions Row */}
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
+          <span className="inline-flex items-center gap-1.5">
+            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" aria-hidden="true" />
+            Full Source ZIP
+          </span>
+          <span className="text-slate-300" aria-hidden="true">·</span>
+          <span className="inline-flex items-center gap-1.5">
+            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" aria-hidden="true" />
+            30-Day Support
+          </span>
         </div>
 
-        {/* 3. Divider & Purchase Area */}
-        <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
+        {/* 3. Price & Action Footer */}
+        <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
           <div className="min-w-0">
-            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-              {isStarting ? "Starting Price" : "Price"}
+            <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              {isStarting ? "Starting at" : "Price"}
             </span>
-            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+            <div className="mt-0.5 text-lg font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} variant="featured" />
             </div>
           </div>
 
           <Link
             href={`/systems/${system.slug}`}
-            className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-blue-600 px-4.5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+            className="group/btn inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
           >
             <span>View System</span>
-            <ExternalLink className="size-3.5 text-blue-100 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+            <ArrowRight className="size-3.5 transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true" />
           </Link>
         </div>
       </div>
