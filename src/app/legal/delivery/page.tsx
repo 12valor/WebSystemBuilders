@@ -2,16 +2,55 @@ import type { Metadata } from "next";
 import { PolicyPage } from "@/components/legal/policy-page";
 
 export const metadata: Metadata = {
-  title: "Digital delivery policy summary",
-  description: "Pre-launch summary of the approved WebSystemBuilders digital delivery direction.",
-  robots: { index: false, follow: false },
+  title: "Digital Delivery Policy",
+  description: "WebSystemBuilders Digital Delivery Policy — how software files, licenses, and private downloads are fulfilled.",
 };
 
 export default function DeliveryPolicyPage() {
-  return <PolicyPage title="Digital delivery should begin only after verified payment." description="The initial commerce design keeps system files private and separates checkout return pages from authoritative payment confirmation." sections={[
-    { title: "Payment confirmation", paragraphs: ["A pending order is created before hosted checkout. A browser redirect is never proof of payment; fulfillment starts only after a verified server-side payment event matches the expected order, amount, and currency."] },
-    { title: "Private access", items: ["ZIP packages remain in private storage.", "Each authorized download receives a new signed URL that expires after one hour.", "Access is designed to be revocable and every download attempt is recorded.", "The paid customer can return through the customer portal for eligible re-downloads."] },
-    { title: "Purchased version", paragraphs: ["The customer keeps permanent portal entitlement to the version purchased and eligible corrective patches attached to that version. Future major versions are separate unless the product page explicitly includes an upgrade."] },
-    { title: "Delivery problems", paragraphs: ["A failed or missing delivery requires order, payment, fulfillment, email, and download-event review. Redelivery or correction should be attempted before escalation to another legally required or approved remedy."] },
-  ]} />;
+  return (
+    <PolicyPage
+      eyebrow="Delivery & Access"
+      title="Digital Delivery Policy"
+      description="Effective date: August 7, 2026 — How software systems, source code packages, and access credentials are electronically fulfilled after verified payment."
+      sideNote={{
+        title: "Private Storage Fulfillment",
+        text: "System packages are stored in private Supabase Storage buckets. Downloads are authorized exclusively through expiring, single-use signed URLs.",
+      }}
+      sections={[
+        {
+          title: "Payment verification before fulfillment",
+          paragraphs: [
+            "A pending order is initialized before entering checkout. A client-side redirect or browser return is never treated as proof of payment.",
+            "Fulfillment begins only after our server validates the PayPal capture event or signed webhook payload, confirming the exact order number, amount, and currency.",
+          ],
+        },
+        {
+          title: "Private storage and secure access tokens",
+          paragraphs: [
+            "We maintain rigorous security controls for digital deliverables:",
+          ],
+          items: [
+            "ZIP packages and repositories remain strictly protected in private cloud storage.",
+            "Each authorized download request generates a unique signed URL that automatically expires after 60 minutes.",
+            "Download attempts, IP addresses, and token timestamps are logged to prevent link leakage and unauthorized distribution.",
+            "Customers can generate new download tokens at any time through their authenticated customer portal.",
+          ],
+        },
+        {
+          title: "Purchased versions and patch entitlement",
+          paragraphs: [
+            "Purchasing a system grants permanent portal access to the specific version acquired at the time of order, including any eligible security patches or bug fixes issued for that major release.",
+            "Subsequent major releases with new architecture or substantial feature additions are separate unless explicitly noted on the product listing.",
+          ],
+        },
+        {
+          title: "Delivery assistance and redownloads",
+          paragraphs: [
+            "If you experience a network interruption or corrupted archive download, you can immediately regenerate a fresh signed download link in your account.",
+            "If your download token fails or your order status does not update within 5 minutes of PayPal payment, contact evangelista.agdiaz@gmail.com with your order number for same-day manual verification.",
+          ],
+        },
+      ]}
+    />
+  );
 }

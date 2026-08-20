@@ -3,176 +3,170 @@ import { PolicyPage } from "@/components/legal/policy-page";
 
 export const metadata: Metadata = {
   title: "Terms and Conditions",
-  description: "WebSystemBuilders Terms and Conditions — terms governing website access, system purchases, and custom development.",
+  description: "WebSystemBuilders Terms and Conditions — governing website access, ready-made software purchases, and custom development services.",
 };
 
 export default function TermsPolicyPage() {
   return (
     <PolicyPage
-      eyebrow="Official Legal Agreement"
+      eyebrow="Legal Agreement"
       title="Terms and Conditions"
-      description="Effective date: 7 August 2026 — Governing access to and use of the WebSystemBuilders website, ready-made software systems, and custom-development services."
+      description="Effective date: August 7, 2026 — The contractual agreement governing access to WebSystemBuilders, purchase of ready-made software systems, and custom development services."
       sideNote={{
-        title: "Operator Information",
-        text: "WebSystemBuilders is operated by AG Evangelista, individual operator (Metro Manila, Philippines). Contact: evangelista.agdiaz@gmail.com.",
+        title: "Platform Operator Notice",
+        text: "WebSystemBuilders is operated by AG Evangelista, individual software developer and sole proprietor (Metro Manila, Philippines). Contact: evangelista.agdiaz@gmail.com.",
       }}
       sections={[
         {
-          title: "Operator information",
+          title: "Operator identification and acceptance",
           paragraphs: [
-            "These Terms and Conditions (“Terms”) govern access to and use of the WebSystemBuilders website and the purchase of ready-made software systems or custom-development services. The service is operated by AG Evangelista, an individual operating under the name WebSystemBuilders (“WebSystemBuilders,” “we,” “us,” or “our”). WebSystemBuilders is not presented as a corporation or as a legal entity separate from its individual operator.",
-            "By creating an account, placing an order, submitting payment, requesting custom work, or using a delivered system, you agree to these Terms. If you do not agree, do not use the service or submit an order.",
+            "These Terms and Conditions (“Terms”) constitute a binding legal agreement between you and AG Evangelista, operating as WebSystemBuilders (“WebSystemBuilders,” “we,” “us,” or “our”).",
+            "By registering an account, purchasing a ready-made system, paying for custom development, or downloading delivered software, you agree to these Terms. If you disagree with any part of these Terms, you must not use the website or purchase products.",
           ],
         },
         {
-          title: "Eligibility and accounts",
+          title: "Eligibility and account security",
           paragraphs: [
-            "You must provide accurate, current, and complete information. You are responsible for activity under your account and for keeping login credentials confidential. Do not share your password or permit unauthorized access.",
-            "If you are under 18, you may transact only with the involvement and consent of a parent or legal guardian, who must review and accept these Terms and take responsibility for the transaction.",
-            "We may reject, suspend, or close accounts reasonably associated with payment fraud, unauthorized access, infringement, abusive conduct, or violation of these Terms. We will not suspend access arbitrarily where doing so would violate applicable consumer rights.",
+            "You must provide accurate and complete contact information during registration and checkout. You are responsible for all activity conducted through your account.",
+            "If you are under 18 years old, you may transact on WebSystemBuilders only with the active consent and supervision of a parent or legal guardian who accepts responsibility for the transaction.",
+            "We reserve the right to suspend or terminate accounts reasonably suspected of payment fraud, unauthorized credential sharing, software redistribution violations, or abusive conduct.",
           ],
         },
         {
-          title: "Services and product information",
+          title: "Product descriptions and specifications",
           paragraphs: [
-            "WebSystemBuilders offers ready-made software systems delivered digitally, and custom software design and development based on an agreed scope.",
-            "Each listing, proposal, quotation, or written agreement may state its own price, inclusions, compatibility, license, delivery estimate, support period, revision limits, dependencies, and special conditions. Those specific terms form part of the agreement. If they conflict with these general Terms, the more specific written terms control for that order unless prohibited by law.",
-            "We aim to describe each product and service accurately. Buyers must review the stated features, technical requirements, screenshots, demos, and limitations before ordering and ask questions about compatibility when uncertain.",
+            "WebSystemBuilders sells two distinct product models:",
+          ],
+          subsections: [
+            {
+              title: "1. Ready-Made Software Systems",
+              paragraphs: [
+                "Pre-built, database-driven web applications delivered as complete source code packages with SQL schemas, environment configurations, and setup documentation.",
+              ],
+            },
+            {
+              title: "2. Custom Development Services",
+              paragraphs: [
+                "Bespoke software design and engineering based on an agreed scope of work, milestone schedule, and technical requirements.",
+              ],
+            },
+          ],
+          items: [
+            "Each system listing details its tech stack, database engine, included modules, screenshots, and live demo where available.",
+            "Buyers must review technical requirements and prerequisites (such as Node.js or database versions) before purchasing.",
           ],
         },
         {
           title: "Orders and contract formation",
           paragraphs: [
-            "Submitting an order is an offer to purchase. An order becomes accepted only when we verify payment and send an order confirmation, delivery notice, or written acceptance. An automated acknowledgment that information was received does not by itself confirm acceptance.",
-            "We may decline or cancel an unaccepted order because of an incorrect price, unavailable product, suspected fraud, technical error, unlawful request, or inability to perform the requested work. If verified funds were received for an order we cannot accept, we will return the applicable amount using a reasonable available method.",
+            "Submitting an order constitutes an offer to purchase. An order is accepted only after payment capture is authoritatively verified by our server and an official order confirmation is recorded in our system.",
+            "Automated browser redirects or client-side payment approvals do not constitute proof of completed purchase until confirmed by server-to-server webhook verification.",
+            "If an order cannot be fulfilled due to technical error, pricing error, or inventory unavailability, we will cancel the order and issue a full refund to the original payment method.",
           ],
         },
         {
-          title: "Prices and PayPal verification",
+          title: "Pricing and PayPal verification",
+          callout: {
+            title: "Server-Verified Payments",
+            text: "All transactions are processed through PayPal Orders v2 with strict server-side signature verification to protect both buyer and seller against fraud.",
+          },
           paragraphs: [
-            "Prices are displayed or quoted in Philippine pesos unless stated otherwise. Any applicable taxes, fees, or additional costs will be disclosed as required.",
-            "PayPal payments are captured and verified through the provider's server APIs and signed webhooks. Do not send money based only on a message from an unverified person. We will never request your password, one-time password, or full account credentials.",
-            "A PayPal browser approval or return does not by itself prove payment; server capture and reconciliation must succeed. Altered, duplicated, reversed, insufficient, or fraudulent payments may cause rejection, suspension, and referral to the proper authorities. The operator will provide the applicable electronic invoice or receipt required by law.",
+            "Prices are listed in Philippine Pesos (PHP) or United States Dollars (USD) as displayed on the product catalog. The server calculates authoritative prices during checkout.",
+            "Payments are verified via PayPal server APIs. We never ask for your bank password, OTP, or PayPal credentials.",
+            "Fraudulent chargebacks, forged payment references, or reversed captures will result in immediate revocation of download access and potential referral to relevant authorities.",
           ],
         },
         {
-          title: "Digital delivery",
+          title: "Digital delivery and download tokens",
           paragraphs: [
-            "Delivery may occur through a download link, repository invitation, email attachment, license key, hosted account, access credentials, or another agreed digital method. Delivery is complete when the purchased files or access are made available through the agreed method, even if the buyer delays downloading or accessing them.",
-            "The buyer must provide a working email address and promptly download or secure delivered materials. Unless a listing or written agreement provides otherwise, delivery estimates are good-faith estimates and may be affected by payment-verification time, project dependencies, buyer delays, security checks, or events beyond reasonable control.",
+            "Ready-made software systems are delivered digitally through the customer portal immediately following verified payment capture.",
+            "Download access is granted via expiring, signed URLs (valid for 1 hour per session) to prevent unauthorized link sharing. Customers can generate fresh download tokens through their authenticated customer account at any time.",
+            "Delivery is complete once the download link is generated and made accessible in your account, regardless of when you download the files to your local machine.",
           ],
         },
         {
-          title: "License for ready-made systems",
+          title: "Commercial license for ready-made systems",
+          callout: {
+            title: "Full Source Code Rights",
+            text: "You receive full, readable source code with the right to modify, customize, and deploy the software for commercial, internal, or academic projects.",
+          },
           paragraphs: [
-            "Unless a product listing or written agreement expressly states otherwise, purchasing a ready-made system grants the buyer a limited, non-exclusive, non-transferable license to use and modify one delivered copy for the buyer's own academic, portfolio, internal, or business purpose.",
-            "The buyer may not, without prior written permission: resell, redistribute, sublicense, publish, leak, or give away the source code or system as a competing product; claim authorship of WebSystemBuilders' original work or remove required copyright notices; share download links or credentials with unauthorized persons; or violate laws.",
-            "Academic buyers remain responsible for following their school's rules on originality, attribution, collaboration, and academic integrity. We do not guarantee that a purchased system may be submitted as solely the buyer's original work.",
+            "Purchasing a ready-made system grants you a perpetual, non-exclusive, non-transferable license to use, modify, and deploy the source code for your business, client, or academic project.",
+          ],
+          items: [
+            "Allowed: Deploy the software to production servers, cloud hosting, or local environments.",
+            "Allowed: Customize, refactor, add features, and modify database schemas.",
+            "Allowed: Use the software as the foundation for your own client or capstone project.",
+            "Prohibited: Resell, redistribute, sublicense, or publish the original or unmodified source code package as a competing software template or digital asset.",
+            "Prohibited: Claim original authorship of the base system architecture or remove copyright notices from third-party open-source libraries.",
           ],
         },
         {
-          title: "Custom-development projects",
+          title: "Academic integrity for students",
           paragraphs: [
-            "Custom work requires a written scope, quotation, or project agreement covering deliverables, timeline, price, payment schedule, revisions, acceptance, support, and ownership. The buyer must provide timely, accurate requirements, content, approvals, credentials, and feedback.",
-            "Unless a written agreement says otherwise: ownership or the agreed license to custom deliverables transfers only after full payment; WebSystemBuilders retains ownership of pre-existing code, reusable components, tools, templates, and general methods; third-party and open-source components remain governed by their own licenses.",
+            "Students purchasing systems or requesting custom capstone development must comply with their institution’s academic integrity policies.",
+            "WebSystemBuilders provides software architecture, foundational boilerplates, and technical guidance. We do not participate in academic dishonesty, exam cheating, or fraudulent certification.",
           ],
         },
         {
-          title: "Buyer-provided materials",
+          title: "Custom development projects",
           paragraphs: [
-            "You represent that you own or have permission to use all content, data, branding, credentials, code, and other materials you provide. You grant WebSystemBuilders a limited permission to use those materials only as needed to evaluate, build, test, deliver, secure, or support the requested service.",
-            "Do not provide illegally obtained data, malware, infringing material, or unnecessary sensitive personal information. We may refuse unlawful or unsafe project requirements.",
+            "Custom development engagements require an agreed written project proposal specifying deliverables, milestones, payment schedules, and revision limits.",
+            "Ownership of custom code transfers to the client upon receipt of final milestone payment, excluding pre-existing WebSystemBuilders proprietary tools, libraries, and open-source packages.",
           ],
         },
         {
-          title: "Refunds, repairs, and replacements",
+          title: "Refunds and remedy policy",
           paragraphs: [
-            "Because digital files and source code can be copied after access is granted, change-of-mind refunds are generally unavailable after files, credentials, repository access, license keys, or other digital access have been delivered.",
-            "This rule does not remove any remedy that cannot lawfully be waived. If a system or service is defective, materially different from its description, missing an agreed essential feature, incompatible despite an express compatibility promise, or not delivered as agreed, contact us promptly with details and reasonable evidence. Depending on the circumstances and applicable law, an appropriate remedy may include correction, repair, replacement, completion, price adjustment, or refund.",
+            "Due to the irrevocable digital nature of complete source code deliverables, change-of-mind refunds are not available once files or repository access have been accessed or downloaded.",
+            "If a delivered system has a material defect, fails to run according to documented specifications, or is missing agreed core features, contact us within 14 days of purchase. We will fix the defect, provide an updated package, or issue a refund if the defect cannot be resolved.",
           ],
         },
         {
-          title: "Support, updates, and compatibility",
+          title: "Support and technical assistance",
           paragraphs: [
-            "Support, installation, deployment, customization, maintenance, hosting, updates, domain fees, and third-party subscriptions are included only when the listing or written agreement says so. Unless expressly promised, a purchase does not include perpetual support or compatibility with every future browser, OS, library, device, or third-party API change.",
+            "Ready-made system purchases include 30 days of email support covering installation questions, environment configuration guidance, and bug fixes related to original code.",
+            "Support does not include free custom feature development, third-party server management, or debugging user-introduced code modifications unless contracted separately.",
           ],
         },
         {
           title: "Acceptable use",
           paragraphs: [
-            "You must not use the website or delivered systems to: break the law, infringe intellectual property, invade privacy, or commit fraud; introduce malware, probe vulnerabilities without permission, disrupt systems, or bypass security; harass, impersonate, deceive, or collect personal data without a lawful basis; or resell licensed materials contrary to the applicable license.",
+            "You agree not to use WebSystemBuilders products or services for unlawful activities, including fraud, malware distribution, unauthorized vulnerability scanning, harassment, or violation of third-party intellectual property rights.",
           ],
         },
         {
           title: "Intellectual property",
           paragraphs: [
-            "The website, branding, original source code, interface designs, documentation, graphics, text, and other original materials supplied by WebSystemBuilders are protected by applicable intellectual-property laws. No ownership transfers except as expressly stated in a product license or written custom-development agreement.",
+            "All content, documentation, brand assets, logos, and original code templates on this website are the intellectual property of AG Evangelista / WebSystemBuilders, protected by copyright and intellectual property laws.",
           ],
         },
         {
-          title: "Third-party services and components",
+          title: "Third-party libraries and licenses",
           paragraphs: [
-            "The website and delivered systems may depend on third-party hosting, databases, APIs, libraries, payment channels, or open-source software. Third-party services are governed by their own terms, availability, and privacy practices.",
-          ],
-        },
-        {
-          title: "Service availability and changes",
-          paragraphs: [
-            "We may perform maintenance, correct errors, improve security, or change website features. We do not promise uninterrupted website availability. Material changes will not retroactively reduce rights already earned under an accepted and paid order.",
-          ],
-        },
-        {
-          title: "Disclaimers",
-          paragraphs: [
-            "Except for express written commitments and rights that cannot be excluded by law, products and services are provided with the features and limitations stated in the applicable listing or agreement. The buyer is responsible for reviewing and testing a system before production use.",
+            "Our software systems may incorporate open-source libraries (e.g., React, Next.js, Tailwind CSS, Lucide icons, PostgreSQL drivers). These dependencies remain governed by their respective open-source licenses (such as MIT, Apache 2.0, or BSD).",
           ],
         },
         {
           title: "Limitation of liability",
           paragraphs: [
-            "To the extent permitted by law, neither party is liable for indirect, incidental, or consequential loss. Where liability may lawfully be limited, WebSystemBuilders' aggregate liability arising from a specific order will not exceed the amount actually paid for that order.",
-          ],
-        },
-        {
-          title: "Suspension and termination",
-          paragraphs: [
-            "You may stop using the website and request account closure. We may suspend or terminate access for a material breach, security threat, fraud, infringement, or unlawful use.",
-          ],
-        },
-        {
-          title: "Privacy",
-          paragraphs: [
-            "Our collection and processing of personal data are governed by the WebSystemBuilders Privacy Policy. By using the service, you acknowledge that you have been given an opportunity to review that Policy.",
-          ],
-        },
-        {
-          title: "Electronic communications",
-          paragraphs: [
-            "You agree that orders, confirmations, proposals, invoices, delivery notices, approvals, and other communications may be provided electronically.",
+            "To the maximum extent permitted by applicable Philippine law, WebSystemBuilders is not liable for indirect, incidental, or consequential damages resulting from the use or inability to use delivered software.",
+            "Our total aggregate liability for any claim arising from an order is strictly limited to the amount actually paid by you for that specific order.",
           ],
         },
         {
           title: "Governing law and dispute resolution",
           paragraphs: [
-            "These Terms are governed by the laws of the Republic of the Philippines. Before starting formal proceedings, contact evangelista.agdiaz@gmail.com with the order number, facts, and requested resolution to attempt good-faith resolution.",
+            "These Terms are governed by and construed in accordance with the laws of the Republic of the Philippines.",
+            "In the event of a dispute, both parties agree to first seek an informal, good-faith resolution by contacting evangelista.agdiaz@gmail.com with transaction details and a clear description of the issue.",
           ],
         },
         {
-          title: "Changes to these Terms",
+          title: "Contact information",
           paragraphs: [
-            "We may update these Terms for future use of the service. Continued use after proper notice of changes constitutes acceptance to the extent permitted by law.",
-          ],
-        },
-        {
-          title: "Severability and no waiver",
-          paragraphs: [
-            "If a provision is held invalid or unenforceable, the remaining provisions remain effective. Failure to enforce a provision once is not a waiver of the right to enforce it later.",
-          ],
-        },
-        {
-          title: "Contact",
-          paragraphs: [
-            "WebSystemBuilders — AG Evangelista, individual operator — Metro Manila, Philippines — evangelista.agdiaz@gmail.com",
+            "For contractual questions, licensing inquiries, or legal notices, contact:",
+            "AG Evangelista — Platform Operator, WebSystemBuilders",
+            "Location: Metro Manila, Philippines | Email: evangelista.agdiaz@gmail.com",
           ],
         },
       ]}
