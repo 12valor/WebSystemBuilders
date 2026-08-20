@@ -57,7 +57,7 @@ export function TrustStrip() {
     <section
       id="institutions"
       aria-labelledby="institutions-title"
-      className="border-b border-slate-200/80 bg-white py-12 sm:py-14"
+      className="border-b border-slate-200/80 bg-white py-10 sm:py-14"
     >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -67,22 +67,22 @@ export function TrustStrip() {
             </p>
             <h2
               id="institutions-title"
-              className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
+              className="mt-2 text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl md:text-3xl"
             >
               Proven Across Universities and Academic Institutions
             </h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
+            <p className="mt-2 text-xs font-medium leading-relaxed text-slate-600 sm:text-sm">
               Our systems are architected to pass technical defenses, rigorous code reviews, and live production deployments.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:gap-6">
             {institutions.map((institution) => (
               <div
                 key={institution.name}
-                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-4 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md ${institution.rotation}`}
+                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-3 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md sm:p-4 ${institution.rotation}`}
               >
-                <div className="relative mb-3 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-white p-2 shadow-xs border border-slate-100 transition-transform duration-300 group-hover:scale-105">
+                <div className="relative mb-2.5 flex size-12 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white p-1.5 shadow-xs transition-transform duration-300 group-hover:scale-105 sm:mb-3 sm:size-16 sm:p-2">
                   <Image
                     src={institution.src}
                     alt={institution.name}
@@ -91,7 +91,7 @@ export function TrustStrip() {
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                <span className="text-[11px] font-bold leading-snug text-slate-700 transition-colors group-hover:text-blue-700">
+                <span className="text-[10px] font-bold leading-snug text-slate-700 transition-colors group-hover:text-blue-700 sm:text-[11px]">
                   {institution.name}
                 </span>
               </div>
@@ -108,14 +108,14 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
 
   return (
-    <section id="systems" className="bg-[#FAFAFC] py-16 sm:py-20 lg:py-24">
+    <section id="systems" className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-24">
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Featured Systems Heading */}
-        <div className="mb-9 max-w-2xl lg:mb-10">
-          <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.08] tracking-[-0.04em] text-slate-900">
+        <div className="mb-7 max-w-2xl sm:mb-9 lg:mb-10">
+          <h2 className="font-heading text-2xl font-bold leading-[1.12] tracking-[-0.035em] text-slate-900 sm:text-3xl md:text-4xl">
             Featured Software Systems
           </h2>
-          <p className="mt-2.5 text-base text-slate-600 font-normal leading-relaxed">
+          <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600 sm:mt-2.5 sm:text-base">
             Browse ready-made systems engineered with production standards for business operations or academic defense.
           </p>
         </div>
@@ -123,13 +123,13 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         {/* Featured Systems Cards */}
         {systems.length > 0 ? (
           <>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 sm:gap-8">
               {systems.map((system) => (
                 <FeaturedSystemCard key={system.id} system={system} />
               ))}
             </div>
 
-            <div className="mt-10 sm:mt-12 flex justify-center">
+            <div className="mt-8 flex justify-center sm:mt-12">
               <Link href="/systems">
                 <MagneticButton size="md" variant="outline">
                   <span>Browse All Systems</span>
@@ -143,34 +143,34 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
         )}
 
         {/* Browse Categories Grid */}
-        <div className="mt-16 border-t border-slate-200/80 pt-14 sm:mt-20 sm:pt-16">
-          <div className="mb-9 text-center sm:mb-10">
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        <div className="mt-12 border-t border-slate-200/80 pt-12 sm:mt-16 sm:pt-16 lg:mt-20">
+          <div className="mb-7 text-center sm:mb-10">
+            <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
               Browse Systems by Need
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 font-medium">
+            <p className="mx-auto mt-2 max-w-2xl text-sm font-medium text-slate-600 sm:mt-3 sm:text-base">
               Compare published systems and service paths by the workflow or approved technical need they address.
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {categoriesList.map((cat) => (
               <Link key={cat.title} href={`/systems?category=${cat.slug}`}>
                 <TactileCard
                   bg="white"
                   glassHighlight={false}
-                  className="flex h-full flex-col justify-between p-5 hover:border-blue-500/40 sm:p-6"
+                  className="flex h-full flex-col justify-between p-4.5 hover:border-blue-500/40 sm:p-6"
                 >
                   <div>
-                    <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-4" />
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-3.5 sm:mb-4" />
+                    <h3 className="text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-lg">
                       {cat.title}
                     </h3>
-                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-medium">
+                    <p className="mt-1.5 text-xs font-medium leading-relaxed text-slate-600 sm:mt-2">
                       {cat.description}
                     </p>
                   </div>
-                  <div className="mt-6 flex items-center gap-1.5 text-xs font-bold text-blue-600">
+                  <div className="mt-5 flex items-center gap-1.5 text-xs font-bold text-blue-600 sm:mt-6">
                     <span>Explore Category</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </div>
@@ -210,23 +210,23 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
       </div>
 
       {/* 2. Content Area */}
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-4.5 sm:p-6">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
           {system.category?.name ?? "Custom System Development"}
         </span>
 
-        <h3 className="mt-2 font-heading text-lg font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
+        <h3 className="mt-1.5 font-heading text-base font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600 sm:mt-2 sm:text-lg">
           <Link href={`/systems/${system.slug}`} className="focus:outline-none">
             {system.title}
           </Link>
         </h3>
 
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 line-clamp-2">
+        <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-2">
           {system.summary}
         </p>
 
         {/* Inclusions Row */}
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
+        <div className="mt-3.5 flex flex-wrap items-center gap-2.5 text-xs text-slate-500 font-medium sm:mt-4 sm:gap-3">
           <span className="inline-flex items-center gap-1.5">
             <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" aria-hidden="true" />
             Full Source ZIP
@@ -239,19 +239,19 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
         </div>
 
         {/* 3. Price & Action Footer */}
-        <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
+        <div className="mt-4 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 mt-auto sm:mt-5 sm:pt-4">
           <div className="min-w-0">
             <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400">
               {isStarting ? "Starting at" : "Price"}
             </span>
-            <div className="mt-0.5 text-lg font-bold text-slate-900 tracking-tight">
+            <div className="mt-0.5 text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} variant="featured" />
             </div>
           </div>
 
           <Link
             href={`/systems/${system.slug}`}
-            className="group/btn inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+            className="group/btn inline-flex shrink-0 min-h-[40px] items-center justify-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
           >
             <span>View System</span>
             <ArrowRight className="size-3.5 transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true" />

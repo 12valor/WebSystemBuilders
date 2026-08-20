@@ -9,11 +9,11 @@ export function AnnouncementBar({ announcement }: { announcement: SiteContentBlo
   const [visible, setVisible] = useState(true);
   if (!announcement || !visible) return null;
   return (
-    <aside aria-label="Announcement" className="relative bg-slate-900 px-4 py-2 text-xs font-semibold text-white border-b border-slate-800">
-      <div className="mx-auto flex max-w-[1280px] items-center justify-center gap-2 text-center text-slate-200">
-        <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+    <aside aria-label="Announcement" className="relative bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white border-b border-slate-800">
+      <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-center gap-2 pr-8 text-center text-slate-200 sm:pr-0">
+        <span className="flex h-2 w-2 shrink-0 rounded-full bg-blue-500 animate-pulse" />
         <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-        <span>{announcement.title}</span>
+        <span className="leading-snug">{announcement.title}</span>
         {announcement.actionLabel && announcement.actionHref && (
           <Link
             href={announcement.actionHref}
@@ -28,7 +28,7 @@ export function AnnouncementBar({ announcement }: { announcement: SiteContentBlo
         type="button"
         aria-label="Dismiss announcement"
         onClick={() => setVisible(false)}
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-md hover:bg-slate-800 transition-colors"
+        className="absolute right-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
       >
         <X className="w-3.5 h-3.5" />
       </button>

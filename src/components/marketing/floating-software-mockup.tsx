@@ -61,6 +61,9 @@ export function FloatingSoftwareMockup() {
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <Code2 className="w-5.5 h-5.5" />
           </div>
+          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
+            <Code2 className="w-5.5 h-5.5" />
+          </div>
           <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Custom Development</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Requirements-reviewed software for a defined workflow.
@@ -72,7 +75,7 @@ export function FloatingSoftwareMockup() {
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100/80 shadow-xs mb-3">
             <GraduationCap className="w-5.5 h-5.5" />
           </div>
-          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Academic & Capstone</h4>
+          <h4 className="text-xs font-bold text-slate-900 tracking-tight leading-snug">Academic &amp; Capstone</h4>
           <p className="text-[11px] text-slate-500 mt-1 leading-relaxed max-w-[170px]">
             Ethical technical foundations with disclosed scope.
           </p>
@@ -86,48 +89,48 @@ export function FloatingSoftwareMockup() {
       </div>
 
       {/* Mobile & Tablet Responsive Feature Cards Grid (< lg screens) */}
-      <div className="mt-6 grid grid-cols-1 gap-3.5 sm:mt-8 sm:grid-cols-2 lg:hidden">
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 lg:hidden">
         {/* Card 1 */}
-        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
-            <ShoppingCart className="w-5 h-5" />
+        <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 shadow-xs backdrop-blur-md sm:p-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-[#2563EB]">
+            <ShoppingCart className="size-5" />
           </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">POS & Sales System</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Streamline sales, invoices, and transactions.</p>
+          <div className="min-w-0">
+            <h4 className="text-xs font-bold text-slate-900">POS &amp; Sales System</h4>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">Streamline sales, invoices, and transactions.</p>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
-            <Boxes className="w-5 h-5" />
+        <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 shadow-xs backdrop-blur-md sm:p-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-[#2563EB]">
+            <Boxes className="size-5" />
           </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Inventory & Warehouse</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Track stock, manage suppliers, and warehouses.</p>
+          <div className="min-w-0">
+            <h4 className="text-xs font-bold text-slate-900">Inventory &amp; Warehouse</h4>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">Track stock, manage suppliers, and warehouses.</p>
           </div>
         </div>
 
         {/* Card 3 */}
-        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
-            <Code2 className="w-5 h-5" />
+        <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 shadow-xs backdrop-blur-md sm:p-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-[#2563EB]">
+            <Code2 className="size-5" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h4 className="text-xs font-bold text-slate-900">Custom Development</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Requirements-reviewed software for a defined workflow.</p>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">Requirements-reviewed software for a defined workflow.</p>
           </div>
         </div>
 
         {/* Card 4 */}
-        <div className="rounded-[18px] bg-white/95 p-4 border border-slate-200/80 shadow-sm backdrop-blur-md flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0 border border-blue-100">
-            <GraduationCap className="w-5 h-5" />
+        <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 shadow-xs backdrop-blur-md sm:p-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-[#2563EB]">
+            <GraduationCap className="size-5" />
           </div>
-          <div>
-            <h4 className="text-xs font-bold text-slate-900">Academic & Capstone</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Ethical technical foundations with disclosed scope.</p>
+          <div className="min-w-0">
+            <h4 className="text-xs font-bold text-slate-900">Academic &amp; Capstone</h4>
+            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500">Ethical technical foundations with disclosed scope.</p>
           </div>
         </div>
       </div>

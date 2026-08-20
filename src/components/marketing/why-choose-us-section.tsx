@@ -42,30 +42,30 @@ export function WhyChooseUsSection() {
   return (
     <section
       aria-labelledby="knowledge-receive-heading"
-      className="border-b border-slate-200/80 bg-[#FAFAFC] py-16 sm:py-20 lg:py-24 font-sans text-slate-900"
+      className="border-b border-slate-200/80 bg-[#FAFAFC] py-12 font-sans text-slate-900 sm:py-16 lg:py-24"
     >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Section Header */}
         <div className="max-w-2xl">
           <h2
             id="knowledge-receive-heading"
-            className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.1]"
+            className="font-heading text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl leading-[1.15]"
           >
             Know exactly what you receive.
           </h2>
-          <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+          <p className="mt-2.5 text-sm leading-relaxed text-slate-600 sm:mt-3.5 sm:text-base md:text-lg">
             Every system page clearly explains what is included, how it can be used, and what support you receive before purchasing.
           </p>
         </div>
 
         {/* 3 Clean Benefit Cards */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:gap-6 md:grid-cols-3 lg:mt-12">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
               <article
                 key={index}
-                className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none"
+                className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-7"
               >
                 <div>
                   <div
@@ -75,14 +75,14 @@ export function WhyChooseUsSection() {
                     <Icon className="size-5.5 stroke-[1.75]" />
                   </div>
 
-                  <h3 className="mt-5 font-heading text-xl font-bold tracking-tight text-slate-900">
+                  <h3 className="mt-4 font-heading text-lg font-bold tracking-tight text-slate-900 sm:mt-5 sm:text-xl">
                     {benefit.title}
                   </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
                     {benefit.description}
                   </p>
 
-                  <ul className="mt-5 space-y-2 border-t border-slate-100 pt-5">
+                  <ul className="mt-4 space-y-2 border-t border-slate-100 pt-4 sm:mt-5 sm:pt-5">
                     {benefit.points.map((point, idx) => (
                       <li
                         key={idx}

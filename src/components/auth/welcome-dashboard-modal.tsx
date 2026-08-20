@@ -44,19 +44,19 @@ function WelcomeDashboardModalContent() {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/40 backdrop-blur-md">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-3.5 sm:p-6 bg-slate-950/40 backdrop-blur-md">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 12 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="relative w-full max-w-md bg-white border border-slate-200/90 shadow-2xl rounded-2xl p-7 sm:p-9 text-center antialiased"
+          className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto overscroll-contain bg-white border border-slate-200/90 shadow-2xl rounded-2xl p-5 sm:p-9 text-center antialiased"
         >
           {/* Close Button */}
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="absolute right-4 top-4 text-slate-400 hover:text-slate-700 transition-colors p-1.5 rounded-lg hover:bg-slate-100"
+            className="absolute right-3 top-3 text-slate-400 hover:text-slate-700 transition-colors p-2 rounded-lg hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 sm:right-4 sm:top-4"
             aria-label="Close modal"
           >
             <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

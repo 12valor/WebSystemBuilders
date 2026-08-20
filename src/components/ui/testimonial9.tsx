@@ -159,8 +159,8 @@ const DynamicMasonryGrid = dynamic(
       renderCard: (testimonial: TestimonialBasicGridItem, idx: number) => React.ReactNode;
     }) {
       return (
-        <ResponsiveMasonryComp columnsCountBreakPoints={{ 350: 1, 768: 2, 1024: 3 }}>
-          <MasonryComp gutter="20px" columnsCount={3}>
+        <ResponsiveMasonryComp columnsCountBreakPoints={{ 0: 1, 640: 2, 1024: 3 }}>
+          <MasonryComp gutter="18px" columnsCount={3}>
             {items.map(renderCard)}
           </MasonryComp>
         </ResponsiveMasonryComp>
@@ -186,18 +186,18 @@ const Testimonial9 = (props: Props) => {
   const list = testimonials.slice(0, 6);
 
   const renderCard = (testimonial: TestimonialBasicGridItem, idx: number) => (
-    <Card key={testimonial.id || idx} className="p-5">
+    <Card key={testimonial.id || idx} className="p-4.5 sm:p-5">
       <div className="flex justify-between">
-        <div className="flex gap-4 leading-5">
-          <Avatar className="size-9 rounded-full ring-1 ring-input">
+        <div className="flex gap-3 sm:gap-4 leading-5">
+          <Avatar className="size-9 rounded-full ring-1 ring-input shrink-0">
             <AvatarImage
               src={testimonial.avatar}
               alt={testimonial.name}
             />
           </Avatar>
-          <div className="text-sm">
-            <p className="font-medium">{testimonial.name}</p>
-            <p className="text-muted-foreground">
+          <div className="text-xs sm:text-sm">
+            <p className="font-semibold text-slate-900">{testimonial.name}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
               {testimonial.role}
             </p>
           </div>
@@ -212,26 +212,26 @@ const Testimonial9 = (props: Props) => {
           </a>
         ) : null}
       </div>
-      <div className="mt-2 leading-7 text-muted-foreground">
+      <div className="mt-2.5 leading-relaxed text-xs sm:text-sm text-slate-600">
         <q>{testimonial.content}</q>
       </div>
     </Card>
   );
 
   return (
-    <section className={cn("py-32", className)}>
-      <div className="container mx-auto">
-        <div className="flex flex-col items-center gap-6">
-          <h2 className="font-heading text-center text-3xl font-bold lg:text-5xl text-slate-900 tracking-tight">
+    <section className={cn("py-12 sm:py-16 lg:py-24", className)}>
+      <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
+        <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
+          <h2 className="font-heading text-2xl font-bold text-slate-900 tracking-tight sm:text-3xl lg:text-4xl">
             {heading}
           </h2>
-          <p className="text-muted-foreground lg:text-lg">{description}</p>
+          <p className="max-w-2xl text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">{description}</p>
         </div>
-        <div className="mt-14 w-full">
+        <div className="mt-8 sm:mt-12 w-full">
           {mounted ? (
             <DynamicMasonryGrid items={list} renderCard={renderCard} />
           ) : (
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
               {list.map(renderCard)}
             </div>
           )}

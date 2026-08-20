@@ -56,12 +56,12 @@ export function ProjectWorkspacePlayground() {
   return (
     <section
       aria-labelledby="project-workspace-title"
-      className="relative border-y border-slate-200/80 bg-[#FAFBFC] py-20 lg:py-24 font-sans text-slate-900 overflow-hidden"
+      className="relative border-y border-slate-200/80 bg-[#FAFBFC] py-12 font-sans text-slate-900 overflow-hidden sm:py-16 lg:py-24"
     >
       <PreSaleChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.27fr_1fr] gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.27fr_1fr] gap-8 sm:gap-12 lg:gap-16 items-center">
           
           {/* ================= LEFT-SIDE PROJECT WORKSPACE ================= */}
           <motion.div
@@ -69,33 +69,33 @@ export function ProjectWorkspacePlayground() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="order-2 lg:order-1 rounded-2xl bg-white border border-slate-200/90 p-5 sm:p-6 shadow-xs"
+            className="order-2 lg:order-1 rounded-2xl bg-white border border-slate-200/90 p-4.5 sm:p-6 shadow-xs"
           >
             {/* WORKSPACE HEADER */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-4 mb-4 border-b border-slate-100 sm:mb-5">
               <div className="flex items-center gap-3">
-                <BrandLogo className="size-6" />
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+                <BrandLogo className="size-6 shrink-0" />
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-xs font-bold text-slate-900 tracking-tight sm:text-sm">
                       Inventory Management System
                     </h3>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
                       In development
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-[11px] text-slate-500 mt-0.5 sm:text-xs">
                     3 of 5 stages completed
                   </p>
                 </div>
               </div>
-              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 bg-slate-100/80 px-2 py-1 rounded">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 bg-slate-100/80 px-2 py-1 rounded w-fit">
                 EXAMPLE PROJECT
               </span>
             </div>
 
             {/* WORKSPACE BODY (2 INTERNAL COLUMNS) */}
-            <div className="grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] gap-6 items-start">
+            <div className="grid grid-cols-1 sm:grid-cols-[1.1fr_0.9fr] gap-5 sm:gap-6 items-start">
               
               {/* LEFT INTERNAL COLUMN: MILESTONE TIMELINE */}
               <div className="relative pl-1">
@@ -113,7 +113,7 @@ export function ProjectWorkspacePlayground() {
                   initial={false}
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="space-y-4 relative z-10"
+                  className="space-y-3.5 sm:space-y-4 relative z-10"
                 >
                   {/* Milestone 1 */}
                   <motion.div variants={itemVariants} className="flex items-start gap-3">
@@ -124,7 +124,7 @@ export function ProjectWorkspacePlayground() {
                       <div className="flex items-center gap-2">
                         <p className="text-xs sm:text-sm font-bold text-slate-900">1. Requirements</p>
                       </div>
-                      <span className="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
+                      <span className="inline-block text-[10px] sm:text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
                         Completed
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export function ProjectWorkspacePlayground() {
                       <div className="flex items-center gap-2">
                         <p className="text-xs sm:text-sm font-bold text-slate-900">2. Project plan</p>
                       </div>
-                      <span className="inline-block text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
+                      <span className="inline-block text-[10px] sm:text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/70 mt-0.5">
                         Completed
                       </span>
                     </div>
@@ -154,7 +154,7 @@ export function ProjectWorkspacePlayground() {
                       <div className="flex items-center gap-2">
                         <p className="text-xs sm:text-sm font-bold text-slate-900">3. Prototype</p>
                       </div>
-                      <span className="inline-block text-[11px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded border border-amber-100/70 mt-0.5">
+                      <span className="inline-block text-[10px] sm:text-[11px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded border border-amber-100/70 mt-0.5">
                         Ready for review
                       </span>
                     </div>
@@ -169,7 +169,7 @@ export function ProjectWorkspacePlayground() {
                       <div className="flex items-center gap-2">
                         <p className="text-xs sm:text-sm font-bold text-slate-900">4. Development</p>
                       </div>
-                      <span className="inline-block text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-100/70 mt-0.5">
+                      <span className="inline-block text-[10px] sm:text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-100/70 mt-0.5">
                         In progress
                       </span>
                     </div>
@@ -184,7 +184,7 @@ export function ProjectWorkspacePlayground() {
                       <div className="flex items-center gap-2">
                         <p className="text-xs sm:text-sm font-medium text-slate-600">5. Final handoff</p>
                       </div>
-                      <span className="inline-block text-[11px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/60 mt-0.5">
+                      <span className="inline-block text-[10px] sm:text-[11px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/60 mt-0.5">
                         Upcoming
                       </span>
                     </div>
@@ -240,7 +240,7 @@ export function ProjectWorkspacePlayground() {
             </div>
 
             {/* WORKSPACE FOOTER */}
-            <div className="mt-5 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs sm:mt-5 sm:pt-3.5">
               <div className="flex items-center gap-2 min-w-0">
                 <FileText className="size-3.5 text-slate-400 shrink-0" />
                 <span className="font-bold text-slate-900 shrink-0">Latest update:</span>
@@ -264,16 +264,16 @@ export function ProjectWorkspacePlayground() {
               PROJECT SUPPORT
             </span>
 
-            {/* Confident Headline without decorative doodles */}
+            {/* Confident Headline */}
             <h2
               id="project-workspace-title"
-              className="mt-3 font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]"
+              className="mt-2.5 font-heading text-2xl font-bold tracking-tight text-slate-900 sm:mt-3 sm:text-3xl lg:text-4xl leading-[1.15]"
             >
               Know exactly where your project stands.
             </h2>
 
             {/* Controlled Paragraph */}
-            <p className="mt-5 text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl">
+            <p className="mt-3 text-sm sm:text-base md:text-lg text-slate-600 font-normal leading-relaxed max-w-xl sm:mt-4">
               Follow every requirement, milestone, and revision in one organized view—from planning to final handoff.
             </p>
 
@@ -283,10 +283,10 @@ export function ProjectWorkspacePlayground() {
               initial={false}
               whileInView="visible"
               viewport={{ once: true }}
-              className="mt-8 space-y-4"
+              className="mt-6 space-y-3.5 sm:mt-8 sm:space-y-4"
             >
               {/* Row 01 */}
-              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+              <motion.div variants={itemVariants} className="group pb-3.5 border-b border-slate-200/70 flex items-start gap-3 sm:gap-4 sm:pb-4">
                 <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">01</span>
                 <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
                   <FileCheck2 className="size-4 stroke-[2]" />
@@ -300,7 +300,7 @@ export function ProjectWorkspacePlayground() {
               </motion.div>
 
               {/* Row 02 */}
-              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+              <motion.div variants={itemVariants} className="group pb-3.5 border-b border-slate-200/70 flex items-start gap-3 sm:gap-4 sm:pb-4">
                 <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">02</span>
                 <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
                   <GitBranch className="size-4 stroke-[2]" />
@@ -314,7 +314,7 @@ export function ProjectWorkspacePlayground() {
               </motion.div>
 
               {/* Row 03 */}
-              <motion.div variants={itemVariants} className="group pb-4 border-b border-slate-200/70 flex items-start gap-4">
+              <motion.div variants={itemVariants} className="group pb-3.5 border-b border-slate-200/70 flex items-start gap-3 sm:gap-4 sm:pb-4">
                 <span className="text-xs font-mono font-bold text-slate-400 group-hover:text-blue-600 pt-1 transition-colors">03</span>
                 <div className="size-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 border border-slate-200/90 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-600 transition-colors">
                   <MessageSquare className="size-4 stroke-[2]" />
@@ -329,11 +329,11 @@ export function ProjectWorkspacePlayground() {
             </motion.div>
 
             {/* CTA & DIRECT DEVELOPER LINK */}
-            <div className="mt-8 pt-2 space-y-4">
+            <div className="mt-6 pt-2 space-y-3.5 sm:mt-8 sm:space-y-4">
               <div className="flex sm:inline-flex">
                 <Link
                   href="/for-students"
-                  className="blue-button min-h-12 w-full gap-2 px-6 text-sm sm:w-auto"
+                  className="blue-button min-h-[48px] h-12 w-full gap-2 px-6 text-sm sm:w-auto"
                 >
                   <span>See how project support works</span>
                   <ArrowRight className="size-4" />

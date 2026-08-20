@@ -185,9 +185,9 @@ export function SiteNavigation() {
           aria-controls="mobile-menu"
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
           onClick={() => setIsOpen((open) => !open)}
-          className="relative ml-auto grid size-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-xs hover:bg-slate-50 active:scale-95 transition-all xl:hidden"
+          className="relative ml-auto grid size-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-xs hover:bg-slate-50 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 xl:hidden"
         >
-          {isOpen ? <X className="w-5 h-5 text-slate-800" /> : <Menu className="w-5 h-5 text-slate-800" />}
+          {isOpen ? <X className="size-5 text-slate-800" /> : <Menu className="size-5 text-slate-800" />}
         </button>
       </div>
 
@@ -201,7 +201,7 @@ export function SiteNavigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
-            className="mt-3 rounded-3xl border border-slate-200/90 bg-white/95 p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] xl:hidden"
+            className="mt-3 max-h-[calc(100dvh-96px)] overflow-y-auto overscroll-contain rounded-3xl border border-slate-200/90 bg-white/95 p-5 sm:p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] xl:hidden"
           >
             <div className="grid gap-1.5">
               {navigation.map((item) => {
@@ -211,7 +211,7 @@ export function SiteNavigation() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`group flex items-center justify-between rounded-2xl px-4 py-3.5 text-base font-semibold transition-all duration-150 ${
+                    className={`group flex min-h-[48px] items-center justify-between rounded-2xl px-4 py-3 text-base font-semibold transition-all duration-150 ${
                       isActive
                         ? "bg-[#2563EB] text-white shadow-sm"
                         : "text-[#0F172A] hover:bg-[#2563EB] hover:text-white"
@@ -228,7 +228,7 @@ export function SiteNavigation() {
                     <Link
                       href="/dashboard"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center justify-center gap-2 w-full px-6 h-12 text-base font-semibold text-white rounded-2xl bg-slate-900 shadow-sm"
+                      className="flex min-h-[48px] items-center justify-center gap-2 w-full px-6 text-base font-semibold text-white rounded-2xl bg-slate-900 shadow-sm hover:bg-slate-800 transition-colors"
                     >
                       <LayoutDashboard className="w-4.5 h-4.5" />
                       <span>Dashboard</span>
@@ -236,7 +236,7 @@ export function SiteNavigation() {
                     <Link
                       href="/account"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
+                      className="flex min-h-[48px] items-center gap-3 px-4 py-2.5 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl transition-colors"
                     >
                       {user.avatarUrl ? (
                         <img
@@ -257,7 +257,7 @@ export function SiteNavigation() {
                     <Link
                       href="/auth/sign-in"
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-3 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl"
+                      className="flex min-h-[48px] items-center gap-2.5 px-4 py-2.5 text-base font-semibold text-[#0F172A] hover:bg-slate-50 rounded-2xl transition-colors"
                     >
                       <User className="w-4.5 h-4.5 text-slate-500" />
                       <span>Account Login</span>
@@ -265,7 +265,7 @@ export function SiteNavigation() {
                     <Link
                       href="/request-a-quote"
                       onClick={() => setIsOpen(false)}
-                      className="blue-button flex h-12 w-full items-center justify-center gap-2 bg-[#2563EB] px-6 text-base font-semibold text-white"
+                      className="blue-button flex min-h-[48px] w-full items-center justify-center gap-2 bg-[#2563EB] px-6 text-base font-semibold text-white"
                     >
                       <span>Request a Quote</span>
                       <ArrowUpRight className="w-4.5 h-4.5" />
@@ -280,5 +280,3 @@ export function SiteNavigation() {
     </header>
   );
 }
-
-

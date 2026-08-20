@@ -51,7 +51,7 @@ export default async function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFC] text-slate-900 antialiased font-sans">
+    <div className="min-h-screen bg-[#FAFAFC] text-slate-900 antialiased font-sans overflow-x-clip">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -60,7 +60,7 @@ export default async function HomePage() {
       <SiteHeader />
       <WelcomeDashboardModal />
 
-      <main id="main-content">
+      <main id="main-content" className="overflow-x-clip">
         <HeroSection />
         <TrustStrip />
         <ChoosePathSection />
