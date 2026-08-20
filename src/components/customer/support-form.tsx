@@ -15,26 +15,24 @@ export function SupportForm({
   const [state, action, pending] = useActionState(createSupportRequest, initialState);
   const dashboard = appearance === "dashboard";
   const fieldClass = dashboard
-    ? "min-h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/10"
-    : "min-h-12 rounded-[10px] border border-slate-200 bg-white px-4 text-xs font-normal text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10";
-  const labelClass = dashboard
-    ? "grid gap-2 text-xs font-semibold text-slate-700"
-    : "grid gap-2 text-xs font-semibold text-slate-700";
+    ? "min-h-11 rounded-lg border border-slate-200 bg-white px-3.5 text-xs font-medium text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/10"
+    : "min-h-12 rounded-lg border border-slate-200 bg-white px-4 text-xs font-normal text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/10";
+  const labelClass = "grid gap-1.5 text-xs font-semibold text-slate-700";
 
   return (
     <form
       action={action}
       className={
         dashboard
-          ? "mt-5 grid gap-5 rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-2xs"
-          : "mt-6 grid gap-5 rounded-[24px] border border-white/90 bg-white/90 p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)] backdrop-blur-sm sm:p-7"
+          ? "mt-4 grid gap-4 rounded-xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-2xs"
+          : "mt-6 grid gap-5 rounded-2xl border border-white/90 bg-white/90 p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)] backdrop-blur-sm sm:p-7"
       }
       noValidate
     >
       {state.message && (
         <p
           role="status"
-          className={`rounded-xl border p-4 text-sm font-semibold ${
+          className={`rounded-lg border p-3.5 text-xs font-semibold ${
             state.status === "success"
               ? "border-emerald-200 bg-emerald-50 text-emerald-800"
               : "border-red-200 bg-red-50 text-red-700"

@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowDownLeft,
+  ArrowRight,
   ArrowUpRight,
+  Bookmark,
   CheckCircle2,
   ChevronDown,
   Clock,
@@ -28,6 +30,7 @@ import {
   ShieldCheck,
   ShoppingBag,
   SlidersHorizontal,
+  Trash2,
   User as UserIcon,
   X,
 } from "lucide-react";
@@ -746,46 +749,58 @@ function PurchasesPanel({ orders, userEmail }: { orders: CustomerPortalData["ord
 
 function SupportPanel({ portalData }: { portalData: CustomerPortalData }) {
   return (
-    <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr] xl:items-start">
-      <div className="grid gap-5">
+    <div className="grid gap-6 xl:grid-cols-[1fr_1.1fr] xl:items-start">
+      {/* Left: Support History */}
+      <div className="space-y-4">
         <div>
-          <SectionHeading eyebrow="Request history" title="Support activity" />
-          <p className="mt-2 text-sm leading-relaxed text-slate-600 font-medium">
-            Track requests linked to verified purchases on this account.
+          <h2 className="text-base font-extrabold tracking-tight text-slate-900">Support History</h2>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Track inquiries and requests linked to your verified purchases.
           </p>
         </div>
+
         <DashboardPanel className="overflow-hidden">
           {portalData.supportRequests.length === 0 ? (
-            <DashboardEmptyState
-              icon={MessageSquare}
-              title="No support requests yet"
-              description="Requests you submit for verified purchases will be listed here."
-            />
+            <div className="p-8 text-center">
+              <div className="mx-auto grid size-10 place-items-center rounded-xl bg-slate-100 text-slate-600">
+                <MessageSquare className="size-4.5" />
+              </div>
+              <h3 className="mt-3 text-sm font-bold text-slate-900">No support requests yet</h3>
+              <p className="mt-1 text-xs text-slate-500 font-medium max-w-xs mx-auto">
+                Need help with installation, schemas, or source files? Use the form to reach our engineering team.
+              </p>
+            </div>
           ) : (
             <div className="divide-y divide-slate-100">
               {portalData.supportRequests.map((request) => (
-                <div key={request.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-                  <div>
-                    <p className="text-sm font-bold text-slate-900">{request.subject}</p>
-                    <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-                      <Clock className="size-3.5 text-slate-400" />
-                      Updated {formatDate(request.updated_at)}
-                    </p>
+                <div key={request.id} className="p-4 sm:p-5 hover:bg-slate-50/70 transition">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">{request.subject}</p>
+                      <p className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                        <Clock className="size-3 text-slate-400" />
+                        <span>Updated {formatDate(request.updated_at)}</span>
+                      </p>
+                    </div>
+                    <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-700">
+                      {request.status.replace("_", " ")}
+                    </span>
                   </div>
-                  <span className="w-fit rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-bold capitalize text-slate-700">
-                    {request.status.replace("_", " ")}
-                  </span>
                 </div>
               ))}
             </div>
           )}
         </DashboardPanel>
       </div>
-      <div>
-        <SectionHeading eyebrow="New request" title="Contact support" />
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 font-medium">
-          Choose an order and describe the issue without sharing credentials or secret keys.
-        </p>
+
+      {/* Right: Submit New Request */}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-base font-extrabold tracking-tight text-slate-900">New Request</h2>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Select an order and describe your technical question or request.
+          </p>
+        </div>
         <SupportForm
           appearance="dashboard"
           orders={portalData.orders.map((order) => ({ id: order.order_id, label: `${order.order_number} - ${order.product_name}` }))}
@@ -795,16 +810,197 @@ function SupportPanel({ portalData }: { portalData: CustomerPortalData }) {
   );
 }
 
+type SavedSystemItem = {
+  slug: string;
+  name: string;
+  category?: string;
+  priceMinor?: number;
+  currency?: string;
+  version?: string;
+  savedAt?: string;
+};
+
 function SavedSystemsPanel() {
+  const [savedSystems, setSavedSystems] = useState<SavedSystemItem[]>([]);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("wsb_saved_systems");
+      if (stored) {
+        setSavedSystems(JSON.parse(stored));
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, []);
+
+  const handleRemove = (slug: string) => {
+    const next = savedSystems.filter((item) => item.slug !== slug);
+    setSavedSystems(next);
+    try {
+      localStorage.setItem("wsb_saved_systems", JSON.stringify(next));
+    } catch {
+      // Ignore localStorage errors
+    }
+  };
+
+  const clearAll = () => {
+    setSavedSystems([]);
+    try {
+      localStorage.removeItem("wsb_saved_systems");
+    } catch {
+      // Ignore localStorage errors
+    }
+  };
+
+  const popularCategories = [
+    {
+      title: "Business & POS Systems",
+      desc: "Point of sale, inventory tracking, and sales reporting",
+      href: "/systems?category=business",
+    },
+    {
+      title: "Academic & School Portals",
+      desc: "Student enrollment, grading, and document portals",
+      href: "/systems?category=education",
+    },
+    {
+      title: "Booking & Scheduling",
+      desc: "Appointment reservations, client calendars, and notifications",
+      href: "/systems?category=booking",
+    },
+    {
+      title: "Management & CRM",
+      desc: "Client records, billing automation, and operations",
+      href: "/systems?category=management",
+    },
+  ];
+
   return (
-    <DashboardPanel>
-      <DashboardEmptyState
-        icon={Heart}
-        title="Saved systems are not connected yet"
-        description="This workspace does not claim to sync saved catalog items until the account feature is available. You can continue browsing the published catalog."
-        action={<PrimaryLink href="/systems">Explore the catalog</PrimaryLink>}
-      />
-    </DashboardPanel>
+    <div className="space-y-6">
+      {/* Top Header Panel */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-base font-extrabold tracking-tight text-slate-900">Saved Systems</h2>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            Systems you bookmark from the catalog appear here for quick access.
+          </p>
+        </div>
+        {savedSystems.length > 0 && (
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={clearAll}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 transition cursor-pointer shadow-2xs"
+            >
+              <Trash2 className="size-3.5" />
+              <span>Clear list</span>
+            </button>
+            <Link
+              href="/systems"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-blue-700 transition cursor-pointer shadow-xs"
+            >
+              <span>Browse Catalog</span>
+              <ArrowRight className="size-3.5" />
+            </Link>
+          </div>
+        )}
+      </div>
+
+      {savedSystems.length === 0 ? (
+        <div className="space-y-6">
+          <DashboardPanel className="p-8 sm:p-10 text-center">
+            <div className="mx-auto grid size-12 place-items-center rounded-xl border border-slate-200/80 bg-slate-50 text-slate-600 shadow-2xs">
+              <Bookmark className="size-5 text-slate-500" />
+            </div>
+            <h3 className="mt-4 text-base font-extrabold text-slate-900 tracking-tight">No saved systems yet</h3>
+            <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-slate-600 font-medium">
+              Bookmark systems in the catalog to compare features, review database schemas, and save them for later.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Link
+                href="/systems"
+                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-[0.98] transition cursor-pointer"
+              >
+                <span>Browse Ready-Made Systems</span>
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
+          </DashboardPanel>
+
+          {/* Quick Category Jump */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">
+              Explore by Category
+            </h4>
+            <div className="grid gap-3.5 sm:grid-cols-2">
+              {popularCategories.map((cat) => (
+                <Link
+                  key={cat.title}
+                  href={cat.href}
+                  className="group rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs hover:border-slate-300 hover:shadow-xs transition"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                      {cat.title}
+                    </p>
+                    <ArrowRight className="size-3.5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                  <p className="mt-1 text-[11px] text-slate-500 font-medium">{cat.desc}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {savedSystems.map((item) => (
+            <DashboardPanel key={item.slug} className="p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-start justify-between gap-2">
+                  <span className="inline-block rounded-md bg-slate-100 border border-slate-200/80 px-2 py-0.5 text-[10px] font-semibold text-slate-600">
+                    {item.category || "System"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(item.slug)}
+                    className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition cursor-pointer"
+                    title="Remove from saved"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
+                <h3 className="mt-3 text-sm font-extrabold text-slate-900 tracking-tight">{item.name}</h3>
+                {item.version && (
+                  <p className="mt-0.5 text-[11px] font-mono text-slate-400">v{item.version}</p>
+                )}
+                {item.priceMinor !== undefined && (
+                  <p className="mt-3 text-base font-extrabold text-slate-900">
+                    {formatMoney(item.priceMinor, item.currency || "PHP")}
+                  </p>
+                )}
+              </div>
+
+              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-2">
+                <Link
+                  href={`/systems/${item.slug}`}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-700 transition cursor-pointer"
+                >
+                  <span>View Details</span>
+                  <ArrowUpRight className="size-3.5" />
+                </Link>
+                <Link
+                  href={`/checkout/${item.slug}`}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer shadow-2xs"
+                >
+                  <span>Buy</span>
+                </Link>
+              </div>
+            </DashboardPanel>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -820,55 +1016,129 @@ function ProfilePanel({
   username?: string;
 }) {
   return (
-    <DashboardPanel className="max-w-3xl p-6 sm:p-7">
-      <SectionHeading eyebrow="Account record" title="Personal details" />
-      <p className="mt-2 text-sm leading-relaxed text-slate-600 font-medium">
-        These verified profile values are read-only in this workspace.
-      </p>
+    <div className="space-y-6 max-w-4xl">
+      <div>
+        <h2 className="text-base font-extrabold tracking-tight text-slate-900">Account Profile</h2>
+        <p className="text-xs text-slate-500 font-medium mt-0.5">
+          Your verified identity and workspace credentials.
+        </p>
+      </div>
 
-      <div className="mt-6 flex items-center gap-4.5 border-b border-slate-100 pb-6">
-        {avatarUrl ? (
-          <img
-            src={avatarUrl}
-            alt={displayName}
-            className="size-16 rounded-2xl object-cover border border-slate-200/80 shadow-2xs"
-          />
-        ) : (
-          <span className="grid size-16 place-items-center rounded-2xl bg-blue-600 text-xl font-bold text-white shadow-2xs">
-            {displayName.charAt(0).toUpperCase()}
+      <div className="grid gap-6 md:grid-cols-3">
+        {/* Left: User Card */}
+        <DashboardPanel className="p-6 text-center flex flex-col items-center justify-center md:col-span-1">
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={displayName}
+              className="size-20 rounded-xl object-cover border border-slate-200 shadow-2xs"
+            />
+          ) : (
+            <span className="grid size-20 place-items-center rounded-xl bg-slate-900 text-2xl font-bold text-white shadow-2xs">
+              {displayName.charAt(0).toUpperCase()}
+            </span>
+          )}
+          <h3 className="mt-4 text-sm font-extrabold text-slate-900">{displayName}</h3>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">{userEmail ?? "No email set"}</p>
+          <span className="mt-3 inline-flex items-center gap-1 rounded-md bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-700 border border-blue-200/80">
+            <ShieldCheck className="size-3 text-blue-600" />
+            Verified Buyer
           </span>
-        )}
-        <div>
-          <p className="text-base font-bold text-slate-900">{displayName}</p>
-          <p className="text-xs font-medium text-slate-500">{userEmail ?? "No email set"}</p>
-        </div>
-      </div>
+        </DashboardPanel>
 
-      <div className="mt-6 grid gap-5 sm:grid-cols-2">
-        <ReadOnlyField label="Full name" value={displayName} />
-        <ReadOnlyField label="Email address" value={userEmail ?? "Not available"} />
-        <ReadOnlyField label="Username" value={username || "Not set"} />
+        {/* Right: Account Details */}
+        <DashboardPanel className="p-6 md:col-span-2 space-y-5">
+          <div className="pb-4 border-b border-slate-100">
+            <h3 className="text-sm font-bold text-slate-900">Personal Information</h3>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Account details associated with your verified purchases.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ReadOnlyField label="Full Name" value={displayName} />
+            <ReadOnlyField label="Email Address" value={userEmail ?? "Not available"} />
+            <ReadOnlyField label="Username" value={username || "Not configured"} />
+            <ReadOnlyField label="Account Type" value="Buyer Workspace" />
+          </div>
+
+          <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+            <span>Authentication: Supabase Auth</span>
+            <span className="text-emerald-600 font-bold flex items-center gap-1">
+              <CheckCircle2 className="size-3.5" />
+              Active & Protected
+            </span>
+          </div>
+        </DashboardPanel>
       </div>
-    </DashboardPanel>
+    </div>
   );
 }
 
 function SettingsPanel() {
   return (
-    <DashboardPanel className="max-w-3xl p-6 sm:p-7">
-      <SectionHeading eyebrow="Account security" title="Security settings" />
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 font-medium">
-        Use the secure password recovery flow to change your sign-in credentials.
-      </p>
-      <div className="mt-6 border-t border-slate-100 pt-5">
-        <Link
-          href="/auth/forgot-password"
-          className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-blue-600 px-5.5 text-sm font-bold text-white shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_22px_rgba(37,99,235,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
-        >
-          Change password
-        </Link>
+    <div className="space-y-6 max-w-4xl">
+      <div>
+        <h2 className="text-base font-extrabold tracking-tight text-slate-900">Account Settings</h2>
+        <p className="text-xs text-slate-500 font-medium mt-0.5">
+          Manage your sign-in security and workspace preferences.
+        </p>
       </div>
-    </DashboardPanel>
+
+      <div className="grid gap-6">
+        {/* Security & Authentication */}
+        <DashboardPanel className="p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pb-5 border-b border-slate-100">
+            <div>
+              <h3 className="text-sm font-bold text-slate-900">Password & Authentication</h3>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                Update your account password or request a reset link.
+              </p>
+            </div>
+            <Link
+              href="/auth/forgot-password"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition cursor-pointer shadow-xs"
+            >
+              <span>Change password</span>
+              <ArrowUpRight className="size-3.5" />
+            </Link>
+          </div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 text-xs">
+            <div className="rounded-lg border border-slate-200/80 bg-slate-50/50 p-4">
+              <span className="font-bold text-slate-900">Session Security</span>
+              <p className="mt-1 text-slate-600 font-medium leading-relaxed">
+                Protected via encrypted HTTP-only session cookies with automatic token refresh.
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-200/80 bg-slate-50/50 p-4">
+              <span className="font-bold text-slate-900">Deliverable Links</span>
+              <p className="mt-1 text-slate-600 font-medium leading-relaxed">
+                Signed source file URLs expire after 1 hour to prevent link sharing.
+              </p>
+            </div>
+          </div>
+        </DashboardPanel>
+
+        {/* Account Actions */}
+        <DashboardPanel className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-bold text-slate-900">Session</h3>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">
+                Sign out of your active dashboard session on this device.
+              </p>
+            </div>
+            <Link
+              href="/auth/login"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 transition cursor-pointer shadow-2xs"
+            >
+              <span>Sign out</span>
+            </Link>
+          </div>
+        </DashboardPanel>
+      </div>
+    </div>
   );
 }
 
@@ -900,7 +1170,7 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   return (
     <div>
       <p className="text-[11px] font-bold uppercase tracking-wider text-blue-600">{eyebrow}</p>
-      <h2 className="mt-1.5 text-lg font-bold tracking-tight text-slate-900">{title}</h2>
+      <h2 className="mt-1 text-base font-bold tracking-tight text-slate-900">{title}</h2>
     </div>
   );
 }
@@ -916,12 +1186,12 @@ function OrderDetail({ label, value }: { label: string; value: string }) {
 
 function ReadOnlyField({ label, value }: { label: string; value: string }) {
   return (
-    <label className="grid gap-2 text-xs font-bold text-slate-700">
+    <label className="grid gap-1.5 text-xs font-bold text-slate-700">
       <span>{label}</span>
       <input
         disabled
         value={value}
-        className="min-h-11 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-100"
+        className="min-h-10 rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-100"
       />
     </label>
   );
@@ -959,7 +1229,7 @@ function getHeaderCopy(tab: DashboardTab, displayName: string) {
     wishlist: {
       label: "Saved systems",
       title: "Saved systems",
-      description: "A truthful view of saved-system availability for this account.",
+      description: "Review and manage systems you have saved from the catalog.",
     },
     profile: {
       label: "Profile",
