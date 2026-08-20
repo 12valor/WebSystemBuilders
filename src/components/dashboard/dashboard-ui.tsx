@@ -5,7 +5,6 @@ import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   AlertCircle,
-  Calendar,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
@@ -22,7 +21,6 @@ import {
   Menu,
   MessageSquare,
   Package,
-  Search,
   Settings,
   ShieldCheck,
   ShoppingBag,
@@ -286,51 +284,6 @@ export function DashboardSidebar({
         </div>
       </div>
     </aside>
-  );
-}
-
-export function SequenceTopHeader({
-  searchQuery,
-  onSearchChange,
-  onSupport,
-}: {
-  searchQuery?: string;
-  onSearchChange?: (val: string) => void;
-  onSupport: () => void;
-}) {
-  return (
-    <div className="flex flex-col gap-3 pb-6 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/70">
-      {/* Search Input with Shortcut */}
-      <div className="relative flex-1 max-w-md">
-        <Search className="absolute left-3.5 top-3 size-4 text-slate-400 pointer-events-none" />
-        <input
-          type="search"
-          placeholder="Search systems, orders, or documentation..."
-          value={searchQuery ?? ""}
-          onChange={(e) => onSearchChange?.(e.target.value)}
-          className="w-full min-h-10 rounded-lg border border-slate-200/90 bg-white pl-10 pr-16 text-xs font-medium text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none transition shadow-2xs"
-        />
-        <kbd className="absolute right-2.5 top-2.5 hidden sm:inline-flex items-center gap-0.5 rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-mono text-slate-400">
-          ⌘ K
-        </kbd>
-      </div>
-
-      {/* Right Controls (Date & Action Pill) */}
-      <div className="flex items-center gap-2">
-        <div className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-2xs">
-          <Calendar className="size-3.5 text-slate-400" />
-          <span>Last 30 days</span>
-        </div>
-
-        <Link
-          href="/systems"
-          className="group inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-[0.98] transition-all duration-200 cursor-pointer"
-        >
-          <span>Browse systems</span>
-          <ExternalLink className="size-3 text-blue-100 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </Link>
-      </div>
-    </div>
   );
 }
 

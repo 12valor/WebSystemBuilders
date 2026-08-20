@@ -29,7 +29,6 @@ import {
   SlidersHorizontal,
   TrendingUp,
   User as UserIcon,
-  Zap,
 } from "lucide-react";
 import {
   DashboardEmptyState,
@@ -39,7 +38,6 @@ import {
   DashboardPanel,
   DashboardSidebar,
   DashboardStatusBadge,
-  SequenceTopHeader,
   type DashboardNavigationItem,
   type DashboardTab,
 } from "@/components/dashboard/dashboard-ui";
@@ -69,7 +67,6 @@ const navigationId = "customer-workspace-navigation";
 export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }: UnifiedDashboardClientProps) {
   const [activeTab, setActiveTab] = useState<DashboardTab>("overview");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [profile, setProfile] = useState<Profile | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navigationRef = useRef<HTMLElement>(null);
@@ -206,13 +203,6 @@ export function UnifiedDashboardClient({ initialEmail, portalData, resultParam }
 
         <main id="main-content" className="min-w-0 flex-1 px-4 py-6 sm:px-8 sm:py-8 lg:px-10">
           <div className="mx-auto w-full max-w-[1240px] space-y-6">
-            {/* Top Search & Period Header (Sequence Style) */}
-            <SequenceTopHeader
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onSupport={() => selectTab("support")}
-            />
-
             {/* Error / Result Alerts */}
             <div className="grid gap-3" aria-live="polite">
               {portalData.status === "error" && (
