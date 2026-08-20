@@ -111,30 +111,33 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
     <section id="systems" className="bg-[#FAFAFC] py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Featured Systems Heading */}
-        <div className="mb-9 flex flex-col justify-between gap-5 sm:flex-row sm:items-end lg:mb-10">
-          <div>
-            <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.08] tracking-[-0.04em] text-slate-900">
-              Featured Software Systems
-            </h2>
-            <p className="mt-3 max-w-xl text-base text-slate-600 font-medium">
-              Browse ready-made systems engineered with production standards for business operations or academic defense.
-            </p>
-          </div>
-          <Link href="/systems">
-            <MagneticButton size="md" variant="outline">
-              <span>Browse All Systems</span>
-              <ArrowRight className="w-4 h-4" />
-            </MagneticButton>
-          </Link>
+        <div className="mb-9 max-w-2xl lg:mb-10">
+          <h2 className="font-heading text-[clamp(2rem,3.5vw,3rem)] font-bold leading-[1.08] tracking-[-0.04em] text-slate-900">
+            Featured Software Systems
+          </h2>
+          <p className="mt-2.5 text-base text-slate-600 font-normal leading-relaxed">
+            Browse ready-made systems engineered with production standards for business operations or academic defense.
+          </p>
         </div>
 
         {/* Featured Systems Cards */}
         {systems.length > 0 ? (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {systems.map((system) => (
-              <FeaturedSystemCard key={system.id} system={system} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {systems.map((system) => (
+                <FeaturedSystemCard key={system.id} system={system} />
+              ))}
+            </div>
+
+            <div className="mt-10 sm:mt-12 flex justify-center">
+              <Link href="/systems">
+                <MagneticButton size="md" variant="outline">
+                  <span>Browse All Systems</span>
+                  <ArrowRight className="w-4 h-4" />
+                </MagneticButton>
+              </Link>
+            </div>
+          </>
         ) : (
           <CatalogState status={catalog.status} />
         )}
