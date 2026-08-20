@@ -4,15 +4,15 @@
   --background: #fafafc;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --surface-subtle: #f1f5f9;
+  --surface-subtle: #f8fafc;
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  --border: #e5e7eb;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
   --border-strong: #cbd5e1;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-indigo: #4f46e5;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-indigo: #4338ca;
 }
 
 @theme inline {
