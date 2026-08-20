@@ -30,9 +30,9 @@
   --color-ring: var(--accent);
   --color-brand: var(--accent);
   --color-brand-hover: var(--accent-hover);
-  --font-sans: var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-poppins), var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-poppins), var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
@@ -47,7 +47,7 @@ html {
   overflow-y: scroll;
   background: var(--background);
   color: var(--text-primary);
-  font-family: var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-poppins), var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -55,7 +55,7 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--text-primary);
-  font-family: var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-poppins), var(--font-instrument), var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

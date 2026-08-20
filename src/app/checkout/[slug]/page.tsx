@@ -10,7 +10,7 @@ import { getPublicSystemBySlug } from "@/features/catalog/repository";
 import { getCurrentIdentity, getCurrentUser } from "@/lib/auth/current-user";
 import { getPayPalEnv, getPayPalWebSdkUrl, isPayPalConfigured } from "@/lib/env/paypal";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { ArrowLeft, Check, ShieldCheck, Zap } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, ShieldCheck, Zap } from "lucide-react";
 
 export const metadata: Metadata = { title: "Secure Checkout", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -115,12 +115,28 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
                     <span>Platform & Delivery</span>
                     <span className="font-semibold text-emerald-400">Included</span>
                   </div>
-                  <div className="flex justify-between py-2.5 text-slate-300">
-                    <span>License Type</span>
-                    <span className="text-slate-300 truncate max-w-[180px] text-right">
-                      {system.licenseSummary ?? "Single business source license"}
-                    </span>
-                  </div>
+
+                  {/* Expandable License Details */}
+                  <details className="group py-2.5 text-slate-300 cursor-pointer">
+                    <summary className="flex items-center justify-between list-none select-none hover:text-white transition">
+                      <span className="flex items-center gap-1.5 font-medium">
+                        <span>License Type</span>
+                        <ChevronDown className="size-3 text-slate-400 group-open:rotate-180 transition-transform duration-200" />
+                      </span>
+                      <span className="text-slate-300 text-right text-xs group-open:hidden max-w-[180px] truncate">
+                        {system.licenseSummary ?? "Single business source license"}
+                      </span>
+                    </summary>
+                    <div className="mt-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] p-3 text-xs leading-relaxed text-slate-200 space-y-1.5">
+                      <p className="font-medium text-white">
+                        {system.licenseSummary ?? "Single business source license with full source code ownership."}
+                      </p>
+                      <p className="text-[11px] text-slate-400 leading-normal">
+                        Includes perpetual private deployment rights, database schemas, full source repository access, and developer documentation.
+                      </p>
+                    </div>
+                  </details>
+
                   <div className="flex justify-between items-baseline pt-3 pb-1 text-slate-100">
                     <span className="font-bold text-sm">Total due today</span>
                     <span className="font-extrabold text-xl text-white tracking-tight">

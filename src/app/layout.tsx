@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { Poppins, Instrument_Sans, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/layout/lenis-provider";
 import "./globals.css";
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument",
@@ -41,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${instrumentSans.variable} ${plusJakartaSans.variable} ${geistMono.variable}`}
+      className={`${poppins.variable} ${instrumentSans.variable} ${plusJakartaSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
       <body
