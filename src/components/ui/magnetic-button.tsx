@@ -41,24 +41,24 @@ export function MagneticButton({
     "relative inline-flex items-center justify-center font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none overflow-hidden group cursor-pointer";
 
   const sizeStyles = {
-    sm: "h-9 px-4 rounded-xl text-xs gap-1.5",
-    md: "h-11 px-6 rounded-2xl text-sm gap-2",
-    lg: "h-13 px-8 rounded-2xl text-base gap-2.5 font-semibold",
+    sm: "h-9 px-4 rounded-full text-xs gap-1.5 font-semibold",
+    md: "h-11 px-6 rounded-full text-sm gap-2 font-semibold",
+    lg: "h-13 px-8 rounded-full text-base gap-2.5 font-semibold",
   };
 
   const variantStyles = {
     primary:
-      "blue-button bg-blue-600 text-white",
+      "bg-blue-600 text-white shadow-xs hover:bg-blue-700 border border-blue-500/30",
     indigo:
-      "bg-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:bg-indigo-700 hover:shadow-[0_6px_20px_rgba(79,70,229,0.45)] border border-indigo-500/30",
+      "bg-indigo-600 text-white shadow-xs hover:bg-indigo-700 border border-indigo-500/30",
     secondary:
-      "bg-slate-900 text-white shadow-[0_4px_14px_rgba(15,23,42,0.15)] hover:bg-slate-800 border border-slate-800",
+      "bg-slate-900 text-white shadow-xs hover:bg-slate-800 border border-slate-800",
     outline:
       "bg-white/80 backdrop-blur-md text-slate-900 border border-slate-200 shadow-xs hover:bg-slate-50 hover:border-slate-300",
     ghost:
       "bg-transparent text-slate-700 hover:bg-slate-100 hover:text-slate-900",
     white:
-      "bg-white text-slate-900 font-extrabold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.25)] hover:bg-slate-50 hover:shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)] border border-white/90",
+      "bg-white text-slate-900 font-bold shadow-xs hover:bg-slate-50 border border-slate-200",
     glass:
       "bg-white/15 text-white font-semibold backdrop-blur-md border border-white/30 hover:bg-white/25 shadow-xs",
   };

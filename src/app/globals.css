@@ -84,59 +84,50 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
 }
 
-/* Shared public primary action, matched to the project-support CTA. */
+/* Shared public primary action */
 .blue-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 0;
-  border-radius: 12px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 9999px;
   background: #2563eb;
   color: #ffffff;
-  font-weight: 700;
-  box-shadow:
-    0 4px 0 #1d4ed8,
-    0 8px 14px -6px rgba(15, 23, 42, 0.48);
-  transform: translateY(-2px);
+  font-weight: 600;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   transition:
-    background-color 180ms ease,
-    box-shadow 180ms ease,
-    filter 180ms ease,
-    transform 180ms ease;
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
 }
 
 .blue-button:hover {
-  background: #2563eb;
-  filter: brightness(1.06);
-  box-shadow:
-    0 5px 0 #1d4ed8,
-    0 10px 16px -7px rgba(15, 23, 42, 0.52);
-  transform: translateY(-3px);
+  background: #1d4ed8;
+  border-color: rgba(29, 78, 216, 0.4);
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
 }
 
 .blue-button:active {
-  box-shadow:
-    0 1px 0 #1d4ed8,
-    0 4px 8px -5px rgba(15, 23, 42, 0.42);
-  transform: translateY(1px);
+  background: #1e40af;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transform: translateY(0);
 }
 
 .blue-button:disabled,
 .blue-button[aria-disabled="true"] {
-  filter: none;
-  box-shadow: 0 2px 0 #1e40af;
+  opacity: 0.5;
+  cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .blue-button-static,
 .blue-button-static:hover,
 .blue-button-static:active {
-  filter: none;
-  box-shadow:
-    0 4px 0 #1d4ed8,
-    0 8px 14px -6px rgba(15, 23, 42, 0.48);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   transform: none;
-  transition: none;
 }
 
 /* 3D Pushable Button (Blue Theme) */
