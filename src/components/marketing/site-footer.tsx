@@ -34,9 +34,10 @@ export function SiteFooter() {
           <div className="flex flex-col gap-3.5 lg:col-span-4">
             <Link
               href="/"
-              className="-m-1 inline-flex w-fit items-center gap-3 rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A]"
+              aria-label="WebSystemBuilders home"
+              className="-m-1 inline-flex w-fit items-center gap-3 rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] group"
             >
-              <BrandLogo variant="full" priority className="h-8 w-auto" />
+              <BrandLogo variant="full" priority className="size-9 shrink-0 transition-opacity group-hover:opacity-85" />
             </Link>
             <p className="max-w-sm text-xs sm:text-sm leading-relaxed text-[#94A3B8]">
               Ready-made software systems and custom development for students and growing businesses.
@@ -141,4 +142,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-

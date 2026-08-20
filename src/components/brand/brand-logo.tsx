@@ -5,27 +5,18 @@ type BrandLogoProps = {
   priority?: boolean;
   className?: string;
   variant?: "icon" | "full";
+  textClassName?: string;
 };
 
-export function BrandLogo({ compact = false, priority = false, className, variant = "icon" }: BrandLogoProps) {
-  if (variant === "full") {
-    return (
-      <span className={`relative inline-flex items-center shrink-0 ${className ?? ""}`}>
-        <Image
-          src="/brand/websystembuilders-logo-on-dark.svg"
-          alt="WebSystemBuilders"
-          width={520}
-          height={80}
-          priority={priority}
-          loading={priority ? "eager" : "lazy"}
-          className="h-auto w-full object-contain"
-        />
-      </span>
-    );
-  }
-
-  return (
-    <span className={`relative inline-block aspect-square shrink-0 overflow-hidden ${className ?? ""}`}>
+export function BrandLogo({
+  compact = false,
+  priority = false,
+  className,
+  variant = "icon",
+  textClassName,
+}: BrandLogoProps) {
+  const icon = (
+    <span className={`relative inline-block aspect-square shrink-0 overflow-hidden ${className ?? "size-10"}`}>
       <Image
         src="/brand/websystembuilders-logo.png"
         alt={compact ? "" : "WebSystemBuilders"}
@@ -37,4 +28,17 @@ export function BrandLogo({ compact = false, priority = false, className, varian
       />
     </span>
   );
+
+  if (variant === "full") {
+    return (
+      <span className="inline-flex items-center gap-2.5 shrink-0">
+        {icon}
+        <span className={textClassName ?? "font-heading text-lg sm:text-xl font-bold tracking-tight text-[#F5F5F7]"}>
+          WebSystemBuilders
+        </span>
+      </span>
+    );
+  }
+
+  return icon;
 }
