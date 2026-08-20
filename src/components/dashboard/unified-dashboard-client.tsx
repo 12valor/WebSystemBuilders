@@ -27,7 +27,6 @@ import {
   ShieldCheck,
   ShoppingBag,
   SlidersHorizontal,
-  TrendingUp,
   User as UserIcon,
 } from "lucide-react";
 import {
@@ -286,15 +285,9 @@ function SequenceOverviewPanel({
       <div className="relative overflow-hidden rounded-xl bg-slate-900 p-6 sm:p-7 text-white shadow-sm border border-slate-800">
         <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">
-                Workspace Value & Systems
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-md bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
-                <TrendingUp className="size-3" />
-                100% Verified
-              </span>
-            </div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-300">
+              Workspace Value & Systems
+            </span>
             <div className="flex items-baseline gap-3">
               <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
                 {totalSpentMinor > 0 ? formatMoney(totalSpentMinor, "PHP") : "₱ 500.00"}
