@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -106,71 +103,8 @@ const defaultProps: Testimonial9Props = {
       link: "#",
       icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/testimonials/social-network-icons/x-icon.svg",
     },
-    {
-      id: "7",
-      name: "Nina Patel",
-      username: "ninapatel",
-      date: "2024-01-22",
-      role: "UX Engineer",
-      avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/avatars/avatar8.jpg",
-      content:
-        "These components handle edge cases I didn't even think to test for. Dark mode, RTL support, keyboard navigation, screen reader announcements — it's all built in from the start. We used to spend the last two weeks of every release cycle patching accessibility bugs. That just doesn't happen anymore.",
-      link: "#",
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/testimonials/social-network-icons/linkedin-icon.svg",
-    },
-    {
-      id: "8",
-      name: "Alex Thompson",
-      username: "alext",
-      date: "2024-01-18",
-      role: "Engineering Manager",
-      avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/avatars/avatar15.jpg",
-      content:
-        "Our team's velocity increased measurably after adopting this library. Less time on UI boilerplate means more time on the features our customers actually care about.",
-      link: "#",
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/testimonials/social-network-icons/x-icon.svg",
-    },
-    {
-      id: "9",
-      name: "Henry Garcia",
-      username: "henryg",
-      date: "2023-08-25",
-      role: "Product Lead",
-      avatar: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/avatars/avatar20.jpg",
-      content:
-        "We rebuilt our entire onboarding flow using these blocks and launched it in under three weeks. The animation primitives gave us polished micro-interactions without pulling in a separate motion library, and the responsive behavior just worked on every breakpoint we tested. Our activation rate is up 20% since the redesign, and I'm confident the UI quality played a big part in that.",
-      link: "#",
-      icon: "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/testimonials/social-network-icons/instagram-icon.svg",
-    },
   ],
 };
-
-const DynamicMasonryGrid = dynamic(
-  async () => {
-    const mod = await import("react-responsive-masonry");
-    const MasonryComp = mod.default;
-    const ResponsiveMasonryComp = mod.ResponsiveMasonry;
-
-    return function MasonryGrid({
-      items,
-      renderCard,
-    }: {
-      items: TestimonialBasicGridItem[];
-      renderCard: (testimonial: TestimonialBasicGridItem, idx: number) => React.ReactNode;
-    }) {
-      return (
-        <ResponsiveMasonryComp columnsCountBreakPoints={{ 0: 1, 640: 2, 1024: 3 }}>
-          <MasonryComp gutter="18px" columnsCount={3}>
-            {items.map(renderCard)}
-          </MasonryComp>
-        </ResponsiveMasonryComp>
-      );
-    };
-  },
-  {
-    ssr: false,
-  }
-);
 
 const Testimonial9 = (props: Props) => {
   const { heading, description, testimonials, className } = {
@@ -178,15 +112,10 @@ const Testimonial9 = (props: Props) => {
     ...props,
   };
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const list = testimonials.slice(0, 6);
 
   const renderCard = (testimonial: TestimonialBasicGridItem, idx: number) => (
-    <Card key={testimonial.id || idx} className="p-4.5 sm:p-5">
+    <Card key={testimonial.id || idx} className="p-4.5 sm:p-5 break-inside-avoid mb-4 sm:mb-5">
       <div className="flex justify-between">
         <div className="flex gap-3 sm:gap-4 leading-5">
           <Avatar className="size-9 rounded-full ring-1 ring-input shrink-0">
@@ -227,14 +156,8 @@ const Testimonial9 = (props: Props) => {
           </h2>
           <p className="max-w-2xl text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">{description}</p>
         </div>
-        <div className="mt-8 sm:mt-12 w-full">
-          {mounted ? (
-            <DynamicMasonryGrid items={list} renderCard={renderCard} />
-          ) : (
-            <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {list.map(renderCard)}
-            </div>
-          )}
+        <div className="mt-8 sm:mt-12 w-full columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5 [column-fill:_balance]">
+          {list.map(renderCard)}
         </div>
       </div>
     </section>
