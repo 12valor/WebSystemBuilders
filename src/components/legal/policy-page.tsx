@@ -73,15 +73,10 @@ export function PolicyPage({
   return (
     <PublicPageShell>
       {/* ================= HERO HEADER ================= */}
-      <section className="border-b border-slate-200/80 bg-white pt-12 pb-10 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-14">
+      <section className="border-b border-slate-200/80 bg-white pt-12 pb-10 sm:pt-16 sm:pb-12 lg:pt-16 lg:pb-14">
         <div className="mx-auto w-[min(calc(100%-32px),1180px)] md:w-[min(calc(100%-64px),1180px)]">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/80 px-3 py-1 text-xs font-semibold text-blue-700">
-              <ShieldCheck className="size-3.5" />
-              <span>{eyebrow}</span>
-            </div>
-
-            <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]">
+            <h1 className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]">
               {title}
             </h1>
 
