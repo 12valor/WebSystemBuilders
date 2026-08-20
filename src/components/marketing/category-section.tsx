@@ -10,9 +10,9 @@ import { AppIconBadge } from "@/components/ui/app-icon-badge";
 import type { CatalogData, CatalogSystemRecord } from "@/features/catalog/types";
 import {
   ArrowRight,
-  ShoppingBag,
+  Store,
   GraduationCap,
-  Stethoscope,
+  Code2,
   Boxes,
   ShieldCheck,
   CheckCircle2,
@@ -156,7 +156,11 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {categoriesList.map((cat) => (
               <Link key={cat.title} href={`/systems?category=${cat.slug}`}>
-                <TactileCard bg="white" className="flex h-full flex-col justify-between p-5 hover:border-blue-500/40 sm:p-6">
+                <TactileCard
+                  bg="white"
+                  glassHighlight={false}
+                  className="flex h-full flex-col justify-between p-5 hover:border-blue-500/40 sm:p-6"
+                >
                   <div>
                     <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-4" />
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
@@ -309,29 +313,29 @@ const categoriesList = [
     title: "Point-of-Sale (POS)",
     slug: "point-of-sale",
     description: "Retail, cashiering, billing, and receipt printer integration.",
-    icon: ShoppingBag,
-    color: "blue",
+    icon: Store,
+    color: "slate",
   },
   {
     title: "Capstone & Thesis",
     slug: "capstone-systems",
     description: "Approved academic software foundations and technical support.",
     icon: GraduationCap,
-    color: "blue",
+    color: "slate",
   },
   {
     title: "Warehouse & Inventory",
     slug: "inventory-management",
     description: "Stock management, barcode scanning, and multi-location sync.",
     icon: Boxes,
-    color: "blue",
+    color: "slate",
   },
   {
     title: "Custom System Development",
     slug: "custom-system-development",
     description: "Requirements-reviewed software for workflows not covered by a published system.",
-    icon: Stethoscope,
-    color: "blue",
+    icon: Code2,
+    color: "slate",
   },
 ] as const;
 
