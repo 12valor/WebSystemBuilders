@@ -101,18 +101,18 @@ export function BusinessLandingContent() {
                 </div>
               </motion.div>
 
-              {/* Sales Metrics Card */}
+              {/* Daily Sales & Shift Reconciliation Card */}
               <motion.div
                 className="self-end rounded-2xl bg-white p-4 shadow-lg border border-slate-200/80 flex items-center gap-3 w-4/5"
               >
                 <div className="size-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
                   <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <div className="flex-1 truncate">
                   <span className="block text-xs font-bold text-slate-900 truncate">Daily Operations</span>
-                  <span className="block text-[0.68rem] text-slate-500 truncate">99.8% System Uptime</span>
+                  <span className="block text-[0.68rem] text-slate-500 truncate">Shift & Sales Summary Generated</span>
                 </div>
               </motion.div>
             </div>
@@ -163,6 +163,11 @@ export function BusinessLandingContent() {
                   <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                     <div className="bg-blue-600 h-full w-3/4" />
                   </div>
+                  <div className="flex items-center gap-1.5 pt-0.5 text-[0.65rem] text-slate-500 font-mono">
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Receipt Print</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Cashier Mode</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Daily Sales</span>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
@@ -196,6 +201,11 @@ export function BusinessLandingContent() {
                   </div>
                   <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                     <div className="bg-amber-500 h-full w-2/3" />
+                  </div>
+                  <div className="flex items-center gap-1.5 pt-0.5 text-[0.65rem] text-slate-500 font-mono">
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Barcode Sync</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Low-Stock Alert</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Stock Audit</span>
                   </div>
                 </div>
 
@@ -231,6 +241,11 @@ export function BusinessLandingContent() {
                   <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                     <div className="bg-purple-600 h-full w-5/6" />
                   </div>
+                  <div className="flex items-center gap-1.5 pt-0.5 text-[0.65rem] text-slate-500 font-mono">
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Receiving Logs</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Bin Locations</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Dispatch Flow</span>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
@@ -259,11 +274,16 @@ export function BusinessLandingContent() {
 
                 <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-3 space-y-2 select-none">
                   <div className="flex items-center justify-between text-[0.68rem] font-bold text-slate-700">
-                    <span>Custom Management ERP</span>
+                    <span>Custom Management Portal</span>
                     <span className="text-emerald-600">Configurable</span>
                   </div>
                   <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                     <div className="bg-emerald-600 h-full w-full" />
+                  </div>
+                  <div className="flex items-center gap-1.5 pt-0.5 text-[0.65rem] text-slate-500 font-mono">
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Staff Roles</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Custom Fields</span>
+                    <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded">Audit Trail</span>
                   </div>
                 </div>
 
@@ -272,7 +292,7 @@ export function BusinessLandingContent() {
                     Custom Management Systems
                   </h3>
                   <p className="text-xs leading-relaxed text-slate-600 line-clamp-2">
-                    Review software solutions for payroll, attendance, booking, CRM, clinic management, and enterprise workflows.
+                    Review software solutions for payroll, attendance, booking, CRM, clinic management, and operational workflows.
                   </p>
                 </div>
               </motion.div>
@@ -336,11 +356,11 @@ export function BusinessLandingContent() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-600 font-bold">✓</span>
-                    <span>Commercial software license (Single or Multi-site)</span>
+                    <span>Perpetual commercial source-code license (resale & customization allowed)</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-600 font-bold">✓</span>
-                    <span>Standard bug fix support for declared core features</span>
+                    <span>30-day installation & reproducible-defect support for core features</span>
                   </li>
                 </ul>
               </div>
