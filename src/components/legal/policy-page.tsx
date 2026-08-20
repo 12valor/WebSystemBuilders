@@ -50,7 +50,6 @@ function slugify(text: string) {
 }
 
 export function PolicyPage({
-  eyebrow = "Legal Documentation",
   title,
   description,
   sideNote,
@@ -72,8 +71,8 @@ export function PolicyPage({
 
   return (
     <PublicPageShell>
-      {/* ================= HERO HEADER ================= */}
-      <section className="border-b border-slate-200/80 bg-white pt-12 pb-10 sm:pt-16 sm:pb-12 lg:pt-16 lg:pb-14">
+      {/* ================= ON-SCREEN HERO HEADER (Hidden on Print) ================= */}
+      <section className="border-b border-slate-200/80 bg-white pt-12 pb-10 sm:pt-16 sm:pb-12 lg:pt-16 lg:pb-14 print:hidden">
         <div className="mx-auto w-[min(calc(100%-32px),1180px)] md:w-[min(calc(100%-64px),1180px)]">
           <div className="max-w-3xl">
             <h1 className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl leading-[1.12]">
@@ -84,7 +83,7 @@ export function PolicyPage({
               {description}
             </p>
 
-            {/* Document Metadata Badges */}
+            {/* Document Metadata Badges & Print Action */}
             <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs text-slate-500">
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono font-medium text-slate-700">
                 Effective: 7 August 2026
@@ -97,7 +96,7 @@ export function PolicyPage({
           </div>
 
           {/* ================= LEGAL HUB TABS ================= */}
-          <div className="mt-10 border-t border-slate-100 pt-6 print:hidden">
+          <div className="mt-10 border-t border-slate-100 pt-6">
             <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none sm:gap-2">
               {legalTabs.map((tab) => {
                 const Icon = tab.icon;
@@ -121,11 +120,11 @@ export function PolicyPage({
       <MobilePolicyMenu sections={sections} />
 
       {/* ================= MAIN CONTENT AREA ================= */}
-      <section className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-20 font-sans">
-        <div className="mx-auto grid w-[min(calc(100%-32px),1180px)] gap-10 md:w-[min(calc(100%-64px),1180px)] lg:grid-cols-[280px_1fr] lg:gap-14 xl:gap-16">
+      <section className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-20 font-sans print:bg-white print:py-0 print:px-0 print:m-0 print:w-full">
+        <div className="mx-auto grid w-[min(calc(100%-32px),1180px)] gap-10 md:w-[min(calc(100%-64px),1180px)] lg:grid-cols-[280px_1fr] lg:gap-14 xl:gap-16 print:block print:w-full print:max-w-none print:p-0 print:m-0">
           
-          {/* ================= DESKTOP STICKY SIDEBAR ================= */}
-          <aside className="hidden lg:block">
+          {/* ================= DESKTOP STICKY SIDEBAR (Hidden on Print) ================= */}
+          <aside className="hidden lg:block print:hidden">
             <div className="sticky top-24 space-y-6">
               
               {/* Table of Contents */}
@@ -157,47 +156,67 @@ export function PolicyPage({
           </aside>
 
           {/* ================= POLICY DOCUMENT BODY ================= */}
-          <div className="min-w-0 max-w-3xl">
-            <div className="rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 lg:p-12 shadow-xs space-y-12">
+          <div className="min-w-0 max-w-3xl print:max-w-none print:w-full print:p-0 print:m-0">
+            
+            {/* ================= DEDICATED PRINT-ONLY FORMAL DOCUMENT HEADER ================= */}
+            <div className="hidden print:block mb-8 pb-5 border-b-2 border-black">
+              <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-black">
+                <span className="font-bold text-sm">WebSystemBuilders</span>
+                <span>Republic of the Philippines</span>
+              </div>
+              <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-black">
+                {title}
+              </h1>
+              <div className="mt-1.5 flex items-center gap-4 text-[11px] font-mono text-black">
+                <span>Last Updated: 7 August 2026</span>
+                <span>•</span>
+                <span>Official Legal Policy</span>
+              </div>
+              <p className="mt-2.5 text-xs text-black leading-relaxed italic border-l-2 border-black pl-3 py-0.5">
+                {description}
+              </p>
+            </div>
+
+            <div className="rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 lg:p-12 shadow-xs space-y-12 print:border-none print:shadow-none print:p-0 print:m-0 print:space-y-6 print:w-full">
               {sections.map((section, index) => {
                 const slug = slugify(section.title);
                 return (
                   <article
                     key={section.title}
                     id={slug}
-                    className="scroll-mt-28 border-b border-slate-100 pb-10 last:border-b-0 last:pb-0"
+                    className="scroll-mt-28 border-b border-slate-100 pb-10 last:border-b-0 last:pb-0 print:border-none print:pb-4 print:mb-4 print:break-inside-avoid"
                   >
                     {/* Section Header */}
-                    <div className="flex items-start gap-3.5">
-                      <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 font-mono text-xs font-bold text-blue-700 border border-blue-100/80">
+                    <div className="flex items-start gap-3.5 print:gap-2">
+                      <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 font-mono text-xs font-bold text-blue-700 border border-blue-100/80 print:bg-transparent print:border-none print:text-black print:p-0 print:size-auto print:font-bold print:text-sm print:mr-1">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <h2 className="font-heading text-xl font-bold tracking-tight text-slate-900 sm:text-2xl leading-snug">
+                        <h2 className="font-heading text-xl font-bold tracking-tight text-slate-900 sm:text-2xl leading-snug print:text-base print:font-bold print:text-black print:break-after-avoid">
                           {section.title}
                         </h2>
 
                         {/* Optional Section Callout */}
                         {section.callout && (
-                          <div className="mt-3.5 rounded-xl border border-blue-100 bg-blue-50/60 p-4 text-xs">
-                            <strong className="block font-bold text-blue-900">{section.callout.title}</strong>
-                            <p className="mt-1 leading-relaxed text-blue-800">{section.callout.text}</p>
+                          <div className="mt-3.5 rounded-xl border border-blue-100 bg-blue-50/60 p-4 text-xs print:border-l-2 print:border-black print:border-t-0 print:border-r-0 print:border-b-0 print:rounded-none print:bg-transparent print:p-2 print:my-2 print:text-black">
+                            <strong className="block font-bold text-blue-900 print:text-black">{section.callout.title}</strong>
+                            <p className="mt-1 leading-relaxed text-blue-800 print:text-black">{section.callout.text}</p>
                           </div>
                         )}
 
                         {/* Section Paragraphs */}
                         {section.paragraphs?.map((paragraph, pIdx) => (
-                          <p key={pIdx} className="mt-3.5 text-xs sm:text-sm leading-relaxed text-slate-700">
+                          <p key={pIdx} className="mt-3.5 text-xs sm:text-sm leading-relaxed text-slate-700 print:text-xs print:text-black print:leading-relaxed print:mt-1.5">
                             {paragraph}
                           </p>
                         ))}
 
                         {/* Section Bullet Items */}
                         {section.items && (
-                          <ul className="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-700">
+                          <ul className="mt-4 space-y-2.5 text-xs sm:text-sm text-slate-700 print:text-xs print:text-black print:space-y-1 print:mt-2">
                             {section.items.map((item, iIdx) => (
-                              <li key={iIdx} className="flex items-start gap-2.5">
-                                <span className="mt-1.5 size-1.5 rounded-full bg-blue-600 shrink-0" aria-hidden="true" />
+                              <li key={iIdx} className="flex items-start gap-2.5 print:gap-2">
+                                <span className="mt-1.5 size-1.5 rounded-full bg-blue-600 shrink-0 print:bg-black print:size-1 print:mt-1.5" aria-hidden="true" />
                                 <span className="leading-relaxed">{item}</span>
                               </li>
                             ))}
@@ -206,22 +225,22 @@ export function PolicyPage({
 
                         {/* Subsections */}
                         {section.subsections?.map((sub, sIdx) => (
-                          <div key={sIdx} className="mt-6 rounded-xl border border-slate-100 bg-slate-50/70 p-4 sm:p-5">
+                          <div key={sIdx} className="mt-6 rounded-xl border border-slate-100 bg-slate-50/70 p-4 sm:p-5 print:border-none print:bg-transparent print:p-0 print:mt-3 print:space-y-1">
                             {sub.title && (
-                              <h3 className="font-heading text-sm font-bold text-slate-900 tracking-tight">
+                              <h3 className="font-heading text-sm font-bold text-slate-900 tracking-tight print:text-xs print:font-bold print:text-black print:break-after-avoid">
                                 {sub.title}
                               </h3>
                             )}
                             {sub.paragraphs?.map((sp, spIdx) => (
-                              <p key={spIdx} className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600">
+                              <p key={spIdx} className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 print:text-xs print:text-black print:mt-1 print:leading-relaxed">
                                 {sp}
                               </p>
                             ))}
                             {sub.items && (
-                              <ul className="mt-3 space-y-2 text-xs sm:text-sm text-slate-700">
+                              <ul className="mt-3 space-y-2 text-xs sm:text-sm text-slate-700 print:text-xs print:text-black print:space-y-0.5 print:mt-1">
                                 {sub.items.map((si, siIdx) => (
-                                  <li key={siIdx} className="flex items-start gap-2">
-                                    <span className="mt-1.5 size-1.5 rounded-full bg-slate-400 shrink-0" aria-hidden="true" />
+                                  <li key={siIdx} className="flex items-start gap-2 print:gap-1.5">
+                                    <span className="mt-1.5 size-1.5 rounded-full bg-slate-400 shrink-0 print:bg-black print:size-1 print:mt-1.5" aria-hidden="true" />
                                     <span className="leading-relaxed">{si}</span>
                                   </li>
                                 ))}
@@ -236,7 +255,15 @@ export function PolicyPage({
               })}
             </div>
 
-            {/* ================= BOTTOM QUESTIONS CARD ================= */}
+            {/* ================= PRINT-ONLY DOCUMENT FOOTER ================= */}
+            <div className="hidden print:block mt-8 pt-4 border-t border-black text-[10px] text-black">
+              <div className="flex items-center justify-between font-mono">
+                <span>WebSystemBuilders — Operator: AG Evangelista</span>
+                <span>evangelista.agdiaz@gmail.com</span>
+              </div>
+            </div>
+
+            {/* ================= BOTTOM QUESTIONS CARD (Hidden on Print) ================= */}
             <div className="mt-8 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs print:hidden">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>

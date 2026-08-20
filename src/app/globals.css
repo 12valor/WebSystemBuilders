@@ -334,3 +334,82 @@ body {
     opacity: 0 !important;
   }
 }
+
+/* ==========================================================================
+   Print Stylesheet (Formal A4 Legal Document Standard)
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 18mm 20mm;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10.5pt !important;
+    line-height: 1.5 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Hide interactive web elements, navigation, and floating widgets */
+  header.sticky,
+  header:not(.print\:block),
+  footer:not(.print\:block),
+  nav,
+  aside,
+  button,
+  [role="dialog"],
+  .skip-link,
+  .print-hidden,
+  .print\:hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Headings typography and page-break rules */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* Document flow & orphan/widow controls */
+  article,
+  section {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  article > div,
+  .print-break-inside-avoid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  p,
+  li {
+    orphans: 3 !important;
+    widows: 3 !important;
+    color: #000000 !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+}
