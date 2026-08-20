@@ -11,9 +11,9 @@ import {
 } from "@/components/marketing/process-interactive";
 
 export const metadata: Metadata = {
-  title: "Development and delivery process",
+  title: "Development and delivery process | WebSystemBuilders",
   description:
-    "Understand how WebSystemBuilders handles ready-made system evaluation, custom requirements, payment verification, and private delivery.",
+    "How WebSystemBuilders handles ready-made system evaluation, custom requirements, server payment verification, and private digital delivery.",
   alternates: { canonical: "/process" },
 };
 
@@ -23,8 +23,8 @@ export default function ProcessPage() {
       {/* Hero Section */}
       <PublicPageHero
         eyebrow="Development Process"
-        title="A clear, transparent route from requirements to delivery."
-        description="Ready-made purchases and custom-development requests follow distinct, rigorous paths. Both depend on transparent scope, server-authoritative calculations, and verified actions."
+        title="How we evaluate, build, and deliver software."
+        description="Ready-made systems and custom development follow separate, predictable workflows with server-verified payment and private digital fulfillment."
         primary={{ label: "Browse systems", href: "/systems" }}
         secondary={{ label: "Request custom quote", href: "/request-a-quote" }}
       />
@@ -33,10 +33,10 @@ export default function ProcessPage() {
       <section className="px-5 py-12 md:py-16">
         <div className="mx-auto max-w-6xl mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-text-primary">
-            Explore the Process Pipelines
+            Delivery Pathways
           </h2>
           <p className="mt-2 text-sm md:text-base text-text-secondary max-w-2xl mx-auto">
-            Select a pathway below to view the step-by-step technical execution, architectural diagrams, and stage assurances.
+            Select a pathway below to inspect the stages, requirements, and checkpoints from order to delivery.
           </p>
         </div>
 
@@ -50,8 +50,8 @@ export default function ProcessPage() {
             eyebrow="System of Record & Security"
             title="We never treat a browser return URL as proof of payment."
             copy={[
-              "Orders, payments, fulfillment, email notifications, and download activity are logged as independent events in immutable server logs. Payment-provider webhooks must pass HMAC-SHA256 signature verification before any order is marked eligible for delivery.",
-              "Source code deliverables remain isolated in private Supabase Storage buckets. Authorized customers receive expiring, 1-hour revocable signed links after server-side identity and payment checks pass.",
+              "Orders, payments, fulfillment, email notifications, and download activity are recorded as independent events in immutable server logs. Payment-provider webhooks must pass HMAC-SHA256 signature verification before any order is marked eligible for delivery.",
+              "Source code deliverables remain isolated in private Supabase Storage buckets. Authorized customers receive expiring, 1-hour revocable signed links only after server-side identity and payment checks pass.",
             ]}
           />
 
@@ -65,10 +65,10 @@ export default function ProcessPage() {
         <div className="mx-auto max-w-6xl space-y-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-text-primary">
-              Ethical Standards & Commercial Guarantees
+              Ethical Standards & Commercial Policies
             </h2>
             <p className="mt-2 text-sm text-text-secondary">
-              Clear boundaries built specifically for students and business owners.
+              Clear commitments and boundaries for both students and business owners.
             </p>
           </div>
 
@@ -79,10 +79,10 @@ export default function ProcessPage() {
                 STUDENT AUDIENCE PATH
               </div>
               <h3 className="text-xl font-bold text-text-primary">
-                Ethical Technical Guidance
+                Ethical Technical Mentoring
               </h3>
               <p className="text-sm text-text-secondary leading-relaxed">
-                We provide ready-made system templates, clean source code, database ERDs, and architectural documentation for educational analysis. We strictly do not engage in academic dishonesty or ghostwriting.
+                We provide ready-made system templates, clean source code, database ERDs, setup guides, and technical mentoring. We strictly decline ghostwriting, taking exams, or fabricating academic data.
               </p>
               <ul className="space-y-2 text-xs text-text-secondary pt-2">
                 <li className="flex items-center gap-2">
@@ -92,7 +92,7 @@ export default function ProcessPage() {
                   <span className="text-accent font-bold">✓</span> Detailed setup & architectural documentation
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-accent font-bold">✓</span> Clear ethical boundary policy
+                  <span className="text-accent font-bold">✓</span> Clear academic integrity policy
                 </li>
               </ul>
             </div>
@@ -106,17 +106,17 @@ export default function ProcessPage() {
                 Commercial Code Ownership
               </h3>
               <p className="text-sm text-text-secondary leading-relaxed">
-                Deploy production-ready web applications built on Next.js, Supabase, and Tailwind. Receive explicit license terms, no recurring percentage fees, and comprehensive system documentation.
+                Deploy production-ready web applications built on Next.js, Supabase, and Tailwind. Receive perpetual commercial source-code licenses, 30 days of defect support, and comprehensive setup guides.
               </p>
               <ul className="space-y-2 text-xs text-text-secondary pt-2">
                 <li className="flex items-center gap-2">
                   <span className="text-emerald-400 font-bold">✓</span> Clean TypeScript modular monolith codebase
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-emerald-400 font-bold">✓</span> Explicit commercial software licenses
+                  <span className="text-emerald-400 font-bold">✓</span> Perpetual commercial source-code license
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-emerald-400 font-bold">✓</span> Direct developer communication during custom sprints
+                  <span className="text-emerald-400 font-bold">✓</span> 30-day installation & defect support
                 </li>
               </ul>
             </div>
@@ -134,3 +134,4 @@ export default function ProcessPage() {
     </PublicPageShell>
   );
 }
+

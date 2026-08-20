@@ -127,7 +127,7 @@ export function ProcessPipelineSwitcher() {
         </div>
 
         <div className="hidden md:block px-3 text-xs font-mono text-text-muted">
-          {pipeline === "ready" ? "MODE: CATALOG_FULFILLMENT" : "MODE: CUSTOM_DEVELOPMENT_SPRINT"}
+          {pipeline === "ready" ? "Ready-made systems" : "Custom development"}
         </div>
       </div>
 
@@ -192,7 +192,7 @@ export function ProcessPipelineSwitcher() {
           {/* Key Inclusions / Verification Points */}
           <div className="w-full rounded-lg border border-white/10 bg-surface-subtle p-5 md:w-80">
             <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-text-muted">
-              Stage Assurances
+              Key Checkpoints
             </h4>
             <ul className="mt-3 space-y-2 text-xs text-text-secondary">
               {currentStep.details.map((detail, idx) => (
@@ -210,7 +210,7 @@ export function ProcessPipelineSwitcher() {
 }
 
 /**
- * Enhanced Security & Fulfillment Simulator Component (UI/UX Pro Max Edition)
+ * Enhanced Security & Fulfillment Simulator Component
  */
 export function SecurityFulfillmentSimulator() {
   const [simStep, setSimStep] = useState<1 | 2 | 3>(1);
@@ -270,7 +270,7 @@ export function SecurityFulfillmentSimulator() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-mono font-medium text-emerald-400 mb-3">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>LIVE INTERACTIVE SIMULATION</span>
+            <span>Server-Side Verification Flow</span>
           </div>
           <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
             <ShieldCheck className="h-6 w-6 text-accent" />
