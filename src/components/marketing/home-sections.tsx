@@ -3,11 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, MessageSquare, ShieldCheck, Clock } from "lucide-react";
 import { PreSaleChatModal } from "@/components/marketing/pre-sale-chat-modal";
 
 export function FinalCallToAction() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -21,7 +23,13 @@ export function FinalCallToAction() {
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.55fr_1fr] items-stretch">
           
           {/* ================= LEFT CARD: MAIN SYSTEM DISCOVERY ================= */}
-          <div className="relative flex flex-col justify-center overflow-hidden rounded-[20px] border border-slate-800/90 bg-[#090C15] p-5 text-white shadow-md sm:rounded-[24px] sm:p-7 lg:p-8">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex flex-col justify-center overflow-hidden rounded-[20px] border border-slate-800/90 bg-[#090C15] p-5 text-white shadow-md sm:rounded-[24px] sm:p-7 lg:p-8 will-change-transform"
+          >
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1.18fr_0.82fr] items-center gap-5 sm:gap-6">
               <div>
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
@@ -72,10 +80,16 @@ export function FinalCallToAction() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* ================= RIGHT CARD: DIRECT DEVELOPER CONSULTATION ================= */}
-          <div className="relative flex flex-col justify-between rounded-[20px] border border-slate-200/90 bg-white p-5 shadow-xs sm:rounded-[24px] sm:p-6 lg:p-7">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.12 }}
+            className="relative flex flex-col justify-between rounded-[20px] border border-slate-200/90 bg-white p-5 shadow-xs sm:rounded-[24px] sm:p-6 lg:p-7 will-change-transform"
+          >
             <div>
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500">
                 PRE-SALE QUESTIONS
@@ -133,7 +147,7 @@ export function FinalCallToAction() {
                 </Link>
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

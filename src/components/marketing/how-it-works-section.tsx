@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { PreSaleChatModal } from "@/components/marketing/pre-sale-chat-modal";
 import { AppIconBadge } from "@/components/ui/app-icon-badge";
 import { Search, CreditCard, ShieldCheck, Download, ArrowRight } from "lucide-react";
@@ -42,6 +43,7 @@ const steps = [
 
 export function HowItWorksSection() {
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -50,7 +52,13 @@ export function HowItWorksSection() {
       className="relative overflow-hidden border-b border-slate-200/80 bg-[#FAFAFC] py-12 font-sans text-slate-900 sm:py-16 lg:py-24"
     >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
-        <div className="mx-auto mb-8 max-w-3xl text-center sm:mb-10 lg:mb-12">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mb-8 max-w-3xl text-center sm:mb-10 lg:mb-12 will-change-transform"
+        >
           <h2
             id="purchase-process-title"
             className="font-heading text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl lg:text-4xl"
@@ -61,14 +69,25 @@ export function HowItWorksSection() {
             Four straightforward stages, with payment verified before any
             system is delivered.
           </p>
-        </div>
+        </motion.div>
 
         <ol
           aria-label="Purchase process steps"
           className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4"
         >
-          {steps.map((step) => (
-            <li key={step.number} className="h-full">
+          {steps.map((step, index) => (
+            <motion.li
+              key={step.number}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+                delay: reduceMotion ? 0 : (index % 4) * 0.08,
+              }}
+              className="h-full will-change-transform"
+            >
               <article className="group flex h-full min-h-48 flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-4.5 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:min-h-56 sm:p-6">
                 <div>
                   <div className="flex items-center justify-between gap-4">
@@ -92,11 +111,17 @@ export function HowItWorksSection() {
                   </span>
                 </div>
               </article>
-            </li>
+            </motion.li>
           ))}
         </ol>
 
-        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-30px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.2 }}
+          className="mt-6 flex flex-col gap-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:p-7 will-change-transform"
+        >
           <div className="max-w-2xl">
             <div className="flex items-center gap-2">
               <ShieldCheck className="size-5 text-blue-600 shrink-0" aria-hidden="true" />
@@ -118,7 +143,7 @@ export function HowItWorksSection() {
             <span>Ask before purchasing</span>
             <ArrowRight className="size-4" aria-hidden="true" />
           </button>
-        </div>
+        </motion.div>
 
         <PreSaleChatModal
           isOpen={isChatModalOpen}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
@@ -24,6 +24,7 @@ export function BusinessWorkflowPlayground() {
 
 export function ProjectWorkspacePlayground() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -65,11 +66,11 @@ export function ProjectWorkspacePlayground() {
           
           {/* ================= LEFT-SIDE PROJECT WORKSPACE ================= */}
           <motion.div
-            initial={false}
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="order-2 lg:order-1 rounded-2xl bg-white border border-slate-200/90 p-4.5 sm:p-6 shadow-xs"
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="order-2 lg:order-1 rounded-2xl bg-white border border-slate-200/90 p-4.5 sm:p-6 shadow-xs will-change-transform"
           >
             {/* WORKSPACE HEADER */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-4 mb-4 border-b border-slate-100 sm:mb-5">
@@ -280,9 +281,9 @@ export function ProjectWorkspacePlayground() {
             {/* PROCESS BENEFITS (3 EDITORIAL ROWS) */}
             <motion.div
               variants={containerVariants}
-              initial={false}
+              initial={reduceMotion ? false : "hidden"}
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-40px" }}
               className="mt-6 space-y-3.5 sm:mt-8 sm:space-y-4"
             >
               {/* Row 01 */}
