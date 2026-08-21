@@ -78,7 +78,10 @@ export function SiteNavigation() {
   }, []);
 
   return (
-    <header
+    <motion.header
+      initial={reduceMotion ? false : { opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="sticky top-3 z-50 mx-auto w-[min(calc(100%-24px),1240px)] md:top-4"
     >
       <div
@@ -277,6 +280,6 @@ export function SiteNavigation() {
           </motion.nav>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
