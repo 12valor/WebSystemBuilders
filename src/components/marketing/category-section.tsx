@@ -121,6 +121,7 @@ export function TrustStrip() {
 }
 
 export function CategorySection({ catalog }: { catalog: CatalogData }) {
+  const reduceMotion = useReducedMotion();
   const featured = catalog.systems.filter((system) => system.featured);
   const systems = (featured.length > 0 ? featured : catalog.systems).slice(0, 6);
 
@@ -128,32 +129,57 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
     <section id="systems" className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-24">
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Featured Systems Heading */}
-        <div className="mb-7 max-w-2xl sm:mb-9 lg:mb-10">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-7 max-w-2xl sm:mb-9 lg:mb-10 will-change-transform"
+        >
           <h2 className="font-heading text-2xl font-bold leading-[1.12] tracking-[-0.035em] text-slate-900 sm:text-3xl md:text-4xl">
             Featured Software Systems
           </h2>
           <p className="mt-2 text-sm font-normal leading-relaxed text-slate-600 sm:mt-2.5 sm:text-base">
             Browse ready-made systems engineered with production standards for business operations or academic defense.
           </p>
-        </div>
+        </motion.div>
 
         {/* Featured Systems Cards */}
         {systems.length > 0 ? (
           <>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 sm:gap-8">
-              {systems.map((system) => (
-                <FeaturedSystemCard key={system.id} system={system} />
+              {systems.map((system, index) => (
+                <motion.div
+                  key={system.id}
+                  initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{
+                    duration: 0.55,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: reduceMotion ? 0 : (index % 3) * 0.1,
+                  }}
+                  className="will-change-transform"
+                >
+                  <FeaturedSystemCard system={system} />
+                </motion.div>
               ))}
             </div>
 
-            <div className="mt-8 flex justify-center sm:mt-12">
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.2 }}
+              className="mt-8 flex justify-center sm:mt-12 will-change-transform"
+            >
               <Link href="/systems">
                 <MagneticButton size="md" variant="outline">
                   <span>Browse All Systems</span>
                   <ArrowRight className="w-4 h-4" />
                 </MagneticButton>
               </Link>
-            </div>
+            </motion.div>
           </>
         ) : (
           <CatalogState status={catalog.status} />
@@ -161,38 +187,57 @@ export function CategorySection({ catalog }: { catalog: CatalogData }) {
 
         {/* Browse Categories Grid */}
         <div className="mt-12 border-t border-slate-200/80 pt-12 sm:mt-16 sm:pt-16 lg:mt-20">
-          <div className="mb-7 text-center sm:mb-10">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-7 text-center sm:mb-10 will-change-transform"
+          >
             <h2 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
               Browse Systems by Need
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm font-medium text-slate-600 sm:mt-3 sm:text-base">
               Compare published systems and service paths by the workflow or approved technical need they address.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-            {categoriesList.map((cat) => (
-              <Link key={cat.title} href={`/systems?category=${cat.slug}`}>
-                <TactileCard
-                  bg="white"
-                  glassHighlight={false}
-                  className="flex h-full flex-col justify-between p-4.5 hover:border-blue-500/40 sm:p-6"
-                >
-                  <div>
-                    <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-3.5 sm:mb-4" />
-                    <h3 className="text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-lg">
-                      {cat.title}
-                    </h3>
-                    <p className="mt-1.5 text-xs font-medium leading-relaxed text-slate-600 sm:mt-2">
-                      {cat.description}
-                    </p>
-                  </div>
-                  <div className="mt-5 flex items-center gap-1.5 text-xs font-bold text-blue-600 sm:mt-6">
-                    <span>Explore Category</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </TactileCard>
-              </Link>
+            {categoriesList.map((cat, index) => (
+              <motion.div
+                key={cat.title}
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: reduceMotion ? 0 : (index % 4) * 0.08,
+                }}
+                className="will-change-transform"
+              >
+                <Link href={`/systems?category=${cat.slug}`}>
+                  <TactileCard
+                    bg="white"
+                    glassHighlight={false}
+                    className="flex h-full flex-col justify-between p-4.5 hover:border-blue-500/40 sm:p-6"
+                  >
+                    <div>
+                      <AppIconBadge icon={cat.icon} color={cat.color} size="md" className="mb-3.5 sm:mb-4" />
+                      <h3 className="text-base font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-lg">
+                        {cat.title}
+                      </h3>
+                      <p className="mt-1.5 text-xs font-medium leading-relaxed text-slate-600 sm:mt-2">
+                        {cat.description}
+                      </p>
+                    </div>
+                    <div className="mt-5 flex items-center gap-1.5 text-xs font-bold text-blue-600 sm:mt-6">
+                      <span>Explore Category</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </TactileCard>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
