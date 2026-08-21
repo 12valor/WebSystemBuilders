@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -52,6 +55,8 @@ const policyLinks = [
 ] as const;
 
 export function PurchaseTransparencySection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       aria-labelledby="purchase-transparency-title"
@@ -60,7 +65,13 @@ export function PurchaseTransparencySection() {
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 items-start">
           {/* Left Column */}
-          <div>
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="will-change-transform"
+          >
             <h2
               id="purchase-transparency-title"
               className="font-heading text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl leading-[1.15]"
@@ -83,16 +94,24 @@ export function PurchaseTransparencySection() {
                 </Link>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: 4 Clean Step Cards */}
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
-            {purchaseSteps.map((step) => {
+            {purchaseSteps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <article
+                <motion.article
                   key={step.id}
-                  className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-4.5 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05] sm:p-6"
+                  initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: reduceMotion ? 0 : (index % 2) * 0.1,
+                  }}
+                  className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-4.5 transition-all duration-200 hover:border-white/20 hover:bg-white/[0.05] sm:p-6 will-change-transform"
                 >
                   <div>
                     <div className="flex items-center justify-between">
@@ -109,7 +128,7 @@ export function PurchaseTransparencySection() {
                       {step.description}
                     </p>
                   </div>
-                </article>
+                </motion.article>
               );
             })}
           </div>
@@ -120,19 +139,32 @@ export function PurchaseTransparencySection() {
 }
 
 export function HomepageFaqPreview({ items }: { items: PublicFaqItem[] }) {
+  const reduceMotion = useReducedMotion();
   const selected = selectTrustQuestions(items);
   if (selected.length === 0) return null;
 
   return (
     <section aria-labelledby="homepage-faq-title" className="border-y border-slate-200 bg-white py-12 sm:py-16 lg:py-24">
       <div className="mx-auto grid w-[min(calc(100%-32px),1180px)] gap-8 md:w-[min(calc(100%-64px),1180px)] lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-16">
-        <div>
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="will-change-transform"
+        >
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">Purchase questions</p>
           <h2 id="homepage-faq-title" className="mt-3 font-heading text-2xl font-bold tracking-[-0.035em] text-slate-950 sm:mt-4 sm:text-3xl lg:text-4xl">Clear answers before commitment.</h2>
           <p className="mt-2.5 text-sm leading-relaxed text-slate-600 sm:mt-4 sm:text-base sm:leading-7">Review the most common product, pricing, delivery, and policy questions before opening checkout or requesting a quotation.</p>
           <Link href="/faq" className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-900 sm:mt-6">Read every FAQ <ArrowRight className="size-4" /></Link>
-        </div>
-        <div className="border-t border-slate-200">
+        </motion.div>
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.15 }}
+          className="border-t border-slate-200 will-change-transform"
+        >
           {selected.map((item, index) => (
             <details key={item.id} className="group border-b border-slate-200 py-4 sm:py-5">
               <summary className="grid cursor-pointer list-none grid-cols-[28px_1fr_auto] gap-2.5 font-bold text-slate-950 marker:hidden sm:grid-cols-[32px_1fr_auto] sm:gap-3 text-sm sm:text-base">
@@ -143,7 +175,7 @@ export function HomepageFaqPreview({ items }: { items: PublicFaqItem[] }) {
               <p className="pl-7 pr-1 mt-2.5 max-w-3xl text-xs leading-relaxed text-slate-600 sm:pl-11 sm:mt-3 sm:text-sm sm:leading-7">{item.answer}</p>
             </details>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -162,6 +194,7 @@ function GitHubMark({ className }: { className?: string }) {
   );
 }
 export function FounderIdentitySection({ profile }: { profile: PublicCompanyProfile }) {
+  const reduceMotion = useReducedMotion();
   const githubProfile = {
     handle: "12valor",
     url: "https://github.com/12valor",
@@ -171,7 +204,13 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
 
   return (
     <section aria-labelledby="founder-identity-title" className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-24">
-      <div className="mx-auto grid w-[min(calc(100%-32px),1080px)] gap-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.25)] sm:gap-8 sm:p-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12 lg:p-12">
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto grid w-[min(calc(100%-32px),1080px)] gap-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.25)] sm:gap-8 sm:p-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12 lg:p-12 will-change-transform"
+      >
         <div className="self-start flex flex-row items-center gap-4 sm:flex-col sm:items-start sm:gap-0">
           <a
             href={githubProfile.url}
@@ -250,7 +289,7 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
