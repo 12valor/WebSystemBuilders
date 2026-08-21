@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
 import { CatalogCardIllustration } from "@/components/catalog/catalog-card-illustration";
 import { TactileCard } from "@/components/ui/tactile-card";
@@ -53,6 +54,8 @@ const institutions = [
 ] as const;
 
 export function TrustStrip() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id="institutions"
@@ -61,7 +64,13 @@ export function TrustStrip() {
     >
       <div className="mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-md">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-md will-change-transform"
+          >
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">
               Tested Against Real Technical Scrutiny
             </p>
@@ -74,13 +83,21 @@ export function TrustStrip() {
             <p className="mt-2 text-xs font-medium leading-relaxed text-slate-600 sm:text-sm">
               Our systems are architected to pass technical defenses, rigorous code reviews, and live production deployments.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:gap-6">
-            {institutions.map((institution) => (
-              <div
+            {institutions.map((institution, index) => (
+              <motion.div
                 key={institution.name}
-                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-3 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md sm:p-4 ${institution.rotation}`}
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: reduceMotion ? 0 : index * 0.08,
+                }}
+                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-3 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md sm:p-4 will-change-transform ${institution.rotation}`}
               >
                 <div className="relative mb-2.5 flex size-12 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white p-1.5 shadow-xs transition-transform duration-300 group-hover:scale-105 sm:mb-3 sm:size-16 sm:p-2">
                   <Image
@@ -94,7 +111,7 @@ export function TrustStrip() {
                 <span className="text-[10px] font-bold leading-snug text-slate-700 transition-colors group-hover:text-blue-700 sm:text-[11px]">
                   {institution.name}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
