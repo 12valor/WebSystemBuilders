@@ -55,7 +55,7 @@ export function HeroSection() {
                 transition={{
                   duration: 0.75,
                   ease: [0.22, 1, 0.36, 1],
-                  delay: 0.12,
+                  delay: 0.08,
                 }}
               >
                 Handcrafted Software Systems
@@ -71,7 +71,7 @@ export function HeroSection() {
                 transition={{
                   duration: 0.75,
                   ease: [0.22, 1, 0.36, 1],
-                  delay: 0.24,
+                  delay: 0.18,
                 }}
               >
                 for Students &amp; <span className="text-[#2563EB]">Businesses</span>
@@ -86,7 +86,7 @@ export function HeroSection() {
             transition={{
               duration: 0.65,
               ease: [0.22, 1, 0.36, 1],
-              delay: 0.38,
+              delay: 0.28,
             }}
             className="mx-auto mt-4 max-w-[680px] font-sans text-sm font-normal leading-relaxed text-[#64748B] sm:mt-5 sm:text-base sm:leading-8 md:text-lg"
           >
@@ -100,7 +100,7 @@ export function HeroSection() {
             transition={{
               duration: 0.55,
               ease: [0.22, 1, 0.36, 1],
-              delay: 0.48,
+              delay: 0.38,
             }}
             className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row"
           >

@@ -31,7 +31,7 @@ export function FloatingSoftwareMockup() {
         transition={{
           duration: 0.85,
           ease: [0.22, 1, 0.36, 1],
-          delay: 0.55,
+          delay: 0.45,
         }}
         className="relative z-10 mx-auto flex w-full items-center justify-center will-change-transform"
       >
@@ -60,7 +60,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.65,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.72,
+            delay: 0.55,
           }}
           className="pointer-events-auto absolute left-[1%] top-[6%] w-[210px] -rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:left-[-8px] xl:w-[224px]"
         >
@@ -80,7 +80,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.5,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.78,
+            delay: 0.60,
           }}
           className="absolute top-[18%] left-[17%] xl:left-[16%] w-24 h-16 pointer-events-none"
           viewBox="0 0 100 60"
@@ -97,7 +97,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.65,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.82,
+            delay: 0.65,
           }}
           className="pointer-events-auto absolute bottom-[16%] left-0 w-[210px] rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:left-[-8px] xl:w-[224px]"
         >
@@ -117,7 +117,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.5,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.86,
+            delay: 0.68,
           }}
           className="absolute bottom-[24%] left-[16%] xl:left-[15%] w-24 h-16 pointer-events-none"
           viewBox="0 0 100 60"
@@ -134,7 +134,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.65,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.76,
+            delay: 0.58,
           }}
           className="pointer-events-auto absolute right-[1%] top-[6%] w-[210px] rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:right-[-8px] xl:w-[224px]"
         >
@@ -154,7 +154,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.65,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.84,
+            delay: 0.68,
           }}
           className="pointer-events-auto absolute bottom-[16%] right-0 w-[210px] -rotate-2 rounded-[20px] border border-slate-200/80 bg-white/95 p-4 shadow-[0_18px_36px_-18px_rgba(15,23,42,0.18)] backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:rotate-0 motion-reduce:transform-none motion-reduce:transition-none xl:right-[-8px] xl:w-[224px]"
         >
@@ -174,7 +174,7 @@ export function FloatingSoftwareMockup() {
           transition={{
             duration: 0.5,
             ease: [0.22, 1, 0.36, 1],
-            delay: 0.88,
+            delay: 0.72,
           }}
           className="absolute bottom-[24%] right-[16%] xl:right-[15%] w-24 h-16 pointer-events-none"
           viewBox="0 0 100 60"
@@ -192,7 +192,7 @@ export function FloatingSoftwareMockup() {
         transition={{
           duration: 0.6,
           ease: [0.22, 1, 0.36, 1],
-          delay: 0.65,
+          delay: 0.50,
         }}
         className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 lg:hidden"
       >
