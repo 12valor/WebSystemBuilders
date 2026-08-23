@@ -28,9 +28,10 @@ describe("development banner and shadcn UI primitives", () => {
     expect(noticeFile).toContain('export function DevelopmentNoticeBanner');
     expect(noticeFile).toContain('export function BannerCenteredButton');
 
-    // Asserts light mode styling and moving blue glow
+    // Asserts light mode styling and moving blue glow & highlight
     expect(noticeFile).toContain("bg-white");
     expect(noticeFile).toContain("development-banner-glow");
+    expect(noticeFile).toContain("development-banner-highlight");
     expect(noticeFile).toContain("overflow-hidden");
     expect(noticeFile).not.toContain("bg-slate-950");
 

@@ -30,8 +30,9 @@ export function DevelopmentNoticeBanner({
         variant="border"
         className="relative overflow-hidden border-b border-slate-200/80 bg-white px-3.5 py-2 text-slate-900 shadow-2xs sm:px-6 md:py-2"
       >
-        {/* Soft moving blue accent gradient (stays behind text and controls) */}
+        {/* Soft moving blue ambient glow and specular highlight (stays behind text and controls) */}
         <div className="development-banner-glow" aria-hidden="true" />
+        <div className="development-banner-highlight" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] items-center justify-between gap-2.5">
           {/* Main Notice Content */}
@@ -85,7 +86,7 @@ export function DevelopmentNoticeBanner({
 }
 
 /**
- * Standard BannerCenteredButton export in light mode with subtle moving blue accent.
+ * Standard BannerCenteredButton export in light mode with distinct moving blue accent.
  */
 export function BannerCenteredButton() {
   const [isVisible, setIsVisible] = useState(true);
@@ -98,6 +99,7 @@ export function BannerCenteredButton() {
       className="relative overflow-hidden border-b border-slate-200/80 bg-white px-3.5 py-2 text-slate-900 shadow-2xs md:py-2"
     >
       <div className="development-banner-glow" aria-hidden="true" />
+      <div className="development-banner-highlight" aria-hidden="true" />
 
       <div className="relative z-10 flex w-full gap-2 md:items-center">
         <div className="flex grow gap-3 md:items-center md:justify-center">

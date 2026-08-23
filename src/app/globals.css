@@ -220,21 +220,21 @@ body {
   outline: none;
 }
 
-/* Subtle moving blue accent for development notice banner */
+/* Distinct moving blue ambient glow and specular highlight for development notice banner */
 @keyframes development-glow {
   0% {
-    transform: translateX(-60%);
+    transform: translateX(-40%);
   }
   50% {
-    transform: translateX(220%);
+    transform: translateX(140%);
   }
   100% {
-    transform: translateX(-60%);
+    transform: translateX(-40%);
   }
 }
 
 .development-glow {
-  animation: development-glow 12s ease-in-out infinite;
+  animation: development-glow 8s ease-in-out infinite;
 }
 
 .development-banner-glow {
@@ -242,20 +242,34 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 50%;
+  width: 55%;
   height: 100%;
-  background: radial-gradient(ellipse 65% 100% at 50% 50%, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.04) 50%, transparent 100%);
+  background: radial-gradient(ellipse 65% 90% at 50% 50%, rgba(37, 99, 235, 0.26) 0%, rgba(59, 130, 246, 0.15) 45%, rgba(147, 197, 253, 0.05) 75%, transparent 100%);
   pointer-events: none;
-  animation: development-glow 12s ease-in-out infinite;
+  animation: development-glow 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.development-banner-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 55%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.3) 25%, rgba(37, 99, 235, 0.95) 50%, rgba(59, 130, 246, 0.95) 60%, rgba(37, 99, 235, 0.3) 80%, transparent 100%);
+  pointer-events: none;
+  animation: development-glow 8s ease-in-out infinite;
   will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .development-banner-glow,
+  .development-banner-highlight,
   .development-glow {
     animation: none !important;
     transform: none !important;
   }
+
 
   html {
     scroll-behavior: auto;
