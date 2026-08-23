@@ -28,12 +28,15 @@ export function DevelopmentNoticeBanner({
     <aside aria-label="Development Notice">
       <Banner
         variant="border"
-        className="bg-slate-950 text-slate-200 border-b border-slate-800/80 px-3.5 py-2.5 sm:px-6 md:py-2 shadow-xs"
+        className="relative overflow-hidden border-b border-slate-200/80 bg-white px-3.5 py-2 text-slate-900 shadow-2xs sm:px-6 md:py-2"
       >
-        <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between gap-2.5">
+        {/* Soft moving blue accent gradient (stays behind text and controls) */}
+        <div className="development-banner-glow" aria-hidden="true" />
+
+        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] items-center justify-between gap-2.5">
           {/* Main Notice Content */}
           <div className="flex grow items-start gap-2.5 sm:items-center sm:justify-center">
-            <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-amber-500/10 text-amber-400 max-sm:mt-0.5">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-md border border-blue-100 bg-blue-50 text-blue-600 max-sm:mt-0.5">
               <Construction
                 className="size-3.5 shrink-0"
                 strokeWidth={2.2}
@@ -42,9 +45,9 @@ export function DevelopmentNoticeBanner({
             </span>
 
             <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
-              <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
-                <strong className="font-semibold text-white">This website is still in development.</strong>{" "}
-                <span className="text-slate-300">
+              <p className="text-xs leading-relaxed text-slate-600 sm:text-sm">
+                <strong className="font-semibold text-slate-900">This website is still in development.</strong>{" "}
+                <span className="text-slate-600">
                   Some features and content may still be updated as we continue improving the experience.
                 </span>
               </p>
@@ -54,7 +57,7 @@ export function DevelopmentNoticeBanner({
                   asChild
                   size="sm"
                   variant="outline"
-                  className="h-6 rounded-full border-slate-700 bg-slate-900/90 px-2.5 text-[11px] font-medium text-slate-200 hover:border-slate-600 hover:bg-slate-800 hover:text-white sm:h-7 sm:px-3 sm:text-xs"
+                  className="h-6 rounded-full border-slate-200/90 bg-white/90 px-2.5 text-[11px] font-medium text-slate-700 shadow-2xs transition-colors hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700 sm:h-7 sm:px-3 sm:text-xs"
                 >
                   <Link href={learnMoreHref}>Learn more</Link>
                 </Button>
@@ -67,7 +70,7 @@ export function DevelopmentNoticeBanner({
             type="button"
             aria-label="Close development notice"
             onClick={handleDismiss}
-            className="group -mr-1 flex size-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="group -mr-1 flex size-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
             <X
               className="size-4 opacity-70 transition-opacity group-hover:opacity-100"
@@ -82,7 +85,7 @@ export function DevelopmentNoticeBanner({
 }
 
 /**
- * Standard BannerCenteredButton export as requested in the specification.
+ * Standard BannerCenteredButton export in light mode with subtle moving blue accent.
  */
 export function BannerCenteredButton() {
   const [isVisible, setIsVisible] = useState(true);
@@ -90,20 +93,28 @@ export function BannerCenteredButton() {
   if (!isVisible) return null;
 
   return (
-    <Banner variant="muted" className="dark text-foreground md:py-2">
-      <div className="flex w-full gap-2 md:items-center">
+    <Banner
+      variant="border"
+      className="relative overflow-hidden border-b border-slate-200/80 bg-white px-3.5 py-2 text-slate-900 shadow-2xs md:py-2"
+    >
+      <div className="development-banner-glow" aria-hidden="true" />
+
+      <div className="relative z-10 flex w-full gap-2 md:items-center">
         <div className="flex grow gap-3 md:items-center md:justify-center">
-          <Construction
-            className="shrink-0 opacity-60 max-md:mt-0.5"
-            size={16}
-            strokeWidth={2}
-            aria-hidden="true"
-          />
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-md border border-blue-100 bg-blue-50 text-blue-600 max-md:mt-0.5">
+            <Construction
+              className="size-3.5 shrink-0"
+              strokeWidth={2.2}
+              aria-hidden="true"
+            />
+          </span>
 
           <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
-            <p className="text-sm">
-              <strong>This website is still in development.</strong>{" "}
-              Some features and content may still be updated as we continue improving the experience.
+            <p className="text-sm text-slate-600">
+              <strong className="font-semibold text-slate-900">This website is still in development.</strong>{" "}
+              <span>
+                Some features and content may still be updated as we continue improving the experience.
+              </span>
             </p>
 
             <div className="flex gap-2 max-md:flex-wrap">
@@ -111,7 +122,7 @@ export function BannerCenteredButton() {
                 asChild
                 size="sm"
                 variant="outline"
-                className="rounded-full"
+                className="rounded-full border-slate-200/90 bg-white/90 text-slate-700 shadow-2xs hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700"
               >
                 <Link href="/about">Learn more</Link>
               </Button>
@@ -121,14 +132,14 @@ export function BannerCenteredButton() {
 
         <Button
           variant="ghost"
-          className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
+          className="group -my-1.5 -me-2 size-8 shrink-0 p-0 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
           onClick={() => setIsVisible(false)}
           aria-label="Close development notice"
         >
           <X
             size={16}
             strokeWidth={2}
-            className="opacity-60 transition-opacity group-hover:opacity-100"
+            className="opacity-70 transition-opacity group-hover:opacity-100"
             aria-hidden="true"
           />
         </Button>

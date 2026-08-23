@@ -18,7 +18,7 @@ describe("development banner and shadcn UI primitives", () => {
     expect(bannerFile).toContain('size: {');
   });
 
-  it("provides development notice banner with compliant messaging", () => {
+  it("provides development notice banner with compliant messaging in light mode with moving blue glow", () => {
     const noticeFile = readFileSync(resolve("src/components/marketing/development-notice-banner.tsx"), "utf8");
     expect(noticeFile).toContain("This website is still in development.");
     expect(noticeFile).toContain("Some features and content may still be updated as we continue improving the experience.");
@@ -28,6 +28,12 @@ describe("development banner and shadcn UI primitives", () => {
     expect(noticeFile).toContain('export function DevelopmentNoticeBanner');
     expect(noticeFile).toContain('export function BannerCenteredButton');
 
+    // Asserts light mode styling and moving blue glow
+    expect(noticeFile).toContain("bg-white");
+    expect(noticeFile).toContain("development-banner-glow");
+    expect(noticeFile).toContain("overflow-hidden");
+    expect(noticeFile).not.toContain("bg-slate-950");
+
     // Asserts that prohibited or negative slop language is avoided
     const lower = noticeFile.toLowerCase();
     expect(lower).not.toContain("live and ready to use");
@@ -35,6 +41,14 @@ describe("development banner and shadcn UI primitives", () => {
     expect(lower).not.toContain("website incomplete");
     expect(lower).not.toContain("website not finished");
     expect(lower).not.toContain("beta website");
+  });
+
+  it("defines GPU-friendly development glow keyframe animation in globals.css", () => {
+    const globalsCss = readFileSync(resolve("src/app/globals.css"), "utf8");
+    expect(globalsCss).toContain("@keyframes development-glow");
+    expect(globalsCss).toContain(".development-banner-glow");
+    expect(globalsCss).toContain("transform: translateX");
+    expect(globalsCss).toContain("prefers-reduced-motion");
   });
 
   it("integrates development notice into SiteHeader above navigation", () => {
