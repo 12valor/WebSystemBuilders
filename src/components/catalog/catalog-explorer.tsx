@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { CheckCircle2, ShieldCheck, ExternalLink } from "lucide-react";
+import { CheckCircle2, ShieldCheck, ExternalLink, ArrowRight } from "lucide-react";
 import { CatalogCardIllustration } from "@/components/catalog/catalog-card-illustration";
 import { CatalogCurrencyControl } from "@/components/catalog/catalog-currency-provider";
 import { LocalizedCatalogPrice } from "@/components/catalog/localized-catalog-price";
@@ -252,91 +252,71 @@ function SystemCard({ system }: { system: CatalogSystemRecord }) {
   const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[22px] border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md">
-      {/* 1. Product Preview Area: Light neutral container with device/browser preview frame */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-50/80 p-4 sm:p-5 flex items-center justify-center border-b border-slate-100">
+    <article className="group flex flex-col overflow-hidden rounded-[26px] sm:rounded-[28px] border border-slate-100/90 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)]">
+      {/* 1. Full-bleed Media Preview */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100/80">
         {primaryMedia ? (
-          <div className="relative size-full flex items-center justify-center">
-            <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
-              {/* Minimal browser window header */}
-              <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
-                <div className="size-1.5 rounded-full bg-slate-300" />
-                <div className="size-1.5 rounded-full bg-slate-300" />
-                <div className="size-1.5 rounded-full bg-slate-300" />
-              </div>
-              {/* Screenshot preview */}
-              <div className="relative flex-1 overflow-hidden bg-slate-50/40 flex items-center justify-center p-1">
-                {/* eslint-disable-next-html-element-suppression */}
-                <img
-                  src={primaryMedia}
-                  alt={system.title}
-                  className="size-full object-contain transition-transform duration-200 group-hover:scale-[1.015]"
-                />
-              </div>
-            </div>
-          </div>
+          // eslint-disable-next-html-element-suppression
+          <img
+            src={primaryMedia}
+            alt={system.title}
+            className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          />
         ) : (
-          <div className="size-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-xs flex flex-col">
-            <div className="flex h-5 items-center gap-1 border-b border-slate-100 bg-slate-50/90 px-2.5 shrink-0">
-              <div className="size-1.5 rounded-full bg-slate-300" />
-              <div className="size-1.5 rounded-full bg-slate-300" />
-              <div className="size-1.5 rounded-full bg-slate-300" />
-            </div>
-            <div className="relative flex-1 overflow-hidden bg-slate-50/40">
-              <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
-            </div>
+          <div className="size-full flex items-center justify-center bg-slate-50">
+            <CatalogCardIllustration categorySlug={system.category?.slug} title={system.title} />
           </div>
         )}
       </div>
 
       {/* 2. Content Area */}
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        {/* Category: Small, uppercase, blue, medium weight */}
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
-          {system.category?.name ?? "Custom System Development"}
-        </span>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {/* Title & Pill Badge Row */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-heading text-lg sm:text-xl font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
+            <Link href={`/systems/${system.slug}`} className="focus:outline-none">
+              {system.title}
+            </Link>
+          </h3>
+          <span className="shrink-0 inline-flex items-center rounded-full border border-slate-200/80 bg-slate-50/80 px-2.5 py-0.5 text-xs font-medium text-slate-700 shadow-2xs">
+            {system.featured ? "Top rated" : (system.category?.name ?? "Verified")}
+          </span>
+        </div>
 
-        {/* Product Title: Strong dark navy / near-black font */}
-        <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-          <Link href={`/systems/${system.slug}`} className="focus:outline-none">
-            {system.title}
-          </Link>
-        </h3>
+        {/* Subtitle / Meta Line */}
+        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+          {system.category?.name ? `${system.category.name} • ` : ""}
+          {system.audience === "students"
+            ? "Student Capstone"
+            : system.audience === "business"
+              ? "Business Operations"
+              : "Full Stack System"}
+        </p>
 
-        {/* Short Description: Muted slate, 2-3 lines with line clamp */}
-        <p className="mt-2.5 line-clamp-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
+        {/* Short Summary Description */}
+        <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-500 line-clamp-2">
           {system.summary}
         </p>
 
-        {/* Feature Chips: Full Source ZIP & 30-Day Support with small blue outline icons and subtle borders */}
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
-            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
-            <span>Full Source ZIP</span>
-          </div>
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-slate-200/80 bg-slate-50/60 px-2.5 py-1 text-[11px] font-medium text-slate-600">
-            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" />
-            <span>30-Day Support</span>
-          </div>
-        </div>
-
-        {/* 3. Divider & Purchase Area */}
-        <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
-          <div className="min-w-0">
-            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-              {isStarting ? "Starting Price" : "Price"}
-            </span>
-            <div className="mt-0.5 text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+        {/* Price & Dark Action Button Footer */}
+        <div className="mt-5 pt-4 border-t border-slate-100/90 flex items-center justify-between gap-3 mt-auto">
+          <div className="flex items-baseline gap-1">
+            <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} />
-            </div>
+            </span>
+            {system.pricingType !== "quotation" && (
+              <span className="text-xs sm:text-sm font-normal text-slate-400">
+                {isStarting ? "/ starting" : "/ license"}
+              </span>
+            )}
           </div>
 
           <Link
             href={`/systems/${system.slug}`}
-            className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-blue-600 px-4.5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-[0_4px_16px_rgba(37,99,235,0.35)] hover:bg-blue-700 hover:shadow-[0_6px_22px_rgba(37,99,235,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-all duration-200 hover:bg-slate-800 hover:gap-2 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
           >
             <span>View System</span>
-            <ExternalLink className="size-3.5 text-blue-100 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+            <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
       </div>

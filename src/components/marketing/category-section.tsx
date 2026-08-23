@@ -254,15 +254,15 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
   const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none">
-      {/* 1. Clean Media Preview */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+    <article className="group flex flex-col overflow-hidden rounded-[26px] sm:rounded-[28px] border border-slate-100/90 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)]">
+      {/* 1. Full-bleed Media Preview */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100/80">
         {primaryMedia ? (
           // eslint-disable-next-html-element-suppression
           <img
             src={primaryMedia}
             alt={system.title}
-            className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transform-none"
+            className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="size-full flex items-center justify-center bg-slate-50">
@@ -272,51 +272,53 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
       </div>
 
       {/* 2. Content Area */}
-      <div className="flex flex-1 flex-col p-4.5 sm:p-6">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
-          {system.category?.name ?? "Custom System Development"}
-        </span>
-
-        <h3 className="mt-1.5 font-heading text-base font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600 sm:mt-2 sm:text-lg">
-          <Link href={`/systems/${system.slug}`} className="focus:outline-none">
-            {system.title}
-          </Link>
-        </h3>
-
-        <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-2">
-          {system.summary}
-        </p>
-
-        {/* Inclusions Row */}
-        <div className="mt-3.5 flex flex-wrap items-center gap-2.5 text-xs text-slate-500 font-medium sm:mt-4 sm:gap-3">
-          <span className="inline-flex items-center gap-1.5">
-            <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" aria-hidden="true" />
-            Full Source ZIP
-          </span>
-          <span className="text-slate-300" aria-hidden="true">·</span>
-          <span className="inline-flex items-center gap-1.5">
-            <ShieldCheck className="size-3.5 text-blue-600 shrink-0" aria-hidden="true" />
-            30-Day Support
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {/* Title & Pill Badge Row */}
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-heading text-lg sm:text-xl font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
+            <Link href={`/systems/${system.slug}`} className="focus:outline-none">
+              {system.title}
+            </Link>
+          </h3>
+          <span className="shrink-0 inline-flex items-center rounded-full border border-slate-200/80 bg-slate-50/80 px-2.5 py-0.5 text-xs font-medium text-slate-700 shadow-2xs">
+            {system.featured ? "Top rated" : (system.category?.name ?? "Verified")}
           </span>
         </div>
 
-        {/* 3. Price & Action Footer */}
-        <div className="mt-4 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 mt-auto sm:mt-5 sm:pt-4">
-          <div className="min-w-0">
-            <span className="block text-[10px] font-medium uppercase tracking-wider text-slate-400">
-              {isStarting ? "Starting at" : "Price"}
-            </span>
-            <div className="mt-0.5 text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+        {/* Subtitle / Meta Line */}
+        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-500">
+          {system.category?.name ? `${system.category.name} • ` : ""}
+          {system.audience === "students"
+            ? "Student Capstone"
+            : system.audience === "business"
+              ? "Business Operations"
+              : "Full Stack System"}
+        </p>
+
+        {/* Short Summary Description */}
+        <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-500 line-clamp-2">
+          {system.summary}
+        </p>
+
+        {/* Price & Dark Action Button Footer */}
+        <div className="mt-5 pt-4 border-t border-slate-100/90 flex items-center justify-between gap-3 mt-auto">
+          <div className="flex items-baseline gap-1">
+            <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} variant="featured" />
-            </div>
+            </span>
+            {system.pricingType !== "quotation" && (
+              <span className="text-xs sm:text-sm font-normal text-slate-400">
+                {isStarting ? "/ starting" : "/ license"}
+              </span>
+            )}
           </div>
 
           <Link
             href={`/systems/${system.slug}`}
-            className="group/btn inline-flex shrink-0 min-h-[40px] items-center justify-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-all duration-200 hover:bg-slate-800 hover:gap-2 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
           >
             <span>View System</span>
-            <ArrowRight className="size-3.5 transition-transform duration-150 group-hover/btn:translate-x-0.5" aria-hidden="true" />
+            <ArrowRight className="size-3.5" aria-hidden="true" />
           </Link>
         </div>
       </div>

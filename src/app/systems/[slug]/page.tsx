@@ -251,23 +251,42 @@ function RelatedSystems({ systems }: { systems: CatalogSystemRecord[] }) {
           </div>
           <Link href="/systems" className="text-sm font-semibold text-brand-hover">View full catalog →</Link>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
           {systems.map((system) => {
             const cover = system.coverImageUrl || system.media?.find((m) => m.mediaType === "image")?.url;
             return (
-              <article key={system.id} className="flex min-h-72 flex-col rounded-xl border border-white/10 bg-surface overflow-hidden">
+              <article key={system.id} className="group flex flex-col overflow-hidden rounded-[26px] border border-slate-200/80 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)]">
                 {cover && (
-                  <div className="aspect-[16/10] w-full overflow-hidden bg-white/5 border-b border-white/10 flex items-center justify-center p-1">
-                    <img src={cover} alt={system.title} className="size-full object-contain" />
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100">
+                    <img src={cover} alt={system.title} className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
                   </div>
                 )}
-                <div className="flex flex-1 flex-col p-5">
-                  <p className="text-xs uppercase tracking-[0.08em] text-muted">{system.category?.name ?? audienceLabel(system.audience)}</p>
-                  <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em]">{system.title}</h3>
-                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-secondary">{system.summary}</p>
-                  <div className="mt-auto border-t border-white/10 pt-5">
-                    <LocalizedCatalogPrice system={system} variant="related" />
-                    <Link href={`/systems/${system.slug}`} className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-[9px] border border-white/15 text-sm font-semibold">View system</Link>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-heading text-lg font-bold tracking-tight text-slate-900 transition-colors group-hover:text-blue-600">
+                      <Link href={`/systems/${system.slug}`} className="focus:outline-none">
+                        {system.title}
+                      </Link>
+                    </h3>
+                    <span className="shrink-0 inline-flex items-center rounded-full border border-slate-200/80 bg-slate-50/80 px-2.5 py-0.5 text-xs font-medium text-slate-700 shadow-2xs">
+                      {system.category?.name ?? audienceLabel(system.audience)}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
+                    {system.category?.name ? `${system.category.name} • ` : ""}{audienceLabel(system.audience)}
+                  </p>
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-500 line-clamp-2">{system.summary}</p>
+                  <div className="mt-5 pt-4 border-t border-slate-100/90 flex items-center justify-between gap-3 mt-auto">
+                    <div className="min-w-0">
+                      <LocalizedCatalogPrice system={system} variant="related" />
+                    </div>
+                    <Link
+                      href={`/systems/${system.slug}`}
+                      className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all duration-200 hover:bg-slate-800 hover:gap-2 active:scale-95"
+                    >
+                      <span>View</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
                   </div>
                 </div>
               </article>
