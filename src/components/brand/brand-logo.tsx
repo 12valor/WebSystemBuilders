@@ -6,6 +6,7 @@ type BrandLogoProps = {
   className?: string;
   variant?: "icon" | "full";
   textClassName?: string;
+  onDark?: boolean;
 };
 
 export function BrandLogo({
@@ -14,8 +15,32 @@ export function BrandLogo({
   className,
   variant = "icon",
   textClassName,
+  onDark = false,
 }: BrandLogoProps) {
-  const icon = (
+  const icon = onDark ? (
+    <span className={`relative inline-flex items-center justify-center shrink-0 ${className ?? "size-9"}`}>
+      <svg
+        viewBox="0 0 112 64"
+        className="w-full h-auto drop-shadow-[0_0_12px_rgba(59,130,246,0.25)]"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 12 32 52 56 12 80 52 100 12"
+          stroke="#F5F5F7"
+          strokeWidth="12"
+          strokeLinecap="square"
+          strokeLinejoin="miter"
+        />
+        <path
+          d="M32 52 56 12"
+          stroke="#3B82F6"
+          strokeWidth="12"
+          strokeLinecap="butt"
+        />
+      </svg>
+    </span>
+  ) : (
     <span className={`relative inline-block aspect-square shrink-0 overflow-hidden ${className ?? "size-10"}`}>
       <Image
         src="/brand/websystembuilders-logo.png"
