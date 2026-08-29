@@ -25,7 +25,7 @@ export function HeroSection() {
       ref={sectionRef}
       className="relative isolate overflow-hidden -mt-14 pb-4 pt-20 sm:-mt-16 sm:pb-5 sm:pt-28 md:pt-32"
     >
-      {/* Purple Gradient Grid Right Background with subtle parallax */}
+      {/* Dual Gradient Overlay (Top) Background with subtle parallax */}
       <motion.div
         style={reduceMotion ? undefined : { y: bgY }}
         className="pointer-events-none absolute -top-20 inset-x-0 bottom-0 z-0 h-[calc(100%+80px)] w-full will-change-transform"
@@ -34,11 +34,12 @@ export function HeroSection() {
           className="h-full w-full bg-white"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #f0f0f0 1px, transparent 1px),
-              linear-gradient(to bottom, #f0f0f0 1px, transparent 1px),
-              radial-gradient(circle 800px at 100% 200px, #d5c5ff, transparent)
+              linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
+              radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
+              radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent)
             `,
-            backgroundSize: "96px 64px, 96px 64px, 100% 100%",
+            backgroundSize: "48px 48px, 48px 48px, 100% 100%, 100% 100%",
           }}
         />
         {/* Soft bottom blend to transition smoothly into #FAFAFC */}
