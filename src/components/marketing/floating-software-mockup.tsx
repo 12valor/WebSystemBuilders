@@ -48,7 +48,7 @@ export function FloatingSoftwareMockup() {
         </div>
       </motion.div>
 
-      {/* ABSOLUTE OVERLAY FLOATING CARDS WITH CURLY CONNECTOR LINES (Desktop lg+ Only) */}
+      {/* ABSOLUTE OVERLAY FLOATING CARDS (Desktop lg+ Only) */}
       <motion.div
         style={reduceMotion ? undefined : { y: cardsScrollY }}
         className="hidden lg:block absolute inset-0 z-30 pointer-events-none will-change-transform"
@@ -73,23 +73,6 @@ export function FloatingSoftwareMockup() {
           </p>
         </motion.div>
 
-        {/* Curly Connector Line 1 (Top Left) */}
-        <motion.svg
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1],
-            delay: 0.60,
-          }}
-          className="absolute top-[18%] left-[17%] xl:left-[16%] w-24 h-16 pointer-events-none"
-          viewBox="0 0 100 60"
-          fill="none"
-        >
-          <path d="M 10 10 Q 50 40 90 50" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
-          <circle cx="90" cy="50" r="3" fill="#94A3B8" />
-        </motion.svg>
-
         {/* ================= CARD 2: BOTTOM LEFT (Inventory & Warehouse) ================= */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16, x: -8 }}
@@ -109,23 +92,6 @@ export function FloatingSoftwareMockup() {
             Track stock, manage suppliers, and warehouses.
           </p>
         </motion.div>
-
-        {/* Curly Connector Line 2 (Bottom Left) */}
-        <motion.svg
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1],
-            delay: 0.68,
-          }}
-          className="absolute bottom-[24%] left-[16%] xl:left-[15%] w-24 h-16 pointer-events-none"
-          viewBox="0 0 100 60"
-          fill="none"
-        >
-          <path d="M 10 50 Q 50 10 90 20" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
-          <circle cx="90" cy="20" r="3" fill="#94A3B8" />
-        </motion.svg>
 
         {/* ================= CARD 3: TOP RIGHT (Custom Development) ================= */}
         <motion.div
@@ -166,23 +132,6 @@ export function FloatingSoftwareMockup() {
             Ethical technical foundations with disclosed scope.
           </p>
         </motion.div>
-
-        {/* Curly Connector Line 4 (Bottom Right) */}
-        <motion.svg
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1],
-            delay: 0.72,
-          }}
-          className="absolute bottom-[24%] right-[16%] xl:right-[15%] w-24 h-16 pointer-events-none"
-          viewBox="0 0 100 60"
-          fill="none"
-        >
-          <path d="M 90 50 Q 50 10 10 20" stroke="#CBD5E1" strokeWidth="1.5" strokeDasharray="3 3" />
-          <circle cx="10" cy="20" r="3" fill="#94A3B8" />
-        </motion.svg>
       </motion.div>
 
       {/* Mobile & Tablet Responsive Feature Cards Grid (< lg screens) */}
