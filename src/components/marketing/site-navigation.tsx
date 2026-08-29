@@ -17,7 +17,7 @@ const navigation = [
 
 export function SiteNavigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [user, setUser] = useState<{
     id: string;
     email?: string;
@@ -29,7 +29,8 @@ export function SiteNavigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      // Navbar disappears when user scrolls down past 20px, and reappears when at top
+      setIsVisible(window.scrollY <= 20);
     };
 
     handleScroll();
@@ -76,21 +77,27 @@ export function SiteNavigation() {
     checkAuth();
   }, []);
 
+  const shouldShow = isVisible || isOpen;
+
   return (
     <motion.header
       initial={reduceMotion ? false : { opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-50 flex w-full justify-center pointer-events-none"
+      animate={{
+        opacity: shouldShow ? 1 : 0,
+        y: shouldShow ? 0 : -70,
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.32,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className={`sticky top-0 z-50 flex w-full justify-center ${
+        shouldShow ? "pointer-events-none" : "pointer-events-none select-none"
+      }`}
     >
       <div className="relative w-[min(calc(100%-16px),1180px)] flex justify-center">
         {/* TOP MACBOOK NOTCH / TAB CONTAINER (BLACK THEME) */}
         <div
-          className={`pointer-events-auto relative flex h-14 md:h-15 w-full items-center justify-between gap-4 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] px-4 sm:px-6 md:px-7 backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-200 ${
-            scrolled
-              ? "bg-[#07080A]/96 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)]"
-              : "bg-[#0B0C0E]/94 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.5)]"
-          }`}
+          className={`pointer-events-auto relative flex h-14 md:h-15 w-full items-center justify-between gap-4 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] px-4 sm:px-6 md:px-7 backdrop-blur-xl bg-[#0B0C0E]/94 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.5)] transition-[box-shadow,border-color] duration-200`}
         >
           {/* LEFT INVERTED FILLET (Concave ear transition to top edge) */}
           <svg
@@ -101,7 +108,7 @@ export function SiteNavigation() {
             <path
               d="M 0 0 A 20 20 0 0 1 20 20 V 0 H 0 Z"
               fill="currentColor"
-              className={scrolled ? "fill-[#07080A]/96" : "fill-[#0B0C0E]/94"}
+              className="fill-[#0B0C0E]/94"
             />
             <path
               d="M 0 0 A 20 20 0 0 1 20 20"
@@ -120,7 +127,7 @@ export function SiteNavigation() {
             <path
               d="M 0 20 A 20 20 0 0 1 20 0 H 0 V 20 Z"
               fill="currentColor"
-              className={scrolled ? "fill-[#07080A]/96" : "fill-[#0B0C0E]/94"}
+              className="fill-[#0B0C0E]/94"
             />
             <path
               d="M 0 20 A 20 20 0 0 1 20 0"
