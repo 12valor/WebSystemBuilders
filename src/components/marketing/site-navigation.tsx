@@ -91,17 +91,17 @@ export function SiteNavigation() {
         className={`relative flex justify-center ${
           scrolled
             ? "w-[min(calc(100%-24px),1020px)] pt-3 sm:pt-3.5"
-            : "w-[min(calc(100%-16px),1180px)] pt-0"
+            : "w-[calc(100%-48px)] sm:w-[min(calc(100%-16px),1180px)] pt-0"
         }`}
       >
         {/* TOP MACBOOK NOTCH / FLOATING DYNAMIC ISLAND CAPSULE */}
         <motion.div
           layout
           transition={reduceMotion ? { duration: 0 } : springTransition}
-          className={`pointer-events-auto relative flex w-full items-center justify-between gap-4 backdrop-blur-2xl ${
+          className={`pointer-events-auto relative flex w-full items-center justify-between gap-3 sm:gap-4 backdrop-blur-2xl ${
             scrolled
-              ? "h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-4 sm:px-6 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
-              : "h-14 md:h-15 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] bg-[#0B0C0E]/94 px-4 sm:px-6 md:px-7 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]"
+              ? "h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-3.5 sm:px-6 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
+              : "h-13 sm:h-14 md:h-15 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] bg-[#0B0C0E]/94 px-3.5 sm:px-6 md:px-7 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]"
           }`}
         >
           {/* LEFT INVERTED FILLET EAR */}

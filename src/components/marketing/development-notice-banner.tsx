@@ -25,14 +25,14 @@ export function DevelopmentNoticeBanner({
   };
 
   return (
-    <aside aria-label="Development Notice">
+    <aside aria-label="Development Notice" className="w-full">
       <Banner
         variant="border"
-        className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3.5 py-1 text-slate-900 shadow-none sm:px-6"
+        className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3 py-1 sm:px-6 sm:py-1 text-slate-900 shadow-none"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-[1280px] items-center justify-between gap-2">
           {/* Main Notice Content */}
-          <div className="flex grow items-center gap-2 sm:justify-center">
+          <div className="flex grow items-center gap-2 min-w-0 sm:justify-center">
             <span className="flex size-5 shrink-0 items-center justify-center rounded border border-blue-200/80 bg-blue-50/80 text-blue-600">
               <Construction
                 className="size-3 shrink-0"
@@ -41,20 +41,20 @@ export function DevelopmentNoticeBanner({
               />
             </span>
 
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-600">
-              <p className="leading-normal">
-                <strong className="font-semibold text-slate-900">This website is still in development.</strong>{" "}
-                <span className="text-slate-600">
-                  Some features and content may still be updated as we continue improving the experience.
+            <div className="flex items-center gap-x-2 gap-y-0.5 text-[11px] sm:text-xs text-slate-600 min-w-0 flex-wrap sm:flex-nowrap">
+              <p className="leading-snug truncate sm:truncate-none">
+                <strong className="font-semibold text-slate-900">This website is in development.</strong>{" "}
+                <span className="hidden sm:inline text-slate-600">
+                  Some features and content may still be updated.
                 </span>
               </p>
 
-              <div className="flex shrink-0 items-center gap-1.5">
+              <div className="flex shrink-0 items-center">
                 <Button
                   asChild
                   size="sm"
                   variant="outline"
-                  className="h-5.5 rounded-full border-slate-200/80 bg-white/70 px-2.5 text-[11px] font-medium text-slate-700 shadow-2xs backdrop-blur-xs transition-colors hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700"
+                  className="h-5 rounded-full border-slate-200/80 bg-white/80 px-2 text-[10.5px] font-medium text-slate-700 shadow-2xs backdrop-blur-xs transition-colors hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700"
                 >
                   <Link href={learnMoreHref}>Learn more</Link>
                 </Button>
@@ -92,10 +92,10 @@ export function BannerCenteredButton() {
   return (
     <Banner
       variant="border"
-      className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3.5 py-1 text-slate-900 shadow-none"
+      className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3 py-1 sm:px-6 sm:py-1 text-slate-900 shadow-none"
     >
-      <div className="relative z-10 flex w-full gap-2 md:items-center">
-        <div className="flex grow gap-2.5 md:items-center md:justify-center">
+      <div className="relative z-10 flex w-full gap-2 items-center justify-between">
+        <div className="flex grow gap-2 items-center min-w-0 sm:justify-center">
           <span className="flex size-5 shrink-0 items-center justify-center rounded border border-blue-200/80 bg-blue-50/80 text-blue-600">
             <Construction
               className="size-3 shrink-0"
@@ -104,24 +104,22 @@ export function BannerCenteredButton() {
             />
           </span>
 
-          <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center text-xs">
-            <p className="text-slate-600 leading-normal">
-              <strong className="font-semibold text-slate-900">This website is still in development.</strong>{" "}
-              <span>
-                Some features and content may still be updated as we continue improving the experience.
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs min-w-0">
+            <p className="text-slate-600 leading-snug truncate sm:truncate-none">
+              <strong className="font-semibold text-slate-900">This website is in development.</strong>{" "}
+              <span className="hidden sm:inline">
+                Some features and content may still be updated.
               </span>
             </p>
 
-            <div className="flex gap-2 max-md:flex-wrap">
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="h-5.5 rounded-full border-slate-200/80 bg-white/70 px-2.5 text-[11px] text-slate-700 shadow-2xs hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700"
-              >
-                <Link href="/about">Learn more</Link>
-              </Button>
-            </div>
+            <Button
+              asChild
+              size="sm"
+              variant="outline"
+              className="h-5 rounded-full border-slate-200/80 bg-white/80 px-2 text-[10.5px] text-slate-700 shadow-2xs hover:border-blue-300 hover:bg-blue-50/70 hover:text-blue-700 shrink-0"
+            >
+              <Link href="/about">Learn more</Link>
+            </Button>
           </div>
         </div>
 
