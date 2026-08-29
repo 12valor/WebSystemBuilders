@@ -47,16 +47,8 @@ export function SiteFooter() {
       </div>
 
       <div className="relative z-10 mx-auto w-[min(calc(100%-32px),1340px)] md:w-[min(calc(100%-64px),1340px)]">
-        {/* TOP SECTION: EYEBROW & EDITORIAL HEADLINE */}
+        {/* TOP SECTION: EDITORIAL HEADLINE */}
         <div className="mb-14 sm:mb-20 max-w-3xl">
-          {/* Eyebrow Tag */}
-          <div className="inline-flex items-center gap-2 mb-4 sm:mb-6">
-            <span className="text-xs font-medium tracking-wide text-[#93C5FD] flex items-center gap-1.5">
-              <span className="text-xs text-[#60A5FA]" aria-hidden="true">✦</span>
-              Contact Us
-            </span>
-          </div>
-
           {/* Large Editorial Headline */}
           <p className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-medium leading-[1.22] sm:leading-[1.18] tracking-[-0.025em] text-[#F3F4F6]">
             Interested in working together, exploring ready-made systems, or requesting a custom build?
@@ -71,11 +63,11 @@ export function SiteFooter() {
               Reach out directly at:
             </span>
             <a
-              href="mailto:contact@websystembuilders.com"
+              href="mailto:evangelista.agdiaz@gmail.com"
               className="group inline-flex items-center gap-1.5 text-base sm:text-lg md:text-xl font-medium text-white transition-colors duration-200 hover:text-[#60A5FA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B82F6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] rounded w-fit"
             >
               <span className="border-b border-transparent group-hover:border-[#60A5FA]/40 transition-colors">
-                contact@websystembuilders.com
+                evangelista.agdiaz@gmail.com
               </span>
               <ArrowUpRight
                 className="size-4 sm:size-5 text-[#85858F] transition-all duration-200 group-hover:text-[#60A5FA] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
