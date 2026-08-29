@@ -121,7 +121,7 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Product Showcase & Floating Cards */}
+        {/* Product Showcase */}
         <div className="mt-4 md:mt-6">
           <FloatingSoftwareMockup />
         </div>
