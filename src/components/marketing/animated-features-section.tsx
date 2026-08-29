@@ -66,13 +66,9 @@ export function AnimatedFeaturesSection() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-2xl will-change-transform"
         >
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/80 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
-            <span className="text-blue-600" aria-hidden="true">✦</span>
-            Platform Advantages
-          </div>
           <h2
             id="animated-features-heading"
-            className="mt-3 font-heading text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl lg:text-4xl leading-[1.15]"
+            className="font-heading text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl lg:text-4xl leading-[1.15]"
           >
             Everything you need to get started.
           </h2>
