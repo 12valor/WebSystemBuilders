@@ -64,13 +64,12 @@ export default async function HomePage() {
       <main id="main-content" className="overflow-x-clip">
         <HeroSection />
         <TrustStrip />
+        <AnimatedFeaturesSection />
         <ChoosePathSection />
 
         <CatalogCurrencyProvider snapshot={currency}>
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>
-
-        <AnimatedFeaturesSection />
 
         <WhyChooseUsSection />
 
