@@ -90,7 +90,7 @@ export function SiteNavigation() {
         transition={reduceMotion ? { duration: 0 } : springTransition}
         className={`relative flex justify-center ${
           scrolled
-            ? "w-[min(calc(100%-24px),860px)] pt-3 sm:pt-3.5"
+            ? "w-[min(calc(100%-24px),1020px)] pt-3 sm:pt-3.5"
             : "w-[min(calc(100%-16px),1180px)] pt-0"
         }`}
       >
@@ -98,9 +98,9 @@ export function SiteNavigation() {
         <motion.div
           layout
           transition={reduceMotion ? { duration: 0 } : springTransition}
-          className={`pointer-events-auto relative flex w-full items-center justify-between gap-3 sm:gap-4 backdrop-blur-2xl ${
+          className={`pointer-events-auto relative flex w-full items-center justify-between gap-4 backdrop-blur-2xl ${
             scrolled
-              ? "h-11 sm:h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-3.5 sm:px-5 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
+              ? "h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-4 sm:px-6 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
               : "h-14 md:h-15 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] bg-[#0B0C0E]/94 px-4 sm:px-6 md:px-7 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]"
           }`}
         >
@@ -171,7 +171,7 @@ export function SiteNavigation() {
                 onDark
                 priority
                 className={`transition-all duration-300 group-hover:opacity-85 motion-reduce:transition-none ${
-                  scrolled ? "size-7" : "size-8"
+                  scrolled ? "size-7.5" : "size-8"
                 }`}
               />
             </motion.div>
@@ -180,7 +180,7 @@ export function SiteNavigation() {
           {/* Center: Navigation links */}
           <nav
             aria-label="Primary navigation"
-            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 xl:flex"
+            className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1.5 xl:flex"
           >
             {navigation.map((item) => {
               const isActive =
@@ -194,8 +194,8 @@ export function SiteNavigation() {
                   aria-current={isActive ? "page" : undefined}
                   className={`whitespace-nowrap rounded-full font-semibold transition-all duration-200 select-none motion-reduce:transition-none ${
                     scrolled
-                      ? "px-3 py-1 text-xs"
-                      : "px-3.5 py-1.5 text-xs sm:text-[13px]"
+                      ? "px-3.5 py-1.5 text-xs"
+                      : "px-4 py-1.5 text-xs sm:text-[13px]"
                   } ${
                     isActive
                       ? "bg-[#2563EB] text-white shadow-xs"
@@ -212,14 +212,14 @@ export function SiteNavigation() {
           <motion.div
             layout="position"
             transition={reduceMotion ? { duration: 0 } : springTransition}
-            className="hidden shrink-0 items-center gap-2 xl:flex"
+            className="hidden shrink-0 items-center gap-3 xl:flex"
           >
             {user ? (
               <>
                 <Link
                   href="/dashboard"
                   className={`inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/10 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-white/20 motion-reduce:transition-none ${
-                    scrolled ? "h-8 px-3.5 text-xs" : "h-9 px-4 text-xs sm:text-[13px]"
+                    scrolled ? "h-8.5 px-3.5 text-xs" : "h-9 px-4 text-xs sm:text-[13px]"
                   }`}
                 >
                   <LayoutDashboard className={scrolled ? "size-3" : "size-3.5"} />
@@ -231,7 +231,7 @@ export function SiteNavigation() {
                   title={user.fullName || "Account Profile"}
                   aria-label="View Account Profile"
                   className={`group relative flex items-center justify-center rounded-full border border-white/20 bg-white/10 p-0.5 shadow-2xs transition-all duration-200 hover:border-blue-500 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090A] ${
-                    scrolled ? "size-8" : "size-9"
+                    scrolled ? "size-8.5" : "size-9"
                   }`}
                 >
                   {user.avatarUrl ? (
@@ -256,21 +256,21 @@ export function SiteNavigation() {
                 <Link
                   href="/auth/sign-in"
                   className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap font-semibold text-[#CBD5E1] transition-all hover:text-white motion-reduce:transition-none ${
-                    scrolled ? "px-2.5 py-1 text-xs" : "px-3 py-1.5 text-xs sm:text-[13px]"
+                    scrolled ? "px-3 py-1.5 text-xs" : "px-3.5 py-1.5 text-xs sm:text-[13px]"
                   }`}
                 >
-                  <User className={scrolled ? "size-3 text-[#94A3B8]" : "size-3.5 text-[#94A3B8]"} />
+                  <User className={scrolled ? "size-3.5 text-[#94A3B8]" : "size-3.5 text-[#94A3B8]"} />
                   <span>Sign In</span>
                 </Link>
 
                 <Link
                   href="/request-a-quote"
                   className={`blue-button inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap bg-[#2563EB] font-semibold text-white transition-all hover:bg-[#1D4ED8] motion-reduce:transition-none ${
-                    scrolled ? "h-8 px-3.5 text-xs" : "h-9 px-4 text-xs sm:text-[13px]"
+                    scrolled ? "h-8.5 px-4 text-xs" : "h-9 px-4.5 text-xs sm:text-[13px]"
                   }`}
                 >
                   <span>Request a Quote</span>
-                  <ArrowUpRight className={scrolled ? "size-3" : "size-3.5"} />
+                  <ArrowUpRight className={scrolled ? "size-3.5" : "size-3.5"} />
                 </Link>
               </>
             )}
@@ -284,7 +284,7 @@ export function SiteNavigation() {
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
             onClick={() => setIsOpen((open) => !open)}
             className={`relative ml-auto grid place-items-center rounded-full border border-white/15 bg-white/10 text-white shadow-2xs hover:bg-white/20 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 xl:hidden ${
-              scrolled ? "size-8" : "size-10"
+              scrolled ? "size-8.5" : "size-10"
             }`}
           >
             {isOpen ? (
