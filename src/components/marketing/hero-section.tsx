@@ -25,18 +25,24 @@ export function HeroSection() {
       ref={sectionRef}
       className="relative isolate overflow-hidden pb-4 pt-9 sm:pb-5 sm:pt-14 md:pt-16"
     >
-      {/* Radial Gradient Background with subtle parallax */}
+      {/* Purple Gradient Grid Right Background with subtle parallax */}
       <motion.div
         style={reduceMotion ? undefined : { y: bgY }}
         className="pointer-events-none absolute inset-0 z-0 h-full w-full will-change-transform"
       >
         <div
-          className="h-full w-full"
+          className="h-full w-full bg-white"
           style={{
-            background:
-              "radial-gradient(125% 125% at 50% 10%, #ffffff 35%, #93c5fd 85%, #60a5fa 100%)",
+            backgroundImage: `
+              linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+              linear-gradient(to bottom, #f0f0f0 1px, transparent 1px),
+              radial-gradient(circle 800px at 100% 200px, #d5c5ff, transparent)
+            `,
+            backgroundSize: "96px 64px, 96px 64px, 100% 100%",
           }}
         />
+        {/* Soft bottom blend to transition smoothly into #FAFAFC */}
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAFAFC] to-transparent pointer-events-none" />
       </motion.div>
 
       <div className="relative z-10 mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
