@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CatalogCurrencyProvider } from "@/components/catalog/catalog-currency-provider";
+import { AnimatedFeaturesSection } from "@/components/marketing/animated-features-section";
 import { CategorySection, TrustStrip } from "@/components/marketing/category-section";
 import { ChoosePathSection } from "@/components/marketing/choose-path-section";
 import { HeroSection } from "@/components/marketing/hero-section";
@@ -68,6 +69,8 @@ export default async function HomePage() {
         <CatalogCurrencyProvider snapshot={currency}>
           <CategorySection catalog={catalog} />
         </CatalogCurrencyProvider>
+
+        <AnimatedFeaturesSection />
 
         <WhyChooseUsSection />
 
