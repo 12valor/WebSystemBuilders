@@ -23,12 +23,12 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden pb-4 pt-9 sm:pb-5 sm:pt-14 md:pt-16"
+      className="relative isolate overflow-hidden -mt-14 pb-4 pt-20 sm:-mt-16 sm:pb-5 sm:pt-28 md:pt-32"
     >
       {/* Purple Gradient Grid Right Background with subtle parallax */}
       <motion.div
         style={reduceMotion ? undefined : { y: bgY }}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full will-change-transform"
+        className="pointer-events-none absolute -top-20 inset-x-0 bottom-0 z-0 h-[calc(100%+80px)] w-full will-change-transform"
       >
         <div
           className="h-full w-full bg-white"
