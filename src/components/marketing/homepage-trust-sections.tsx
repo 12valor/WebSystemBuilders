@@ -202,6 +202,13 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
   } as const;
   const portfolioUrl = "https://12valor.vercel.app/";
 
+  const techFocusTags = [
+    "Next.js App Router",
+    "TypeScript",
+    "PostgreSQL & Supabase",
+    "Systems Architecture",
+  ];
+
   return (
     <section aria-labelledby="founder-identity-title" className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-24">
       <motion.div
@@ -209,84 +216,95 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto grid w-[min(calc(100%-32px),1080px)] gap-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_18px_50px_-30px_rgba(15,23,42,0.25)] sm:gap-8 sm:p-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12 lg:p-12 will-change-transform"
+        className="mx-auto grid w-[min(calc(100%-32px),1040px)] gap-6 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-[0_16px_40px_-16px_rgba(15,23,42,0.08),0_1px_3px_rgba(0,0,0,0.03)] sm:gap-8 sm:p-8 lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10 lg:p-10 will-change-transform"
       >
-        <div className="self-start flex flex-row items-center gap-4 sm:flex-col sm:items-start sm:gap-0">
+        {/* Left Column: Avatar & GitHub Badge */}
+        <div className="flex flex-row items-center gap-4 sm:flex-col sm:items-start sm:gap-3">
           <a
             href={githubProfile.url}
             target="_blank"
             rel="noreferrer"
             aria-label={`View ${profile.founderName} on GitHub`}
-            className="group block w-fit shrink-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4 sm:rounded-3xl"
+            className="group block w-fit shrink-0 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
           >
-            <span className="relative block size-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm sm:size-32 sm:rounded-3xl lg:size-44">
+            <span className="relative block size-24 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-2xs sm:size-32 lg:size-40">
               <Image
                 src={githubProfile.avatarUrl}
                 alt={`${profile.founderName} GitHub profile photo`}
                 fill
-                sizes="(min-width: 1024px) 176px, 128px"
+                sizes="(min-width: 1024px) 160px, 128px"
                 className="object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none"
               />
             </span>
           </a>
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-700 sm:mt-4">
-            <GitHubMark className="size-4 text-slate-950" />
+          <a
+            href={githubProfile.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-50/80 px-3 py-1 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+          >
+            <GitHubMark className="size-3.5 text-slate-900" />
             <span>@{githubProfile.handle}</span>
-          </div>
+          </a>
         </div>
 
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.12em] text-blue-700">
-            Founder and web developer
-          </p>
-          <h2
-            id="founder-identity-title"
-            className="mt-2 text-2xl font-extrabold tracking-[-0.035em] text-slate-950 sm:mt-3 sm:text-3xl lg:text-4xl"
-          >
-            {profile.founderName}
-          </h2>
-          <p className="mt-1 text-sm font-semibold text-blue-700 sm:mt-1.5">{profile.founderTitle}</p>
-          <p className="mt-3.5 max-w-3xl text-sm leading-relaxed text-slate-600 sm:mt-4 sm:leading-7">{profile.founderBio}</p>
-          <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:flex lg:flex-wrap sm:gap-3 sm:mt-7">
+        {/* Right Column: Founder Info, Tech Tags, and Shadcn Action Buttons */}
+        <div className="flex flex-col justify-between">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+              <span className="text-blue-600" aria-hidden="true">✦</span>
+              Founder &amp; Architect
+            </div>
+
+            <h2
+              id="founder-identity-title"
+              className="mt-2.5 text-2xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-3xl lg:text-[2rem]"
+            >
+              {profile.founderName}
+            </h2>
+            <p className="mt-1 text-xs sm:text-sm font-semibold text-slate-500">{profile.founderTitle}</p>
+            <p className="mt-3.5 max-w-2xl text-sm leading-relaxed text-slate-600 sm:leading-7">{profile.founderBio}</p>
+
+            {/* Technical Focus Badges */}
+            <div className="mt-4 flex flex-wrap items-center gap-1.5 sm:gap-2">
+              {techFocusTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center rounded-md border border-slate-200/80 bg-slate-50/90 px-2.5 py-1 text-[11px] sm:text-xs font-mono font-medium text-slate-700"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Buttons Row */}
+          <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3 pt-6 border-t border-slate-100">
             <a
               href={githubProfile.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-xs sm:text-sm font-bold text-white transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              className="inline-flex h-9 sm:h-10 items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 text-xs sm:text-sm font-semibold text-white shadow-2xs transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
             >
-              <GitHubMark className="size-4" />
-              View GitHub Profile
+              <GitHubMark className="size-3.5" />
+              <span>View GitHub Profile</span>
             </a>
             <a
               href={portfolioUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 px-5 text-xs sm:text-sm font-bold text-slate-800 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              className="inline-flex h-9 sm:h-10 items-center justify-center gap-2 rounded-xl border border-slate-200/90 bg-white px-4 text-xs sm:text-sm font-semibold text-slate-800 shadow-2xs transition-colors hover:bg-slate-50 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
             >
-              <ExternalLink className="size-4" aria-hidden="true" />
-              View Portfolio
+              <span>View Portfolio</span>
+              <ExternalLink className="size-3.5 text-slate-500" aria-hidden="true" />
             </a>
             <Link
               href="/about"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-slate-300 px-5 text-xs sm:text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
+              className="inline-flex h-9 sm:h-10 items-center justify-center gap-1.5 rounded-xl border border-transparent px-3 text-xs sm:text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
             >
-              About WebSystemBuilders <ArrowRight className="size-4" />
+              <span>About WebSystemBuilders</span>
+              <ArrowRight className="size-3.5 text-slate-400" />
             </Link>
-            {profile.publicEmail ? (
-              <a
-                href={`mailto:${profile.publicEmail}`}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-300 px-5 text-xs sm:text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
-              >
-                {profile.publicEmail}
-              </a>
-            ) : (
-              <Link
-                href="/contact"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-slate-300 px-5 text-xs sm:text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
-              >
-                Contact WebSystemBuilders
-              </Link>
-            )}
           </div>
         </div>
       </motion.div>
