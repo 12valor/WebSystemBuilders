@@ -202,13 +202,6 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
   } as const;
   const portfolioUrl = "https://12valor.vercel.app/";
 
-  const techFocusTags = [
-    "Next.js App Router",
-    "TypeScript",
-    "PostgreSQL & Supabase",
-    "Systems Architecture",
-  ];
-
   return (
     <section aria-labelledby="founder-identity-title" className="bg-[#FAFAFC] py-12 sm:py-16 lg:py-24">
       <motion.div
@@ -248,34 +241,17 @@ export function FounderIdentitySection({ profile }: { profile: PublicCompanyProf
           </a>
         </div>
 
-        {/* Right Column: Founder Info, Tech Tags, and Shadcn Action Buttons */}
+        {/* Right Column: Founder Info and Shadcn Action Buttons */}
         <div className="flex flex-col justify-between">
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
-              <span className="text-blue-600" aria-hidden="true">✦</span>
-              Founder &amp; Architect
-            </div>
-
             <h2
               id="founder-identity-title"
-              className="mt-2.5 text-2xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-3xl lg:text-[2rem]"
+              className="text-2xl font-extrabold tracking-[-0.035em] text-slate-950 sm:text-3xl lg:text-[2rem]"
             >
               {profile.founderName}
             </h2>
             <p className="mt-1 text-xs sm:text-sm font-semibold text-slate-500">{profile.founderTitle}</p>
             <p className="mt-3.5 max-w-2xl text-sm leading-relaxed text-slate-600 sm:leading-7">{profile.founderBio}</p>
-
-            {/* Technical Focus Badges */}
-            <div className="mt-4 flex flex-wrap items-center gap-1.5 sm:gap-2">
-              {techFocusTags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center rounded-md border border-slate-200/80 bg-slate-50/90 px-2.5 py-1 text-[11px] sm:text-xs font-mono font-medium text-slate-700"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
 
           {/* Action Buttons Row */}
