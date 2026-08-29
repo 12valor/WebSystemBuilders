@@ -58,11 +58,32 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
-      <SiteHeader />
-      <WelcomeDashboardModal />
+      <div className="relative isolate">
+        {/* Dual Gradient Overlay (Top) Background from absolute top of the page */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-white"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
+              radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
+              radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent)
+            `,
+            backgroundSize: "48px 48px, 48px 48px, 100% 100%, 100% 100%",
+          }}
+        >
+          {/* Soft bottom blend to transition smoothly into #FAFAFC */}
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAFAFC] to-transparent pointer-events-none" />
+        </div>
+
+        <div className="relative z-10">
+          <SiteHeader />
+          <WelcomeDashboardModal />
+          <HeroSection />
+        </div>
+      </div>
 
       <main id="main-content" className="overflow-x-clip">
-        <HeroSection />
         <TrustStrip />
         <AnimatedFeaturesSection />
         <ChoosePathSection />

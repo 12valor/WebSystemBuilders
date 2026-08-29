@@ -18,34 +18,12 @@ export function HeroSection() {
 
   const textY = useTransform(scrollYProgress, [0, 1], [0, -28]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 0.96, 0.7]);
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 36]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden -mt-14 pb-4 pt-20 sm:-mt-16 sm:pb-5 sm:pt-28 md:pt-32"
+      className="relative pb-4 pt-6 sm:pb-5 sm:pt-8 md:pt-10"
     >
-      {/* Dual Gradient Overlay (Top) Background with subtle parallax */}
-      <motion.div
-        style={reduceMotion ? undefined : { y: bgY }}
-        className="pointer-events-none absolute -top-20 inset-x-0 bottom-0 z-0 h-[calc(100%+80px)] w-full will-change-transform"
-      >
-        <div
-          className="h-full w-full bg-white"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
-              radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
-              radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent)
-            `,
-            backgroundSize: "48px 48px, 48px 48px, 100% 100%, 100% 100%",
-          }}
-        />
-        {/* Soft bottom blend to transition smoothly into #FAFAFC */}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAFAFC] to-transparent pointer-events-none" />
-      </motion.div>
-
       <div className="relative z-10 mx-auto w-[min(calc(100%-32px),1280px)] md:w-[min(calc(100%-64px),1280px)]">
         {/* Hero Headline & Supporting Description */}
         <motion.div
