@@ -20,7 +20,7 @@ const features: FeatureCard[] = [
   {
     title: "Made for Any Screen",
     description: "Clean, responsive experiences across desktop, tablet and mobile.",
-    gifSrc: "/gifs/system-outline-478-desktop-hover-pinch.gif",
+    gifSrc: "/gifs/system-solid-478-desktop-hover-pinch.gif",
     gifAlt: "Responsive screens and multi-device display illustration",
   },
   {
@@ -44,7 +44,7 @@ const features: FeatureCard[] = [
   {
     title: "Support That’s Human",
     description: "Get direct help before, during and after your system is delivered.",
-    gifSrc: "/gifs/system-outline-27-globe-hover-pinch.gif",
+    gifSrc: "/gifs/system-solid-27-globe-loop-cycle.gif",
     gifAlt: "Human-centric technical support and reach illustration",
   },
 ];
