@@ -90,8 +90,8 @@ export function SiteNavigation() {
         transition={reduceMotion ? { duration: 0 } : springTransition}
         className={`relative flex justify-center ${
           scrolled
-            ? "w-[min(calc(100%-24px),1020px)] pt-3 sm:pt-3.5"
-            : "w-[calc(100%-48px)] sm:w-[min(calc(100%-16px),1180px)] pt-0"
+            ? "w-[min(calc(100%-20px),1020px)] pt-2 sm:pt-3.5"
+            : "w-[min(calc(100%-20px),1020px)] md:w-[min(calc(100%-16px),1180px)] pt-2 md:pt-0"
         }`}
       >
         {/* TOP MACBOOK NOTCH / FLOATING DYNAMIC ISLAND CAPSULE */}
@@ -100,11 +100,11 @@ export function SiteNavigation() {
           transition={reduceMotion ? { duration: 0 } : springTransition}
           className={`pointer-events-auto relative flex w-full items-center justify-between gap-3 sm:gap-4 backdrop-blur-2xl ${
             scrolled
-              ? "h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-3.5 sm:px-6 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
-              : "h-13 sm:h-14 md:h-15 rounded-b-2xl md:rounded-b-[22px] border-b border-x border-white/[0.12] bg-[#0B0C0E]/94 px-3.5 sm:px-6 md:px-7 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]"
+              ? "h-11 sm:h-12 rounded-full border border-white/18 bg-[#07080A]/96 px-3.5 sm:px-6 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.08)]"
+              : "h-11 sm:h-12 md:h-15 rounded-full md:rounded-b-[22px] md:rounded-t-none border border-white/[0.14] md:border-t-0 bg-[#0B0C0E]/94 px-3.5 sm:px-6 md:px-7 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]"
           }`}
         >
-          {/* LEFT INVERTED FILLET EAR */}
+          {/* LEFT INVERTED FILLET EAR (Desktop Only) */}
           <motion.svg
             viewBox="0 0 20 20"
             initial={false}
@@ -114,7 +114,7 @@ export function SiteNavigation() {
                 : { opacity: 1, scale: 1, x: 0, y: 0 }
             }
             transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: "easeOut" }}
-            className="absolute -left-[20px] top-0 size-5 text-[#0B0C0E] pointer-events-none origin-top-right"
+            className="hidden md:block absolute -left-[20px] top-0 size-5 text-[#0B0C0E] pointer-events-none origin-top-right"
             aria-hidden="true"
           >
             <path
@@ -130,7 +130,7 @@ export function SiteNavigation() {
             />
           </motion.svg>
 
-          {/* RIGHT INVERTED FILLET EAR */}
+          {/* RIGHT INVERTED FILLET EAR (Desktop Only) */}
           <motion.svg
             viewBox="0 0 20 20"
             initial={false}
@@ -140,7 +140,7 @@ export function SiteNavigation() {
                 : { opacity: 1, scale: 1, x: 0, y: 0 }
             }
             transition={reduceMotion ? { duration: 0 } : { duration: 0.22, ease: "easeOut" }}
-            className="absolute -right-[20px] top-0 size-5 text-[#0B0C0E] pointer-events-none origin-top-left"
+            className="hidden md:block absolute -right-[20px] top-0 size-5 text-[#0B0C0E] pointer-events-none origin-top-left"
             aria-hidden="true"
           >
             <path
@@ -171,7 +171,7 @@ export function SiteNavigation() {
                 onDark
                 priority
                 className={`transition-all duration-300 group-hover:opacity-85 motion-reduce:transition-none ${
-                  scrolled ? "size-7.5" : "size-8"
+                  scrolled ? "size-6.5 sm:size-7.5" : "size-7 md:size-8"
                 }`}
               />
             </motion.div>
@@ -283,14 +283,12 @@ export function SiteNavigation() {
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
             onClick={() => setIsOpen((open) => !open)}
-            className={`relative ml-auto grid place-items-center rounded-full border border-white/15 bg-white/10 text-white shadow-2xs hover:bg-white/20 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 xl:hidden ${
-              scrolled ? "size-8.5" : "size-10"
-            }`}
+            className="relative ml-auto grid size-7.5 sm:size-8.5 place-items-center rounded-full border border-white/15 bg-white/10 text-white shadow-2xs hover:bg-white/20 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 xl:hidden"
           >
             {isOpen ? (
-              <X className={scrolled ? "size-4 text-white" : "size-4.5 text-white"} />
+              <X className="size-3.5 sm:size-4 text-white" />
             ) : (
-              <Menu className={scrolled ? "size-4 text-white" : "size-4.5 text-white"} />
+              <Menu className="size-3.5 sm:size-4 text-white" />
             )}
           </button>
         </motion.div>
