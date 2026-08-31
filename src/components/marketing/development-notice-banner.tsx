@@ -30,9 +30,9 @@ export function DevelopmentNoticeBanner({
         variant="border"
         className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3 py-1 sm:px-6 sm:py-1 text-slate-900 shadow-none"
       >
-        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] items-center justify-between gap-2">
-          {/* Main Notice Content */}
-          <div className="flex grow items-center gap-2 min-w-0 sm:justify-center">
+        <div className="relative z-10 mx-auto flex w-full items-center justify-center">
+          {/* Main Notice Content + Close Button together */}
+          <div className="flex items-center gap-2 min-w-0">
             <span className="flex size-5 shrink-0 items-center justify-center rounded border border-blue-200/80 bg-blue-50/80 text-blue-600">
               <Construction
                 className="size-3 shrink-0"
@@ -60,21 +60,21 @@ export function DevelopmentNoticeBanner({
                 </Button>
               </div>
             </div>
-          </div>
 
-          {/* Dismiss Button */}
-          <button
-            type="button"
-            aria-label="Close development notice"
-            onClick={handleDismiss}
-            className="group -mr-1 flex size-6 shrink-0 items-center justify-center rounded text-slate-400 transition-colors hover:bg-slate-200/50 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            <X
-              className="size-3.5 opacity-70 transition-opacity group-hover:opacity-100"
-              strokeWidth={2}
-              aria-hidden="true"
-            />
-          </button>
+            {/* Dismiss Button */}
+            <button
+              type="button"
+              aria-label="Close development notice"
+              onClick={handleDismiss}
+              className="group ml-0.5 flex size-5 shrink-0 items-center justify-center rounded text-slate-400 transition-colors hover:bg-slate-200/50 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <X
+                className="size-3.5 opacity-70 transition-opacity group-hover:opacity-100"
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
         </div>
       </Banner>
     </aside>
@@ -94,8 +94,8 @@ export function BannerCenteredButton() {
       variant="border"
       className="relative overflow-hidden border-b border-slate-200/60 bg-transparent px-3 py-1 sm:px-6 sm:py-1 text-slate-900 shadow-none"
     >
-      <div className="relative z-10 flex w-full gap-2 items-center justify-between">
-        <div className="flex grow gap-2 items-center min-w-0 sm:justify-center">
+      <div className="relative z-10 flex w-full items-center justify-center">
+        <div className="flex gap-2 items-center min-w-0">
           <span className="flex size-5 shrink-0 items-center justify-center rounded border border-blue-200/80 bg-blue-50/80 text-blue-600">
             <Construction
               className="size-3 shrink-0"
@@ -121,20 +121,20 @@ export function BannerCenteredButton() {
               <Link href="/about">Learn more</Link>
             </Button>
           </div>
-        </div>
 
-        <Button
-          variant="ghost"
-          className="group -my-1 -me-1 size-6 shrink-0 p-0 text-slate-400 hover:bg-transparent hover:text-slate-700"
-          onClick={() => setIsVisible(false)}
-          aria-label="Close development notice"
-        >
-          <X
-            className="size-3.5 opacity-70 transition-opacity group-hover:opacity-100"
-            strokeWidth={2}
-            aria-hidden="true"
-          />
-        </Button>
+          <Button
+            variant="ghost"
+            className="group ml-0.5 size-5 shrink-0 p-0 text-slate-400 hover:bg-transparent hover:text-slate-700"
+            onClick={() => setIsVisible(false)}
+            aria-label="Close development notice"
+          >
+            <X
+              className="size-3.5 opacity-70 transition-opacity group-hover:opacity-100"
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </Button>
+        </div>
       </div>
     </Banner>
   );
