@@ -58,6 +58,9 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
+      <SiteHeader />
+      <WelcomeDashboardModal />
+
       <div className="relative isolate">
         {/* Dual Gradient Overlay (Top) Background from absolute top of the page */}
         <div
@@ -77,8 +80,6 @@ export default async function HomePage() {
         </div>
 
         <div className="relative z-10">
-          <SiteHeader />
-          <WelcomeDashboardModal />
           <HeroSection />
         </div>
       </div>
