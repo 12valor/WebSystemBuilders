@@ -7,9 +7,9 @@ export async function SiteHeader() {
   const { announcement } = await getPublicSiteContent();
   return (
     <>
-      <DevelopmentNoticeBanner />
       <AnnouncementBar announcement={announcement} />
       <SiteNavigation />
+      <DevelopmentNoticeBanner />
     </>
   );
 }

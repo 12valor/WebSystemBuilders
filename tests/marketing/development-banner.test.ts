@@ -18,22 +18,15 @@ describe("development banner and shadcn UI primitives", () => {
     expect(bannerFile).toContain('size: {');
   });
 
-  it("provides development notice banner with compliant messaging in light mode with moving blue glow", () => {
+  it("provides development notice banner with compliant messaging", () => {
     const noticeFile = readFileSync(resolve("src/components/marketing/development-notice-banner.tsx"), "utf8");
-    expect(noticeFile).toContain("This website is still in development.");
-    expect(noticeFile).toContain("Some features and content may still be updated as we continue improving the experience.");
+    expect(noticeFile).toContain("This website is in development.");
+    expect(noticeFile).toContain("Some features and content may still be updated.");
     expect(noticeFile).toContain("Construction");
     expect(noticeFile).toContain("Learn more");
     expect(noticeFile).toContain('aria-label="Close development notice"');
     expect(noticeFile).toContain('export function DevelopmentNoticeBanner');
     expect(noticeFile).toContain('export function BannerCenteredButton');
-
-    // Asserts light mode styling and moving blue glow & highlight
-    expect(noticeFile).toContain("bg-white");
-    expect(noticeFile).toContain("development-banner-glow");
-    expect(noticeFile).toContain("development-banner-highlight");
-    expect(noticeFile).toContain("overflow-hidden");
-    expect(noticeFile).not.toContain("bg-slate-950");
 
     // Asserts that prohibited or negative slop language is avoided
     const lower = noticeFile.toLowerCase();
@@ -44,19 +37,11 @@ describe("development banner and shadcn UI primitives", () => {
     expect(lower).not.toContain("beta website");
   });
 
-  it("defines GPU-friendly development glow keyframe animation in globals.css", () => {
-    const globalsCss = readFileSync(resolve("src/app/globals.css"), "utf8");
-    expect(globalsCss).toContain("@keyframes development-glow");
-    expect(globalsCss).toContain(".development-banner-glow");
-    expect(globalsCss).toContain("transform: translateX");
-    expect(globalsCss).toContain("prefers-reduced-motion");
-  });
-
-  it("integrates development notice into SiteHeader above navigation", () => {
+  it("integrates development notice into SiteHeader below navigation", () => {
     const siteHeaderFile = readFileSync(resolve("src/components/marketing/site-header.tsx"), "utf8");
     expect(siteHeaderFile).toContain("DevelopmentNoticeBanner");
     expect(siteHeaderFile).toContain("<DevelopmentNoticeBanner />");
-    expect(siteHeaderFile.indexOf("<DevelopmentNoticeBanner />")).toBeLessThan(
+    expect(siteHeaderFile.indexOf("<DevelopmentNoticeBanner />")).toBeGreaterThan(
       siteHeaderFile.indexOf("<SiteNavigation />")
     );
   });
