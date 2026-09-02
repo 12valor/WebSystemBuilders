@@ -22,4 +22,27 @@ describe("PayPal Web SDK checkout", () => {
     expect(source).toContain("[paypal-checkout] Checkout start failed");
     expect(source).toContain("getPayPalSdkErrorDetails(paymentError)");
   });
+
+  it("reviews the PayPal-only purchase before opening the provider window", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/components/checkout/paypal-checkout.tsx"), "utf8");
+
+    expect(source).toContain("Review and pay");
+    expect(source).toContain("Confirm these details before the secure PayPal window opens.");
+    expect(source).toContain("buyerEmail={props.buyerEmail}");
+    expect(source).toContain("All required policies reviewed");
+    expect(source).toContain("Prepared separately after verified payment");
+    expect(source).toContain("onClick: () => setReviewOpen(true)");
+    expect(source).toContain("onClick={onConfirm}");
+  });
+
+  it("does not present inactive payment methods", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/components/checkout/paypal-checkout.tsx"), "utf8");
+
+    expect(source).not.toContain('selectedTab === "card"');
+    expect(source).not.toContain('selectedTab === "gcash"');
+    expect(source).not.toContain('selectedTab === "maya"');
+    expect(source).not.toContain("CardBrandIcons");
+    expect(source).not.toContain("GCashLogo");
+    expect(source).not.toContain("MayaLogo");
+  });
 });

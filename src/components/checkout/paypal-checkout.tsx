@@ -3,22 +3,17 @@
 import Link from "next/link";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
-import { createElement, useCallback, useState } from "react";
+import { createElement, useCallback, useEffect, useRef, useState } from "react";
 import {
-  CreditCard,
+  Check,
   Lock,
+  Mail,
+  PackageCheck,
   ShieldCheck,
   Tag,
-  Building2,
-  Info,
-  ArrowRight,
+  X,
 } from "lucide-react";
-import {
-  PayPalLogo,
-  GCashLogo,
-  MayaLogo,
-  CardBrandIcons,
-} from "@/components/checkout/payment-icons";
+import { PayPalLogo } from "@/components/checkout/payment-icons";
 
 type PayPalApproveData = { orderId?: string };
 type PayPalSdkErrorDetails = {
@@ -61,14 +56,12 @@ type Props = {
   systemId: string;
   systemTitle: string;
   priceFormatted: string;
+  buyerEmail: string;
   sdkUrl: string;
 };
 
-type PaymentTab = "paypal" | "card" | "gcash" | "maya" | "invoice";
-
 export function PayPalCheckout(props: Props) {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<PaymentTab>("paypal");
   const [accepted, setAccepted] = useState({
     terms: false,
     license: false,
@@ -81,19 +74,15 @@ export function PayPalCheckout(props: Props) {
   const [eligible, setEligible] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Card form state
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvc, setCvc] = useState("");
-  const [nameOnCard, setNameOnCard] = useState("");
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   // Promo code state
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState<string | null>(null);
 
-  const ready = Object.values(accepted).every(Boolean) && eligible && !pending;
+  const agreementsAccepted = Object.values(accepted).every(Boolean);
+  const ready = agreementsAccepted && eligible && !pending;
 
   const initialize = useCallback(async () => {
     try {
@@ -274,6 +263,11 @@ export function PayPalCheckout(props: Props) {
     }
   }
 
+  function confirmPayment() {
+    setReviewOpen(false);
+    void startPayment();
+  }
+
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
     if (!promoCode.trim()) return;
@@ -281,7 +275,7 @@ export function PayPalCheckout(props: Props) {
   };
 
   return (
-    <div className="rounded-3xl bg-white p-6 sm:p-10 shadow-xl border border-slate-200/90 text-slate-900 space-y-8">
+    <div className="rounded-2xl border border-slate-200/90 bg-white p-6 text-slate-900 shadow-lg sm:p-8">
       <Script
         src={props.sdkUrl}
         strategy="afterInteractive"
@@ -291,362 +285,128 @@ export function PayPalCheckout(props: Props) {
         onError={() => setError("PayPal could not load.")}
       />
 
-      {/* 1. Payment Method Selector Tabs with Official Brand Logos */}
-      <div className="space-y-3">
-        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-          Select Payment Method
-        </label>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          {/* Option 1: Official PayPal Logo */}
-          <button
-            type="button"
-            onClick={() => setSelectedTab("paypal")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
-              selectedTab === "paypal"
-                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <PayPalLogo className="h-5 w-auto" />
-            <span className="text-[10px] text-slate-500 font-semibold mt-1">
-              Instant
-            </span>
-          </button>
-
-          {/* Option 2: Debit / Credit Card */}
-          <button
-            type="button"
-            onClick={() => setSelectedTab("card")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
-              selectedTab === "card"
-                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <CardBrandIcons className="h-3.5 w-auto" />
-            <span className="text-[10px] text-slate-700 font-bold mt-1">
-              Debit / Credit
-            </span>
-          </button>
-
-          {/* Option 3: Official GCash Logo */}
-          <button
-            type="button"
-            onClick={() => setSelectedTab("gcash")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
-              selectedTab === "gcash"
-                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <GCashLogo className="h-5 w-auto" />
-            <span className="text-[10px] text-slate-500 font-semibold mt-1">
-              e-Wallet
-            </span>
-          </button>
-
-          {/* Option 4: Official Maya Logo */}
-          <button
-            type="button"
-            onClick={() => setSelectedTab("maya")}
-            className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer min-h-[72px] ${
-              selectedTab === "maya"
-                ? "border-blue-600 bg-blue-50/50 ring-2 ring-blue-600/20 shadow-xs"
-                : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
-            }`}
-          >
-            <MayaLogo className="h-5 w-auto" />
-            <span className="text-[10px] text-slate-500 font-semibold mt-1">
-              e-Wallet
-            </span>
-          </button>
+      <div className="flex items-start justify-between gap-5 border-b border-slate-100 pb-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+            Secure payment
+          </p>
+          <h1 className="mt-2 text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">
+            Complete your purchase with PayPal
+          </h1>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
+            Review the purchase terms, then confirm the final details before PayPal opens.
+          </p>
+        </div>
+        <div className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2">
+          <PayPalLogo className="h-5 w-auto" />
         </div>
       </div>
 
-      {/* 2. Dynamic Payment Form / Actions based on selection */}
-      {selectedTab === "paypal" && (
-        <div className="space-y-6">
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4.5 text-xs text-blue-900 space-y-1.5">
-            <div className="flex items-center gap-1.5 font-bold text-blue-950">
-              <ShieldCheck className="size-4 text-blue-700 shrink-0" />
-              <span>Verified PayPal Merchant Gateway</span>
-            </div>
-            <p className="text-blue-800 leading-relaxed">
-              Click the button below to authorize payment of{" "}
-              <strong className="text-blue-950">{props.priceFormatted}</strong> for{" "}
-              <strong>{props.systemTitle}</strong>. Your license and private package delivery will be logged instantly.
-            </p>
-          </div>
+      <div className="mt-6 rounded-xl border border-blue-100 bg-blue-50/60 p-4 text-sm text-blue-950">
+        <div className="flex items-center gap-2 font-semibold">
+          <ShieldCheck className="size-4 shrink-0 text-blue-700" />
+          <span>PayPal-hosted authorization</span>
+        </div>
+        <p className="mt-1.5 leading-6 text-blue-900/80">
+          You will approve <strong>{props.priceFormatted}</strong> for{" "}
+          <strong>{props.systemTitle}</strong> in PayPal&apos;s secure checkout.
+          Payment confirmation and private delivery are recorded separately.
+        </p>
+      </div>
 
-          {/* Required agreements */}
-          <fieldset className="space-y-3 pt-2">
-            <legend className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-              Required Agreements
-            </legend>
-            <Acknowledgement
-              checked={accepted.terms}
-              onChange={(value) =>
-                setAccepted((state) => ({ ...state, terms: value }))
-              }
-            >
-              I agree to the{" "}
-              <Link href="/legal/terms" className="underline font-semibold text-slate-900 hover:text-blue-600">
-                terms of service
-              </Link>
-              .
-            </Acknowledgement>
-            <Acknowledgement
-              checked={accepted.license}
-              onChange={(value) =>
-                setAccepted((state) => ({ ...state, license: value }))
-              }
-            >
-              I understand the published software license applies to this purchase.
-            </Acknowledgement>
-            <Acknowledgement
-              checked={accepted.refund}
-              onChange={(value) =>
-                setAccepted((state) => ({ ...state, refund: value }))
-              }
-            >
-              I reviewed the{" "}
-              <Link href="/legal/refunds" className="underline font-semibold text-slate-900 hover:text-blue-600">
-                refund policy
-              </Link>
-              .
-            </Acknowledgement>
-            <Acknowledgement
-              checked={accepted.delivery}
-              onChange={(value) =>
-                setAccepted((state) => ({ ...state, delivery: value }))
-              }
-            >
-              I understand verified payment and private file delivery are separate steps.
-            </Acknowledgement>
-          </fieldset>
+      <fieldset className="mt-7 space-y-3">
+        <legend className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700">
+          Required agreements
+        </legend>
+        <Acknowledgement
+          checked={accepted.terms}
+          onChange={(value) =>
+            setAccepted((state) => ({ ...state, terms: value }))
+          }
+        >
+          I agree to the{" "}
+          <Link href="/legal/terms" className="font-semibold text-slate-900 underline hover:text-blue-700">
+            terms of service
+          </Link>
+          .
+        </Acknowledgement>
+        <Acknowledgement
+          checked={accepted.license}
+          onChange={(value) =>
+            setAccepted((state) => ({ ...state, license: value }))
+          }
+        >
+          I understand the published software license applies to this purchase.
+        </Acknowledgement>
+        <Acknowledgement
+          checked={accepted.refund}
+          onChange={(value) =>
+            setAccepted((state) => ({ ...state, refund: value }))
+          }
+        >
+          I reviewed the{" "}
+          <Link href="/legal/refunds" className="font-semibold text-slate-900 underline hover:text-blue-700">
+            refund policy
+          </Link>
+          .
+        </Acknowledgement>
+        <Acknowledgement
+          checked={accepted.delivery}
+          onChange={(value) =>
+            setAccepted((state) => ({ ...state, delivery: value }))
+          }
+        >
+          I understand verified payment and private file delivery are separate steps.
+        </Acknowledgement>
+      </fieldset>
 
-          {error && (
-            <div
-              role="alert"
-              aria-live="assertive"
-              className="rounded-2xl border-2 border-red-300/70 bg-red-950/80 p-4.5 text-red-50 shadow-[0_0_0_1px_rgba(248,113,113,0.12)]"
-            >
-              <p className="text-sm font-bold">PayPal Checkout needs attention</p>
-              <p className="mt-1 text-xs font-medium leading-relaxed text-red-100">{error}</p>
-              <p className="mt-2 text-[11px] leading-5 text-red-200/90">
-                Your browser console now includes a safe PayPal diagnostic entry for this attempt.
-              </p>
-            </div>
-          )}
-
-          {!eligible && !error && (
-            <p className="text-xs text-slate-500 font-medium">
-              Initializing PayPal security bridge…
-            </p>
-          )}
-
-          {/* Official PayPal Button */}
-          <div aria-busy={pending} className="pt-2">
-            {createElement("paypal-button", {
-              type: "pay",
-              disabled: !ready,
-              onClick: startPayment,
-              class: `block min-h-13 w-full rounded-full ${
-                ready
-                  ? "cursor-pointer"
-                  : "pointer-events-none opacity-50"
-              }`,
-            })}
-          </div>
+      {error && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mt-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-950"
+        >
+          <p className="text-sm font-semibold">PayPal Checkout needs attention</p>
+          <p className="mt-1 text-xs font-medium leading-5 text-red-800">{error}</p>
+          <p className="mt-2 text-[11px] leading-5 text-red-700">
+            Your browser console includes a safe PayPal diagnostic entry for this attempt.
+          </p>
         </div>
       )}
 
-      {selectedTab === "card" && (
-        <div className="space-y-5">
-          <div className="space-y-1">
-            <h3 className="text-sm font-bold text-slate-900">
-              Credit or Debit Card Payment
-            </h3>
-            <p className="text-xs text-slate-500">
-              Direct card processing via PayPal Enterprise Hosted Gateway.
-            </p>
-          </div>
+      {!eligible && !error && (
+        <p aria-live="polite" className="mt-6 text-xs font-medium text-slate-500">
+          Initializing PayPal secure checkout…
+        </p>
+      )}
 
-          <div className="space-y-4 text-xs">
-            <div>
-              <label className="block font-semibold text-slate-700 mb-1.5">
-                Card Number
-              </label>
-              <input
-                type="text"
-                placeholder="0000 0000 0000 0000"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-600 focus:outline-none transition"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1.5">
-                  Expiry Date
-                </label>
-                <input
-                  type="text"
-                  placeholder="MM/YY"
-                  value={expiryDate}
-                  onChange={(e) => setExpiryDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-600 focus:outline-none transition"
-                />
-              </div>
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1.5">
-                  CVC / CVV
-                </label>
-                <input
-                  type="text"
-                  placeholder="3 digits"
-                  value={cvc}
-                  onChange={(e) => setCvc(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-600 focus:outline-none transition"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block font-semibold text-slate-700 mb-1.5">
-                Name on Card
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. John Doe"
-                value={nameOnCard}
-                onChange={(e) => setNameOnCard(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-blue-600 focus:outline-none transition"
-              />
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-4 text-xs text-amber-900 space-y-1">
-            <div className="flex items-center gap-1.5 font-bold text-amber-950">
-              <Info className="size-3.5 text-amber-700" />
-              <span>Card Gateway Authorization</span>
-            </div>
-            <p className="leading-relaxed">
-              Debit and Credit card payments are routed securely through PayPal's PCI-DSS Level 1 compliant gateway. You can also pay directly via the PayPal option without creating an account.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setSelectedTab("paypal")}
-            className="w-full min-h-12 rounded-full bg-slate-950 text-white font-bold text-xs sm:text-sm hover:bg-slate-800 transition shadow-md cursor-pointer flex items-center justify-center gap-2"
+      <div aria-busy={pending} className="mt-7">
+        {createElement("paypal-button", {
+          type: "pay",
+          disabled: !ready,
+          onClick: () => setReviewOpen(true),
+          class: `block min-h-13 w-full ${
+            ready ? "cursor-pointer" : "pointer-events-none opacity-50"
+          }`,
+        })}
+        {!agreementsAccepted && (
+          <p className="mt-2 text-center text-xs leading-5 text-slate-500">
+            Accept all required agreements to continue.
+          </p>
+        )}
+        {pending && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-xs font-semibold text-slate-700"
           >
-            <Lock className="size-4" />
-            <span>Pay with Card via PayPal ({props.priceFormatted})</span>
-          </button>
-        </div>
-      )}
-
-      {selectedTab === "gcash" && (
-        <div className="space-y-4 text-xs">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <h3 className="text-sm font-bold text-slate-900">
-                GCash Direct Checkout
-              </h3>
-              <p className="text-slate-500">
-                Fast & secure payment via GCash e-Wallet.
-              </p>
-            </div>
-            <GCashLogo className="h-6 w-auto" />
+            <span className="size-2 animate-pulse rounded-full bg-blue-600 motion-reduce:animate-none" />
+            Opening secure PayPal checkout…
           </div>
+        )}
+      </div>
 
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5 space-y-3 text-slate-700">
-            <p className="font-bold text-blue-950">
-              Local GCash Account Settlement
-            </p>
-            <p className="leading-relaxed">
-              To pay for <strong>{props.systemTitle}</strong> ({props.priceFormatted}) using your GCash account, our team provides instant automated invoice receipts and delivery reconciliation via our helpdesk.
-            </p>
-            <div className="pt-1">
-              <Link
-                href="/account/support"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 font-bold text-white shadow-xs hover:bg-blue-700 transition"
-              >
-                <span>Request GCash Payment QR →</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {selectedTab === "maya" && (
-        <div className="space-y-4 text-xs">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <h3 className="text-sm font-bold text-slate-900">
-                Maya (PayMaya) Checkout
-              </h3>
-              <p className="text-slate-500">
-                Seamless payment via Maya Wallet & QR Ph.
-              </p>
-            </div>
-            <MayaLogo className="h-6 w-auto" />
-          </div>
-
-          <div className="rounded-2xl border border-emerald-100 bg-emerald-50/40 p-5 space-y-3 text-slate-700">
-            <p className="font-bold text-emerald-950">
-              Maya Wallet & QR Ph Billing
-            </p>
-            <p className="leading-relaxed">
-              Pay with your Maya wallet or any QR Ph enabled banking app for <strong>{props.systemTitle}</strong> ({props.priceFormatted}). We log the transaction directly to your customer account upon verification.
-            </p>
-            <div className="pt-1">
-              <Link
-                href="/account/support"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 font-bold text-white shadow-xs hover:bg-emerald-700 transition"
-              >
-                <span>Request Maya Payment Code →</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {selectedTab === "invoice" && (
-        <div className="space-y-4 text-xs">
-          <div className="space-y-1">
-            <h3 className="text-sm font-bold text-slate-900">
-              Corporate / Institutional Bank Invoice
-            </h3>
-            <p className="text-slate-500">
-              Wire transfer & BIR-compliant invoice receipt.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 space-y-2.5 text-slate-700">
-            <p className="font-semibold text-slate-900">
-              Institutional Purchase Order
-            </p>
-            <p className="leading-relaxed">
-              For schools, colleges, and registered enterprises requiring a formal purchase order or official bank invoice before disbursement, our team provides custom quotation invoices.
-            </p>
-            <div className="pt-2">
-              <Link
-                href="/inquiries"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white border border-slate-200 px-3.5 py-2 font-bold text-slate-900 shadow-2xs hover:bg-slate-50"
-              >
-                <span>Submit Enterprise Quotation Request →</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 3. Promo Code Toggle & Input */}
-      <div className="border-t border-slate-100 pt-5">
+      <div className="mt-7 border-t border-slate-100 pt-5">
         {!showPromoInput ? (
           <button
             type="button"
@@ -688,13 +448,150 @@ export function PayPalCheckout(props: Props) {
         )}
       </div>
 
-      {/* 4. Security & Trust Guarantee */}
-      <div className="border-t border-slate-100 pt-5 flex items-center justify-between text-[11px] text-slate-400">
+      <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-5 text-[11px] text-slate-500">
         <span className="flex items-center gap-1.5">
-          <Lock className="size-3.5 text-emerald-600" />
-          <span>256-Bit SSL Encrypted Payment</span>
+          <Lock className="size-3.5 text-emerald-700" />
+          <span>Payment details stay with PayPal</span>
         </span>
-        <span>Guaranteed Safe Checkout</span>
+        <span>Charge currency: PHP</span>
+      </div>
+
+      <ReviewAndPayDialog
+        open={reviewOpen}
+        systemTitle={props.systemTitle}
+        priceFormatted={props.priceFormatted}
+        buyerEmail={props.buyerEmail}
+        onClose={() => setReviewOpen(false)}
+        onConfirm={confirmPayment}
+      />
+    </div>
+  );
+}
+
+function ReviewAndPayDialog({
+  open,
+  systemTitle,
+  priceFormatted,
+  buyerEmail,
+  onClose,
+  onConfirm,
+}: {
+  open: boolean;
+  systemTitle: string;
+  priceFormatted: string;
+  buyerEmail: string;
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
+  }, [open]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="paypal-review-title"
+      aria-describedby="paypal-review-description"
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClose={onClose}
+      className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#111214] p-0 text-white shadow-2xl backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm"
+    >
+      <div className="border-b border-white/10 px-5 py-5 sm:px-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-300">
+              Final review
+            </p>
+            <h2 id="paypal-review-title" className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl">
+              Review and pay
+            </h2>
+            <p id="paypal-review-description" className="mt-2 text-sm leading-6 text-slate-400">
+              Confirm these details before the secure PayPal window opens.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close payment review"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-white/10 text-slate-300 transition hover:bg-white/5 hover:text-white"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-5 px-5 py-5 sm:px-6 sm:py-6">
+        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+          <div className="flex items-start justify-between gap-5">
+            <div className="min-w-0">
+              <p className="text-xs text-slate-400">System</p>
+              <p className="mt-1 text-sm font-semibold leading-5 text-white">{systemTitle}</p>
+            </div>
+            <div className="shrink-0 text-right">
+              <p className="text-xs text-slate-400">Total</p>
+              <p className="mt-1 text-lg font-semibold tabular-nums text-white">{priceFormatted}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-3 text-sm">
+          <ReviewRow icon={Mail} label="Buyer email" value={buyerEmail} />
+          <ReviewRow icon={Check} label="Agreements" value="All required policies reviewed" />
+          <ReviewRow icon={PackageCheck} label="Delivery" value="Prepared separately after verified payment" />
+        </div>
+
+        <div className="rounded-xl border border-amber-300/20 bg-amber-300/[0.07] p-4 text-xs leading-5 text-amber-100">
+          Confirming opens PayPal to authorize the payment. It does not mark the order paid or make files available until the server verifies the transaction.
+        </div>
+      </div>
+
+      <div className="sticky bottom-0 flex flex-col-reverse gap-3 border-t border-white/10 bg-[#111214] px-5 py-5 sm:flex-row sm:justify-end sm:px-6">
+        <button
+          type="button"
+          onClick={onClose}
+          className="min-h-11 rounded-lg border border-white/15 px-5 text-sm font-semibold text-slate-200 transition hover:bg-white/5"
+        >
+          Go back
+        </button>
+        <button
+          type="button"
+          onClick={onConfirm}
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-white px-5 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+        >
+          <Lock className="size-4" />
+          Continue to PayPal
+        </button>
+      </div>
+    </dialog>
+  );
+}
+
+function ReviewRow({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: typeof Check;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-blue-300">
+        <Icon className="size-4" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-xs text-slate-400">{label}</p>
+        <p className="mt-0.5 break-words font-medium leading-5 text-slate-100">{value}</p>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { getPublicSystemBySlug } from "@/features/catalog/repository";
 import { getCurrentIdentity, getCurrentUser } from "@/lib/auth/current-user";
 import { getPayPalEnv, getPayPalWebSdkUrl, isPayPalConfigured } from "@/lib/env/paypal";
 import { isSupabasePubliclyConfigured } from "@/lib/env/public";
-import { ArrowLeft, Check, ChevronDown, ShieldCheck, Zap } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown } from "lucide-react";
 
 export const metadata: Metadata = { title: "Secure Checkout", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -169,6 +169,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ slug:
                 systemId={system.id}
                 systemTitle={system.title}
                 priceFormatted={price.current}
+                buyerEmail={user.email}
                 sdkUrl={paypalSdkUrl}
               />
             </div>
