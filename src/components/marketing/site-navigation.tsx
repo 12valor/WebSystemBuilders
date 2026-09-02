@@ -84,7 +84,11 @@ export function SiteNavigation() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 flex w-full justify-center pointer-events-none">
+    <header
+      className={`sticky top-0 z-50 flex w-full justify-center transition-colors duration-200 pointer-events-none motion-reduce:transition-none ${
+        scrolled ? "bg-transparent" : "bg-[#0B0C0E]/94"
+      }`}
+    >
       <motion.div
         layout
         transition={reduceMotion ? { duration: 0 } : springTransition}

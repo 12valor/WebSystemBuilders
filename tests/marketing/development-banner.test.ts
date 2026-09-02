@@ -45,4 +45,11 @@ describe("development banner and shadcn UI primitives", () => {
       siteHeaderFile.indexOf("<SiteNavigation />")
     );
   });
+
+  it("extends the top navigation background across the viewport", () => {
+    const navigationFile = readFileSync(resolve("src/components/marketing/site-navigation.tsx"), "utf8");
+
+    expect(navigationFile).toContain('scrolled ? "bg-transparent" : "bg-[#0B0C0E]/94"');
+    expect(navigationFile).toContain("w-full justify-center transition-colors");
+  });
 });
