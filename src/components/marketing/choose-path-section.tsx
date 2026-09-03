@@ -30,15 +30,15 @@ export function ChoosePathSection() {
         <div className="grid grid-cols-1 items-stretch gap-5 sm:gap-6 md:grid-cols-2">
           {/* Card 1: Student Systems */}
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{
-              duration: 0.65,
+              duration: 0.55,
               ease: [0.22, 1, 0.36, 1],
               delay: reduceMotion ? 0 : 0.1,
             }}
-            className="group flex h-full flex-col justify-between rounded-2xl border border-blue-200/70 bg-[#F4F8FF] p-5 sm:p-8 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none will-change-transform"
+            className="group flex h-full flex-col justify-between rounded-2xl border border-blue-200/80 bg-[#F6F9FF] p-5 sm:p-8 shadow-2xs transition-colors duration-150 hover:border-blue-400/80 will-change-transform"
           >
             <div>
               <div className="flex size-11 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -87,15 +87,15 @@ export function ChoosePathSection() {
 
           {/* Card 2: Business Systems */}
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{
-              duration: 0.65,
+              duration: 0.55,
               ease: [0.22, 1, 0.36, 1],
-              delay: reduceMotion ? 0 : 0.22,
+              delay: reduceMotion ? 0 : 0.18,
             }}
-            className="group flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none will-change-transform"
+            className="group flex h-full flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-8 shadow-2xs transition-colors duration-150 hover:border-slate-400 will-change-transform"
           >
             <div>
               <div className="flex size-11 items-center justify-center rounded-xl bg-slate-100 text-slate-800">

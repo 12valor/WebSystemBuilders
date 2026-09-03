@@ -82,7 +82,7 @@ export function WhyChooseUsSection() {
                   ease: [0.22, 1, 0.36, 1],
                   delay: reduceMotion ? 0 : index * 0.1,
                 }}
-                className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:p-7 will-change-transform"
+                className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-2xs transition-colors duration-150 hover:border-slate-400 sm:p-7 will-change-transform"
               >
                 <div>
                   <div

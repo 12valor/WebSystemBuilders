@@ -77,38 +77,38 @@ export function AnimatedFeaturesSection() {
           </p>
         </motion.div>
 
-        {/* 6 Animated Feature Cards Grid */}
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 lg:mt-12">
+        {/* 6 Clean Feature Cards Grid */}
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5 lg:mt-12">
           {features.map((feature, index) => (
             <motion.article
               key={feature.title}
-              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{
-                duration: 0.55,
+                duration: 0.5,
                 ease: [0.22, 1, 0.36, 1],
-                delay: reduceMotion ? 0 : index * 0.08,
+                delay: reduceMotion ? 0 : index * 0.06,
               }}
-              className="group flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none will-change-transform"
+              className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs transition-colors duration-150 hover:border-slate-300 will-change-transform"
             >
-              {/* Illustration Frame */}
-              <div className="relative flex h-40 sm:h-44 w-full items-center justify-center rounded-xl sm:rounded-2xl border border-slate-100 bg-slate-50/80 p-5 transition-colors duration-200 group-hover:bg-slate-50">
-                <div className="relative size-20 sm:size-22 transition-transform duration-300 group-hover:scale-105 motion-reduce:transform-none">
-                  <Image
-                    src={feature.gifSrc}
-                    alt={feature.gifAlt}
-                    fill
-                    unoptimized
-                    sizes="96px"
-                    className="object-contain select-none pointer-events-none"
-                  />
+              <div>
+                {/* Clean Compact Icon Badge */}
+                <div className="flex size-12 sm:size-13 items-center justify-center rounded-xl border border-slate-100 bg-slate-50 p-2 mb-4 transition-colors duration-150 group-hover:bg-slate-100/70">
+                  <div className="relative size-7 sm:size-8">
+                    <Image
+                      src={feature.gifSrc}
+                      alt={feature.gifAlt}
+                      fill
+                      unoptimized
+                      sizes="32px"
+                      className="object-contain select-none pointer-events-none"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Title and Description */}
-              <div className="mt-5 sm:mt-6">
-                <h3 className="font-heading text-base sm:text-lg font-bold tracking-tight text-slate-950">
+                {/* Title and Description */}
+                <h3 className="font-heading text-base font-bold tracking-tight text-slate-900 sm:text-lg">
                   {feature.title}
                 </h3>
                 <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-slate-600">

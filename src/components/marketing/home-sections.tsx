@@ -28,7 +28,7 @@ export function FinalCallToAction() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex flex-col justify-center overflow-hidden rounded-[20px] border border-slate-800/90 bg-[#090C15] p-5 text-white shadow-md sm:rounded-[24px] sm:p-7 lg:p-8 will-change-transform"
+            className="relative flex flex-col justify-center overflow-hidden rounded-2xl border border-slate-800 bg-[#090C15] p-5 text-white shadow-2xs sm:p-7 lg:p-8 will-change-transform"
           >
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1.18fr_0.82fr] items-center gap-5 sm:gap-6">
               <div>
@@ -66,17 +66,17 @@ export function FinalCallToAction() {
 
               {/* Seamless Phone Mockup Preview */}
               <div className="relative mx-auto w-full max-w-[280px] md:max-w-none flex items-center justify-center">
-                <div className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 shadow-xl max-h-[210px] sm:max-h-[230px] flex items-center justify-center group">
+                <div className="relative w-full overflow-hidden rounded-xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 max-h-[210px] sm:max-h-[230px] flex items-center justify-center group">
                   <Image
                     src="/images/cta-phone-mockup.jpg"
                     alt="WebSystemBuilders mobile system dashboard preview"
                     width={800}
                     height={600}
                     priority
-                    className="w-full h-full max-h-[210px] sm:max-h-[230px] object-cover object-center transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transform-none"
+                    className="w-full h-full max-h-[210px] sm:max-h-[230px] object-cover object-center"
                   />
                   {/* Subtle inner ambient ring */}
-                  <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" aria-hidden="true" />
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@ export function FinalCallToAction() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.12 }}
-            className="relative flex flex-col justify-between rounded-[20px] border border-slate-200/90 bg-white p-5 shadow-xs sm:rounded-[24px] sm:p-6 lg:p-7 will-change-transform"
+            className="relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-2xs sm:p-6 lg:p-7 will-change-transform"
           >
             <div>
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-500">

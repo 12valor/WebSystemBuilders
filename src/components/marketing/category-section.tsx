@@ -15,9 +15,6 @@ import {
   GraduationCap,
   Code2,
   Boxes,
-  ShieldCheck,
-  CheckCircle2,
-  ExternalLink,
   CircleAlert,
   PackageSearch,
 } from "lucide-react";
@@ -28,28 +25,24 @@ const institutions = [
     src: "/images/institutions/tup.png",
     width: 1280,
     height: 1280,
-    rotation: "xl:-rotate-3",
   },
   {
     name: "Central Philippines State University",
     src: "/images/institutions/cpsu.png",
     width: 727,
     height: 664,
-    rotation: "xl:rotate-2",
   },
   {
     name: "Dr. Vicente F. Gustilo Memorial National High School",
     src: "/images/institutions/dr-vicente-f-gustilo-mnhs.png",
     width: 447,
     height: 447,
-    rotation: "xl:-rotate-1",
   },
   {
     name: "Negros Occidental High School",
     src: "/images/institutions/negros-occidental-high-school.png",
     width: 736,
     height: 731,
-    rotation: "xl:rotate-3",
   },
 ] as const;
 
@@ -97,9 +90,9 @@ export function TrustStrip() {
                   ease: [0.22, 1, 0.36, 1],
                   delay: reduceMotion ? 0 : index * 0.08,
                 }}
-                className={`group relative flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-[#FAFAFC] p-3 text-center shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-300/80 hover:bg-white hover:shadow-md sm:p-4 will-change-transform ${institution.rotation}`}
+                className="group relative flex flex-col items-center justify-center rounded-xl border border-slate-200/90 bg-white p-3 text-center shadow-2xs transition-colors duration-150 hover:border-slate-300 sm:p-4 will-change-transform"
               >
-                <div className="relative mb-2.5 flex size-12 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white p-1.5 shadow-xs transition-transform duration-300 group-hover:scale-105 sm:mb-3 sm:size-16 sm:p-2">
+                <div className="relative mb-2.5 flex size-12 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-slate-50/60 p-1.5 transition-colors sm:mb-3 sm:size-16 sm:p-2">
                   <Image
                     src={institution.src}
                     alt={institution.name}
@@ -108,7 +101,7 @@ export function TrustStrip() {
                     className="max-h-full max-w-full object-contain"
                   />
                 </div>
-                <span className="text-[10px] font-bold leading-snug text-slate-700 transition-colors group-hover:text-blue-700 sm:text-[11px]">
+                <span className="text-[10px] font-semibold leading-snug text-slate-700 transition-colors group-hover:text-slate-900 sm:text-[11px]">
                   {institution.name}
                 </span>
               </motion.div>
@@ -254,15 +247,15 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
   const isStarting = system.pricingType === "starting";
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[26px] sm:rounded-[28px] border border-slate-100/90 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_rgba(15,23,42,0.12)]">
-      {/* 1. Full-bleed Media Preview */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-100/80">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xs transition-colors duration-150 hover:border-slate-400">
+      {/* 1. Media Preview */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 border-b border-slate-200/80">
         {primaryMedia ? (
-          // eslint-disable-next-html-element-suppression
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={primaryMedia}
             alt={system.title}
-            className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            className="size-full object-cover object-top"
           />
         ) : (
           <div className="size-full flex items-center justify-center bg-slate-50">
@@ -280,7 +273,7 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
               {system.title}
             </Link>
           </h3>
-          <span className="shrink-0 inline-flex items-center rounded-full border border-slate-200/80 bg-slate-50/80 px-2.5 py-0.5 text-xs font-medium text-slate-700 shadow-2xs">
+          <span className="shrink-0 inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700">
             {system.featured ? "Top rated" : (system.category?.name ?? "Verified")}
           </span>
         </div>
@@ -296,18 +289,18 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
         </p>
 
         {/* Short Summary Description */}
-        <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-500 line-clamp-2">
+        <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-2">
           {system.summary}
         </p>
 
         {/* Price & Dark Action Button Footer */}
-        <div className="mt-5 pt-4 border-t border-slate-100/90 flex items-center justify-between gap-3 mt-auto">
+        <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-3 mt-auto">
           <div className="flex items-baseline gap-1">
             <span className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               <LocalizedCatalogPrice system={system} variant="featured" />
             </span>
             {system.pricingType !== "quotation" && (
-              <span className="text-xs sm:text-sm font-normal text-slate-400">
+              <span className="text-xs sm:text-sm font-normal text-slate-500">
                 {isStarting ? "/ starting" : "/ license"}
               </span>
             )}
@@ -315,7 +308,7 @@ function FeaturedSystemCard({ system }: { system: CatalogSystemRecord }) {
 
           <Link
             href={`/systems/${system.slug}`}
-            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-xs transition-all duration-200 hover:bg-slate-800 hover:gap-2 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white transition-colors duration-150 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
           >
             <span>View System</span>
             <ArrowRight className="size-3.5" aria-hidden="true" />
